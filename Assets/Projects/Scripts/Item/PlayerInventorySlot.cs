@@ -6,15 +6,15 @@ using UnityEngine.UI;
 
 public class PlayerInventorySlot : InventorySlot
 {
-    private GameObject                _refInvObj;
-    private GameObject[]              _refInvSlotObjs;
-    private PlayerInventory           _playerInv;
-    private RefrigeratorInventory     _refInv;
+    private GameObject _refInvObj;
+    private GameObject[] _refInvSlotObjs;
+    private PlayerInventory _playerInv;
+    private RefrigeratorInventory _refInv;
     private RefrigeratorInventorySlot _refInvSlot;
 
     void Start()
     {
-        _invObj      = GameObject.FindGameObjectWithTag("PlayerInventory");
+        _invObj   = GameObject.FindGameObjectWithTag("PlayerInventory");
         _invSlotObjs = GameObject.FindGameObjectsWithTag("PlayerInventorySlot");
 
         _playerInv = _invObj.GetComponent<PlayerInventory>();
@@ -50,20 +50,20 @@ public class PlayerInventorySlot : InventorySlot
         if (_playerInv.IsSwapMode)
         {
             // 冷蔵庫Inv取得
-            _refInvObj      = GameObject.FindGameObjectWithTag("RefrigeratorInventory");
+            _refInvObj = GameObject.FindGameObjectWithTag("RefrigeratorInventory");
             _refInvSlotObjs = GameObject.FindGameObjectsWithTag("RefrigeratorInventorySlot");
-            _refInv         = _refInvObj.GetComponent<RefrigeratorInventory>();
+            _refInv = _refInvObj.GetComponent<RefrigeratorInventory>();
 
             // 選択スロットを交換アイテムに指定
             _playerInv.ItemToSwap = SelfItem;
 
             // 選択スロットに交換先のアイテムを配置
-            SelfItem      = _refInv.ItemToSwap;
+            SelfItem = _refInv.ItemToSwap;
             ItemName.text = _refInv.ItemToSwap.ItemName;
 
             // 交換先に指定アイテムを渡す
-            _refInvSlot               = _refInvSlotObjs[_refInv.IndexToSwap].GetComponent<RefrigeratorInventorySlot>();
-            _refInvSlot.SelfItem      = _playerInv.ItemToSwap;
+            _refInvSlot = _refInvSlotObjs[_refInv.IndexToSwap].GetComponent<RefrigeratorInventorySlot>();
+            _refInvSlot.SelfItem = _playerInv.ItemToSwap;
             _refInvSlot.ItemName.text = _playerInv.ItemToSwap.ItemName;
 
             // フォーカスを冷蔵庫に戻す
@@ -73,8 +73,8 @@ public class PlayerInventorySlot : InventorySlot
 
             // 一時保存のアイテムをクリア
             _playerInv.ItemToSwap = null;
-            _refInv.ItemToSwap    = null;
-            _refInv.IndexToSwap   = -1;
+            _refInv.ItemToSwap = null;
+            _refInv.IndexToSwap = -1;
         }
         else
         {
