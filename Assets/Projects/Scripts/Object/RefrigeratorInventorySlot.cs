@@ -5,33 +5,23 @@ using UnityEngine.EventSystems;
 
 public class RefrigeratorInventorySlot : InventorySlot
 {
-    private GameObject _playerInvCanvasObj;
-    private GameObject _playerInvObj;
     private GameObject[] _playerInvSlotObjs;
     private GameObject[] _refInvSlotObjs;
 
-    private Canvas _playerInvCanvas;
-    private PlayerInventory _playerInv;
-    private PlayerInventorySlot _playerInvSlot;
+    private PlayerInventory       _playerInv;
     private RefrigeratorInventory _refInv;
-    private RefrigeratorInventorySlot _refInvSlot;
 
     // Start is called before the first frame update
     void Start()
     {
-        _invObj      = GameObject.FindGameObjectWithTag("RefrigeratorInventory");
-        _invSlotObjs = GameObject.FindGameObjectsWithTag("RefrigeratorInventorySlot");
-        _playerInvCanvasObj = GameObject.Find("PlayerInventoryCanvas");
-        _playerInvObj = GameObject.FindGameObjectWithTag("PlayerInventory");
+        GameObject _playerInvObj = GameObject.FindGameObjectWithTag("PlayerInventory");
+
+        _invObj            = GameObject.FindGameObjectWithTag("RefrigeratorInventory");
         _playerInvSlotObjs = GameObject.FindGameObjectsWithTag("PlayerInventorySlot");
-        _refInvSlotObjs = GameObject.FindGameObjectsWithTag("RefrigeratorInventorySlot");
+        _refInvSlotObjs    = GameObject.FindGameObjectsWithTag("RefrigeratorInventorySlot");
 
-        _playerInvCanvas = _playerInvCanvasObj.GetComponent<Canvas>();
         _playerInv = _playerInvObj.GetComponent<PlayerInventory>();
-        _refInv = _invObj.GetComponent<RefrigeratorInventory>();
-
-        // インベントリスロットを選択
-        //EventSystem.current.SetSelectedGameObject(_invSlots[0]);
+        _refInv    = _invObj.GetComponent<RefrigeratorInventory>();
     }
 
     /// <summary>
@@ -40,6 +30,8 @@ public class RefrigeratorInventorySlot : InventorySlot
     /// </summary>
     public override void OnClick()
     {
+        PlayerInventorySlot _playerInvSlot;
+
         // スロットにアイテムがなければ弾く
         if (SelfItem == null) return;
 
