@@ -6,17 +6,16 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField]
     // プレイヤーの各パラメーター
-    public float
-        walkSpeed   = 10.0f,  // 移動速度
-        sprintSpeed = 15.0f,  // ダッシュ速度
-        rotateSpeed = 700.0f, // 回転速度
-        gravity     = 50.0f;  // 重力
+    [SerializeField]
+    private float
+        _walkSpeed   = 10.0f,  // 移動速度
+        _sprintSpeed = 15.0f,  // ダッシュ速度
+        _rotateSpeed = 700.0f, // 回転速度
+        _gravity     = 50.0f;  // 重力
 
     private CharacterController _controller;
     private Vector3             _moveDirection = Vector3.zero;
-
 
     // Start is called before the first frame update
     void Start()
@@ -45,8 +44,8 @@ public class Player : MonoBehaviour
         {
             // Bボタン押下時にダッシュ、そうでなければ歩く
             _moveDirection = Input.GetKey("joystick button 1")
-                ? new Vector3(_h * sprintSpeed, 0, _v * sprintSpeed)
-                : new Vector3(_h * walkSpeed, 0, _v * walkSpeed);
+                ? new Vector3(_h * _sprintSpeed, 0, _v * _sprintSpeed)
+                : new Vector3(_h * _walkSpeed, 0, _v * _walkSpeed);
         }
         else
         {
@@ -61,7 +60,7 @@ public class Player : MonoBehaviour
             else
             {
                 // 重力による落下
-                _moveDirection.y -= gravity * Time.deltaTime;
+                _moveDirection.y -= _gravity * Time.deltaTime;
             }
         }
 
@@ -73,7 +72,7 @@ public class Player : MonoBehaviour
         if (_h != 0 || _v != 0)
         {
             q = Quaternion.LookRotation(new Vector3(_moveDirection.x, 0, _moveDirection.z));
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, q, rotateSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, q, _rotateSpeed * Time.deltaTime);
         }
     }
 }

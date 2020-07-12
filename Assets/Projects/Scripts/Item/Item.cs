@@ -9,8 +9,7 @@ public class Item : ScriptableObject
     public enum KindOfItem
     {
         Seasoning,  // 調味料
-        Food,       // 食材
-        CookingTool // 調理器具
+        Food        // 食材
     }
 
     // アイテムの種類
@@ -25,14 +24,6 @@ public class Item : ScriptableObject
     [SerializeField]
     private string _itemName;
 
-    // アイテム説明
-    [SerializeField]
-    private string _itemDesc;
-
-    // 初期装備か否か
-    [SerializeField]
-    private bool _isDefault = false;
-
     // 使用可能か否か
     [SerializeField]
     private bool _isUsable = false;
@@ -40,7 +31,5 @@ public class Item : ScriptableObject
     public KindOfItem KindOfItem1 { get => _kindOfItem; }
     public Sprite     ItemIcon    { get => _itemIcon; }
     public string     ItemName    { get => _itemName; }
-    public string     ItemDesc    { get => _itemDesc; }
-    public bool       IsDefault   { get => _isDefault; }
     public bool       IsUsable    { get => _isUsable; }
 }

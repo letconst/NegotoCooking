@@ -35,10 +35,4 @@ public class PlayerInventorySlotGrid : InventorySlotGrid
             }
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }

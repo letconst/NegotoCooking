@@ -11,21 +11,20 @@ public class Refrigerator : MonoBehaviour
     // オブジェクト付近にプレイヤーがいるか否か
     private bool _isNear = false;
 
-    private GameObject
-        _invObj,
-        _refInvObj,
-        _playerInvObj;
+    private GameObject _invObj;
 
-    private PlayerInventory _playerInv;
+    private PlayerInventory       _playerInv;
     private RefrigeratorInventory _refInv;
 
     // Start is called before the first frame update
     void Start()
     {
         // インベントリ初期化
-        _invObj       = transform.GetChild(0).gameObject;
-        _refInvObj    = GameObject.FindGameObjectWithTag("RefrigeratorInventory");
-        _playerInvObj = GameObject.FindGameObjectWithTag("PlayerInventory");
+        GameObject
+            _refInvObj    = GameObject.FindGameObjectWithTag("RefrigeratorInventory"),
+            _playerInvObj = GameObject.FindGameObjectWithTag("PlayerInventory");
+
+        _invObj = transform.GetChild(0).gameObject;
 
         _refInv    = _refInvObj.GetComponent<RefrigeratorInventory>();
         _playerInv = _playerInvObj.GetComponent<PlayerInventory>();
