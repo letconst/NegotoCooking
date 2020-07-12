@@ -16,7 +16,7 @@ public class Refrigerator : MonoBehaviour
         _refInvObj,
         _playerInvObj;
 
-    private PlayerInventory _playerInv;
+    private PlayerInventory       _playerInv;
     private RefrigeratorInventory _refInv;
 
     // Start is called before the first frame update

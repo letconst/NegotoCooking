@@ -9,8 +9,7 @@ public class Item : ScriptableObject
     public enum KindOfItem
     {
         Seasoning,  // 調味料
-        Food,       // 食材
-        CookingTool // 調理器具
+        Food        // 食材
     }
 
     // アイテムの種類

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class RefrigeratorInventory : Inventory
 {
-    private int _indexToSwap;
+    private int          _indexToSwap;
     private GameObject[] _invSlotObjs;
 
     public int IndexToSwap { get => _indexToSwap; set => _indexToSwap = value; }
