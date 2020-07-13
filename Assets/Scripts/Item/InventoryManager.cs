@@ -2,28 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Inventory : MonoBehaviour
+public abstract class InventoryManager<T> : SingletonMonoBehaviour<T> where T : InventoryManager<T>
 {
     // 現在選択しているアイテム
-    protected Item _selectedItem;
+    [System.NonSerialized]
+    public Item selectedItem;
     // 最後に選択していたアイテムのインデックス
-    private int _lastSelectedIndex = 0;
+    [System.NonSerialized]
+    public int lastSelectedIndex = 0;
     // スロットが選択可能状態か否か
     private bool _isSlotEnabled = true;
     // 交換時の対象アイテム
-    private Item _itemToSwap;
+    [System.NonSerialized]
+    public Item itemToSwap;
     // インベントリ内のすべてのアイテム
-    public Item[] allItems;
+    [SerializeField]
+    private Item[] _allItems;
 
     // インベントリが持つスロットの数
     [SerializeField]
     protected int _slotSize;
 
-    public Item SelectedItem { get => _selectedItem; set => _selectedItem = value; }
-    public int LastSelectedIndex { get => _lastSelectedIndex; set => _lastSelectedIndex = value; }
     public bool IsSlotEnabled { get => _isSlotEnabled; protected set => _isSlotEnabled = value; }
-    public Item ItemToSwap { get => _itemToSwap; set => _itemToSwap = value; }
-    public Item[] AllItems { get => allItems; protected set => allItems = value; }
+    public Item[] AllItems { get => _allItems; protected set => _allItems = value; }
     public int SlotSize { get => _slotSize; }
 
     /// <summary>

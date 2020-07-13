@@ -8,29 +8,21 @@ using UnityEngine.EventSystems;
 
 public class Refrigerator : MonoBehaviour
 {
+    // 冷蔵庫のインベントリオブジェクト
+    private GameObject _refInvObj;
     // オブジェクト付近にプレイヤーがいるか否か
     private bool _isNear = false;
 
-    private GameObject _invObj;
-
-    private PlayerInventory       _playerInv;
     private RefrigeratorInventory _refInv;
 
     // Start is called before the first frame update
     void Start()
     {
-        // インベントリ初期化
-        GameObject
-            _refInvObj    = GameObject.FindGameObjectWithTag("RefrigeratorInventory"),
-            _playerInvObj = GameObject.FindGameObjectWithTag("PlayerInventory");
-
-        _invObj = transform.GetChild(0).gameObject;
-
-        _refInv    = _refInvObj.GetComponent<RefrigeratorInventory>();
-        _playerInv = _playerInvObj.GetComponent<PlayerInventory>();
+        _refInvObj = transform.GetChild(0).gameObject;
+        _refInv = _refInvObj.GetComponentInChildren<RefrigeratorInventory>();
 
         // 冷蔵庫インベントリを非表示
-        _invObj.SetActive(false);
+        _refInvObj.SetActive(false);
     }
 
     // Update is called once per frame
@@ -40,28 +32,28 @@ public class Refrigerator : MonoBehaviour
         if (Input.GetKeyDown("joystick button 2") && _isNear)
         {
             // 開閉切り替え
-            _invObj.SetActive(!_invObj.activeSelf);
+            _refInvObj.SetActive(!_refInvObj.activeSelf);
 
             // 開いたとき
-            if (_invObj.activeSelf)
+            if (_refInvObj.activeSelf)
             {
                 // 冷蔵庫インベントリにフォーカス
                 _refInv.SelectSlot(0);
                 // プレイヤーインベントリを無効化
-                _playerInv.DisableAllSlot();
+                PlayerInventory.Instance.DisableAllSlot();
             }
             // 閉じたとき
             else
             {
                 // プレイヤーインベントリを有効化
-                _playerInv.EnableAllSlot();
+                PlayerInventory.Instance.EnableAllSlot();
                 // プレイヤーインベントリにフォーカスを戻す
-                _playerInv.SelectSlot();
+                PlayerInventory.Instance.SelectSlot();
 
                 // アイテム交換モードの最中だったら解除し、冷蔵庫をenabledに戻す
-                if (_playerInv.IsSwapMode)
+                if (PlayerInventory.Instance.isSwapMode)
                 {
-                    _playerInv.IsSwapMode = false;
+                    PlayerInventory.Instance.isSwapMode = false;
                     _refInv.EnableAllSlot();
                 }
             }
@@ -75,6 +67,7 @@ public class Refrigerator : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         _isNear = true;
+        RefrigeratorManager.Instance.currentNearObj = gameObject;
     }
 
     /// <summary>
@@ -84,19 +77,19 @@ public class Refrigerator : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         _isNear = false;
+        RefrigeratorManager.Instance.currentNearObj = null;
 
         // インベントリが開いているなら閉じる
-        // TODO: 開いている間は移動できないようにするか要相談
-        if (_invObj.activeSelf) _invObj.SetActive(!_invObj.activeSelf);
+        if (_refInvObj.activeSelf) _refInvObj.SetActive(!_refInvObj.activeSelf);
         // プレイヤーインベントリを有効化
-        _playerInv.EnableAllSlot();
+        PlayerInventory.Instance.EnableAllSlot();
         // プレイヤーインベントリにフォーカスを戻す
-        _playerInv.SelectSlot();
+        PlayerInventory.Instance.SelectSlot();
 
         // アイテム交換モードの最中だったら解除し、冷蔵庫をenabledに戻す
-        if (_playerInv.IsSwapMode)
+        if (PlayerInventory.Instance.isSwapMode)
         {
-            _playerInv.IsSwapMode = false;
+            PlayerInventory.Instance.isSwapMode = false;
             _refInv.EnableAllSlot();
         }
     }

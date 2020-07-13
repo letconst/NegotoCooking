@@ -4,37 +4,28 @@ using UnityEngine;
 
 public class RefrigeratorInventorySlotGrid : InventorySlotGrid
 {
-    // 冷蔵庫インベントリのインスタンス
-    private RefrigeratorInventory _inv;
-
     // Start is called before the first frame update
     void Start()
     {
-        _invObj = GameObject.FindGameObjectWithTag("RefrigeratorInventory");
-        _inv    = _invObj.GetComponent<RefrigeratorInventory>();
+        GameObject            _refInvObj = gameObject.transform.parent.gameObject;
+        RefrigeratorInventory _refInv    = _refInvObj.GetComponent<RefrigeratorInventory>();
 
-        for (int i = 0; i < _inv.SlotSize; i++)
+        for (int i = 0; i < _refInv.SlotSize; i++)
         {
             // スロットのインスタンス
-            GameObject                slotObj = Instantiate(_slotPrefab, this.transform);
+            GameObject                slotObj = Instantiate(_slotPrefab, transform);
             RefrigeratorInventorySlot slot    = slotObj.GetComponent<RefrigeratorInventorySlot>();
 
             // インスペクタでアイテム指定がある場合はそれをスロットに配置する
             // 指定がなければnullを持たせる
-            if (i < _inv.AllItems.Length)
+            if (i < _refInv.AllItems.Length)
             {
-                slot.SetItem(_inv.AllItems[i]);
+                slot.SetItem(_refInv.AllItems[i]);
             }
             else
             {
                 slot.SetItem(null);
             }
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 }

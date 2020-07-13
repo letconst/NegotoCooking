@@ -88,7 +88,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b7ffa40b589c4349828b8497047109b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allItems: []
+  _allItems: []
   _slotSize: 3
 --- !u!1 &8611854936007513227
 GameObject:
@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 8611854936007513216}
   - component: {fileID: 8611854936007513231}
   - component: {fileID: 8611854936007513219}
-  - component: {fileID: 8611854936007513218}
+  - component: {fileID: 8129181476049174235}
   m_Layer: 0
   m_Name: SlotWrapper
   m_TagString: SlotWrapper
@@ -214,7 +214,7 @@ MonoBehaviour:
   m_Spacing: {x: 10, y: 0}
   m_Constraint: 0
   m_ConstraintCount: 2
---- !u!114 &8611854936007513218
+--- !u!114 &8129181476049174235
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

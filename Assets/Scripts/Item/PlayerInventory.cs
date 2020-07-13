@@ -4,13 +4,12 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class PlayerInventory : Inventory
+public class PlayerInventory : InventoryManager<PlayerInventory>
 {
     // アイテム交換モードか否か
-    private bool _isSwapMode = false;
+    [System.NonSerialized]
+    public bool isSwapMode = false;
     private GameObject[] _playerInvSlotObjs;
-
-    public bool IsSwapMode { get => _isSwapMode; set => _isSwapMode = value; }
 
     // Start is called before the first frame update
     void Start()
@@ -26,7 +25,7 @@ public class PlayerInventory : Inventory
 
     public override void SelectSlot(int index = -1)
     {
-        index = index == -1 ? LastSelectedIndex : index;
+        index = index == -1 ? lastSelectedIndex : index;
         EventSystem.current.SetSelectedGameObject(_playerInvSlotObjs[index]);
     }
 
