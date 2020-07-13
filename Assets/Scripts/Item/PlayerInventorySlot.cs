@@ -37,13 +37,13 @@ public class PlayerInventorySlot : InventorySlot
     /// </summary>
     public override void OnClick()
     {
-        GameObject[]              _refInvSlotObjs;
-        RefrigeratorInventory     _refInv = RefrigeratorManager.Instance.currentNearObj.GetComponentInChildren<RefrigeratorInventory>();
-        RefrigeratorInventorySlot _refInvSlot;
-
         // 選択モードなら
         if (PlayerInventory.Instance.isSwapMode)
         {
+            GameObject[]              _refInvSlotObjs;
+            RefrigeratorInventory     _refInv = RefrigeratorManager.Instance.currentNearObj.GetComponentInChildren<RefrigeratorInventory>();
+            RefrigeratorInventorySlot _refInvSlot;
+
             // 冷蔵庫Inv取得
             _refInvSlotObjs = GameObject.FindGameObjectsWithTag("RefrigeratorInventorySlot");
 
@@ -71,9 +71,9 @@ public class PlayerInventorySlot : InventorySlot
         }
         else
         {
-            UsableItem selectedItem = PlayerInventory.Instance.selectedItem as UsableItem;
+            Usable selectedItem = PlayerInventory.Instance.selectedItem as Usable;
 
-            if (selectedItem != null && selectedItem.IsUsable)
+            if (selectedItem != null && ((Item)selectedItem).IsUsable)
             {
                 selectedItem.Use();
             }

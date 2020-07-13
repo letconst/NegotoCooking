@@ -33,3 +33,11 @@ public class Item : ScriptableObject
     public string     ItemName    { get => _itemName; }
     public bool       IsUsable    { get => _isUsable; }
 }
+
+public interface Usable
+{
+    /// <summary>
+    /// 所持アイテムを使用した際の処理
+    /// </summary>
+    void Use();
+}
