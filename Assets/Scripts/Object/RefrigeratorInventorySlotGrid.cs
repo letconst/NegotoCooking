@@ -7,18 +7,20 @@ public class RefrigeratorInventorySlotGrid : InventorySlotGrid
     // Start is called before the first frame update
     void Start()
     {
-        for (int i = 0; i < RefrigeratorInventory.Instance.SlotSize; i++)
+        GameObject            _refInvObj = gameObject.transform.parent.gameObject;
+        RefrigeratorInventory _refInv    = _refInvObj.GetComponent<RefrigeratorInventory>();
+
+        for (int i = 0; i < _refInv.SlotSize; i++)
         {
             // スロットのインスタンス
-            GameObject                slotObj = Instantiate(_slotPrefab, this.transform);
+            GameObject                slotObj = Instantiate(_slotPrefab, transform);
             RefrigeratorInventorySlot slot    = slotObj.GetComponent<RefrigeratorInventorySlot>();
 
             // インスペクタでアイテム指定がある場合はそれをスロットに配置する
             // 指定がなければnullを持たせる
-            Debug.Log(RefrigeratorInventory.Instance.AllItems);
-            if (i < RefrigeratorInventory.Instance.AllItems.Length)
+            if (i < _refInv.AllItems.Length)
             {
-                slot.SetItem(RefrigeratorInventory.Instance.AllItems[i]);
+                slot.SetItem(_refInv.AllItems[i]);
             }
             else
             {

@@ -10,7 +10,7 @@ public class PlayerInventorySlotGrid : InventorySlotGrid
         for (int i = 0; i < PlayerInventory.Instance.SlotSize; i++)
         {
             // スロットのインスタンス
-            GameObject          slotObj = Instantiate(_slotPrefab, this.transform);
+            GameObject          slotObj = Instantiate(_slotPrefab, transform);
             PlayerInventorySlot slot    = slotObj.GetComponent<PlayerInventorySlot>();
 
             //slot.SetItem(null);

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -12,7 +13,7 @@ public class RefrigeratorInventorySlot : InventorySlot
     void Start()
     {
         _playerInvSlotObjs = GameObject.FindGameObjectsWithTag("PlayerInventorySlot");
-        _refInvSlotObjs    = GameObject.FindGameObjectsWithTag("RefrigeratorInventorySlot");
+        _refInvSlotObjs    = transform.parent.gameObject.GetComponentsInChildren<RefrigeratorInventorySlot>().Select(t => t.gameObject).ToArray();
     }
 
     /// <summary>
@@ -22,6 +23,8 @@ public class RefrigeratorInventorySlot : InventorySlot
     public override void OnClick()
     {
         PlayerInventorySlot _playerInvSlot;
+        RefrigeratorInventory _refInv = RefrigeratorManager.Instance.currentNearObj.GetComponentInChildren<RefrigeratorInventory>();
+        Debug.Log(_refInv);
 
         // スロットにアイテムがなければ弾く
         if (SelfItem == null) return;
@@ -48,13 +51,13 @@ public class RefrigeratorInventorySlot : InventorySlot
         // プレイヤーインベントリに空きがなければ交換させる
 
         // 交換アイテムに現在スロットのアイテムを指定
-        RefrigeratorInventory.Instance.itemToSwap = SelfItem;
+        _refInv.itemToSwap = SelfItem;
         // 冷蔵庫に交換元のインデックスを指定
-        RefrigeratorInventory.Instance.indexToSwap = GetSelfIndex(_refInvSlotObjs, gameObject);
+        _refInv.indexToSwap = GetSelfIndex(_refInvSlotObjs, gameObject);
         // プレイヤーインベントリをアイテム交換モードに変更
         PlayerInventory.Instance.isSwapMode = true;
         // 冷蔵庫Invを無効化し、プレイヤーInvにフォーカス
-        RefrigeratorInventory.Instance.DisableAllSlot();
+        _refInv.DisableAllSlot();
         PlayerInventory.Instance.EnableAllSlot();
         PlayerInventory.Instance.SelectSlot();
         // ここから先はPlayerInventorySlot.OnClick()
