@@ -4,12 +4,11 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class RefrigeratorInventory : Inventory
+public class RefrigeratorInventory : InventoryManager<RefrigeratorInventory>
 {
-    private int _indexToSwap;
+    [System.NonSerialized]
+    public int indexToSwap;
     private GameObject[] _invSlotObjs;
-
-    public int IndexToSwap { get => _indexToSwap; set => _indexToSwap = value; }
 
     // Start is called before the first frame update
     void Start()
@@ -17,15 +16,9 @@ public class RefrigeratorInventory : Inventory
         _invSlotObjs = GameObject.FindGameObjectsWithTag("RefrigeratorInventorySlot");
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public override void SelectSlot(int index = -1)
     {
-        index = index == -1 ? LastSelectedIndex : index;
+        index = index == -1 ? lastSelectedIndex : index;
         EventSystem.current.SetSelectedGameObject(_invSlotObjs[index]);
     }
 
