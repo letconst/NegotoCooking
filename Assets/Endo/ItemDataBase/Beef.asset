@@ -15,6 +15,4 @@ MonoBehaviour:
   _kindOfItem: 1
   _itemIcon: {fileID: 0}
   _itemName: "\u725B\u8089"
-  _itemDesc: 
-  _isDefault: 0
   _isUsable: 1

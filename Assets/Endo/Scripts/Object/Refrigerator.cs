@@ -29,7 +29,7 @@ public class Refrigerator : MonoBehaviour
     void Update()
     {
         // X押下でインベントリを開閉
-        if (Input.GetKeyDown("joystick button 2") && _isNear)
+        if (Input.GetKeyDown("joystick button 2") && _isNear || Input.GetKeyDown(KeyCode.Q) && _isNear)
         {
             // 開閉切り替え
             _refInvObj.SetActive(!_refInvObj.activeSelf);
