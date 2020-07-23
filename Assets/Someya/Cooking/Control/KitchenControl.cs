@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class BoilScript : MonoBehaviour
+public class KitchenControl : MonoBehaviour
 {
     public void OnClickButton()
     {
-        SceneManager.UnloadSceneAsync("BoilScenes");
+        SceneManager.UnloadSceneAsync("CookingScenes");
     }
 }
