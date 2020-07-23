@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class Player : MonoBehaviour
 
     private CharacterController _controller;
     private Vector3             _moveDirection = Vector3.zero;
+    private bool _isTouch;
 
     // Start is called before the first frame update
     void Start()
@@ -73,6 +75,48 @@ public class Player : MonoBehaviour
         {
             q = Quaternion.LookRotation(new Vector3(_moveDirection.x, 0, _moveDirection.z));
             transform.rotation = Quaternion.RotateTowards(transform.rotation, q, _rotateSpeed * Time.deltaTime);
+        }
+    }
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.name.CompareTo("Bakekitchen") == 0)
+        {
+            if (Input.GetMouseButtonDown(0) && !_isTouch)
+            {
+                _isTouch = true;
+                // シーンを追加
+                SceneManager.LoadSceneAsync("BakeScenes", LoadSceneMode.Additive);
+            }
+            if (Input.GetMouseButtonDown(1) && !_isTouch)
+            {
+                _isTouch = false;
+            }
+        }
+        if (other.gameObject.name.CompareTo("Boilkitchen") == 0)
+        {
+            if (Input.GetMouseButtonDown(0) && !_isTouch)
+            {
+                _isTouch = true;
+                // シーンを追加
+                SceneManager.LoadSceneAsync("BoilScenes", LoadSceneMode.Additive);
+            }
+            if (Input.GetMouseButtonDown(1) && !_isTouch)
+            {
+                _isTouch = false;
+            }
+        }
+        if (other.gameObject.name.CompareTo("Cutkitchen") == 0)
+        {
+            if (Input.GetMouseButtonDown(0) && !_isTouch)
+            {
+                _isTouch = true;
+                // シーンを追加
+                SceneManager.LoadSceneAsync("CutScenes", LoadSceneMode.Additive);
+            }
+            if (Input.GetMouseButtonDown(1) && !_isTouch)
+            {
+                _isTouch = false;
+            }
         }
     }
 }
