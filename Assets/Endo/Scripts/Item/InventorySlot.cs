@@ -7,18 +7,15 @@ using UnityEngine.UI;
 public abstract class InventorySlot : MonoBehaviour, ISelectHandler
 {
     // インベントリオブジェクト
-    protected GameObject _invObj;
+    protected GameObject _selfInvObj;
     // インベントリスロットオブジェクト
-    protected GameObject[] _invSlotObjs;
+    protected GameObject[] _selfInvSlotObjs;
     // スロット内のアイテム
-    protected Item _selfItem;
+    public Item selfItem;
 
     // アイテム名
     [SerializeField]
-    Text _itemName;
-
-    public Text ItemName { get => _itemName; set => _itemName = value; }
-    public Item SelfItem { get => _selfItem; set => _selfItem = value; }
+    public Text itemName;
 
     /// <summary>
     /// 選択スロット変更時の処理
@@ -33,15 +30,23 @@ public abstract class InventorySlot : MonoBehaviour, ISelectHandler
 
     /// <summary>
     /// スロットにアイテムを渡し、アイテム名を表示させる
+    /// インベントリインスタンスの指定があれば、当該アイテム配列も更新する
     /// </summary>
     /// <param name="item">配置および表示させるアイテム</param>
-    public void SetItem(Item item)
+    /// <param name="inv">インベントリのインスタンス</param>
+    public void SetItem(Item item, InventoryManager inv = null)
     {
-        SelfItem = item;
+        selfItem = item;
 
         if (item != null)
         {
-            ItemName.text = item.ItemName;
+            itemName.text = item.ItemName;
+        }
+
+        // 初期化時じゃなければアイテム配列更新
+        if (inv != null)
+        {
+            inv.AllItems[GetSelfIndex(_selfInvSlotObjs, gameObject)] = selfItem;
         }
     }
 
@@ -50,8 +55,8 @@ public abstract class InventorySlot : MonoBehaviour, ISelectHandler
     /// </summary>
     public void RemoveItem()
     {
-        SelfItem = null;
-        ItemName.text = "";
+        selfItem = null;
+        itemName.text = "";
     }
 
     /// <summary>

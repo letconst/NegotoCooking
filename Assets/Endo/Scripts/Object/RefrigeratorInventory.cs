@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class RefrigeratorInventory : InventoryManager<RefrigeratorInventory>
+public class RefrigeratorInventory : InventoryManager
 {
     // 交換モード時、どの冷蔵庫スロットが選択されたかのインデックスを保持する変数
     [System.NonSerialized]
