@@ -5,19 +5,21 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class Player : MonoBehaviour
+public class Player : SingletonMonoBehaviour<Player>
 {
     // プレイヤーの各パラメーター
-    [SerializeField]
-    private float
-        _walkSpeed   = 10.0f,  // 移動速度
-        _sprintSpeed = 15.0f,  // ダッシュ速度
-        _rotateSpeed = 700.0f, // 回転速度
-        _gravity     = 50.0f;  // 重力
+    [SerializeField, Header("移動速度")]
+    private float _walkSpeed = 10.0f;
+
+    [SerializeField, Header("重力")]
+    private float _gravity = 50.0f;
+
+    [SerializeField, Header("回転速度")]
+    private int _rotateSpeed = 10;
 
     private CharacterController _controller;
     private Vector3             _moveDirection = Vector3.zero;
-    private bool _isTouch;
+    public bool _isTouch;
 
     // Start is called before the first frame update
     void Start()
@@ -36,7 +38,7 @@ public class Player : MonoBehaviour
     /// </summary>
     private void Movement()
     {
-        Quaternion q;
+        Quaternion rot;
         float
             _h = Input.GetAxis("Horizontal"), // 水平
             _v = Input.GetAxis("Vertical");   // 垂直
@@ -44,10 +46,7 @@ public class Player : MonoBehaviour
         // 接地判定
         if (_controller.isGrounded)
         {
-            // Bボタン押下時にダッシュ、そうでなければ歩く
-            _moveDirection = Input.GetKey("joystick button 1")
-                ? new Vector3(_h * _sprintSpeed, 0, _v * _sprintSpeed)
-                : new Vector3(_h * _walkSpeed, 0, _v * _walkSpeed);
+            _moveDirection = new Vector3(_h * _walkSpeed, 0, _v * _walkSpeed);
         }
         else
         {
@@ -73,8 +72,8 @@ public class Player : MonoBehaviour
         // 入力時に向きを変更
         if (_h != 0 || _v != 0)
         {
-            q = Quaternion.LookRotation(new Vector3(_moveDirection.x, 0, _moveDirection.z));
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, q, _rotateSpeed * Time.deltaTime);
+            rot = Quaternion.LookRotation(new Vector3(_moveDirection.x, 0, _moveDirection.z));
+            transform.rotation = Quaternion.Slerp(transform.rotation, rot, Time.deltaTime * 8);
         }
     }
     private void OnTriggerStay(Collider other)
@@ -87,10 +86,6 @@ public class Player : MonoBehaviour
                 // シーンを追加
                 SceneManager.LoadSceneAsync("BakeScenes", LoadSceneMode.Additive);
             }
-            if (Input.GetMouseButtonDown(1) && !_isTouch)
-            {
-                _isTouch = false;
-            }
         }
         if (other.gameObject.name.CompareTo("Boilkitchen") == 0)
         {
@@ -100,10 +95,6 @@ public class Player : MonoBehaviour
                 // シーンを追加
                 SceneManager.LoadSceneAsync("BoilScenes", LoadSceneMode.Additive);
             }
-            if (Input.GetMouseButtonDown(1) && !_isTouch)
-            {
-                _isTouch = false;
-            }
         }
         if (other.gameObject.name.CompareTo("Cutkitchen") == 0)
         {
@@ -112,10 +103,6 @@ public class Player : MonoBehaviour
                 _isTouch = true;
                 // シーンを追加
                 SceneManager.LoadSceneAsync("CutScenes", LoadSceneMode.Additive);
-            }
-            if (Input.GetMouseButtonDown(1) && !_isTouch)
-            {
-                _isTouch = false;
             }
         }
     }

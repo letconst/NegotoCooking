@@ -1491,6 +1491,7 @@ GameObject:
   - component: {fileID: 308902430}
   - component: {fileID: 308902429}
   - component: {fileID: 308902428}
+  - component: {fileID: 308902431}
   m_Layer: 0
   m_Name: Cutkitchen
   m_TagString: Untagged
@@ -1520,7 +1521,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 308902426}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -1571,6 +1572,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 308902426}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!65 &308902431
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 308902426}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.0000002, y: 1, z: 2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &317892549
 GameObject:
   m_ObjectHideFlags: 0
@@ -4138,6 +4152,7 @@ GameObject:
   - component: {fileID: 1082978639}
   - component: {fileID: 1082978638}
   - component: {fileID: 1082978637}
+  - component: {fileID: 1082978640}
   m_Layer: 0
   m_Name: Boilkitchen
   m_TagString: Untagged
@@ -4167,7 +4182,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1082978635}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -4218,6 +4233,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1082978635}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!65 &1082978640
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1082978635}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1155502998
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4747,7 +4775,7 @@ PrefabInstance:
     - target: {fileID: 5202636314267799200, guid: 7f19a70fbd7217e4785bd861808aa9c1,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -38
+      value: 25.3
       objectReference: {fileID: 0}
     - target: {fileID: 5202636314267799200, guid: 7f19a70fbd7217e4785bd861808aa9c1,
         type: 3}
@@ -4757,7 +4785,7 @@ PrefabInstance:
     - target: {fileID: 5202636314267799200, guid: 7f19a70fbd7217e4785bd861808aa9c1,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -28
+      value: -2.6
       objectReference: {fileID: 0}
     - target: {fileID: 5202636314267799200, guid: 7f19a70fbd7217e4785bd861808aa9c1,
         type: 3}
@@ -6017,6 +6045,7 @@ GameObject:
   - component: {fileID: 1674723146}
   - component: {fileID: 1674723145}
   - component: {fileID: 1674723144}
+  - component: {fileID: 1674723148}
   m_Layer: 0
   m_Name: Bakekitchen
   m_TagString: Untagged
@@ -6032,7 +6061,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1674723143}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -6097,6 +6126,19 @@ Transform:
   m_Father: {fileID: 56058344}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1674723148
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1674723143}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1684326733
 GameObject:
   m_ObjectHideFlags: 0
