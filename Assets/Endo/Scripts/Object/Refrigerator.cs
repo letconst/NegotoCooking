@@ -18,7 +18,7 @@ public class Refrigerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _refInvObj = transform.GetChild(0).gameObject;
+        _refInvObj = transform.Find("RefrigeratorInventoryCanvas").gameObject;
         _refInv = _refInvObj.GetComponentInChildren<RefrigeratorInventory>();
 
         // 冷蔵庫インベントリを非表示
