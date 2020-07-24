@@ -4,32 +4,32 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-// TODO: 複数冷蔵庫を配置することを考慮し、インベントリのようにマネージャを作成する
-
 public class Refrigerator : MonoBehaviour
 {
     // 冷蔵庫のインベントリオブジェクト
     private GameObject _refInvObj;
-    // オブジェクト付近にプレイヤーがいるか否か
-    private bool _isNear = false;
 
     private RefrigeratorInventory _refInv;
 
     // Start is called before the first frame update
     void Start()
     {
-        _refInvObj = transform.GetChild(0).gameObject;
-        _refInv = _refInvObj.GetComponentInChildren<RefrigeratorInventory>();
+        _refInvObj = transform.Find("RefrigeratorInventoryCanvas").gameObject;
+        _refInv    = _refInvObj.GetComponentInChildren<RefrigeratorInventory>();
 
         // 冷蔵庫インベントリを非表示
         _refInvObj.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter()
+    {
+        RefrigeratorManager.Instance.currentNearObj = gameObject;
+    }
+
+    private void OnTriggerStay()
     {
         // X押下でインベントリを開閉
-        if (Input.GetKeyDown("joystick button 2") && _isNear)
+        if (Input.GetKeyDown("joystick button 2") || Input.GetKeyDown(KeyCode.E))
         {
             // 開閉切り替え
             _refInvObj.SetActive(!_refInvObj.activeSelf);
@@ -60,23 +60,8 @@ public class Refrigerator : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 冷蔵庫に近づいた際の処理
-    /// </summary>
-    /// <param name="other"></param>
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerExit()
     {
-        _isNear = true;
-        RefrigeratorManager.Instance.currentNearObj = gameObject;
-    }
-
-    /// <summary>
-    /// 冷蔵庫から離れた際の処理
-    /// </summary>
-    /// <param name="other"></param>
-    private void OnTriggerExit(Collider other)
-    {
-        _isNear = false;
         RefrigeratorManager.Instance.currentNearObj = null;
 
         // インベントリが開いているなら閉じる
@@ -86,7 +71,7 @@ public class Refrigerator : MonoBehaviour
         // プレイヤーインベントリにフォーカスを戻す
         PlayerInventory.Instance.SelectSlot();
 
-        // アイテム交換モードの最中だったら解除し、冷蔵庫をenabledに戻す
+        // アイテム交換モードだったら解除し、冷蔵庫をenabledに戻す
         if (PlayerInventory.Instance.isSwapMode)
         {
             PlayerInventory.Instance.isSwapMode = false;

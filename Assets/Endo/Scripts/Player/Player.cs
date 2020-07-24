@@ -4,16 +4,16 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Player : MonoBehaviour
+public class Player : SingletonMonoBehaviour<Player>
 {
     // プレイヤーの各パラメーター
-    [SerializeField, Header("移動速度")]
+    [SerializeField, Tooltip("移動速度")]
     private float _walkSpeed = 10.0f;
 
-    [SerializeField, Header("重力")]
+    [SerializeField, Tooltip("重力")]
     private float _gravity = 50.0f;
 
-    [SerializeField, Header("回転速度")]
+    [SerializeField, Tooltip("回転速度")]
     private int _rotateSpeed = 10;
 
     private CharacterController _controller;

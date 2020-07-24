@@ -22,9 +22,8 @@ public class RefrigeratorInventorySlot : InventorySlot
     /// </summary>
     public override void OnClick()
     {
-        PlayerInventorySlot _playerInvSlot;
+        PlayerInventorySlot   _playerInvSlot;
         RefrigeratorInventory _refInv = RefrigeratorManager.Instance.currentNearObj.GetComponentInChildren<RefrigeratorInventory>();
-        Debug.Log(_refInv);
 
         // スロットにアイテムがなければ弾く
         if (SelfItem == null) return;
@@ -37,13 +36,11 @@ public class RefrigeratorInventorySlot : InventorySlot
             // プレイヤーインベントリに空きがあったら
             if (_playerInvSlot.SelfItem == null)
             {
-                // そのスロットにアイテムを配置して名前を表示させる
-                _playerInvSlot.SelfItem = SelfItem;
-                _playerInvSlot.ItemName.text = ItemName.text;
+                // そのスロットにアイテムを配置
+                _playerInvSlot.SetItem(SelfItem);
 
                 // 冷蔵庫スロットは空にする
-                SelfItem = null;
-                ItemName.text = null;
+                RemoveItem();
                 return;
             }
         }

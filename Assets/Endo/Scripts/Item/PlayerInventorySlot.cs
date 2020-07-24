@@ -51,13 +51,11 @@ public class PlayerInventorySlot : InventorySlot
             PlayerInventory.Instance.itemToSwap = SelfItem;
 
             // 選択スロットに交換先のアイテムを配置
-            SelfItem      = _refInv.itemToSwap;
-            ItemName.text = _refInv.itemToSwap.ItemName;
+            SetItem(_refInv.itemToSwap);
 
             // 交換先に指定アイテムを渡す
-            _refInvSlot               = _refInvSlotObjs[_refInv.indexToSwap].GetComponent<RefrigeratorInventorySlot>();
-            _refInvSlot.SelfItem      = PlayerInventory.Instance.itemToSwap;
-            _refInvSlot.ItemName.text = PlayerInventory.Instance.itemToSwap.ItemName;
+            _refInvSlot = _refInvSlotObjs[_refInv.indexToSwap].GetComponent<RefrigeratorInventorySlot>();
+            _refInvSlot.SetItem(PlayerInventory.Instance.itemToSwap);
 
             // フォーカスを冷蔵庫に戻す
             PlayerInventory.Instance.DisableAllSlot();
