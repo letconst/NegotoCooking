@@ -6,6 +6,8 @@ using UnityEngine.EventSystems;
 
 public class Refrigerator : MonoBehaviour
 {
+    // プレイヤーが近くにいるか否か
+    private bool _isNear = false;
     // 冷蔵庫のインベントリオブジェクト
     private GameObject _selfInvObj;
     private GameObject _playerInvObj;
@@ -26,15 +28,10 @@ public class Refrigerator : MonoBehaviour
         _selfInvObj.SetActive(false);
     }
 
-    private void OnTriggerEnter()
-    {
-        RefrigeratorManager.Instance.currentNearObj = gameObject;
-    }
-
-    private void OnTriggerStay()
+    private void Update()
     {
         // X押下でインベントリを開閉
-        if (Input.GetKeyDown("joystick button 2") || Input.GetKeyDown(KeyCode.E))
+        if ((Input.GetKeyDown("joystick button 2") || Input.GetKeyDown(KeyCode.E)) && _isNear)
         {
             // 開閉切り替え
             _selfInvObj.SetActive(!_selfInvObj.activeSelf);
@@ -65,8 +62,15 @@ public class Refrigerator : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter()
+    {
+        _isNear = true;
+        RefrigeratorManager.Instance.currentNearObj = gameObject;
+    }
+
     private void OnTriggerExit()
     {
+        _isNear = false;
         RefrigeratorManager.Instance.currentNearObj = null;
 
         // インベントリが開いているなら閉じる
