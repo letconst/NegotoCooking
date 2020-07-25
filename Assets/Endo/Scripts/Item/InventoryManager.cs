@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class InventoryManager<T> : SingletonMonoBehaviour<T> where T : InventoryManager<T>
+public abstract class InventoryManager : MonoBehaviour
 {
     // 現在選択しているアイテム
     [System.NonSerialized]

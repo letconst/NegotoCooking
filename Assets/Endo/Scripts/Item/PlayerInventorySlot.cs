@@ -6,12 +6,16 @@ using UnityEngine.UI;
 
 public class PlayerInventorySlot : InventorySlot
 {
+    private PlayerInventory _selfInv;
     void Start()
     {
-        _invSlotObjs = GameObject.FindGameObjectsWithTag("PlayerInventorySlot");
+        _selfInvObj = GameObject.FindGameObjectWithTag("PlayerInventory");
+        _selfInvSlotObjs = GameObject.FindGameObjectsWithTag("PlayerInventorySlot");
+
+        _selfInv = _selfInvObj.GetComponent<PlayerInventory>();
 
         // インベントリスロットを選択
-        EventSystem.current.SetSelectedGameObject(_invSlotObjs[0]);
+        EventSystem.current.SetSelectedGameObject(_selfInvSlotObjs[0]);
     }
 
     /// <summary>
@@ -20,13 +24,13 @@ public class PlayerInventorySlot : InventorySlot
     /// <param name="_"></param>
     public override void OnSelect(BaseEventData _)
     {
-        PlayerInventory.Instance.selectedItem = SelfItem;
+        _selfInv.selectedItem = selfItem;
 
-        for (int i = 0; i < _invSlotObjs.Length; i++)
+        for (int i = 0; i < _selfInvSlotObjs.Length; i++)
         {
-            if (_invSlotObjs[i] == gameObject)
+            if (_selfInvSlotObjs[i] == gameObject)
             {
-                PlayerInventory.Instance.lastSelectedIndex = i;
+                _selfInv.lastSelectedIndex = i;
             }
         }
     }
@@ -38,7 +42,7 @@ public class PlayerInventorySlot : InventorySlot
     public override void OnClick()
     {
         // 選択モードなら
-        if (PlayerInventory.Instance.isSwapMode)
+        if (_selfInv.isSwapMode)
         {
             GameObject[]              _refInvSlotObjs;
             RefrigeratorInventory     _refInv = RefrigeratorManager.Instance.currentNearObj.GetComponentInChildren<RefrigeratorInventory>();
@@ -48,30 +52,28 @@ public class PlayerInventorySlot : InventorySlot
             _refInvSlotObjs = GameObject.FindGameObjectsWithTag("RefrigeratorInventorySlot");
 
             // 選択スロットを交換アイテムに指定
-            PlayerInventory.Instance.itemToSwap = SelfItem;
+            _selfInv.itemToSwap = selfItem;
 
             // 選択スロットに交換先のアイテムを配置
-            SelfItem      = _refInv.itemToSwap;
-            ItemName.text = _refInv.itemToSwap.ItemName;
+            SetItem(_refInv.itemToSwap, _selfInv);
 
             // 交換先に指定アイテムを渡す
-            _refInvSlot               = _refInvSlotObjs[_refInv.indexToSwap].GetComponent<RefrigeratorInventorySlot>();
-            _refInvSlot.SelfItem      = PlayerInventory.Instance.itemToSwap;
-            _refInvSlot.ItemName.text = PlayerInventory.Instance.itemToSwap.ItemName;
+            _refInvSlot = _refInvSlotObjs[_refInv.indexToSwap].GetComponent<RefrigeratorInventorySlot>();
+            _refInvSlot.SetItem(_selfInv.itemToSwap, _refInv);
 
             // フォーカスを冷蔵庫に戻す
-            PlayerInventory.Instance.DisableAllSlot();
+            _selfInv.DisableAllSlot();
             _refInv.EnableAllSlot();
             _refInv.SelectSlot(_refInv.indexToSwap);
 
             // 一時保存のアイテムをクリア
-            PlayerInventory.Instance.itemToSwap = null;
-            _refInv.itemToSwap                  = null;
-            _refInv.indexToSwap                 = -1;
+            _selfInv.itemToSwap = null;
+            _refInv.itemToSwap  = null;
+            _refInv.indexToSwap = -1;
         }
         else
         {
-            Usable selectedItem = PlayerInventory.Instance.selectedItem as Usable;
+            Usable selectedItem = _selfInv.selectedItem as Usable;
 
             if (selectedItem != null && ((Item)selectedItem).IsUsable)
             {

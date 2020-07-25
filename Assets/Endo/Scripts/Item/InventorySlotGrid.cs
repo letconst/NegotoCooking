@@ -5,7 +5,7 @@ using UnityEngine;
 public class InventorySlotGrid : MonoBehaviour
 {
     // インベントリオブジェクト
-    protected GameObject _invObj;
+    protected GameObject _selfInvObj;
 
     // 
     [SerializeField]

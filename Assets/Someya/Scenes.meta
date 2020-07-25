@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: b45bd91d3076af946bf2f2cdb11f70df
+=======
+guid: e809ca1411a8a984a8b41a0b439b52ec
+>>>>>>> origin/Endo
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

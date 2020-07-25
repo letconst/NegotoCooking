@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class PlayerInventorySlotGrid : InventorySlotGrid
 {
+    private PlayerInventory _selfInv;
+
     // Start is called before the first frame update
     void Start()
     {
-        for (int i = 0; i < PlayerInventory.Instance.SlotSize; i++)
+        _selfInvObj = GameObject.FindGameObjectWithTag("PlayerInventory");
+        _selfInv    = _selfInvObj.GetComponent<PlayerInventory>();
+
+        for (int i = 0; i < _selfInv.SlotSize; i++)
         {
             // スロットのインスタンス
             GameObject          slotObj = Instantiate(_slotPrefab, transform);
@@ -18,10 +23,10 @@ public class PlayerInventorySlotGrid : InventorySlotGrid
             // デバッグ用
             // 初期アイテムを持たせる
             // 使用する際はSlotWrapperのInvSlotGridコンポのAllItemsにアイテムを指定してあげる
-            if (i < PlayerInventory.Instance.AllItems.Length)
+            if (i < _selfInv.AllItems.Length)
             {
                 // アイテムをスロットに配置
-                slot.SetItem(PlayerInventory.Instance.AllItems[i]);
+                slot.SetItem(_selfInv.AllItems[i]);
             }
             else
             {

@@ -5,31 +5,26 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class RefrigeratorInventory : InventoryManager<RefrigeratorInventory>
+public class RefrigeratorInventory : InventoryManager
 {
     // 交換モード時、どの冷蔵庫スロットが選択されたかのインデックスを保持する変数
     [System.NonSerialized]
     public int indexToSwap;
     private GameObject[] _refInvSlotObjs;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
     public override void SelectSlot(int index = -1)
     {
         _refInvSlotObjs = GetCurrentNearRefInvSlots();
-        index = index == -1 ? lastSelectedIndex : index;
-        Debug.Log(RefrigeratorManager.Instance.currentNearObj.GetComponentsInChildren<RefrigeratorInventorySlot>().Length);
+        index           = index == -1 ? lastSelectedIndex : index;
+
         EventSystem.current.SetSelectedGameObject(_refInvSlotObjs[index]);
     }
 
     public override void DisableAllSlot()
     {
         _refInvSlotObjs = GetCurrentNearRefInvSlots();
-        IsSlotEnabled = false;
+        IsSlotEnabled   = false;
+
         foreach (GameObject slotObj in _refInvSlotObjs)
         {
             slotObj.GetComponent<Button>().enabled = false;
@@ -39,7 +34,8 @@ public class RefrigeratorInventory : InventoryManager<RefrigeratorInventory>
     public override void EnableAllSlot()
     {
         _refInvSlotObjs = GetCurrentNearRefInvSlots();
-        IsSlotEnabled = true;
+        IsSlotEnabled   = true;
+
         foreach (GameObject slotObj in _refInvSlotObjs)
         {
             slotObj.GetComponent<Button>().enabled = true;
@@ -52,6 +48,9 @@ public class RefrigeratorInventory : InventoryManager<RefrigeratorInventory>
     /// <returns>冷蔵庫のインベントリスロット配列</returns>
     private GameObject[] GetCurrentNearRefInvSlots()
     {
-        return RefrigeratorManager.Instance.currentNearObj.GetComponentsInChildren<RefrigeratorInventorySlot>().Select(t => t.gameObject).ToArray();
+        return
+            RefrigeratorManager.Instance.currentNearObj
+            .GetComponentsInChildren<RefrigeratorInventorySlot>()
+            .Select(t => t.gameObject).ToArray();
     }
 }

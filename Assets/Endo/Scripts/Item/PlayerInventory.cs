@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class PlayerInventory : InventoryManager<PlayerInventory>
+public class PlayerInventory : InventoryManager
 {
     // アイテム交換モードか否か
     [System.NonSerialized]
