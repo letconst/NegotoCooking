@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Potato
   m_EditorClassIdentifier: 
   _kindOfItem: 1
-  _itemIcon: {fileID: 0}
+  _itemIcon: {fileID: 21300000, guid: 82612da3f50a1f64caa34377e6359e45, type: 3}
   _itemName: "\u30B8\u30E3\u30AC\u30A4\u30E2"
-  _itemDesc: 
+  _isUsable: 0

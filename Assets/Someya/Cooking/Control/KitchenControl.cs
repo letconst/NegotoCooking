@@ -7,6 +7,6 @@ public class KitchenControl : MonoBehaviour
 {
     public void OnClickButton()
     {
-        SceneManager.UnloadSceneAsync("CookingScenes");
+        SceneChanger.Instance.SceneLoad(SceneChanger.SceneName.Cooking_test);
     }
 }

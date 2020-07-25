@@ -11,14 +11,32 @@ public class FireControl : MonoBehaviour
     private Button _mediumButton = null;
     [SerializeField]
     private Button _strengthButton = null;
+    //火加減ごとの値
+    [SerializeField]
+    private float yowabi;
+    [SerializeField]
+    private float tyubi;
+    [SerializeField]
+    private float tuyobi;
+    //ノイズメーターの値
+    [SerializeField]
+    private float noiseYowabi;
+    [SerializeField]
+    private float noiseTyubi;
+    [SerializeField]
+    private float noiseTuyobi;
 
     public Text text;
+    [HideInInspector]
     public Slider _slider;
+    //騒音メーター
+    [SerializeField]
+    private Slider nosieMator;
     private bool _isMove = false;
     private bool _isMoveup = false;
     private bool _isMovevereup = false;
     void Start()
-    {
+    {                
         // スライダーを取得する
         _slider = GameObject.Find("Slider").GetComponent<Slider>();
     }
@@ -27,23 +45,28 @@ public class FireControl : MonoBehaviour
 
     void Update()
     {
+        if (_slider.value >= 100)
+        {
+            //調理完了した食材をインベントリに戻す。(空いていたら)
+        }
        if(_isMove)
         {
-            _hp += 0.03f;
-            //HPゲージに値を設定
-            _slider.value = _hp;
+            //スライダーに値を設定
+            _slider.value += yowabi;
+            nosieMator.value -= noiseYowabi;
+            GameManager.Instance.NoiseMator += noiseYowabi;
         }
         if (_isMoveup)
-        {
-            _hp += 0.04f;
-            //HPゲージに値を設定
-            _slider.value = _hp;
+        {            
+            _slider.value += tyubi;
+            nosieMator.value -= noiseTyubi;
+            GameManager.Instance.NoiseMator += noiseTyubi;
         }
         if (_isMovevereup)
-        {
-            _hp += 0.05f;
-            //HPゲージに値を設定
-            _slider.value = _hp;
+        {            
+            _slider.value += tuyobi;
+            nosieMator.value -= noiseTuyobi;
+            GameManager.Instance.NoiseMator += noiseTuyobi;
         }
     }
 
@@ -51,17 +74,23 @@ public class FireControl : MonoBehaviour
     {
         text.text = "弱火";
         _isMove = true;
+        _isMoveup = false;
+        _isMovevereup = false;
     }
 
     public void OnMediumButton()
     {
         text.text = "中火";
         _isMoveup = true;
+        _isMove = false;
+        _isMovevereup = false;
     }
 
     public void OnStrengthButton()
     {
         text.text = "強火";
         _isMovevereup = true;
+        _isMove = false;
+        _isMoveup = false;
     }
 }
