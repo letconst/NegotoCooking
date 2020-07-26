@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class KitchenControl : MonoBehaviour
+public class CutScript : MonoBehaviour
 {
     public void OnClickButton()
     {
-        SceneManager.UnloadSceneAsync("CookingScenes");
+        SceneManager.UnloadSceneAsync("CutScenes");
+        Player.Instance._isTouch = false;
     }
 }

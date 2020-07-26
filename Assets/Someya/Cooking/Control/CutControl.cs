@@ -2,12 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RandomText : MonoBehaviour
+public class CutControl : MonoBehaviour
 {
-    //アイテム名ぼかす
-    //近づいたらランダムにアイテム名生成
-    
-
     // Start is called before the first frame update
     void Start()
     {
