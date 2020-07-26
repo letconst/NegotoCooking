@@ -46,17 +46,32 @@ public abstract class InventorySlot : MonoBehaviour, ISelectHandler
         // 初期化時じゃなければアイテム配列更新
         if (inv != null)
         {
-            inv.AllItems[GetSelfIndex(_selfInvSlotObjs, gameObject)] = selfItem;
+            int selfIndex           = GetSelfIndex(_selfInvSlotObjs, gameObject);
+            inv.AllItems[selfIndex] = selfItem;
+
+            // プレイヤーInvなら静的な方も更新
+            if (inv is PlayerInventory)
+            {
+                PlayerInventory.playerAllItems[selfIndex] = selfItem;
+            }
         }
     }
 
     /// <summary>
     /// スロットアイテムを削除する
     /// </summary>
-    public void RemoveItem()
+    public void RemoveItem(InventoryManager inv)
     {
-        selfItem = null;
-        itemName.text = "";
+        int selfIndex           = GetSelfIndex(_selfInvSlotObjs, gameObject);
+        selfItem                = null;
+        itemName.text           = "";
+        inv.AllItems[selfIndex] = selfItem;
+
+        // プレイヤーInvなら静的な方も更新
+        if (inv is PlayerInventory)
+        {
+            PlayerInventory.playerAllItems[selfIndex] = selfItem;
+        }
     }
 
     /// <summary>

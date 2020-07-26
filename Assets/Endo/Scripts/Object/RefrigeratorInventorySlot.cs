@@ -45,7 +45,7 @@ public class RefrigeratorInventorySlot : InventorySlot
                 _playerInvSlot.SetItem(selfItem, _playerInv);
 
                 // 冷蔵庫スロットは空にする
-                RemoveItem();
+                RemoveItem(_refInv);
                 return;
             }
         }
