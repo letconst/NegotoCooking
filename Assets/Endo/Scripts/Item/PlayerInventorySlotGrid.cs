@@ -37,6 +37,9 @@ public class PlayerInventorySlotGrid : InventorySlotGrid
         }
     }
 
+    /// <summary>
+    /// ゲーム終了時にプレイヤーインベントリの中身を削除する
+    /// </summary>
     private void OnApplicationQuit()
     {
         _selfInv.container.Container.Clear();
