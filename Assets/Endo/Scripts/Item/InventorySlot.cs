@@ -6,10 +6,9 @@ using UnityEngine.UI;
 
 public abstract class InventorySlot : MonoBehaviour, ISelectHandler
 {
-    // インベントリオブジェクト
     protected GameObject _selfInvObj;
-    // インベントリスロットオブジェクト
     protected GameObject[] _selfInvSlotObjs;
+
     // スロット内のアイテム
     public Item selfItem;
 
@@ -46,13 +45,16 @@ public abstract class InventorySlot : MonoBehaviour, ISelectHandler
         // 初期化時じゃなければアイテム配列更新
         if (inv != null)
         {
-            int selfIndex           = GetSelfIndex(_selfInvSlotObjs, gameObject);
+            int selfIndex = (inv is PlayerInventory)
+                ? inv.lastSelectedIndex
+                : GetSelfIndex(_selfInvSlotObjs, gameObject);
+
             inv.AllItems[selfIndex] = selfItem;
 
-            // プレイヤーInvなら静的な方も更新
+            // プレイヤーInvならコンテナ更新（暫定）
             if (inv is PlayerInventory)
             {
-                PlayerInventory.playerAllItems[selfIndex] = selfItem;
+                (inv as PlayerInventory).container.UpdateItem(selfIndex, selfItem, FoodState.Raw);
             }
         }
     }
@@ -67,10 +69,10 @@ public abstract class InventorySlot : MonoBehaviour, ISelectHandler
         itemName.text           = "";
         inv.AllItems[selfIndex] = selfItem;
 
-        // プレイヤーInvなら静的な方も更新
+        // プレイヤーInvならSOも更新
         if (inv is PlayerInventory)
         {
-            PlayerInventory.playerAllItems[selfIndex] = selfItem;
+            (inv as PlayerInventory).container.RemoveItem(selfIndex);
         }
     }
 
@@ -84,6 +86,9 @@ public abstract class InventorySlot : MonoBehaviour, ISelectHandler
     protected int GetSelfIndex(GameObject[] objToSearch, GameObject selfObj)
     {
         int result = -1;
+
+        // スロット配列が未生成なら弾く
+        if (objToSearch == null) return result;
 
         for (int i = 0; i < objToSearch.Length; i++)
         {

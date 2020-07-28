@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class PlayerInventorySlot : InventorySlot
 {
     private PlayerInventory _selfInv;
+
     void Start()
     {
         _selfInvObj = GameObject.FindGameObjectWithTag("PlayerInventory");
@@ -41,12 +42,13 @@ public class PlayerInventorySlot : InventorySlot
     /// </summary>
     public override void OnClick()
     {
-        // 選択モードなら
+        // 交換モードなら
         if (_selfInv.isSwapMode)
         {
             GameObject[]              _refInvSlotObjs;
             RefrigeratorInventory     _refInv = RefrigeratorManager.Instance.currentNearObj.GetComponentInChildren<RefrigeratorInventory>();
             RefrigeratorInventorySlot _refInvSlot;
+            int selfIndex = GetSelfIndex(_selfInvSlotObjs, gameObject);
 
             // 冷蔵庫Inv取得
             _refInvSlotObjs = GameObject.FindGameObjectsWithTag("RefrigeratorInventorySlot");
@@ -73,6 +75,7 @@ public class PlayerInventorySlot : InventorySlot
         }
         else
         {
+            // おそらく使わないため廃止予定
             Usable selectedItem = _selfInv.selectedItem as Usable;
 
             if (selectedItem != null && ((Item)selectedItem).IsUsable)

@@ -26,12 +26,19 @@ public class PlayerInventorySlotGrid : InventorySlotGrid
             if (i < _selfInv.AllItems.Length)
             {
                 // アイテムをスロットに配置
+                _selfInv.container.AddItem(_selfInv.AllItems[i], FoodState.Raw);
                 slot.SetItem(_selfInv.AllItems[i]);
             }
             else
             {
+                _selfInv.container.AddItem(null, FoodState.Raw);
                 slot.SetItem(null);
             }
         }
+    }
+
+    private void OnApplicationQuit()
+    {
+        _selfInv.container.Container.Clear();
     }
 }
