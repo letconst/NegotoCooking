@@ -6,12 +6,11 @@ using UnityEngine.UI;
 
 public abstract class InventorySlot : MonoBehaviour, ISelectHandler
 {
-    // インベントリオブジェクト
     protected GameObject _selfInvObj;
-    // インベントリスロットオブジェクト
     protected GameObject[] _selfInvSlotObjs;
+
     // スロット内のアイテム
-    public Item selfItem;    
+    public Item selfItem;
 
     // アイテム名
     [SerializeField]
@@ -46,7 +45,17 @@ public abstract class InventorySlot : MonoBehaviour, ISelectHandler
         // 初期化時じゃなければアイテム配列更新
         if (inv != null)
         {
-            inv.AllItems[GetSelfIndex(_selfInvSlotObjs, gameObject)] = selfItem;
+            int selfIndex = (inv is PlayerInventory)
+                ? inv.lastSelectedIndex
+                : GetSelfIndex(_selfInvSlotObjs, gameObject);
+
+            inv.AllItems[selfIndex] = selfItem;
+
+            // プレイヤーInvならコンテナ更新（暫定）
+            if (inv is PlayerInventory)
+            {
+                (inv as PlayerInventory).container.UpdateItem(selfIndex, selfItem, FoodState.Raw);
+            }
         }
     }
 
@@ -55,19 +64,16 @@ public abstract class InventorySlot : MonoBehaviour, ISelectHandler
     /// </summary>
     public void RemoveItem(InventoryManager inv)
     {
-        selfItem = null;
-        itemName.text = "";
-        //Debug.Log(GetSelfIndex(_selfInvSlotObjs, gameObject));
-        inv.AllItems[GetSelfIndex(_selfInvSlotObjs, gameObject)] = null;
-    }    
-    public Item GetInAllItem(InventoryManager inv)
-    {
-        return inv.AllItems[GetSelfIndex(_selfInvSlotObjs, gameObject)];        
-    }
+        int selfIndex           = GetSelfIndex(_selfInvSlotObjs, gameObject);
+        selfItem                = null;
+        itemName.text           = "";
+        inv.AllItems[selfIndex] = selfItem;
 
-    public void ChangeFoodName(InventoryManager inv, int index)
-    {
-        itemName.text = "焼いた" + inv.AllItems[index].ItemName;
+        // プレイヤーInvならSOも更新
+        if (inv is PlayerInventory)
+        {
+            (inv as PlayerInventory).container.RemoveItem(selfIndex);
+        }
     }
 
     /// <summary>
@@ -80,6 +86,9 @@ public abstract class InventorySlot : MonoBehaviour, ISelectHandler
     protected int GetSelfIndex(GameObject[] objToSearch, GameObject selfObj)
     {
         int result = -1;
+
+        // スロット配列が未生成なら弾く
+        if (objToSearch == null) return result;
 
         for (int i = 0; i < objToSearch.Length; i++)
         {

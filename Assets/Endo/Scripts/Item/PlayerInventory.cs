@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class PlayerInventory : InventoryManager
 {
+    // インベントリアセット
+    public PlayerInventoryContainer container;
     // アイテム交換モードか否か
     [System.NonSerialized]
     public bool isSwapMode = false;
@@ -15,12 +17,6 @@ public class PlayerInventory : InventoryManager
     void Start()
     {
         _playerInvSlotObjs = GameObject.FindGameObjectsWithTag("PlayerInventorySlot");
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     public override void SelectSlot(int index = -1)
