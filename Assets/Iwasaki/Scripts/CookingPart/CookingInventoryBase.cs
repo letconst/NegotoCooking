@@ -1,10 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
-public class BakeCooking : InventorySlot
+public class CookingInventoryBase : InventoryManager
 {
     // Start is called before the first frame update
     void Start()
@@ -18,10 +16,18 @@ public class BakeCooking : InventorySlot
         
     }
 
-    public override void OnClick()
+    public override void SelectSlot(int index)
     {
         
-            RemoveItem();
-                       
+    }
+
+    public override void DisableAllSlot()
+    {
+        
+    }
+
+    public override void EnableAllSlot()
+    {
+        
     }
 }

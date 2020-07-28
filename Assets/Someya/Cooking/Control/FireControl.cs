@@ -35,6 +35,13 @@ public class FireControl : MonoBehaviour
     private bool _isMove = false;
     private bool _isMoveup = false;
     private bool _isMovevereup = false;
+
+    //焼き処理が終わったか
+    [HideInInspector]
+    static public bool bakeBool;
+    //今焼き処理中か
+    [HideInInspector]
+    static public bool clickBool = true;
     void Start()
     {                
         // スライダーを取得する
@@ -45,11 +52,14 @@ public class FireControl : MonoBehaviour
 
     void Update()
     {
-        if (_slider.value >= 100)
-        {
-            //調理完了した食材をインベントリに戻す。(空いていたら)
+        if(_slider.value >= 100)
+        {           
+            _slider.value = 0;
+            _isMove = false;
+            _isMoveup = false;
+            _isMovevereup = false;
         }
-       if(_isMove)
+        if(_isMove)
         {
             //スライダーに値を設定
             _slider.value += yowabi;

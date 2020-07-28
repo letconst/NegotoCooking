@@ -3,12 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class ToCooking : InventorySlotGrid
+public class SceneChange_test : MonoBehaviour
 {
-    void Awake()
-    {
-        DontDestroyOnLoad(gameObject);
-    }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.E))

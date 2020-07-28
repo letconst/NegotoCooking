@@ -11,6 +11,13 @@ TagManager:
   - RefrigeratorInventorySlot
   - Refrigerator_1
   - Refrigerator_2
+  - CookingInventory
+  - CookingInventorySlot
+  - FoodSprite
+  - BakeMator
+  - FoodParent
+  - pork
+  - shrimp
   layers:
   - Default
   - TransparentFX

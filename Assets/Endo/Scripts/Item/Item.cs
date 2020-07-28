@@ -24,12 +24,17 @@ public class Item : ScriptableObject
     [SerializeField]
     private string _itemName;
 
+    // 食材3Dオブジェクト
+    [SerializeField]
+    private GameObject _foodObj;
+
     // 使用可能か否か
     [SerializeField]
     private bool _isUsable = false;
 
     public KindOfItem KindOfItem1 { get => _kindOfItem; }
     public Sprite     ItemIcon    { get => _itemIcon; }
+    public GameObject FoodObj     { get => _foodObj; }
     public string     ItemName    { get => _itemName; }
     public bool       IsUsable    { get => _isUsable; }
 }

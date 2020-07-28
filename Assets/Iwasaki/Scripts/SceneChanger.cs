@@ -5,15 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class SceneChanger : SingletonMonoBehaviour<SceneChanger>
 {
-    public static Item[] playerInv;
-    private GameObject _playerInv;
     [SerializeField]
     private float waittime = 1;
-    private string[] refTagName =
-    {
-        "Refrigerator_1",
-        "Refrigerator_2",
-    };
 
     public enum SceneName
     {
@@ -35,13 +28,7 @@ public class SceneChanger : SingletonMonoBehaviour<SceneChanger>
     }
     private void Start()
     {
-        _playerInv = GameObject.FindGameObjectWithTag("PlayerInventory");        
-        
-        //for(int i = 0; i < refTagName.Length; i++)
-        //{
-        //    GameObject _ref = GameObject.FindGameObjectWithTag(refTagName[i]);
-        //    _refInv = _ref.
-        //}        
+            
     }
     //連打対策
     private bool doOnceSceneChange = true;
@@ -61,10 +48,6 @@ public class SceneChanger : SingletonMonoBehaviour<SceneChanger>
         doOnceSceneChange = false;
         var async = SceneManager.LoadSceneAsync(sceneName.ToString());
         async.allowSceneActivation = false;
-        //for (int i = 0; i < _playerInv.GetComponent<PlayerInventory>().AllItems.Length - 1; i++)
-        //{
-        //    playerInv[i] = _playerInv.GetComponent<PlayerInventory>().AllItems[i];
-        //}
         yield return new WaitForSeconds(waittime);
         doOnceSceneChange = true;
         async.allowSceneActivation = true;

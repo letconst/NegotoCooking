@@ -11,7 +11,7 @@ public abstract class InventorySlot : MonoBehaviour, ISelectHandler
     // インベントリスロットオブジェクト
     protected GameObject[] _selfInvSlotObjs;
     // スロット内のアイテム
-    public Item selfItem;
+    public Item selfItem;    
 
     // アイテム名
     [SerializeField]
@@ -53,10 +53,21 @@ public abstract class InventorySlot : MonoBehaviour, ISelectHandler
     /// <summary>
     /// スロットアイテムを削除する
     /// </summary>
-    public void RemoveItem()
+    public void RemoveItem(InventoryManager inv)
     {
         selfItem = null;
         itemName.text = "";
+        //Debug.Log(GetSelfIndex(_selfInvSlotObjs, gameObject));
+        inv.AllItems[GetSelfIndex(_selfInvSlotObjs, gameObject)] = null;
+    }    
+    public Item GetInAllItem(InventoryManager inv)
+    {
+        return inv.AllItems[GetSelfIndex(_selfInvSlotObjs, gameObject)];        
+    }
+
+    public void ChangeFoodName(InventoryManager inv, int index)
+    {
+        itemName.text = "焼いた" + inv.AllItems[index].ItemName;
     }
 
     /// <summary>
