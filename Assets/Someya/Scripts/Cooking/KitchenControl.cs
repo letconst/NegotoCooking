@@ -7,6 +7,6 @@ public class KitchenControl : MonoBehaviour
 {
     public void OnClickButton()
     {
-        SceneChanger.Instance.SceneLoad(SceneChanger.SceneName.Cooking_test);
+        SceneManager.LoadScene("Player");        
     }
 }

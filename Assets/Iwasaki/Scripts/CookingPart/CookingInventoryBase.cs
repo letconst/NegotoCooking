@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CookingInventoryBase : InventoryManager
 {
+    // インベントリアセット
+    public PlayerInventoryContainer container;
     // Start is called before the first frame update
     void Start()
     {

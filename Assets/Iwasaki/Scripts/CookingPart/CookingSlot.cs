@@ -26,13 +26,21 @@ public class CookingSlot : InventorySlotGrid
             // 使用する際はSlotWrapperのInvSlotGridコンポのAllItemsにアイテムを指定してあげる
             if (i < _selfInv.AllItems.Length)
             {
+                //_selfInv.container.AddItem(_selfInv.AllItems[i], FoodState.Raw);
                 // アイテムをスロットに配置
-                slot.SetItem(_selfInv.AllItems[i]);
+                slot.SetItem(_selfInv.container.Container[i].Item, _selfInv);
+                _selfInv.AllItems[i] = _selfInv.container.Container[i].Item;
             }
             else
             {
+                //_selfInv.container.AddItem(null, FoodState.Raw);
                 slot.SetItem(null);
+                _selfInv.AllItems[i] = null;
             }
         }
+    }
+    private void OnApplicationQuit()
+    {
+        _selfInv.container.Container.Clear();
     }
 }

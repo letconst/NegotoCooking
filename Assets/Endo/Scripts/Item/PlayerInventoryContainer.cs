@@ -24,6 +24,8 @@ public class PlayerInventoryContainer : ScriptableObject
     /// <param name="state">アイテムの状態</param>
     public void AddItem(Item item, FoodState state)
     {
+        if (Container.Count >= 3) return;
+
         Container.Add(new PlayerInventorySlotObject(item, state));
     }
 
