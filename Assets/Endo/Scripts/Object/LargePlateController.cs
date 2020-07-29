@@ -9,6 +9,7 @@ public class LargePlateController : MonoBehaviour
     // 近くにいるか否か
     private bool _isNear = false;
 
+    private GameObject      _soup;
     private GameObject      _playerInvObj;
     private GameObject[]    _playerInvSlotObjs;
     private PlayerInventory _playerInv;
@@ -16,8 +17,11 @@ public class LargePlateController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _soup         = transform.Find("Soup").gameObject;
         _playerInvObj = GameObject.FindGameObjectWithTag("PlayerInventory");
         _playerInv    = _playerInvObj.GetComponent<PlayerInventory>();
+
+        _soup.SetActive(false);
     }
 
     // Update is called once per frame
@@ -41,6 +45,9 @@ public class LargePlateController : MonoBehaviour
             _playerInvSlotObjs[_playerInv.lastSelectedIndex]
                 .GetComponent<PlayerInventorySlot>().RemoveItem(_playerInv);
         }
+
+        // コンテナにアイテムが1つでも入ったらスープを表示
+        if (container.Container.Count > 0) _soup.SetActive(true);
     }
 
     private void OnTriggerEnter() => _isNear = true;
