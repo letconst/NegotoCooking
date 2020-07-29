@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 
 public class FireControl : MonoBehaviour
 {
@@ -53,6 +55,11 @@ public class FireControl : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown("joystick button 1") && _slider.value == 0)
+        {
+            SceneManager.LoadScene("GameScenes");
+        }
+
         float dph = Input.GetAxis("D_Pad_H");
 
         if (dph < 0)
