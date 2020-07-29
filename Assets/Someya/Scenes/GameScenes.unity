@@ -1965,7 +1965,6 @@ MonoBehaviour:
   _yOffset: 100
   _popupPrefab: {fileID: 7900804596812582887, guid: 734123dc5ae305a4c9073740783f6cd1,
     type: 3}
-  _targetObj: {fileID: 0}
 --- !u!1 &417535057
 GameObject:
   m_ObjectHideFlags: 0
@@ -2082,7 +2081,6 @@ MonoBehaviour:
   _yOffset: 100
   _popupPrefab: {fileID: 7900804596812582887, guid: 734123dc5ae305a4c9073740783f6cd1,
     type: 3}
-  _targetObj: {fileID: 0}
 --- !u!65 &459157481
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2775,12 +2773,12 @@ PrefabInstance:
     - target: {fileID: 979996481103748, guid: de9ca386aaedf4b49b577b7d4de1c0fc, type: 3}
       propertyPath: _allItems.Array.data[1]
       value: 
-      objectReference: {fileID: 11400000, guid: 58f8d27339ce9b64dba3a3447ad7c98c,
+      objectReference: {fileID: 11400000, guid: bbe1f14281c868b4b8c383905e59e2fc,
         type: 2}
     - target: {fileID: 979996481103748, guid: de9ca386aaedf4b49b577b7d4de1c0fc, type: 3}
       propertyPath: _allItems.Array.data[2]
       value: 
-      objectReference: {fileID: 11400000, guid: 964110bd62ab36c4b98f1d1898b4c742,
+      objectReference: {fileID: 11400000, guid: 753232919155f2943b154226573fa8ad,
         type: 2}
     - target: {fileID: 979996481103748, guid: de9ca386aaedf4b49b577b7d4de1c0fc, type: 3}
       propertyPath: container
@@ -4208,7 +4206,6 @@ MonoBehaviour:
   _yOffset: 100
   _popupPrefab: {fileID: 7900804596812582887, guid: 734123dc5ae305a4c9073740783f6cd1,
     type: 3}
-  _targetObj: {fileID: 911471542}
 --- !u!114 &911471548
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8721,7 +8718,6 @@ MonoBehaviour:
   _yOffset: 100
   _popupPrefab: {fileID: 7900804596812582887, guid: 734123dc5ae305a4c9073740783f6cd1,
     type: 3}
-  _targetObj: {fileID: 0}
 --- !u!65 &1898772246
 BoxCollider:
   m_ObjectHideFlags: 0
