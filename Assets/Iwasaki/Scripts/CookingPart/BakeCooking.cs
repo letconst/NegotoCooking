@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class BakeCooking : InventorySlot
 {
     private CookingInventoryBase CIB;
-    private GameObject foodIcon;  
+    private GameObject foodIcon;
 
     private Item bakeItem;
     private Slider _slider;
@@ -25,6 +25,9 @@ public class BakeCooking : InventorySlot
         _selfInvObj = GameObject.FindGameObjectWithTag("CookingInventory");
         CIB = _selfInvObj.GetComponent<CookingInventoryBase>();
         _selfInvSlotObjs = GameObject.FindGameObjectsWithTag("CookingInventorySlot");
+
+        // インベントリスロットを選択
+        EventSystem.current.SetSelectedGameObject(_selfInvSlotObjs[0]);
     }
 
     // Update is called once per frame
@@ -40,16 +43,16 @@ public class BakeCooking : InventorySlot
         //調理完了した食材をインベントリに戻す。(空いていたら)
         for (int i = 0; i < CIB.SlotSize; i++)
         {
-            BakeCooking _playerInvSlot;            
+            BakeCooking _playerInvSlot;
             _playerInvSlot = _selfInvSlotObjs[i].GetComponent<BakeCooking>();
 
             if (FireControl.bakeBool && _playerInvSlot.selfItem == null)
-            {                
+            {
                 //出ていた野菜を消す。
                 Destroy(foodParent.transform.GetChild(0).gameObject);
                 //保持していたscriptableObjectを入れる。
-                CIB.AllItems[i] = bakeItem;                
-                ChangeFoodName(CIB, i);                
+                CIB.AllItems[i] = bakeItem;
+                ChangeFoodName(CIB, i);
                 FireControl.clickBool = true;
                 FireControl.bakeBool = false;
                 if (CIB.AllItems[i] != null)
@@ -66,8 +69,8 @@ public class BakeCooking : InventorySlot
         if (FireControl.clickBool == false || GetInAllItem(CIB) == null || CIB.container.Container[GetSelfIndex(_selfInvSlotObjs, gameObject)].State == FoodState.Cooked) return;
 
         FireControl.clickBool = false;
-        foodChild = Instantiate(GetInAllItem(CIB).FoodObj, new Vector3(GetInAllItem(CIB).FoodObj.transform.position.x, 
-                                                           GetInAllItem(CIB).FoodObj.transform.position.y, 
+        foodChild = Instantiate(GetInAllItem(CIB).FoodObj, new Vector3(GetInAllItem(CIB).FoodObj.transform.position.x,
+                                                           GetInAllItem(CIB).FoodObj.transform.position.y,
                                                            GetInAllItem(CIB).FoodObj.transform.position.z), Quaternion.identity);
         foodChild.transform.parent = foodParent.transform;
         bakeItem = GetInAllItem(CIB);
