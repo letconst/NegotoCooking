@@ -8,7 +8,7 @@ public class PlayerInventorySlotGrid : InventorySlotGrid
 
     // Start is called before the first frame update
     void Start()
-    {        
+    {
         _selfInvObj = GameObject.FindGameObjectWithTag("PlayerInventory");
         _selfInv    = _selfInvObj.GetComponent<PlayerInventory>();
 
@@ -38,7 +38,7 @@ public class PlayerInventorySlotGrid : InventorySlotGrid
             }
             else
             {
-                slot.SetItem(_selfInv.container.Container[i].Item, _selfInv);
+                slot.SetItem(_selfInv.container.Container[i].Item);
                 _selfInv.AllItems[i] = _selfInv.container.Container[i].Item;
                 switch (_selfInv.container.Container[i].State)
                 {
@@ -50,7 +50,7 @@ public class PlayerInventorySlotGrid : InventorySlotGrid
                         slot.itemName.text = "焦げた" + _selfInv.container.Container[i].Item.ItemName;
                         break;
                 }
-            }            
+            }
         }
     }
 
