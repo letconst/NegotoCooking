@@ -12,11 +12,10 @@ public class MasterController : SingletonMonoBehaviour<MasterController>
     // 近くにいるか否か
     private bool _isNear = false;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    // 食材がすべて調理できているか否か
+    private bool _isComplete = true;
+
+    public InventoryContainerBase largePlateContainer;
 
     // Update is called once per frame
     void Update()
@@ -24,15 +23,25 @@ public class MasterController : SingletonMonoBehaviour<MasterController>
         // X押下および接近時に調理完了を行う
         if (Input.GetKeyDown("joystick button 2") && _isNear)
         {
-            // 調理できていればゲームクリア
-            if (_isCooked)
+            // 大皿のすべての食材が調理できているかチェック
+            for (int i = 0; i < largePlateContainer.Container.Count; i++)
+            {
+                if (largePlateContainer.Container[i].State != FoodState.Cooked)
+                {
+                    _isComplete = false;
+                }
+            }
+
+            // 大皿に食材があり、すべて調理済みならゲームクリア（仮）
+            if (_isComplete && largePlateContainer.Container.Count != 0)
             {
                 // ゲームクリアシーン読み込み
+                SceneChanger.Instance.SceneLoad(SceneChanger.SceneName.GameClear);
             }
             // 調理できていなければゲームオーバー
             else
             {
-                SceneManager.LoadScene("GameOverScenes");
+                SceneChanger.Instance.SceneLoad(SceneChanger.SceneName.GameOverScenes);
             }
         }
     }

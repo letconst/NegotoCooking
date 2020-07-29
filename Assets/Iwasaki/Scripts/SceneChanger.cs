@@ -14,7 +14,7 @@ public class SceneChanger : SingletonMonoBehaviour<SceneChanger>
         CookingScenes,
         GameOverScenes,
         GameScenes,
-
+        GameClear
     }
     public void Awake()
     {
@@ -27,7 +27,7 @@ public class SceneChanger : SingletonMonoBehaviour<SceneChanger>
     }
     private void Start()
     {
-            
+
     }
     //連打対策
     private bool doOnceSceneChange = true;
