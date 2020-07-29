@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 
 public class FireControl : MonoBehaviour
 {
@@ -53,6 +55,11 @@ public class FireControl : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown("joystick button 1") && _slider.value == 0)
+        {
+            SceneManager.LoadScene("GameScenes");
+        }
+
         float dph = Input.GetAxis("D_Pad_H");
 
         if (dph < 0)
@@ -93,7 +100,7 @@ public class FireControl : MonoBehaviour
 
         if (clickBool == true) return;
 
-        if(fireChange == 0)
+        if(fireChange <= 0)
         {
             leftAllow.gameObject.SetActive(false);
             FireChar.GetComponent<Image>().color = Color.cyan;
@@ -113,7 +120,7 @@ public class FireControl : MonoBehaviour
             noiseMator.GetComponent<Image>().fillAmount -= noiseTyubi * 0.01f;
             GameManager.Instance.NoiseMator += noiseTyubi * 0.01f;
         }
-        else if (fireChange == 2)
+        else if (fireChange >= 2)
         {
             RightAllow.gameObject.SetActive(false);
             FireChar.GetComponent<Image>().color = Color.red;
