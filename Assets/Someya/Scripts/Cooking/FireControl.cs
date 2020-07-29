@@ -33,10 +33,7 @@ public class FireControl : MonoBehaviour
     [SerializeField]
     private Image noiseMator;
 
-    private bool _isMove = false;
-    private bool _isMoveup = true;
-    private bool _isMovevereup = false;
-
+    private bool doOnce = true;
     private int fireChange = 1;
 
     //焼き処理が終わったか
@@ -63,6 +60,12 @@ public class FireControl : MonoBehaviour
                 return;
             }
             fireChange--;
+
+            if (doOnce)
+            {
+                doOnce = false;
+                StartCoroutine(WaitForSeconds(1.0f));
+            }
         }
         if(dph >= 0)
         {
@@ -72,6 +75,12 @@ public class FireControl : MonoBehaviour
                 return;
             }
             fireChange++;
+
+            if (doOnce)
+            {
+                doOnce = false;
+                StartCoroutine(WaitForSeconds(1.0f));
+            }
         }
 
         if (_slider.value >= 100)
@@ -86,46 +95,29 @@ public class FireControl : MonoBehaviour
             text.text = "弱火";
             //スライダーに値を設定
             _slider.value += yowabi;
-            noiseMator.GetComponent<Image>().fillAmount -= noiseYowabi;
-            GameManager.Instance.NoiseMator += noiseYowabi;
+            noiseMator.GetComponent<Image>().fillAmount -= noiseYowabi * 0.01f;
+            GameManager.Instance.NoiseMator += noiseYowabi * 0.01f;
         }
         if (fireChange == 1)
         {
             text.text = "中火";
             _slider.value += tyubi;
-            noiseMator.GetComponent<Image>().fillAmount -= noiseTyubi;
-            GameManager.Instance.NoiseMator += noiseTyubi;
+            noiseMator.GetComponent<Image>().fillAmount -= noiseTyubi * 0.01f;
+            GameManager.Instance.NoiseMator += noiseTyubi * 0.01f;
         }
         if (fireChange == 2)
         {
             text.text = "強火";
             _slider.value += tuyobi;
-            noiseMator.GetComponent<Image>().fillAmount -= noiseTuyobi;
-            GameManager.Instance.NoiseMator += noiseTuyobi;
+            noiseMator.GetComponent<Image>().fillAmount -= noiseTuyobi * 0.01f;
+            GameManager.Instance.NoiseMator += noiseTuyobi * 0.01f;
         }
-    }
+    }    
 
-    public void OnWeakButton()
+    IEnumerator WaitForSeconds(float waitTime)
     {
-        text.text = "弱火";
-        _isMove = true;
-        _isMoveup = false;
-        _isMovevereup = false;
-    }
-
-    public void OnMediumButton()
-    {
-        text.text = "中火";
-        _isMoveup = true;
-        _isMove = false;
-        _isMovevereup = false;
-    }
-
-    public void OnStrengthButton()
-    {
-        text.text = "強火";
-        _isMovevereup = true;
-        _isMove = false;
-        _isMoveup = false;
+        yield return new WaitForSeconds(waitTime);
+        doOnce = true;
+        yield break;
     }
 }

@@ -1616,9 +1616,9 @@ MonoBehaviour:
   yowabi: 0.03
   tyubi: 0.05
   tuyobi: 0.07
-  noiseYowabi: 0.000175
-  noiseTyubi: 0.00035
-  noiseTuyobi: 0.0007
+  noiseYowabi: 0.0014
+  noiseTyubi: 0.0028
+  noiseTuyobi: 0.0056
   text: {fileID: 857105282}
   _slider: {fileID: 0}
   noiseMator: {fileID: 2004258867}
