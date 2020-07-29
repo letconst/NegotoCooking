@@ -5,12 +5,6 @@ using UnityEngine.UI;
 
 public class FireControl : MonoBehaviour
 {
-    [SerializeField]
-    private Button _weakButton = null;
-    [SerializeField]
-    private Button _mediumButton = null;
-    [SerializeField]
-    private Button _strengthButton = null;
     //火加減ごとの値
     [SerializeField]
     private float yowabi;
@@ -25,13 +19,22 @@ public class FireControl : MonoBehaviour
     private float noiseTyubi;
     [SerializeField]
     private float noiseTuyobi;
-
-    public Text text;
+    //火の強さを出すテキスト
+    [SerializeField]
+    private Text text;
+    //焼き終わるまでのメーター
     [HideInInspector]
     public Slider _slider;
-    //騒音メーター
+    //騒音のメーター
     [SerializeField]
     private Image noiseMator;
+
+    [SerializeField]
+    private GameObject FireChar;
+    [SerializeField]
+    private GameObject leftAllow;
+    [SerializeField]
+    private GameObject RightAllow;
 
     private bool doOnce = true;
     private int fireChange = 1;
@@ -52,7 +55,7 @@ public class FireControl : MonoBehaviour
     {
         float dph = Input.GetAxis("D_Pad_H");
 
-        if (dph <= 0)
+        if (dph < 0)
         {
             if(fireChange <= 0)
             {
@@ -67,7 +70,7 @@ public class FireControl : MonoBehaviour
                 fireChange--;
             }
         }
-        if(dph >= 0)
+        if(dph > 0)
         {
             if (fireChange >= 2)
             {
@@ -92,22 +95,29 @@ public class FireControl : MonoBehaviour
 
         if(fireChange == 0)
         {
-            text.text = "弱火";
+            leftAllow.gameObject.SetActive(false);
+            FireChar.GetComponent<Image>().color = Color.cyan; 
+            text.text = "弱";
             //スライダーに値を設定
             _slider.value += yowabi;
             noiseMator.GetComponent<Image>().fillAmount -= noiseYowabi * 0.01f;
             GameManager.Instance.NoiseMator += noiseYowabi * 0.01f;
         }
-        if (fireChange == 1)
+        else if (fireChange == 1)
         {
-            text.text = "中火";
+            leftAllow.gameObject.SetActive(true);
+            RightAllow.gameObject.SetActive(true);
+            FireChar.GetComponent<Image>().color = Color.yellow;
+            text.text = "中";
             _slider.value += tyubi;
             noiseMator.GetComponent<Image>().fillAmount -= noiseTyubi * 0.01f;
             GameManager.Instance.NoiseMator += noiseTyubi * 0.01f;
         }
-        if (fireChange == 2)
+        else if (fireChange == 2)
         {
-            text.text = "強火";
+            RightAllow.gameObject.SetActive(false);
+            FireChar.GetComponent<Image>().color = Color.red;
+            text.text = "強";
             _slider.value += tuyobi;
             noiseMator.GetComponent<Image>().fillAmount -= noiseTuyobi * 0.01f;
             GameManager.Instance.NoiseMator += noiseTuyobi * 0.01f;
