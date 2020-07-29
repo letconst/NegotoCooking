@@ -59,12 +59,12 @@ public class FireControl : MonoBehaviour
                 fireChange = 0;
                 return;
             }
-            fireChange--;
 
             if (doOnce)
             {
                 doOnce = false;
                 StartCoroutine(WaitForSeconds(1.0f));
+                fireChange--;
             }
         }
         if(dph >= 0)
@@ -74,12 +74,12 @@ public class FireControl : MonoBehaviour
                 fireChange = 2;
                 return;
             }
-            fireChange++;
 
             if (doOnce)
             {
                 doOnce = false;
                 StartCoroutine(WaitForSeconds(1.0f));
+                fireChange++;
             }
         }
 
