@@ -46,9 +46,9 @@ public class FireControl : MonoBehaviour
     [HideInInspector]
     static public bool clickBool = true;
     void Start()
-    {                
+    {
         // スライダーを取得する
-        _slider = GameObject.Find("Slider").GetComponent<Slider>();             
+        _slider = GameObject.Find("Slider").GetComponent<Slider>();
     }
 
     void Update()
@@ -91,12 +91,12 @@ public class FireControl : MonoBehaviour
             _slider.value = 0;
         }
 
-        if (clickBool == true) return;  
+        if (clickBool == true) return;
 
         if(fireChange == 0)
         {
             leftAllow.gameObject.SetActive(false);
-            FireChar.GetComponent<Image>().color = Color.cyan; 
+            FireChar.GetComponent<Image>().color = Color.cyan;
             text.text = "弱";
             //スライダーに値を設定
             _slider.value += yowabi;
@@ -122,7 +122,7 @@ public class FireControl : MonoBehaviour
             noiseMator.GetComponent<Image>().fillAmount -= noiseTuyobi * 0.01f;
             GameManager.Instance.NoiseMator += noiseTuyobi * 0.01f;
         }
-    }    
+    }
 
     IEnumerator WaitForSeconds(float waitTime)
     {

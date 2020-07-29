@@ -8,6 +8,9 @@ public class TimeCounter : MonoBehaviour
     //カウントアップ
     public static float countup = 300.0f;
 
+    [System.NonSerialized]
+    public static float currentTime = countup;
+
     //タイムリミット
     public float timeLimit = 0.0f;
 
@@ -18,13 +21,13 @@ public class TimeCounter : MonoBehaviour
     void Update()
     {
         //時間をカウントする
-        countup -= Time.deltaTime;
+        currentTime -= Time.deltaTime;
 
         //時間を表示する
-        timeText.text = countup.ToString("0");
+        timeText.text = currentTime.ToString("0");
 
         // タイムアップでゲームオーバー
-        if (countup <= timeLimit)
+        if (currentTime <= timeLimit)
         {
             SceneChanger.Instance.SceneLoad(SceneChanger.SceneName.GameOverScenes);
         }
