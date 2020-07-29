@@ -5,8 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class KitchenControl : MonoBehaviour
 {
-    public void OnClickButton()
+    void Update()
     {
-        SceneManager.LoadScene("GameScenes");        
-    }
+        if(Input.GetKeyDown("joystick button 1"))
+        {
+            SceneManager.LoadScene("GameScenes");
+        }
+    }       
 }

@@ -31,10 +31,13 @@ public class FireControl : MonoBehaviour
     public Slider _slider;
     //騒音メーター
     [SerializeField]
-    private Slider nosieMator;
+    private Image noiseMator;
+
     private bool _isMove = false;
-    private bool _isMoveup = false;
+    private bool _isMoveup = true;
     private bool _isMovevereup = false;
+
+    private int fireChange = 1;
 
     //焼き処理が終わったか
     [HideInInspector]
@@ -45,37 +48,59 @@ public class FireControl : MonoBehaviour
     void Start()
     {                
         // スライダーを取得する
-        _slider = GameObject.Find("Slider").GetComponent<Slider>();
+        _slider = GameObject.Find("Slider").GetComponent<Slider>();             
     }
-
-    float _hp = 0;
 
     void Update()
     {
-        if(_slider.value >= 100)
-        {           
-            _slider.value = 0;
-            _isMove = false;
-            _isMoveup = false;
-            _isMovevereup = false;
-        }
-        if(_isMove)
+        float dph = Input.GetAxis("D_Pad_H");
+
+        if (dph <= 0)
         {
+            if(fireChange <= 0)
+            {
+                fireChange = 0;
+                return;
+            }
+            fireChange--;
+        }
+        if(dph >= 0)
+        {
+            if (fireChange >= 2)
+            {
+                fireChange = 2;
+                return;
+            }
+            fireChange++;
+        }
+
+        if (_slider.value >= 100)
+        {
+            _slider.value = 0;
+        }
+
+        if (clickBool == true) return;  
+
+        if(fireChange == 0)
+        {
+            text.text = "弱火";
             //スライダーに値を設定
             _slider.value += yowabi;
-            nosieMator.value -= noiseYowabi;
+            noiseMator.GetComponent<Image>().fillAmount -= noiseYowabi;
             GameManager.Instance.NoiseMator += noiseYowabi;
         }
-        if (_isMoveup)
-        {            
+        if (fireChange == 1)
+        {
+            text.text = "中火";
             _slider.value += tyubi;
-            nosieMator.value -= noiseTyubi;
+            noiseMator.GetComponent<Image>().fillAmount -= noiseTyubi;
             GameManager.Instance.NoiseMator += noiseTyubi;
         }
-        if (_isMovevereup)
-        {            
+        if (fireChange == 2)
+        {
+            text.text = "強火";
             _slider.value += tuyobi;
-            nosieMator.value -= noiseTuyobi;
+            noiseMator.GetComponent<Image>().fillAmount -= noiseTuyobi;
             GameManager.Instance.NoiseMator += noiseTuyobi;
         }
     }

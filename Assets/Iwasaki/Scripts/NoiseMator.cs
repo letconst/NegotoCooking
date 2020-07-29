@@ -5,15 +5,16 @@ using UnityEngine.UI;
 
 public class NoiseMator : MonoBehaviour
 {
-    // Start is called before the first frame update
+    private float noiseValue;
     void Start()
     {
-        this.gameObject.GetComponent<Slider>().value = 100 - GameManager.Instance.NoiseMator;
+        noiseValue = this.gameObject.GetComponent<Image>().fillAmount;
+        noiseValue = 1 - GameManager.Instance.NoiseMator;
     }
 
     private void Update()
     {
-        if(this.gameObject.GetComponent<Slider>().value <= 0 || GameManager.Instance.NoiseMator >= 100)
+        if(noiseValue <= 0 || GameManager.Instance.NoiseMator >= 1)
         {
             SceneChanger.Instance.SceneLoad(SceneChanger.SceneName.GameOverScenes);
         }

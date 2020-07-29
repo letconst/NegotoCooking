@@ -9,7 +9,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     {
         set
         {
-            noiseValue = Mathf.Clamp(value, 0, 100);
+            noiseValue = Mathf.Clamp(value, 0, 1);
         }
         get
         {
