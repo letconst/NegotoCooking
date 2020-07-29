@@ -41,32 +41,31 @@ public class BakeCooking : InventorySlot
         }
 
         //調理完了した食材をインベントリに戻す。(空いていたら)
-        for (int i = 0; i < CIB.SlotSize; i++)
-        {
-            BakeCooking _playerInvSlot;
-            _playerInvSlot = _selfInvSlotObjs[i].GetComponent<BakeCooking>();
+        BakeCooking _playerInvSlot;
+        _playerInvSlot = _selfInvSlotObjs[CIB.lastPuttedSlotIndex].GetComponent<BakeCooking>();
 
-            if (FireControl.bakeBool && _playerInvSlot.selfItem == null)
-            {
-                //出ていた野菜を消す。
-                Destroy(foodParent.transform.GetChild(0).gameObject);
-                //保持していたscriptableObjectを入れる。
-                CIB.AllItems[i] = bakeItem;
-                ChangeFoodName(CIB, i);
-                FireControl.clickBool = true;
-                FireControl.bakeBool = false;
-                if (CIB.AllItems[i] != null)
-                {
-                    CIB.container.UpdateItem(i, CIB.AllItems[i], FoodState.Cooked);
-                }
-                break;
-            }
+        if (FireControl.bakeBool && _playerInvSlot.selfItem == null)
+        {
+            //出ていた野菜を消す。
+            Destroy(foodParent.transform.GetChild(0).gameObject);
+            //保持していたscriptableObjectを入れる。
+            CIB.AllItems[CIB.lastPuttedSlotIndex] = bakeItem;
+            ChangeFoodName(CIB, CIB.lastPuttedSlotIndex);
+            FireControl.clickBool = true;
+            FireControl.bakeBool = false;
+
+            if (CIB.AllItems[CIB.lastPuttedSlotIndex] == null) return;
+
+            CIB.container.UpdateItem(CIB.lastPuttedSlotIndex, CIB.AllItems[CIB.lastPuttedSlotIndex], FoodState.Cooked);
         }
     }
 
     public override void OnClick()
     {
-        if (FireControl.clickBool == false || GetInAllItem(CIB) == null || CIB.container.Container[GetSelfIndex(_selfInvSlotObjs, gameObject)].State == FoodState.Cooked) return;
+        int selfIndex = GetSelfIndex(_selfInvSlotObjs, gameObject);
+        if (FireControl.clickBool == false ||
+            GetInAllItem(CIB)     == null  ||
+            CIB.container.Container[selfIndex].State == FoodState.Cooked) return;
 
         FireControl.clickBool = false;
         foodChild = Instantiate(GetInAllItem(CIB).FoodObj, new Vector3(GetInAllItem(CIB).FoodObj.transform.position.x,
@@ -74,7 +73,12 @@ public class BakeCooking : InventorySlot
                                                            GetInAllItem(CIB).FoodObj.transform.position.z), Quaternion.identity);
         foodChild.transform.parent = foodParent.transform;
         bakeItem = GetInAllItem(CIB);
-        //Debug.Log(bakeItem);
+
+        // プレイヤーインベントリコンテナからアイテムを削除
+        CIB.container.RemoveItem(selfIndex);
         RemoveItem(CIB);
+
+        // 投入元のスロットインデックスを記憶
+        CIB.lastPuttedSlotIndex = selfIndex;
     }
 }
