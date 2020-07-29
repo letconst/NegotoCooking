@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class TimeCounter : MonoBehaviour
 {
     //カウントアップ
-    public float countup = 300.0f;
+    public static float countup = 300.0f;
 
     //タイムリミット
     public float timeLimit = 0.0f;
