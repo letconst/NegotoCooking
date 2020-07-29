@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class TimeCounter : MonoBehaviour
 {
     //カウントアップ
-    private float countup = 300.0f;
+    public float countup = 300.0f;
 
     //タイムリミット
     public float timeLimit = 0.0f;
@@ -21,11 +21,12 @@ public class TimeCounter : MonoBehaviour
         countup -= Time.deltaTime;
 
         //時間を表示する
-        timeText.text = countup.ToString("f1");
+        timeText.text = countup.ToString("0");
 
+        // タイムアップでゲームオーバー
         if (countup <= timeLimit)
         {
-            timeText.text = "タイムアップ";
+            SceneChanger.Instance.SceneLoad(SceneChanger.SceneName.GameOverScenes);
         }
     }
 }
