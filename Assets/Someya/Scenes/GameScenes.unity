@@ -4061,6 +4061,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isCooked: 0
+  largePlateContainer: {fileID: 11400000, guid: a8bf5aaa472f507418cbeeac0cb41321,
+    type: 2}
 --- !u!1001 &941632742
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9089,6 +9091,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8056102388491078414, guid: 90bb4f86594e6b647aef8dca5e457067,
+        type: 3}
+      propertyPath: playerContainer
+      value: 
+      objectReference: {fileID: 11400000, guid: be535e889645ad34094e3b4a19ddfdd7,
+        type: 2}
+    - target: {fileID: 8056102388491078414, guid: 90bb4f86594e6b647aef8dca5e457067,
+        type: 3}
+      propertyPath: largePlateContainer
+      value: 
+      objectReference: {fileID: 11400000, guid: a8bf5aaa472f507418cbeeac0cb41321,
+        type: 2}
     - target: {fileID: 8056102388491078415, guid: 90bb4f86594e6b647aef8dca5e457067,
         type: 3}
       propertyPath: m_Name
