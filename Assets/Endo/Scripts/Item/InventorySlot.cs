@@ -33,7 +33,8 @@ public abstract class InventorySlot : MonoBehaviour, ISelectHandler
     /// </summary>
     /// <param name="item">配置および表示させるアイテム</param>
     /// <param name="inv">インベントリのインスタンス</param>
-    public void SetItem(Item item, InventoryManager inv = null)
+    /// <param name="index">配置させるインベントリスロットのインデックス</param>
+    public void SetItem(Item item, InventoryManager inv = null, int index = -1)
     {
         selfItem = item;
 
@@ -46,16 +47,16 @@ public abstract class InventorySlot : MonoBehaviour, ISelectHandler
         if (inv != null)
         {
             if (inv is CookingInventoryBase) return;
-            int selfIndex = (inv is PlayerInventory || inv is CookingInventoryBase)
-                ? inv.lastSelectedIndex 
+            int selfIndex = (inv is PlayerInventory)
+                ? inv.lastSelectedIndex
                 : GetSelfIndex(_selfInvSlotObjs, gameObject);
-            
-            inv.AllItems[selfIndex] = selfItem;
+
+            inv.AllItems[index != -1 ? index : selfIndex] = selfItem;
 
             // プレイヤーInvならコンテナ更新（暫定）
             if (inv is PlayerInventory)
             {
-                (inv as PlayerInventory).container.UpdateItem(selfIndex, selfItem, FoodState.Raw);
+                (inv as PlayerInventory).container.UpdateItem(index != -1 ? index : selfIndex, selfItem, FoodState.Raw);
             }
             //else if(inv is CookingInventoryBase)
             //{
@@ -91,7 +92,7 @@ public abstract class InventorySlot : MonoBehaviour, ISelectHandler
     {
         if (inv.AllItems[index] == null) return;
         itemName.text = "焼いた" + inv.AllItems[index].ItemName;
-        //Debug.Log(inv.AllItems[GetSelfIndex(_selfInvSlotObjs, gameObject)].ItemName);        
+        //Debug.Log(inv.AllItems[GetSelfIndex(_selfInvSlotObjs, gameObject)].ItemName);
     }
 
     /// <summary>

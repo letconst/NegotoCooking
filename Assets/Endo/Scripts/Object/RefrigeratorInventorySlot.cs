@@ -42,7 +42,7 @@ public class RefrigeratorInventorySlot : InventorySlot
             if (_playerInvSlot.selfItem == null)
             {
                 // そのスロットにアイテムを配置
-                _playerInvSlot.SetItem(selfItem, _playerInv);
+                _playerInvSlot.SetItem(selfItem, _playerInv, i);
 
                 // 冷蔵庫スロットは空にする
                 RemoveItem(_refInv);
