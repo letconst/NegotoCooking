@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Someya/New Material 1.mat.meta
+guid: 5d6a490a688fb2a46bd33064785733c3
+=======
 guid: a3a85ea320fc2714ea31b44a86962470
+>>>>>>> origin/Endo:Assets/Someya/New Material 1.mat.meta
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 0

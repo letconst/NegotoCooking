@@ -9,6 +9,15 @@ TagManager:
   - PlayerInventorySlot
   - RefrigeratorInventory
   - RefrigeratorInventorySlot
+  - Refrigerator_1
+  - Refrigerator_2
+  - CookingInventory
+  - CookingInventorySlot
+  - FoodSprite
+  - BakeMator
+  - FoodParent
+  - pork
+  - shrimp
   layers:
   - Default
   - TransparentFX
@@ -45,4 +54,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: New Layer
+    uniqueID: 2052663255
     locked: 0

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Onion
   m_EditorClassIdentifier: 
   _kindOfItem: 1
-  _itemIcon: {fileID: 0}
+  _itemIcon: {fileID: 21300000, guid: ffa371e4d13edff4c8db63176786f934, type: 3}
   _itemName: "\u7389\u306D\u304E"
-  _itemDesc: 
+  _isUsable: 0

@@ -45,10 +45,11 @@ public abstract class InventorySlot : MonoBehaviour, ISelectHandler
         // 初期化時じゃなければアイテム配列更新
         if (inv != null)
         {
-            int selfIndex = (inv is PlayerInventory)
-                ? inv.lastSelectedIndex
+            if (inv is CookingInventoryBase) return;
+            int selfIndex = (inv is PlayerInventory || inv is CookingInventoryBase)
+                ? inv.lastSelectedIndex 
                 : GetSelfIndex(_selfInvSlotObjs, gameObject);
-
+            
             inv.AllItems[selfIndex] = selfItem;
 
             // プレイヤーInvならコンテナ更新（暫定）
@@ -56,6 +57,10 @@ public abstract class InventorySlot : MonoBehaviour, ISelectHandler
             {
                 (inv as PlayerInventory).container.UpdateItem(selfIndex, selfItem, FoodState.Raw);
             }
+            //else if(inv is CookingInventoryBase)
+            //{
+            //    (inv as CookingInventoryBase).container.UpdateItem(selfIndex, selfItem, FoodState.Raw);
+            //}
         }
     }
 
@@ -74,6 +79,19 @@ public abstract class InventorySlot : MonoBehaviour, ISelectHandler
         {
             (inv as PlayerInventory).container.RemoveItem(selfIndex);
         }
+    }
+
+    public Item GetInAllItem(InventoryManager inv)
+    {
+        return inv.AllItems[GetSelfIndex(_selfInvSlotObjs, gameObject)];
+    }
+
+    //焼き処理の後空いているインベントリに焼いた○○として表示させる。
+    public void ChangeFoodName(InventoryManager inv, int index)
+    {
+        if (inv.AllItems[index] == null) return;
+        itemName.text = "焼いた" + inv.AllItems[index].ItemName;
+        //Debug.Log(inv.AllItems[GetSelfIndex(_selfInvSlotObjs, gameObject)].ItemName);        
     }
 
     /// <summary>

@@ -1,0 +1,193 @@
+fileFormatVersion: 2
+guid: 43f79b40f4d5b184888f1022162866eb
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: konro
+    100004: konro_1
+    100006: konro_2
+    100008: konro_3
+    100010: konro_body
+    100012: nob_1
+    100014: nob_2
+    100016: nob_3
+    100018: nob_4
+    100020: nob_5
+    100022: nob_6
+    100024: totte
+    100026: tsumami_shita
+    100028: tsumami_shita 1
+    100030: tsumami_shita 2
+    100032: tsumami_shita 3
+    100034: tsumami_shita 4
+    100036: tsumami_shita 5
+    100038: tumami_ue
+    100040: tumami_ue 1
+    100042: tumami_ue 2
+    100044: tumami_ue 3
+    100046: tumami_ue 4
+    100048: tumami_ue 5
+    400000: //RootNode
+    400002: konro
+    400004: konro_1
+    400006: konro_2
+    400008: konro_3
+    400010: konro_body
+    400012: nob_1
+    400014: nob_2
+    400016: nob_3
+    400018: nob_4
+    400020: nob_5
+    400022: nob_6
+    400024: totte
+    400026: tsumami_shita
+    400028: tsumami_shita 1
+    400030: tsumami_shita 2
+    400032: tsumami_shita 3
+    400034: tsumami_shita 4
+    400036: tsumami_shita 5
+    400038: tumami_ue
+    400040: tumami_ue 1
+    400042: tumami_ue 2
+    400044: tumami_ue 3
+    400046: tumami_ue 4
+    400048: tumami_ue 5
+    2100000: MAT_kitchen_hob
+    2300000: konro_1
+    2300002: konro_2
+    2300004: konro_3
+    2300006: konro_body
+    2300008: totte
+    2300010: tsumami_shita
+    2300012: tsumami_shita 1
+    2300014: tsumami_shita 2
+    2300016: tsumami_shita 3
+    2300018: tsumami_shita 4
+    2300020: tsumami_shita 5
+    2300022: tumami_ue
+    2300024: tumami_ue 1
+    2300026: tumami_ue 2
+    2300028: tumami_ue 3
+    2300030: tumami_ue 4
+    2300032: tumami_ue 5
+    3300000: konro_1
+    3300002: konro_2
+    3300004: konro_3
+    3300006: konro_body
+    3300008: totte
+    3300010: tsumami_shita
+    3300012: tsumami_shita 1
+    3300014: tsumami_shita 2
+    3300016: tsumami_shita 3
+    3300018: tsumami_shita 4
+    3300020: tsumami_shita 5
+    3300022: tumami_ue
+    3300024: tumami_ue 1
+    3300026: tumami_ue 2
+    3300028: tumami_ue 3
+    3300030: tumami_ue 4
+    3300032: tumami_ue 5
+    4300000: totte
+    4300002: konro_1
+    4300004: konro_2
+    4300006: konro_3
+    4300008: konro_body
+    4300010: tsumami_shita
+    4300012: tumami_ue
+    4300014: tsumami_shita
+    4300016: tumami_ue
+    4300018: tsumami_shita
+    4300020: tumami_ue
+    4300022: tsumami_shita
+    4300024: tumami_ue
+    4300026: tsumami_shita
+    4300028: tumami_ue
+    4300030: tsumami_shita
+    4300032: tumami_ue
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

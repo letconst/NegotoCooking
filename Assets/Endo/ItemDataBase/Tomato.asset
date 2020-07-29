@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: Tomato
   m_EditorClassIdentifier: 
   _kindOfItem: 1
-  _itemIcon: {fileID: 0}
+  _itemIcon: {fileID: 21300000, guid: 5fc51ca4ffd54a04291fa454b687f419, type: 3}
   _itemName: "\u30C8\u30DE\u30C8"
-  _itemDesc: 
+  _foodObj: {fileID: 4093491217737059848, guid: fd34069d85c8ec944a98077fee3cc15a,
+    type: 3}
+  _isBake: 1
+  _isUsable: 0

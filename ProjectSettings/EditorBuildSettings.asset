@@ -10,9 +10,9 @@ EditorBuildSettings:
     guid: ab33478bc10b0aa468db104c431c5563
   - enabled: 1
     path: Assets/Someya/Scenes/GameScenes.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
+    guid: 079638275b5883e4aba366e916c82962
   - enabled: 1
-    path: Assets/Someya/Scenes/BakeScenes.unity
+    path: Assets/Someya/Scenes/CookingScenes.unity
     guid: adf57845fde8a2f4b8cf2a5310a813d1
   - enabled: 1
     path: Assets/Someya/Scenes/BoilScenes.unity
