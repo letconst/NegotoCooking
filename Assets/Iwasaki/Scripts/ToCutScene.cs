@@ -1,11 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class ToCookingScene : MonoBehaviour
+public class ToCutScene : MonoBehaviour
 {
-    private bool flontHobBool;
+    private bool flontCuttingBoardBool;
     private GameObject player;
 
     private void Start()
@@ -16,24 +15,24 @@ public class ToCookingScene : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            flontHobBool = true;
+            flontCuttingBoardBool = true;
         }
     }
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.tag == "Player")
         {
-            flontHobBool = false;
+            flontCuttingBoardBool = false;
         }
     }
 
     void Update()
     {
-        if (flontHobBool && Input.GetKeyDown("joystick button 2"))
+        if (flontCuttingBoardBool && Input.GetKeyDown("joystick button 2"))
         {
             GameManager.Instance.PlayerPos = player.transform.position;
             GameManager.Instance.PlayerRotate = player.transform.localEulerAngles;
-            SceneChanger.Instance.SceneLoad(SceneChanger.SceneName.CookingScenes);
+            SceneChanger.Instance.SceneLoad(SceneChanger.SceneName.CutScenes);
         }
     }
 }
