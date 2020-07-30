@@ -25,7 +25,6 @@ public class FireControl : MonoBehaviour
     [SerializeField]
     private Text text;
     //焼き終わるまでのメーター
-    [HideInInspector]
     public Slider _slider;
     //騒音のメーター
     [SerializeField]
@@ -50,7 +49,7 @@ public class FireControl : MonoBehaviour
     void Start()
     {
         // スライダーを取得する
-        _slider = GameObject.Find("Slider").GetComponent<Slider>();
+        //_slider = GameObject.Find("Slider").GetComponent<Slider>();
         //中火の色にしておく
         FireChar.GetComponent<Image>().color = Color.yellow;
     }

@@ -18,7 +18,7 @@ public class BakeCooking : InventorySlot
     {
         //調理ゲージ
         GameObject noiseMator = GameObject.FindGameObjectWithTag("BakeMator");
-        _slider = noiseMator.transform.GetChild(0).GetComponent<Slider>();
+        _slider = noiseMator.GetComponent<FireControl>()._slider;
         //食料prefabの親
         foodParent = GameObject.FindGameObjectWithTag("FoodParent");
 
