@@ -13,17 +13,14 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         // プレイヤーオブジェクト取得
-        _player = GameObject.FindGameObjectWithTag("Player");
+        //_player = GameObject.FindGameObjectWithTag("Player");
         MyP = FindObjectOfType<Player>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        // プレイヤーの位置
-        Vector3 playerPos = MyP.transform.position;
-
         // カメラの位置をプレイヤーに追従
-        transform.position = new Vector3(playerPos.x, playerPos.y + 20, playerPos.z - 7);
+        transform.position = new Vector3(MyP.transform.position.x, MyP.transform.position.y + 20, MyP.transform.position.z - 7);
     }
 }

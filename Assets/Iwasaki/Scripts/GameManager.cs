@@ -13,6 +13,8 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     private Scene _tmpScene;
 
     private float noiseValue;
+    private Vector3 playerPos;
+    private Vector3 playerRotate;
 
     public float NoiseMator
     {
@@ -23,6 +25,30 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         get
         {
             return noiseValue;
+        }
+    }
+
+    public Vector3 PlayerPos
+    {
+        set
+        {
+            playerPos = value;
+        }
+        get
+        {
+            return playerPos;
+        }
+    }
+
+    public Vector3 PlayerRotate
+    {
+        set
+        {
+            playerRotate = value;
+        }
+        get
+        {
+            return playerRotate;
         }
     }
 

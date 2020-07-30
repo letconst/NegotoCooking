@@ -12,4 +12,11 @@ public class StartSystem : MonoBehaviour
         // オープニングのシーンへ
         //SceneManager.LoadScene("OpeningScene");
     }
+    private void Update()
+    {
+        if (Input.GetKeyDown("joystick button 0"))
+        {
+            SceneManager.LoadScene("GameScenes");
+        }
+    }
 }

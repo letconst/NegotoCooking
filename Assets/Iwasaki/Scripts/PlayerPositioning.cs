@@ -4,12 +4,23 @@ using UnityEngine;
 
 public class PlayerPositioning : MonoBehaviour
 {
-    [SerializeField]
     private GameObject player;
-    [HideInInspector]
-    public static Vector3 lastPlayerPos = new Vector3(25,2,0);
+    [SerializeField]
+    private GameObject playerPosition;
     void Start()
     {
-        player.transform.position = lastPlayerPos;
+        Application.targetFrameRate = 60;
+        player = GameObject.FindGameObjectWithTag("Player");
+        if (GameManager.Instance.PlayerPos == new Vector3 (0,0,0))
+        {
+            Debug.Log("StartPos");
+            player.transform.position = playerPosition.transform.position;            
+        }
+        else
+        {
+            Debug.Log("inCookingPos");
+            player.transform.position = GameManager.Instance.PlayerPos;
+            player.transform.localEulerAngles = GameManager.Instance.PlayerRotate;
+        }        
     }
 }

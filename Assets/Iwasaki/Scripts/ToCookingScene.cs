@@ -25,9 +25,10 @@ public class ToCookingScene : MonoBehaviour
 
     void Update()
     {
-        if (flontHobBool && Input.GetKeyDown(KeyCode.Q) || flontHobBool && Input.GetKeyDown("joystick button 2"))
+        if (flontHobBool && Input.GetKeyDown("joystick button 2"))
         {
-            PlayerPositioning.lastPlayerPos = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z);            
+            GameManager.Instance.PlayerPos = player.transform.position;
+            GameManager.Instance.PlayerRotate = player.transform.localEulerAngles;
             SceneChanger.Instance.SceneLoad(SceneChanger.SceneName.CookingScenes);
         }
     }

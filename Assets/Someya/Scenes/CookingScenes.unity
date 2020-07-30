@@ -208,7 +208,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.7264151, g: 0.13363299, b: 0.13363299, a: 1}
+  m_Color: {r: 0.69847137, g: 0.7254902, b: 0.13333333, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1273,12 +1273,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 048e14ede5ef3364f87533be2e93f9fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  yowabi: 0.03
-  tyubi: 0.05
-  tuyobi: 0.07
-  noiseYowabi: 0.0014
-  noiseTyubi: 0.0028
-  noiseTuyobi: 0.0056
+  yowabi: 0.003
+  tyubi: 0.005
+  tuyobi: 0.007
+  noiseYowabi: 0.00014
+  noiseTyubi: 0.00028
+  noiseTuyobi: 0.00056
   text: {fileID: 1869991180}
   _slider: {fileID: 0}
   noiseMator: {fileID: 2004258867}

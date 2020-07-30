@@ -51,6 +51,8 @@ public class FireControl : MonoBehaviour
     {
         // スライダーを取得する
         _slider = GameObject.Find("Slider").GetComponent<Slider>();
+        //中火の色にしておく
+        FireChar.GetComponent<Image>().color = Color.yellow;
     }
 
     void Update()
