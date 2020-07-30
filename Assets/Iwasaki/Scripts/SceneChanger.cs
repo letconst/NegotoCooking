@@ -14,7 +14,9 @@ public class SceneChanger : SingletonMonoBehaviour<SceneChanger>
         CookingScenes,
         GameOverScenes,
         GameScenes,
-        GameClear
+        GameClear,
+        BoilScenes,
+        CutScenes,
     }
     public void Awake()
     {
