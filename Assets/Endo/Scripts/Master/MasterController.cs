@@ -21,7 +21,7 @@ public class MasterController : SingletonMonoBehaviour<MasterController>
     void Update()
     {
         // X押下および接近時に調理完了を行う
-        if (Input.GetKeyDown("joystick button 2") && _isNear)
+        if ((Input.GetKeyDown("joystick button 2") || Input.GetKeyDown(KeyCode.E)) && _isNear)
         {
             // 大皿のすべての食材が調理できているかチェック
             for (int i = 0; i < largePlateContainer.Container.Count; i++)

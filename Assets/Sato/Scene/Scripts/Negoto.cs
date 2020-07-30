@@ -4,37 +4,48 @@ using UnityEngine;
 
 public class Negoto : MonoBehaviour
 {
-    private GameObject[] Negotos;//配列
+    [SerializeField, Tooltip("プレイヤーオブジェクト")]
+    private GameObject _playerObj;
 
+    [SerializeField, Tooltip("キャンバスのRectTransform")]
+    private RectTransform _canvasRectTrf;
+
+    [SerializeField, Tooltip("寝言が表示される距離")]
+    private float _showDistance = 10;
+
+    [SerializeField, Tooltip("寝言の表示位置のXオフセット値")]
+    private float _xOffset;
+
+    [SerializeField, Tooltip("寝言の表示位置のYオフセット値")]
+    private float _yOffset;
+
+    private GameObject _negotoPanel;
 
     private void Start()
     {
-        Negotos = GameObject.FindGameObjectsWithTag("Negoto");
-        foreach (GameObject i in Negotos)
+        _negotoPanel = GameObject.FindGameObjectWithTag("Negoto").transform.parent.gameObject;
+
+        _negotoPanel.SetActive(false);
+    }
+
+    private void Update()
+    {
+        // プレイヤーと師匠の距離が指定距離以内だったら寝言表示
+        if (Vector3.Distance(transform.position, _playerObj.transform.position) < _showDistance)
         {
-            i.SetActive(false);
+            RectTransform negotoRTrf = _negotoPanel.GetComponent<RectTransform>();
+
+            Vector2 offset = new Vector2(Screen.width  * negotoRTrf.anchorMax.x + _xOffset,
+                                         Screen.height * negotoRTrf.anchorMax.y + _yOffset);
+
+            negotoRTrf.position = RectTransformUtility.WorldToScreenPoint(Camera.main,
+                                                                          transform.position) - offset;
+
+            _negotoPanel.SetActive(true);
         }
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        Debug.Log("寝言");
-
-    }
-
-    void OnTriggerStay(Collider other)
-    {
-        foreach(GameObject i in Negotos)
+        else
         {
-            i.SetActive(true);
-        }
-    }
-
-    void OnTriggerExit(Collider other)
-    {
-        foreach (GameObject i in Negotos)
-        {
-            i.SetActive(false);
+            _negotoPanel.SetActive(false);
         }
     }
 }
