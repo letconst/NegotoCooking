@@ -79,13 +79,13 @@ public class Player : SingletonMonoBehaviour<Player>
         }
 
         //アニメーション
-        if(_moveDirection.magnitude>0.01f)
+        if(_h==0 && _v==0)
         {
-            animator.SetBool("Walk", true);
+            animator.SetBool("Walk", false);
         }
         else
         {
-            animator.SetBool("Walk", false);
+            animator.SetBool("Walk", true);
         }
     }
     private void OnTriggerStay(Collider other)
