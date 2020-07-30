@@ -9,15 +9,12 @@ TagManager:
   - PlayerInventorySlot
   - RefrigeratorInventory
   - RefrigeratorInventorySlot
-  - Refrigerator_1
-  - Refrigerator_2
   - CookingInventory
   - CookingInventorySlot
   - FoodSprite
   - BakeMator
   - FoodParent
-  - pork
-  - shrimp
+  - Negoto
   layers:
   - Default
   - TransparentFX
