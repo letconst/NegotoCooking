@@ -32,7 +32,8 @@ public class LargePlateController : MonoBehaviour
             _playerInvSlotObjs = GameObject.FindGameObjectsWithTag("PlayerInventorySlot");
         }
 
-        if (Input.GetKeyDown("joystick button 2") || Input.GetKeyDown(KeyCode.E))
+        if ((Input.GetKeyDown("joystick button 2") || Input.GetKeyDown(KeyCode.E)) &&
+            _isNear)
         {
             // 焼けてるときだけ大皿にぶち込む
             if (_playerInv.container.GetState(_playerInv.lastSelectedIndex) != FoodState.Cooked) return;
