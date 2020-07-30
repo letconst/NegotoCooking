@@ -303,5 +303,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22c79b7d25a01404fbb393253f0d95ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _allItems: []
+  _allItems:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   _slotSize: 3
+  container: {fileID: 11400000, guid: be535e889645ad34094e3b4a19ddfdd7, type: 2}

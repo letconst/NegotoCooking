@@ -13,10 +13,12 @@ public class PlayerInventory : InventoryManager
     public bool isSwapMode = false;
     private GameObject[] _playerInvSlotObjs;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Update()
     {
-        _playerInvSlotObjs = GameObject.FindGameObjectsWithTag("PlayerInventorySlot");
+        if (_playerInvSlotObjs == null)
+        {
+            _playerInvSlotObjs = GameObject.FindGameObjectsWithTag("PlayerInventorySlot");
+        }
     }
 
     public override void SelectSlot(int index = -1)
