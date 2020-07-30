@@ -24,18 +24,36 @@ public class CookingSlot : InventorySlotGrid
             // デバッグ用
             // 初期アイテムを持たせる
             // 使用する際はSlotWrapperのInvSlotGridコンポのAllItemsにアイテムを指定してあげる
-            if (i < _selfInv.AllItems.Length)
+            if (_selfInv.container.Container.Count <= i)
             {
-                //_selfInv.container.AddItem(_selfInv.AllItems[i], FoodState.Raw);
-                // アイテムをスロットに配置
-                slot.SetItem(_selfInv.container.Container[i].Item, _selfInv);
-                _selfInv.AllItems[i] = _selfInv.container.Container[i].Item;
+                if (i < _selfInv.AllItems.Length)
+                {
+                    //_selfInv.container.AddItem(_selfInv.AllItems[i], FoodState.Raw);
+                    // アイテムをスロットに配置
+                    slot.SetItem(_selfInv.container.Container[i].Item, _selfInv);
+                    _selfInv.AllItems[i] = _selfInv.container.Container[i].Item;
+                }
+                else
+                {
+                    //_selfInv.container.AddItem(null, FoodState.Raw);
+                    slot.SetItem(null);
+                    _selfInv.AllItems[i] = null;
+                }
             }
             else
             {
-                //_selfInv.container.AddItem(null, FoodState.Raw);
-                slot.SetItem(null);
-                _selfInv.AllItems[i] = null;
+                slot.SetItem(_selfInv.container.Container[i].Item);
+                _selfInv.AllItems[i] = _selfInv.container.Container[i].Item;
+                switch (_selfInv.container.Container[i].State)
+                {
+                    case FoodState.Cooked:
+                        slot.itemName.text = "焼いた" + _selfInv.container.Container[i].Item.ItemName;
+                        break;
+
+                    case FoodState.Burnt:
+                        slot.itemName.text = "焦げた" + _selfInv.container.Container[i].Item.ItemName;
+                        break;
+                }
             }
         }
     }
