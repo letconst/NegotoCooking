@@ -20,11 +20,13 @@ public class Player : SingletonMonoBehaviour<Player>
     private CharacterController _controller;
     private Vector3             _moveDirection = Vector3.zero;
     public bool _isTouch;
+    private Animator animator;
 
     // Start is called before the first frame update
     void Start()
     {
         _controller = GetComponent<CharacterController>();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -74,6 +76,16 @@ public class Player : SingletonMonoBehaviour<Player>
         {
             rot = Quaternion.LookRotation(new Vector3(_moveDirection.x, 0, _moveDirection.z));
             transform.rotation = Quaternion.Slerp(transform.rotation, rot, Time.deltaTime * 8);
+        }
+
+        //アニメーション
+        if(_moveDirection.magnitude>0.01f)
+        {
+            animator.SetBool("Walk", true);
+        }
+        else
+        {
+            animator.SetBool("Walk", false);
         }
     }
     private void OnTriggerStay(Collider other)
