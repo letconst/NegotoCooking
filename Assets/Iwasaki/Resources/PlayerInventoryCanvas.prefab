@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _allItems:
-  - {fileID: 11400000, guid: 8993772b79e0bc1468fd314663db50d2, type: 2}
-  - {fileID: 11400000, guid: a229e8f242449df48af7131ab524af6b, type: 2}
-  - {fileID: 11400000, guid: 1ec43f4c12d11cc46acece93cd2f07bd, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   _slotSize: 3
+  container: {fileID: 11400000, guid: be535e889645ad34094e3b4a19ddfdd7, type: 2}
+  lastPuttedSlotIndex: 0
 --- !u!1 &4905912591240077378
 GameObject:
   m_ObjectHideFlags: 0

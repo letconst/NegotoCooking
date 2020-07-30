@@ -88,7 +88,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b7ffa40b589c4349828b8497047109b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _allItems: []
+  _allItems:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   _slotSize: 3
 --- !u!1 &8611854936007513227
 GameObject:

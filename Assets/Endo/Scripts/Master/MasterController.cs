@@ -5,10 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class MasterController : SingletonMonoBehaviour<MasterController>
 {
-    // 調理済か否か（デバッグ用、本来は調理パートに持たせる）
-    [SerializeField]
-    private bool _isCooked = false;
-
     // 近くにいるか否か
     private bool _isNear = false;
 

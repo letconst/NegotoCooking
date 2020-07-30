@@ -74,11 +74,14 @@ public class Refrigerator : MonoBehaviour
         RefrigeratorManager.Instance.currentNearObj = null;
 
         // インベントリが開いているなら閉じる
-        if (_selfInvObj.activeSelf) _selfInvObj.SetActive(!_selfInvObj.activeSelf);
-        // プレイヤーインベントリを有効化
-        _playerInv.EnableAllSlot();
-        // プレイヤーインベントリにフォーカスを戻す
-        _playerInv.SelectSlot();
+        if (_selfInvObj.activeSelf)
+        {
+            _selfInvObj.SetActive(!_selfInvObj.activeSelf);
+            // プレイヤーインベントリを有効化
+            _playerInv.EnableAllSlot();
+            // プレイヤーインベントリにフォーカスを戻す
+            _playerInv.SelectSlot();
+        }
 
         // アイテム交換モードだったら解除し、冷蔵庫をenabledに戻す
         if (_playerInv.isSwapMode)
