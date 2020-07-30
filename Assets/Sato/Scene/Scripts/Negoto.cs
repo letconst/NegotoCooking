@@ -7,9 +7,6 @@ public class Negoto : MonoBehaviour
     [SerializeField, Tooltip("プレイヤーオブジェクト")]
     private GameObject _playerObj;
 
-    [SerializeField, Tooltip("キャンバスのRectTransform")]
-    private RectTransform _canvasRectTrf;
-
     [SerializeField, Tooltip("寝言が表示される距離")]
     private float _showDistance = 10;
 
