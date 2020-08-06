@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class InventoryRenderer : MonoBehaviour
@@ -15,23 +17,25 @@ public class InventoryRenderer : MonoBehaviour
     private GameObject _slotWrapper;
 
     private Dictionary<GameObject, InventorySlotBase> _itemsDisplayed = new Dictionary<GameObject, InventorySlotBase>();
+    // 最後に選択していたスロットのインデックス
+    private int _lastSelectedIndex = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-        CreateDisplay();
+        InitRender();
     }
 
     // Update is called once per frame
     void Update()
     {
-        UpdateDisplay();
+        UpdateRender();
     }
 
     /// <summary>
     /// インベントリ表示の初期化
     /// </summary>
-    private void CreateDisplay()
+    private void InitRender()
     {
         for (int i = 0; i < _inventory.SlotSize; i++)
         {
@@ -50,7 +54,7 @@ public class InventoryRenderer : MonoBehaviour
     /// <summary>
     /// インベントリの表示を更新する
     /// </summary>
-    private void UpdateDisplay()
+    private void UpdateRender()
     {
         foreach (KeyValuePair<GameObject, InventorySlotBase> slot in _itemsDisplayed)
         {
@@ -89,6 +93,43 @@ public class InventoryRenderer : MonoBehaviour
             {
                 slotText.text = "";
             }
+        }
+    }
+
+    /// <summary>
+    /// 指定したインデックスのスロットを選択する
+    /// 引数がない場合はラストインデックスを使用
+    /// </summary>
+    /// <param name="index">選択するインデックス</param>
+    public void SelectSlot(int index = -1)
+    {
+        index = (index == -1) ? _lastSelectedIndex : index;
+
+        // 指定インデックスがスロットサイズを超過してたら1番目を選択させる
+        if (index > _inventory.SlotSize) index = 0;
+
+        EventSystem.current.SetSelectedGameObject(_itemsDisplayed.Keys.ElementAt(index));
+    }
+
+    /// <summary>
+    /// 全スロットを選択可能にする
+    /// </summary>
+    public void EnableAllSlot()
+    {
+        foreach (GameObject slot in _itemsDisplayed.Keys)
+        {
+            slot.GetComponent<Button>().enabled = true;
+        }
+    }
+
+    /// <summary>
+    /// 全スロットを選択不可にする
+    /// </summary>
+    public void DisableAllSlot()
+    {
+        foreach (GameObject slot in _itemsDisplayed.Keys)
+        {
+            slot.GetComponent<Button>().enabled = false;
         }
     }
 }
