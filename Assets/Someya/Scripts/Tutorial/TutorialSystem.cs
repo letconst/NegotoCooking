@@ -3,18 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class StartSystem : MonoBehaviour
+public class TutorialSystem : MonoBehaviour
 {
-    // スタートボタンを押したら実行する
     public void OnClickStartButton()
     {
-        SceneManager.LoadScene("TutorialScenes");
+        SceneManager.LoadScene("GameScenes");
     }
     private void Update()
     {
         if (Input.GetKeyDown("joystick button 0"))
         {
-            SceneManager.LoadScene("TutorialScenes");
+            SceneManager.LoadScene("GameScenes");
         }
     }
 }

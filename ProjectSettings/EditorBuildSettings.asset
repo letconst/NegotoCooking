@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Someya/Scenes/TitleScenes.unity
     guid: ab33478bc10b0aa468db104c431c5563
   - enabled: 1
+    path: Assets/Someya/Scenes/TutorialScenes.unity
+    guid: 590b3cfd9c41a32428ddbf607f7a9adc
+  - enabled: 1
     path: Assets/Someya/Scenes/GameScenes.unity
     guid: 079638275b5883e4aba366e916c82962
   - enabled: 1

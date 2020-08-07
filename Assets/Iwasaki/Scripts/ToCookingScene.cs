@@ -33,7 +33,7 @@ public class ToCookingScene : MonoBehaviour
         {
             GameManager.Instance.PlayerPos = player.transform.position;
             GameManager.Instance.PlayerRotate = player.transform.localEulerAngles;
-            SceneChanger.Instance.SceneLoad(SceneChanger.SceneName.CookingScenes);
+            SceneChanger.Instance.SceneLoad(SceneChanger.SceneName.BakeScenes);
         }
     }
 }

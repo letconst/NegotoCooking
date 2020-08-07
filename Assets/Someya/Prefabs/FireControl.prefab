@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6540084494665254715}
-  - component: {fileID: 6540084493477503005}
   m_Layer: 0
   m_Name: FireControl
   m_TagString: BakeMator
@@ -31,27 +30,3 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6540084493477503005
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6540084493477503004}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 048e14ede5ef3364f87533be2e93f9fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  yowabi: 0.03
-  tyubi: 0.05
-  tuyobi: 0.07
-  noiseYowabi: 0.0014
-  noiseTyubi: 0.0028
-  noiseTuyobi: 0.0056
-  text: {fileID: 0}
-  _slider: {fileID: 0}
-  noiseMator: {fileID: 0}
-  FireChar: {fileID: 0}
-  leftAllow: {fileID: 0}
-  RightAllow: {fileID: 0}
