@@ -6,7 +6,9 @@ public enum FoodState
 {
     Raw,    // 生
     Cooked, // 調理済み
-    Burnt   // 焦げてる
+    Burnt,   // 焦げてる
+    Cut,   // 切れている
+    Boil,   // 煮込んである
 }
 
 [CreateAssetMenu(fileName = "New Inventory", menuName = "Inventory/Create Inventory")]

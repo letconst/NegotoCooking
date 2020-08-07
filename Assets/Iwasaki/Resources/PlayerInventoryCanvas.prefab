@@ -85,7 +85,7 @@ MonoBehaviour:
   m_InputActionsPerSecond: 10
   m_RepeatDelay: 0.5
   m_ForceModuleActive: 0
---- !u!114 &1998531899
+--- !u!114 &992624354
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,10 +94,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4905912591336032766}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05971a353bffed145aec4adbf237a4b1, type: 3}
+  m_Script: {fileID: 11500000, guid: 8d4f0b81cedbfea49953faffa2ce8f09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _slotPrefab: {fileID: 9186813898765073516, guid: f280332361ffa8746869d24d2d15dfaf,
+  _slotPrefab: {fileID: 9186813898765073516, guid: de92ddb89c7248f49852dd2c1379bd57,
     type: 3}
 --- !u!1 &4905912591928227465
 GameObject:
@@ -366,7 +366,7 @@ PrefabInstance:
     - target: {fileID: 6229773529946724258, guid: de9ca386aaedf4b49b577b7d4de1c0fc,
         type: 3}
       propertyPath: m_TagString
-      value: CookingInventory
+      value: CutInventory
       objectReference: {fileID: 0}
     - target: {fileID: 6229773529946724261, guid: de9ca386aaedf4b49b577b7d4de1c0fc,
         type: 3}

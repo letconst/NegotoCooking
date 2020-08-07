@@ -28,7 +28,7 @@ public class ToCutScene : MonoBehaviour
 
     void Update()
     {
-        if (flontCuttingBoardBool && Input.GetKeyDown("joystick button 2"))
+        if (flontCuttingBoardBool && Input.GetKeyDown("joystick button 2") || flontCuttingBoardBool && Input.GetKeyDown(KeyCode.Q))
         {
             GameManager.Instance.PlayerPos = player.transform.position;
             GameManager.Instance.PlayerRotate = player.transform.localEulerAngles;

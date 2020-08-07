@@ -7,7 +7,7 @@ public class KitchenControl : MonoBehaviour
 {
     void Update()
     {
-        if(Input.GetKeyDown("joystick button 1"))
+        if(Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.E))
         {
             SceneManager.LoadScene("GameScenes");
         }

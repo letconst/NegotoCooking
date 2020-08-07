@@ -1,24 +1,29 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class PlayerInventorySlotGrid : InventorySlotGrid
+public class CutSlot : InventorySlotGrid
 {
-    private PlayerInventory _selfInv;
+    private CookingInventoryBase _selfInv;
 
     // Start is called before the first frame update
     void Start()
     {
-        _selfInvObj = GameObject.FindGameObjectWithTag("PlayerInventory");
-        _selfInv    = _selfInvObj.GetComponent<PlayerInventory>();
+        _selfInvObj = GameObject.FindGameObjectWithTag("CutInventory");
+        _selfInv = _selfInvObj.GetComponent<CookingInventoryBase>();
 
         for (int i = 0; i < _selfInv.SlotSize; i++)
         {
             // スロットのインスタンス
-            GameObject          slotObj = Instantiate(_slotPrefab, transform);
-            PlayerInventorySlot slot    = slotObj.GetComponent<PlayerInventorySlot>();
+            GameObject slotObj = Instantiate(_slotPrefab, transform);
+            CutCooking slot = slotObj.GetComponent<CutCooking>();
+
+
+
 
             //slot.SetItem(null);
+
             // デバッグ用
             // 初期アイテムを持たせる
             // 使用する際はSlotWrapperのInvSlotGridコンポのAllItemsにアイテムを指定してあげる
@@ -26,18 +31,20 @@ public class PlayerInventorySlotGrid : InventorySlotGrid
             {
                 if (i < _selfInv.AllItems.Length)
                 {
+                    //_selfInv.container.AddItem(_selfInv.AllItems[i], FoodState.Raw);
                     // アイテムをスロットに配置
-                    _selfInv.container.AddItem(_selfInv.AllItems[i], FoodState.Raw);
-                    slot.SetItem(_selfInv.AllItems[i]);
+                    slot.SetItem(_selfInv.container.Container[i].Item, _selfInv);
+                    _selfInv.AllItems[i] = _selfInv.container.Container[i].Item;
                 }
                 else
                 {
-                    _selfInv.container.AddItem(null, FoodState.Raw);
+                    //_selfInv.container.AddItem(null, FoodState.Raw);
                     slot.SetItem(null);
+                    _selfInv.AllItems[i] = null;
                 }
             }
             else
-            {
+            {                
                 slot.SetItem(_selfInv.container.Container[i].Item);
                 _selfInv.AllItems[i] = _selfInv.container.Container[i].Item;
                 switch (_selfInv.container.Container[i].State)
@@ -61,10 +68,6 @@ public class PlayerInventorySlotGrid : InventorySlotGrid
             }
         }
     }
-
-    /// <summary>
-    /// ゲーム終了時にプレイヤーインベントリの中身を削除する
-    /// </summary>
     private void OnApplicationQuit()
     {
         _selfInv.container.Container.Clear();
