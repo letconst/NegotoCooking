@@ -4,6 +4,7 @@ using UnityEngine;
 
 public enum FoodState
 {
+    None,   // なし
     Raw,    // 生
     Cooked, // 調理済み
     Burnt,   // 焦げてる
@@ -14,18 +15,25 @@ public enum FoodState
 [CreateAssetMenu(fileName = "New Inventory", menuName = "Inventory/Create Inventory")]
 public class InventoryContainerBase : ScriptableObject
 {
+    [SerializeField, Tooltip("スロットの最大数（初期値：3）")]
+    private int _slotSize = 3;
+
     [SerializeField]
     private List<InventorySlotBase> _container = new List<InventorySlotBase>();
 
-    public List<InventorySlotBase> Container { get => _container; private set => _container = value; }
+    public List<InventorySlotBase> Container { get => _container; protected set => _container = value; }
+    public int                     SlotSize  { get => _slotSize; protected set => _slotSize = value; }
 
     /// <summary>
     /// インベントリにアイテムを追加する
     /// </summary>
     /// <param name="item"><追加するアイテム/param>
     /// <param name="state">アイテムの状態</param>
-    public virtual void AddItem(Item item, FoodState state)
+    public virtual void AddItem(Item item, FoodState state = FoodState.None)
     {
+        // スロットサイズを超過する場合は追加しない
+        if (Container.Count >= SlotSize) return;
+
         Container.Add(new InventorySlotBase(item, state));
     }
 

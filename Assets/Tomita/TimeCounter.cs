@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class TimeCounter : MonoBehaviour
 {
     //カウントアップ
-    public static float countup = 300.0f;
+    public static float countup = 400.0f;
 
     [System.NonSerialized]
     public static float currentTime = countup;
