@@ -100,6 +100,12 @@ public abstract class InventorySlot : MonoBehaviour, ISelectHandler
         itemName.text = "切れた" + inv.AllItems[index].ItemName;
         //Debug.Log(inv.AllItems[GetSelfIndex(_selfInvSlotObjs, gameObject)].ItemName);
     }
+    public void BoilFoodName(InventoryManager inv, int index)
+    {
+        if (inv.AllItems[index] == null) return;
+        itemName.text = "煮込んだ" + inv.AllItems[index].ItemName;
+        //Debug.Log(inv.AllItems[GetSelfIndex(_selfInvSlotObjs, gameObject)].ItemName);
+    }
 
     /// <summary>
     /// 渡されたスロット配列内から検索スロットを探し、見つかったらインデックスを返す

@@ -28,7 +28,7 @@ public class ToBoilScene : MonoBehaviour
 
     void Update()
     {
-        if (flontPotBool && Input.GetKeyDown("joystick button 2"))
+        if (flontPotBool && Input.GetKeyDown("joystick button 2") || flontPotBool && Input.GetKeyDown(KeyCode.Q))
         {
             GameManager.Instance.PlayerPos = player.transform.position;
             GameManager.Instance.PlayerRotate = player.transform.localEulerAngles;

@@ -1168,27 +1168,27 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 0}
-      propertyPath: noiseMator
-      value: 
-      objectReference: {fileID: 1000580551}
-    - target: {fileID: 0}
-      propertyPath: FireChar
-      value: 
-      objectReference: {fileID: 853849756}
-    - target: {fileID: 0}
+    - target: {fileID: 1329394958, guid: ce882026de3b5c140bf637bf880a00a5, type: 3}
       propertyPath: text
       value: 
       objectReference: {fileID: 853849757}
-    - target: {fileID: 0}
+    - target: {fileID: 1329394958, guid: ce882026de3b5c140bf637bf880a00a5, type: 3}
       propertyPath: _slider
       value: 
       objectReference: {fileID: 851102056}
-    - target: {fileID: 0}
+    - target: {fileID: 1329394958, guid: ce882026de3b5c140bf637bf880a00a5, type: 3}
+      propertyPath: noiseMator
+      value: 
+      objectReference: {fileID: 1000580551}
+    - target: {fileID: 1329394958, guid: ce882026de3b5c140bf637bf880a00a5, type: 3}
+      propertyPath: FireChar
+      value: 
+      objectReference: {fileID: 853849756}
+    - target: {fileID: 1329394958, guid: ce882026de3b5c140bf637bf880a00a5, type: 3}
       propertyPath: leftAllow
       value: 
       objectReference: {fileID: 853849755}
-    - target: {fileID: 0}
+    - target: {fileID: 1329394958, guid: ce882026de3b5c140bf637bf880a00a5, type: 3}
       propertyPath: RightAllow
       value: 
       objectReference: {fileID: 853849754}
@@ -1196,6 +1196,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: FireControl
+      objectReference: {fileID: 0}
+    - target: {fileID: 6540084493477503004, guid: ce882026de3b5c140bf637bf880a00a5,
+        type: 3}
+      propertyPath: m_TagString
+      value: BoilMator
       objectReference: {fileID: 0}
     - target: {fileID: 6540084494665254715, guid: ce882026de3b5c140bf637bf880a00a5,
         type: 3}
@@ -1254,36 +1259,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ce882026de3b5c140bf637bf880a00a5, type: 3}
---- !u!1 &1329394957 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6540084493477503004, guid: ce882026de3b5c140bf637bf880a00a5,
-    type: 3}
-  m_PrefabInstance: {fileID: 1329394956}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1329394958
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1329394957}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 048e14ede5ef3364f87533be2e93f9fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  yowabi: 0.025
-  tyubi: 0.04
-  tuyobi: 0.067
-  noiseYowabi: 0.0014
-  noiseTyubi: 0.0028
-  noiseTuyobi: 0.0056
-  text: {fileID: 853849757}
-  _slider: {fileID: 851102056}
-  noiseMator: {fileID: 1000580551}
-  FireChar: {fileID: 853849756}
-  leftAllow: {fileID: 853849755}
-  RightAllow: {fileID: 853849754}
 --- !u!1001 &1500479914
 PrefabInstance:
   m_ObjectHideFlags: 0

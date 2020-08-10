@@ -50,13 +50,13 @@ public class BoilCooking : InventorySlot
             Destroy(foodParent.transform.GetChild(0).gameObject);
             //保持していたscriptableObjectを入れる。
             CIB.AllItems[CIB.lastPuttedSlotIndex] = boilItem;
-            ChangeFoodName(CIB, CIB.lastPuttedSlotIndex);
+            BoilFoodName(CIB, CIB.lastPuttedSlotIndex);
             FireControl.clickBool = true;
             FireControl.boilBool = false;
 
             if (CIB.AllItems[CIB.lastPuttedSlotIndex] == null) return;
 
-            CIB.container.UpdateItem(CIB.lastPuttedSlotIndex, CIB.AllItems[CIB.lastPuttedSlotIndex], FoodState.Cooked);
+            CIB.container.UpdateItem(CIB.lastPuttedSlotIndex, CIB.AllItems[CIB.lastPuttedSlotIndex], FoodState.Boil);
         }
     }
     public override void OnClick()
@@ -64,7 +64,7 @@ public class BoilCooking : InventorySlot
         int selfIndex = GetSelfIndex(_selfInvSlotObjs, gameObject);
         if (FireControl.clickBool == false ||
             GetInAllItem(CIB) == null ||
-            CIB.container.Container[selfIndex].State == FoodState.Cooked) return;
+            CIB.container.Container[selfIndex].State != FoodState.Raw) return;
 
         FireControl.clickBool = false;
         foodChild = Instantiate(GetInAllItem(CIB).FoodObj, new Vector3(GetInAllItem(CIB).FoodObj.transform.position.x,

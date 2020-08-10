@@ -23,6 +23,7 @@ TagManager:
   - CutInventory
   - Tomato
   - FoodPosition
+  - BoilMator
   layers:
   - Default
   - TransparentFX
