@@ -9,7 +9,7 @@ public class BoilCooking : InventorySlot
     private CookingInventoryBase CIB;
     private GameObject foodIcon;
 
-    private Item bakeItem;
+    private Item boilItem;
     private Slider _slider;
     private GameObject foodParent;
     private GameObject foodChild;
@@ -17,7 +17,7 @@ public class BoilCooking : InventorySlot
     void Start()
     {
         //調理ゲージ
-        GameObject noiseMator = GameObject.FindGameObjectWithTag("BakeMator");
+        GameObject noiseMator = GameObject.FindGameObjectWithTag("BoilMator");
         _slider = noiseMator.GetComponent<FireControl>()._slider;
         //食料prefabの親
         foodParent = GameObject.FindGameObjectWithTag("FoodParent");
@@ -33,26 +33,26 @@ public class BoilCooking : InventorySlot
     // Update is called once per frame
     void Update()
     {
-        if (_slider.value >= 100 && FireControl.bakeBool == false)
+        if (_slider.value >= 100 && FireControl.boilBool == false)
         {
             //Debug.Log("inbakeBool");
             //if (bakeBool) return;
-            FireControl.bakeBool = true;
+            FireControl.boilBool = true;
         }
 
         //調理完了した食材をインベントリに戻す。(空いていたら)
-        BakeCooking _playerInvSlot;
-        _playerInvSlot = _selfInvSlotObjs[CIB.lastPuttedSlotIndex].GetComponent<BakeCooking>();
+        BoilCooking _playerInvSlot;
+        _playerInvSlot = _selfInvSlotObjs[CIB.lastPuttedSlotIndex].GetComponent<BoilCooking>();
 
-        if (FireControl.bakeBool && _playerInvSlot.selfItem == null)
+        if (FireControl.boilBool && _playerInvSlot.selfItem == null)
         {
             //出ていた野菜を消す。
             Destroy(foodParent.transform.GetChild(0).gameObject);
             //保持していたscriptableObjectを入れる。
-            CIB.AllItems[CIB.lastPuttedSlotIndex] = bakeItem;
+            CIB.AllItems[CIB.lastPuttedSlotIndex] = boilItem;
             ChangeFoodName(CIB, CIB.lastPuttedSlotIndex);
             FireControl.clickBool = true;
-            FireControl.bakeBool = false;
+            FireControl.boilBool = false;
 
             if (CIB.AllItems[CIB.lastPuttedSlotIndex] == null) return;
 
@@ -71,7 +71,7 @@ public class BoilCooking : InventorySlot
                                                            GetInAllItem(CIB).FoodObj.transform.position.y,
                                                            GetInAllItem(CIB).FoodObj.transform.position.z), Quaternion.identity);
         foodChild.transform.parent = foodParent.transform;
-        bakeItem = GetInAllItem(CIB);
+        boilItem = GetInAllItem(CIB);
 
         // プレイヤーインベントリコンテナからアイテムを削除
         CIB.container.RemoveItem(selfIndex);

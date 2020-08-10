@@ -243,8 +243,29 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 9186813898765073516, guid: f280332361ffa8746869d24d2d15dfaf,
         type: 3}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5695974388067874855, guid: 1063cbc023a6dfd4aae2144a2bb1700d, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 1063cbc023a6dfd4aae2144a2bb1700d, type: 3}
+--- !u!1 &581401353 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 799783680748707042, guid: 1063cbc023a6dfd4aae2144a2bb1700d,
+    type: 3}
+  m_PrefabInstance: {fileID: 581401352}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &581401354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 581401353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb4a1c7a33d0709408b569987f631672, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _slotPrefab: {fileID: 7395243517525022678, guid: d4f7db75b9098fd4d931df6fa8877816,
+    type: 3}
 --- !u!1001 &833879424
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1251,9 +1272,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 048e14ede5ef3364f87533be2e93f9fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  yowabi: 0.02
+  yowabi: 0.025
   tyubi: 0.04
-  tuyobi: 0.05
+  tuyobi: 0.067
   noiseYowabi: 0.0014
   noiseTyubi: 0.0028
   noiseTuyobi: 0.0056

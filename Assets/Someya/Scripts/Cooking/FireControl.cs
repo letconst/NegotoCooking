@@ -43,9 +43,13 @@ public class FireControl : MonoBehaviour
     //焼き処理が終わったか
     [HideInInspector]
     static public bool bakeBool;
+    //煮込み処理が終わったか
+    [HideInInspector]
+    static public bool boilBool;
     //今焼き処理中か
     [HideInInspector]
     static public bool clickBool = true;
+
     void Start()
     {
         // スライダーを取得する

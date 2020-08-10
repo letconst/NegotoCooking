@@ -15,7 +15,7 @@ public class BoilSlot : InventorySlotGrid
         {
             // スロットのインスタンス
             GameObject slotObj = Instantiate(_slotPrefab, transform);
-            BakeCooking slot = slotObj.GetComponent<BakeCooking>();
+            BoilCooking slot = slotObj.GetComponent < BoilCooking>();
 
             //slot.SetItem(null);
 
