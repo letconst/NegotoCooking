@@ -23,18 +23,18 @@ public class PlayerInventorySlot : InventorySlot
     /// 選択スロット変更時に選択アイテムをSelfItemに渡し、インデックスを保持
     /// </summary>
     /// <param name="_"></param>
-    public override void OnSelect(BaseEventData _)
-    {
-        _selfInv.selectedItem = selfItem;
+    //public override void OnSelect(BaseEventData _)
+    //{
+    //    _selfInv.selectedItem = selfItem;
 
-        for (int i = 0; i < _selfInvSlotObjs.Length; i++)
-        {
-            if (_selfInvSlotObjs[i] == gameObject)
-            {
-                _selfInv.lastSelectedIndex = i;
-            }
-        }
-    }
+    //    for (int i = 0; i < _selfInvSlotObjs.Length; i++)
+    //    {
+    //        if (_selfInvSlotObjs[i] == gameObject)
+    //        {
+    //            _selfInv.lastSelectedIndex = i;
+    //        }
+    //    }
+    //}
 
     /// <summary>
     /// 選択しているアイテムが使用可能なら使用する

@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class InventoryRenderer : MonoBehaviour
 {
-    [SerializeField, Tooltip("表示させる対象のインベントリコンテナ")]
+    [SerializeField, Tooltip("表示させる対象のインベントリコンテナ。冷蔵庫用の場合は未指定で良い")]
     private InventoryContainerBase _inventory;
 
     [SerializeField, Tooltip("表示させるスロットプレハブ")]
@@ -16,13 +16,35 @@ public class InventoryRenderer : MonoBehaviour
     [SerializeField, Tooltip("生成する場所の親オブジェクト")]
     private GameObject _slotWrapper;
 
-    private Dictionary<GameObject, InventorySlotBase> _itemsDisplayed = new Dictionary<GameObject, InventorySlotBase>();
+    [SerializeField, Tooltip("冷蔵庫用のインベントリか否か")]
+    private bool _isForRefrigerator;
+
     // 最後に選択していたスロットのインデックス
     private int _lastSelectedIndex = 0;
+
+    // 最大スロット数
+    private int _selfSlotSize;
+
+    // 現在選択しているスロット
+    private GameObject _currentSelectedObj;
+
+    // 最後に選択していたスロット
+    private GameObject _lastSelectedObj;
+
+    // 現在表示されているスロット情報
+    private Dictionary<GameObject, InventorySlotBase> _itemsDisplayed = new Dictionary<GameObject, InventorySlotBase>();
+
+    public int LastSelectedIndex { get => _lastSelectedIndex; private set => _lastSelectedIndex = value; }
 
     // Start is called before the first frame update
     void Start()
     {
+        _selfSlotSize = (_inventory != null)
+            ? _inventory.SlotSize
+            : (_isForRefrigerator)
+            ? RefrigeratorManager.Instance.slotSize
+            : 0;
+
         InitRender();
     }
 
@@ -30,6 +52,7 @@ public class InventoryRenderer : MonoBehaviour
     void Update()
     {
         UpdateRender();
+        UpdateLastSelectedIndex();
     }
 
     /// <summary>
@@ -37,6 +60,26 @@ public class InventoryRenderer : MonoBehaviour
     /// </summary>
     private void InitRender()
     {
+        // 例外および冷蔵庫かの判定
+        if (_inventory == null)
+        {
+            if (!_isForRefrigerator)
+            {
+                Debug.LogError("表示対象のインベントリコンテナが未指定です");
+                return;
+            }
+
+            // 冷蔵庫用の処理
+            for (int i = 0; i < RefrigeratorManager.Instance.slotSize; i++)
+            {
+                GameObject slotObj = Instantiate(_slotPrefab, transform.position, Quaternion.identity, _slotWrapper.transform);
+
+                _itemsDisplayed.Add(slotObj, new InventorySlotBase());
+            }
+
+            return;
+        }
+
         for (int i = 0; i < _inventory.SlotSize; i++)
         {
             // インベントリコンテナのスロット数がスロットサイズに満たなければスロット確保
@@ -49,6 +92,8 @@ public class InventoryRenderer : MonoBehaviour
 
             _itemsDisplayed.Add(slotObj, _inventory.Container[i]);
         }
+
+        SelectSlot(0);
     }
 
     /// <summary>
@@ -56,6 +101,38 @@ public class InventoryRenderer : MonoBehaviour
     /// </summary>
     private void UpdateRender()
     {
+        // 冷蔵庫ならまず中身を取得
+        if (_isForRefrigerator)
+        {
+            int i = 0;
+            GameObject             curNearRef = RefrigeratorManager.Instance.currentNearObj;
+            RefrigeratorController refCtrlr   = curNearRef.GetComponent<RefrigeratorController>();
+
+            // 初回表示時は初期アイテム表示
+            if (TmpInventoryManager.Instance.refContainers.GetContainer(curNearRef.GetInstanceID()) == null)
+            {
+                foreach (GameObject slotObj in _itemsDisplayed.Keys.ToArray())
+                {
+                    _itemsDisplayed[slotObj] = new InventorySlotBase(refCtrlr.DefaultItems[i], FoodState.Raw);
+
+                    i++;
+                }
+            }
+            // 通常はコンテナアイテムを表示
+            else
+            {
+                var nearRefContainer = RefrigeratorManager.Instance.NearRefrigeratorContainer;
+
+                foreach (GameObject slotObj in _itemsDisplayed.Keys.ToArray())
+                {
+                    _itemsDisplayed[slotObj] = new InventorySlotBase(nearRefContainer.GetItem(i), nearRefContainer.GetState(i));
+
+                    i++;
+                }
+            }
+
+        }
+
         foreach (KeyValuePair<GameObject, InventorySlotBase> slot in _itemsDisplayed)
         {
             Text slotText = slot.Key.GetComponentInChildren<Text>();
@@ -63,36 +140,25 @@ public class InventoryRenderer : MonoBehaviour
             // アイテムがあればアイテム名表示
             if (slot.Value.Item != null)
             {
-                // 状態に応じて名称変化
-                switch (slot.Value.State)
-                {
-                    case FoodState.None:
-                        Debug.LogWarning($"アイテム「{slot.Value.Item.ItemName}」の状態がNoneです");
-                        slotText.text = slot.Value.Item.ItemName;
-                        break;
-
-                    case FoodState.Raw:
-                        slotText.text = slot.Value.Item.ItemName;
-                        break;
-
-                    case FoodState.Cooked:
-                        slotText.text = $"焼けた{slot.Value.Item.ItemName}";
-                        break;
-
-                    case FoodState.Burnt:
-                        slotText.text = $"焦げた{slot.Value.Item.ItemName}";
-                        break;
-
-                    default:
-                        Debug.LogWarning($"「{slot.Value.State}」の接頭辞が未設定です");
-                        slotText.text = slot.Value.Item.ItemName;
-                        break;
-                }
+                slotText.text = slot.Value.FullItemName;
             }
             else
             {
                 slotText.text = "";
             }
+        }
+    }
+
+    /// <summary>
+    /// インベントリスロットの表示を消去する
+    /// </summary>
+    public void ClearRender()
+    {
+        foreach (GameObject slotObj in _itemsDisplayed.Keys.ToArray())
+        {
+            Text slotText            = slotObj.GetComponentInChildren<Text>();
+            slotText.text            = "";
+            _itemsDisplayed[slotObj] = new InventorySlotBase();
         }
     }
 
@@ -103,12 +169,42 @@ public class InventoryRenderer : MonoBehaviour
     /// <param name="index">選択するインデックス</param>
     public void SelectSlot(int index = -1)
     {
-        index = (index == -1) ? _lastSelectedIndex : index;
+        index = (index == -1) ? LastSelectedIndex : index;
 
         // 指定インデックスがスロットサイズを超過してたら1番目を選択させる
-        if (index > _inventory.SlotSize) index = 0;
+        if (index > _selfSlotSize) index = 0;
 
         EventSystem.current.SetSelectedGameObject(_itemsDisplayed.Keys.ElementAt(index));
+    }
+
+    /// <summary>
+    /// 選択スロットのインデックスを取得する
+    /// </summary>
+    public void UpdateLastSelectedIndex()
+    {
+        if (EventSystem.current == null) return;
+
+        _currentSelectedObj = EventSystem.current.currentSelectedGameObject;
+
+        if (_currentSelectedObj != _lastSelectedObj)
+        {
+            Transform slotWrapperTrf = transform.Find("SlotWrapper");
+
+            if (slotWrapperTrf == null)
+            {
+                slotWrapperTrf = transform.Find("InventoryWrapper/SlotWrapper");
+            }
+
+            for (int i = 0; i < slotWrapperTrf.childCount; i++)
+            {
+                if (slotWrapperTrf.GetChild(i).gameObject == _currentSelectedObj)
+                {
+                    LastSelectedIndex = i;
+                }
+            }
+        }
+
+        _lastSelectedObj = _currentSelectedObj;
     }
 
     /// <summary>
