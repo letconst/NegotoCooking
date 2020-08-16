@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1330577696588367529}
   m_Layer: 0
   m_Name: cabbage
-  m_TagString: carotto
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

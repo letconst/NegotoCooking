@@ -21,6 +21,6 @@ public class CameraController : MonoBehaviour
     void Update()
     {
         // カメラの位置をプレイヤーに追従
-        transform.position = new Vector3(MyP.transform.position.x, MyP.transform.position.y + 20, MyP.transform.position.z - 7);
+        transform.position = new Vector3(MyP.transform.position.x, MyP.transform.position.y + 15, MyP.transform.position.z - 15);
     }
 }

@@ -15,15 +15,10 @@ TagManager:
   - BakeMator
   - FoodParent
   - Negoto
-  - shrimp
-  - brocorry
-  - pork
-  - eggplant
   - CutInventorySlot
   - CutInventory
-  - Tomato
-  - FoodPosition
   - BoilMator
+  - FoodPosition
   layers:
   - Default
   - TransparentFX
