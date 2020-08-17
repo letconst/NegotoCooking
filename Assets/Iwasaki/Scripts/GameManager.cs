@@ -5,9 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : SingletonMonoBehaviour<GameManager>
 {
-    public PlayerInventoryContainer playerContainer;
-    public InventoryContainerBase largePlateContainer;
-
     // 現在のシーン
     private Scene _currentScene;
     private Scene _tmpScene;
@@ -82,8 +79,8 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     /// </summary>
     public void ResetAllValues()
     {
-        playerContainer.Container.Clear();
-        largePlateContainer.Container.Clear();
+        TmpInventoryManager.Instance.playerContainer.Container.Clear();
+        TmpInventoryManager.Instance.refContainers.RefInvContainers.Clear();
         TimeCounter.currentTime = TimeCounter.countup;
         NoiseMator = 0;
     }
