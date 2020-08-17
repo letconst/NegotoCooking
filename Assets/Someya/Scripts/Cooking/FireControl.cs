@@ -48,9 +48,9 @@ public class FireControl : MonoBehaviour
     static public bool boilBool;
     //今焼き処理中か
     [HideInInspector]
-    static public bool clickBool = true;
-    [SerializeField]
+    static public bool clickBool = true;    
     private GameObject FlyingPan;
+    private GameObject Otama;
     private bool actionBool;
     private bool actionBool2;
 
@@ -60,6 +60,8 @@ public class FireControl : MonoBehaviour
         //_slider = GameObject.Find("Slider").GetComponent<Slider>();
         //中火の色にしておく
         FireChar.GetComponent<Image>().color = Color.yellow;
+        FlyingPan = GameObject.FindGameObjectWithTag("Frypan");
+        Otama = GameObject.FindGameObjectWithTag("Otama");
     }
 
     void Update()
