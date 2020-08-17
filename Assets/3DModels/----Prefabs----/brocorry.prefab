@@ -87,6 +87,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4550387053112569383}
+  - component: {fileID: 549849974422025614}
+  - component: {fileID: 8038369101698734429}
+  - component: {fileID: 7059948771449572683}
+  - component: {fileID: -291002349779501644}
   m_Layer: 0
   m_Name: brocorry
   m_TagString: Untagged
@@ -101,7 +105,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 683809588437933108}
-  m_LocalRotation: {x: -0, y: -0, z: -0.3017433, w: 0.9533892}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 942, y: 476, z: 17}
   m_LocalScale: {x: 1614.5, y: 1614.5, z: 1614.5}
   m_Children:
@@ -111,7 +115,64 @@ Transform:
   - {fileID: 4712828379902227153}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -35.125}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &549849974422025614
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 683809588437933108}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.018
+  m_Center: {x: -0.02, y: 0.05, z: 0.05}
+--- !u!136 &8038369101698734429
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 683809588437933108}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.006
+  m_Height: 0.026
+  m_Direction: 1
+  m_Center: {x: -0.02, y: 0.03, z: 0.051}
+--- !u!54 &7059948771449572683
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 683809588437933108}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &-291002349779501644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 683809588437933108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5c6b69aceb0d1e4c9a949a5bc3d5514, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  acceleration: {x: 0, y: -500, z: 0}
+  foodPrefab: {fileID: 683809588437933108}
 --- !u!1 &3246840420381598765
 GameObject:
   m_ObjectHideFlags: 0
