@@ -6,6 +6,7 @@ public class CameraController : MonoBehaviour
 {
     private GameObject _player;
     private Player p;
+    private float playerPos;
 
     public Player MyP { get => p; private set => p = value; }
 
@@ -20,7 +21,16 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // カメラの位置をプレイヤーに追従
-        transform.position = new Vector3(MyP.transform.position.x, MyP.transform.position.y + 15, MyP.transform.position.z - 15);
+        
+        if (MyP.transform.position.z >= -22)
+        {
+            // カメラの位置をプレイヤーに追従
+            transform.position = new Vector3(MyP.transform.position.x, MyP.transform.position.y + 15, MyP.transform.position.z - 15);
+        }
+        else
+        {
+            // カメラの位置をプレイヤーに追従
+            transform.position = new Vector3(MyP.transform.position.x, MyP.transform.position.y + 15, -37);
+        }
     }
 }
