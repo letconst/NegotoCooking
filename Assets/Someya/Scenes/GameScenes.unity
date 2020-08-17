@@ -2615,6 +2615,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 753232919155f2943b154226573fa8ad, type: 2}
   - {fileID: 11400000, guid: 249e24904ae17624d87195e14f12ddae, type: 2}
   - {fileID: 11400000, guid: 8993772b79e0bc1468fd314663db50d2, type: 2}
+  - {fileID: 11400000, guid: 8993772b79e0bc1468fd314663db50d2, type: 2}
+  - {fileID: 11400000, guid: 8993772b79e0bc1468fd314663db50d2, type: 2}
+  - {fileID: 11400000, guid: 8993772b79e0bc1468fd314663db50d2, type: 2}
 --- !u!65 &416193395
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9023,6 +9026,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 36742457895ab44489aacb94a97964a5, type: 2}
   - {fileID: 0}
   - {fileID: 11400000, guid: 58f8d27339ce9b64dba3a3447ad7c98c, type: 2}
+  - {fileID: 11400000, guid: 3483be7673b123b4b93b9dfd58e6d572, type: 2}
+  - {fileID: 11400000, guid: bbe1f14281c868b4b8c383905e59e2fc, type: 2}
+  - {fileID: 11400000, guid: 964110bd62ab36c4b98f1d1898b4c742, type: 2}
 --- !u!65 &1523005387
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10337,7 +10343,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentNearObj: {fileID: 0}
-  slotSize: 3
+  slotSize: 6
 --- !u!4 &1673240418
 Transform:
   m_ObjectHideFlags: 0

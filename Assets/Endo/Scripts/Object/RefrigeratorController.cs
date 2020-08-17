@@ -10,8 +10,6 @@ public class RefrigeratorController : MonoBehaviour
     // 近くにいるか否か
     private bool _isNear = false;
 
-    private int _slotSize = 3;
-
     private GameObject _playerInvObj;
     private GameObject _refInvObj;
 
@@ -75,7 +73,7 @@ public class RefrigeratorController : MonoBehaviour
 
         _selfContainer = _refContainers.GetContainer(gameObject.GetInstanceID());
 
-        for (int i = 0; i < _slotSize; i++)
+        for (int i = 0; i < RefrigeratorManager.Instance.slotSize; i++)
         {
             Item selfSlotDefaultItem = DefaultItems[i];
 
