@@ -5,21 +5,22 @@ using UnityEngine;
 public class LargePlateController : MonoBehaviour
 {
     // インベントリアセット
-    public InventoryContainerBase container;
+    public InventoryContainerBase selfContainer;
     // 近くにいるか否か
     private bool _isNear = false;
 
-    private GameObject      _soup;
-    private GameObject      _playerInvObj;
-    private GameObject[]    _playerInvSlotObjs;
-    private PlayerInventory _playerInv;
+    private GameObject               _soup;
+    private GameObject               _playerInvObj;
+    private PlayerInventoryContainer _playerInvContainer;
+    private InventoryRenderer        _playerInvRenderer;
 
     // Start is called before the first frame update
     void Start()
     {
-        _soup         = transform.Find("Soup").gameObject;
-        _playerInvObj = GameObject.FindGameObjectWithTag("PlayerInventory");
-        _playerInv    = _playerInvObj.GetComponent<PlayerInventory>();
+        _soup               = transform.Find("Soup").gameObject;
+        _playerInvObj       = GameObject.FindGameObjectWithTag("PlayerInventory");
+        _playerInvContainer = TmpInventoryManager.Instance.playerContainer;
+        _playerInvRenderer  = _playerInvObj.GetComponent<InventoryRenderer>();
 
         _soup.SetActive(false);
     }
@@ -27,39 +28,31 @@ public class LargePlateController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_playerInvSlotObjs == null)
-        {
-            _playerInvSlotObjs = GameObject.FindGameObjectsWithTag("PlayerInventorySlot");
-        }
-
         if ((Input.GetKeyDown("joystick button 2") || Input.GetKeyDown(KeyCode.E)) &&
             _isNear)
         {
             // 焼けてるときだけ大皿にぶち込む
-            if (_playerInv.container.GetState(_playerInv.lastSelectedIndex) != FoodState.Cooked) return;
+            if (_playerInvContainer.GetState(_playerInvRenderer.LastSelectedIndex) != FoodState.Cooked) return;
 
             // 大皿に現在選択しているアイテムをぶち込む
-            container.AddItem(_playerInv.container.GetItem(_playerInv.lastSelectedIndex),
-                              _playerInv.container.GetState(_playerInv.lastSelectedIndex));
+            selfContainer.AddItem(_playerInvContainer.GetItem(_playerInvRenderer.LastSelectedIndex),
+                              _playerInvContainer.GetState(_playerInvRenderer.LastSelectedIndex));
 
             // プレイヤーのアイテムを削除
-            _playerInvSlotObjs[_playerInv.lastSelectedIndex]
-                .GetComponent<PlayerInventorySlot>().RemoveItem(_playerInv);
+            _playerInvContainer.RemoveItem(_playerInvRenderer.LastSelectedIndex);
         }
 
         // コンテナにアイテムが1つでも入ったらスープを表示
-        if (container.Container.Count > 0) _soup.SetActive(true);
+        if (selfContainer.Container.Count > 0) _soup.SetActive(true);
     }
 
-    private void OnTriggerEnter() => _isNear = true;
-
-    private void OnTriggerExit() => _isNear = false;
-
-    /// <summary>
-    /// ゲーム終了時に大皿の中身を削除する
-    /// </summary>
-    private void OnApplicationQuit()
+    private void OnTriggerEnter(Collider other)
     {
-        container.Container.Clear();
+        if (other.CompareTag("Player")) _isNear = true;
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player")) _isNear = false;
     }
 }

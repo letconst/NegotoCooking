@@ -105,6 +105,47 @@ public class InventorySlotBase
     public int       ID    { get => _id;    protected set => _id    = value; }
     public Item      Item  { get => _item;  protected set => _item  = value; }
     public FoodState State { get => _state; protected set => _state = value; }
+    public string FullItemName
+    {
+        get
+        {
+            string result = "";
+
+            if (Item == null) return result;
+
+            switch (State)
+            {
+                case FoodState.None:
+                    if (Item != null)
+                    {
+                        Debug.LogWarning($"アイテム「{Item.ItemName}」の状態がNoneです。アイテムを持たせる際は適切な状態を指定してください");
+                    }
+
+                    result = Item.ItemName;
+                    break;
+
+                case FoodState.Raw:
+                    result = Item.ItemName;
+                    break;
+
+                case FoodState.Cooked:
+                    result = $"焼いた{Item.ItemName}";
+                    break;
+
+                case FoodState.Burnt:
+                    result = $"焦げた{Item.ItemName}";
+                    break;
+
+                default:
+                    Debug.LogWarning($"状態「{State}」の接頭辞が未設定です");
+
+                    result = Item.ItemName;
+                    break;
+            }
+
+            return result;
+        }
+    }
 
     public InventorySlotBase()
     {
@@ -120,7 +161,7 @@ public class InventorySlotBase
 
     public void UpdateSlot(Item item, FoodState state = FoodState.Raw)
     {
-        Item = item;
+        Item  = item;
         State = state;
     }
 
