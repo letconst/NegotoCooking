@@ -19,7 +19,6 @@ public class InventorySlotFunctions : MonoBehaviour
         _refInvObj         = GameObject.FindGameObjectWithTag("RefrigeratorInventory");
         _invManager        = TmpInventoryManager.Instance;
         _playerContainer   = _invManager.playerContainer;
-        _nearRefContainer  = RefrigeratorManager.Instance.NearRefrigeratorContainer;
         _playerInvRenderer = GameObject.FindGameObjectWithTag("PlayerInventory").GetComponent<InventoryRenderer>();
     }
 
@@ -58,6 +57,8 @@ public class InventorySlotFunctions : MonoBehaviour
 
     public void OnClickForPlayer()
     {
+        _nearRefContainer = RefrigeratorManager.Instance.NearRefrigeratorContainer;
+
         // 交換モードなら
         if (_invManager.isSwapMode)
         {
@@ -84,6 +85,7 @@ public class InventorySlotFunctions : MonoBehaviour
 
     public void OnClickForRefrigerator()
     {
+        _nearRefContainer = RefrigeratorManager.Instance.NearRefrigeratorContainer;
         InventorySlotBase nearRefSlot      = _nearRefContainer.Container[GetSelfIndex()];
         Item              selfItem         = nearRefSlot.Item;
         FoodState         selfState        = nearRefSlot.State;

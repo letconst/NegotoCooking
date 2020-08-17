@@ -23,7 +23,7 @@ public class RefrigeratorManager : SingletonMonoBehaviour<RefrigeratorManager>
             if (currentNearObj == null) return result;
 
             result = TmpInventoryManager.Instance.refContainers.GetContainer(currentNearObj.GetInstanceID());
-
+            
             return result;
         }
     }
