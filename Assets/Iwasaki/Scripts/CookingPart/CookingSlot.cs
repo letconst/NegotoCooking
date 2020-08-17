@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class CookingSlot : InventorySlotGrid
 {
@@ -18,7 +19,6 @@ public class CookingSlot : InventorySlotGrid
             // スロットのインスタンス
             GameObject slotObj = Instantiate(_slotPrefab, transform);
             BakeCooking slot = slotObj.GetComponent<BakeCooking>();
-
             //slot.SetItem(null);
 
             // デバッグ用
@@ -52,6 +52,14 @@ public class CookingSlot : InventorySlotGrid
 
                     case FoodState.Burnt:
                         slot.itemName.text = "焦げた" + _selfInv.container.Container[i].Item.ItemName;
+                        break;
+
+                    case FoodState.Cut:
+                        slot.itemName.text = "切れた" + _selfInv.container.Container[i].Item.ItemName;
+                        break;
+
+                    case FoodState.Boil:
+                        slot.itemName.text = "茹でた" + _selfInv.container.Container[i].Item.ItemName;
                         break;
                 }
             }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class ToCookingScene : MonoBehaviour
+public class ToBakeScene : MonoBehaviour
 {
     private bool flontHobBool;
     private GameObject player;
@@ -29,11 +29,11 @@ public class ToCookingScene : MonoBehaviour
 
     void Update()
     {
-        if (flontHobBool && Input.GetKeyDown("joystick button 2"))
+        if (flontHobBool && Input.GetKeyDown("joystick button 2") || flontHobBool && Input.GetKeyDown(KeyCode.Q))
         {
             GameManager.Instance.PlayerPos = player.transform.position;
             GameManager.Instance.PlayerRotate = player.transform.localEulerAngles;
-            SceneChanger.Instance.SceneLoad(SceneChanger.SceneName.CookingScenes);
+            SceneChanger.Instance.SceneLoad(SceneChanger.SceneName.BakeScenes);
         }
     }
 }

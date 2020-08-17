@@ -13,6 +13,7 @@ public class BakeCooking : InventorySlot
     private Slider _slider;
     private GameObject foodParent;
     private GameObject foodChild;
+    private GameObject foodPosition;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,12 +29,14 @@ public class BakeCooking : InventorySlot
 
         // インベントリスロットを選択
         EventSystem.current.SetSelectedGameObject(_selfInvSlotObjs[0]);
+
+        foodPosition = GameObject.FindGameObjectWithTag("FoodPosition");
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (_slider.value >= 100 && FireControl.bakeBool ==false)
+        if (_slider.value >= 100 && FireControl.bakeBool == false)
         {
             //Debug.Log("inbakeBool");
             //if (bakeBool) return;
@@ -65,12 +68,11 @@ public class BakeCooking : InventorySlot
         int selfIndex = GetSelfIndex(_selfInvSlotObjs, gameObject);
         if (FireControl.clickBool == false ||
             GetInAllItem(CIB)     == null  ||
-            CIB.container.Container[selfIndex].State == FoodState.Cooked) return;
+            CIB.container.Container[selfIndex].State != FoodState.Raw) return;
 
         FireControl.clickBool = false;
-        foodChild = Instantiate(GetInAllItem(CIB).FoodObj, new Vector3(GetInAllItem(CIB).FoodObj.transform.position.x,
-                                                           GetInAllItem(CIB).FoodObj.transform.position.y,
-                                                           GetInAllItem(CIB).FoodObj.transform.position.z), Quaternion.identity);
+        foodChild = Instantiate(GetInAllItem(CIB).FoodObj, new Vector3(foodPosition.transform.position.x, foodPosition.transform.position.y, foodPosition.transform.position.z),
+                                                           new Quaternion(foodPosition.transform.rotation.x, foodPosition.transform.rotation.y, foodPosition.transform.rotation.z, foodPosition.transform.rotation.w));
         foodChild.transform.parent = foodParent.transform;
         bakeItem = GetInAllItem(CIB);
 

@@ -49,6 +49,14 @@ public class PlayerInventorySlotGrid : InventorySlotGrid
                     case FoodState.Burnt:
                         slot.itemName.text = "焦げた" + _selfInv.container.Container[i].Item.ItemName;
                         break;
+
+                    case FoodState.Cut:
+                        slot.itemName.text = "切れた" + _selfInv.container.Container[i].Item.ItemName;
+                        break;
+
+                    case FoodState.Boil:
+                        slot.itemName.text = "茹でた" + _selfInv.container.Container[i].Item.ItemName;
+                        break;
                 }
             }
         }

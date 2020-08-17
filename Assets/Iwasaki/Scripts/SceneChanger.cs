@@ -11,7 +11,7 @@ public class SceneChanger : SingletonMonoBehaviour<SceneChanger>
     public enum SceneName
     {
         TitleScenes = 0,
-        CookingScenes,
+        BakeScenes,
         GameOverScenes,
         GameScenes,
         GameClear,
