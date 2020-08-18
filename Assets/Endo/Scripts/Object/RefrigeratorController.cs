@@ -69,9 +69,12 @@ public class RefrigeratorController : MonoBehaviour
     /// </summary>
     private void CreateContainer()
     {
-        _refContainers.AddContainer(gameObject);
+        // コンテナがすでに作成されていたら追加を行わない
+        if (_refContainers.GetContainer(gameObject.name) != null) return;
 
-        _selfContainer = _refContainers.GetContainer(gameObject.GetInstanceID());
+        _refContainers.AddContainer(gameObject.name);
+
+        _selfContainer = _refContainers.GetContainer(gameObject.name);
 
         for (int i = 0; i < RefrigeratorManager.Instance.slotSize; i++)
         {

@@ -109,7 +109,7 @@ public class InventoryRenderer : MonoBehaviour
             RefrigeratorController refCtrlr   = curNearRef.GetComponent<RefrigeratorController>();
 
             // 初回表示時は初期アイテム表示
-            if (TmpInventoryManager.Instance.refContainers.GetContainer(curNearRef.GetInstanceID()) == null)
+            if (TmpInventoryManager.Instance.refContainers.GetContainer(curNearRef.name) == null)
             {
                 foreach (GameObject slotObj in _itemsDisplayed.Keys.ToArray())
                 {

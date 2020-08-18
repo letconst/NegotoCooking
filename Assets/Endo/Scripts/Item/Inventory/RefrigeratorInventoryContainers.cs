@@ -13,60 +13,35 @@ public class RefrigeratorInventoryContainers : ScriptableObject
     /// <summary>
     /// 冷蔵庫コンテナを新規追加する
     /// </summary>
-    /// <param name="refObj">追加する冷蔵庫のオブジェクト</param>
-    public void AddContainer(GameObject refObj)
+    /// <param name="refObjName">追加する冷蔵庫のオブジェクトの名前</param>
+    public void AddContainer(string refObjName)
     {
         // 同じインスタンスIDのコンテナがあれば追加しない
         foreach (var container in RefInvContainers)
         {
-            if (container._selfInstanceId == refObj.GetInstanceID()) return;
+            if (container.selfObjName == refObjName) return;
         }
 
-        RefInvContainers.Add(new RefrigeratorInventoryContainerBase(refObj.GetInstanceID()));
+        RefInvContainers.Add(new RefrigeratorInventoryContainerBase(refObjName));
     }
 
     /// <summary>
     /// 指定したインスタンスIDの冷蔵庫オブジェクトのコンテナを返す
     /// 指定IDに一致するコンテナが見つからない場合はnullを返す
     /// </summary>
-    /// <param name="instanceId">取得したいコンテナの冷蔵庫オブジェクトのインスタンスID</param>
+    /// <param name="refObjName">取得したいコンテナの冷蔵庫オブジェクトの名前</param>
     /// <returns>コンテナ || null</returns>
-    public RefrigeratorInventoryContainerBase GetContainer(int instanceId)
+    public RefrigeratorInventoryContainerBase GetContainer(string refObjName)
     {
         RefrigeratorInventoryContainerBase result = null;
 
         foreach (var container in RefInvContainers)
         {
-            if (container._selfInstanceId == instanceId)
+            if (container.selfObjName == refObjName)
             {
                 result = container;
                 break;
             }
-        }
-
-        return result;
-    }
-
-    /// <summary>
-    /// 指定したインスタンスIDの冷蔵庫オブジェクトのコンテナインデックスを返す
-    /// 見つからない場合は-1を返す
-    /// </summary>
-    /// <param name="instanceId">取得したいコンテナの冷蔵庫オブジェクトのインスタンスID</param>
-    /// <returns>コンテナのインデックス || -1</returns>
-    public int GetContainerIndex(int instanceId)
-    {
-        int result = -1;
-        int i      = 0;
-
-        foreach (var container in RefInvContainers)
-        {
-            if (container._selfInstanceId == instanceId)
-            {
-                result = i;
-                break;
-            }
-
-            i++;
         }
 
         return result;
@@ -76,17 +51,18 @@ public class RefrigeratorInventoryContainers : ScriptableObject
 [System.Serializable]
 public class RefrigeratorInventoryContainerBase
 {
-    [SerializeField, Tooltip("個々の冷蔵庫オブジェクトのインスタンスID")]
-    public int _selfInstanceId;
+    // TODO: 冷蔵庫判別にオブジェクト名を使用しているが、同一名称が使われる恐れがあるため、できれば他の方法に切り替えたい
+    [SerializeField, Tooltip("個々の冷蔵庫オブジェクトの名前")]
+    public string selfObjName;
 
     [SerializeField]
     private List<InventorySlotBase> _container = new List<InventorySlotBase>();
 
     public List<InventorySlotBase> Container { get => _container; private set => _container = value; }
 
-    public RefrigeratorInventoryContainerBase(int instanceId)
+    public RefrigeratorInventoryContainerBase(string objName)
     {
-        _selfInstanceId = instanceId;
+        selfObjName = objName;
     }
 
     /// <summary>
