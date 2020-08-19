@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class TmpInventoryManager : SingletonMonoBehaviour<TmpInventoryManager>
 {
+    [SerializeField]
     private PlayerInventoryContainer        _playerContainer;
+    [SerializeField]
     private InventoryContainerBase          _largePlateContainer;
+    [SerializeField]
     private RefrigeratorInventoryContainers _refContainers;
+    [SerializeField]
     private RecipeDatabase                  _recipeDatabase;
 
     [System.NonSerialized]

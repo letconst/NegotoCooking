@@ -167,3 +167,16 @@ public class InventorySlotBase
 
     public void ChangeState(FoodState state) => State = state;
 }
+
+[System.Serializable]
+public class DefaultItems
+{
+    [SerializeField]
+    private Item _item;
+
+    [SerializeField]
+    private FoodState _state;
+
+    public Item      Item  { get => _item; }
+    public FoodState State { get => _state; }
+}

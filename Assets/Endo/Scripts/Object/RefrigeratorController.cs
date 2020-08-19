@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class RefrigeratorController : MonoBehaviour
 {
-    [SerializeField, Tooltip("冷蔵庫内に初期配置させるアイテム（3個まで）")]
-    private Item[] _defaultItems = new Item[3];
+    [SerializeField, Tooltip("冷蔵庫内に初期配置させるアイテム")]
+    private List<DefaultItems> _defaultItems = new List<DefaultItems>();
 
     // 近くにいるか否か
     private bool _isNear = false;
@@ -18,7 +18,8 @@ public class RefrigeratorController : MonoBehaviour
     private RefrigeratorInventoryContainers    _refContainers;
     private RefrigeratorInventoryContainerBase _selfContainer;
 
-    public Item[] DefaultItems { get => _defaultItems; private set => _defaultItems = value; }
+    public List<DefaultItems> DefaultItems { get => _defaultItems; }
+
 
     // Start is called before the first frame update
     void Start()
@@ -78,10 +79,10 @@ public class RefrigeratorController : MonoBehaviour
 
         for (int i = 0; i < RefrigeratorManager.Instance.slotSize; i++)
         {
-            Item selfSlotDefaultItem = DefaultItems[i];
+            Item selfSlotDefaultItem = DefaultItems[i].Item;
 
             // スロットインデックスがアイテム数以上の場合は空アイテムを追加
-            if (i >= DefaultItems.Length)
+            if (i >= DefaultItems.Count)
             {
                 _selfContainer.AddItem(null);
                 continue;
