@@ -11,6 +11,22 @@ public class RecipeDatabase : ScriptableObject
     public List<RecipeEntry> Entries { get => _entries; private set => _entries = value; }
 
     /// <summary>
+    /// 登録されている全レシピの名前をリストで取得する
+    /// </summary>
+    /// <returns>レシピ名のリスト</returns>
+    public List<string> GetAllRecipeNames()
+    {
+        List<string> results = new List<string>();
+
+        foreach (var entry in Entries)
+        {
+            results.Add(entry.RecipeName);
+        }
+
+        return results;
+    }
+
+    /// <summary>
     /// 指定した名前のレシピデータを取得する
     /// </summary>
     /// <param name="name">取得するレシピの名前</param>

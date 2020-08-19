@@ -7,8 +7,8 @@ public enum FoodState
     None,   // なし
     Raw,    // 生
     Cooked, // 調理済み
-    Burnt,   // 焦げてる
-    Cut,   // 切れている
+    Burnt,  // 焦げてる
+    Cut,    // 切れている
     Boil,   // 煮込んである
 }
 
@@ -116,7 +116,8 @@ public class InventorySlotBase
             switch (State)
             {
                 case FoodState.None:
-                    if (Item != null)
+                    if (Item != null &&
+                        Item.KindOfItem1 != Item.KindOfItem.Seasoning)
                     {
                         Debug.LogWarning($"アイテム「{Item.ItemName}」の状態がNoneです。アイテムを持たせる際は適切な状態を指定してください");
                     }
@@ -134,6 +135,14 @@ public class InventorySlotBase
 
                 case FoodState.Burnt:
                     result = $"焦げた{Item.ItemName}";
+                    break;
+
+                case FoodState.Boil:
+                    result = $"茹でた{Item.ItemName}";
+                    break;
+
+                case FoodState.Cut:
+                    result = $"切った{Item.ItemName}";
                     break;
 
                 default:
