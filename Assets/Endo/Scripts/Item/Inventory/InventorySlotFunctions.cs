@@ -18,7 +18,7 @@ public class InventorySlotFunctions : MonoBehaviour
         _nearRefObj        = RefrigeratorManager.Instance.currentNearObj;
         _refInvObj         = GameObject.FindGameObjectWithTag("RefrigeratorInventory");
         _invManager        = TmpInventoryManager.Instance;
-        _playerContainer   = _invManager.playerContainer;
+        _playerContainer   = _invManager.PlayerContainer;
         _playerInvRenderer = GameObject.FindGameObjectWithTag("PlayerInventory").GetComponent<InventoryRenderer>();
     }
 

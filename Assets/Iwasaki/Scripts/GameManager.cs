@@ -79,8 +79,8 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     /// </summary>
     public void ResetAllValues()
     {
-        TmpInventoryManager.Instance.playerContainer.Container.Clear();
-        TmpInventoryManager.Instance.refContainers.RefInvContainers.Clear();
+        TmpInventoryManager.Instance.PlayerContainer.Container.Clear();
+        TmpInventoryManager.Instance.RefContainers.RefInvContainers.Clear();
         TimeCounter.currentTime = TimeCounter.countup;
         NoiseMator = 0;
     }

@@ -28,7 +28,7 @@ public class RefrigeratorController : MonoBehaviour
 
         _playerInvRenderer = _playerInvObj.GetComponent<InventoryRenderer>();
         _selfInvRenderer   = _refInvObj.GetComponent<InventoryRenderer>();
-        _refContainers     = TmpInventoryManager.Instance.refContainers;
+        _refContainers     = TmpInventoryManager.Instance.RefContainers;
 
         CreateContainer();
     }

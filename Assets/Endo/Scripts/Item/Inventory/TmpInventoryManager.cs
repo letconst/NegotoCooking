@@ -4,15 +4,24 @@ using UnityEngine;
 
 public class TmpInventoryManager : SingletonMonoBehaviour<TmpInventoryManager>
 {
-    public PlayerInventoryContainer        playerContainer;
-    public InventoryContainerBase          largePlateContainer;
-    public RefrigeratorInventoryContainers refContainers;
-    public Item                            itemToSwapFromRef;
-    public FoodState                       itemStateToSwap;
+    private PlayerInventoryContainer        _playerContainer;
+    private InventoryContainerBase          _largePlateContainer;
+    private RefrigeratorInventoryContainers _refContainers;
+    private RecipeDatabase                  _recipeDatabase;
+
+    [System.NonSerialized]
+    public Item itemToSwapFromRef;
+    [System.NonSerialized]
+    public FoodState itemStateToSwap;
 
     // アイテム交換モードか否か
     [System.NonSerialized]
     public bool isSwapMode = false;
+
+    public PlayerInventoryContainer        PlayerContainer     { get => _playerContainer; }
+    public InventoryContainerBase          LargePlateContainer { get => _largePlateContainer; }
+    public RefrigeratorInventoryContainers RefContainers       { get => _refContainers; }
+    public RecipeDatabase                  RecipeDatabase      { get => _recipeDatabase; }
 
     private void Awake()
     {
@@ -28,8 +37,8 @@ public class TmpInventoryManager : SingletonMonoBehaviour<TmpInventoryManager>
     private void OnApplicationQuit()
     {
         // 終了時にコンテナ消去
-        playerContainer.Container.Clear();
-        refContainers.RefInvContainers.Clear();
-        largePlateContainer.Container.Clear();
+        PlayerContainer.Container.Clear();
+        RefContainers.RefInvContainers.Clear();
+        LargePlateContainer.Container.Clear();
     }
 }
