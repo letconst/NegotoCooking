@@ -79,7 +79,9 @@ public class RefrigeratorController : MonoBehaviour
 
         for (int i = 0; i < RefrigeratorManager.Instance.slotSize; i++)
         {
-            Item selfSlotDefaultItem = DefaultItems[i].Item;
+            Item selfSlotDefaultItem = (DefaultItems.Count != 0)
+                ? DefaultItems[i].Item
+                : null;
 
             // スロットインデックスがアイテム数以上の場合は空アイテムを追加
             if (i >= DefaultItems.Count)
@@ -93,17 +95,17 @@ public class RefrigeratorController : MonoBehaviour
             {
                 _selfContainer.AddItem(selfSlotDefaultItem,
                                        // アイテムが存在するかによって状態変化
-                                       (selfSlotDefaultItem == null)
-                                           ? FoodState.None
-                                           : FoodState.Raw);
+                                       (selfSlotDefaultItem != null)
+                                           ? DefaultItems[i].State
+                                           : FoodState.None);
             }
             // すでにコンテナに同一インデックスのスロットが存在するなら内容更新
             else
             {
                 _selfContainer.UpdateItem(i, selfSlotDefaultItem,
-                                          (selfSlotDefaultItem == null)
-                                              ? FoodState.None
-                                              : FoodState.Raw);
+                                          (selfSlotDefaultItem != null)
+                                              ? DefaultItems[i].State
+                                              : FoodState.None);
             }
         }
     }
