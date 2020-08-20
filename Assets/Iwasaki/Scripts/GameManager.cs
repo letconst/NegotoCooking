@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : SingletonMonoBehaviour<GameManager>
 {
+    public PlayerInventoryContainer playerContainer;
+    public InventoryContainerBase largePlateContainer;
+
     // 現在のシーン
     private Scene _currentScene;
     private Scene _tmpScene;
