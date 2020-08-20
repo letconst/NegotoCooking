@@ -17,4 +17,4 @@ MonoBehaviour:
   _itemName: "\u725B\u8089"
   _foodObj: {fileID: 6280027147318424494, guid: 8845cf9d7b768fc46abd7d53fb186c48,
     type: 3}
-  _isUsable: 1
+  _isUsable: 0

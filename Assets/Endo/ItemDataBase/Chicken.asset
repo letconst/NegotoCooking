@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b6947bccaf59ac4ca7b1bcf2dc1c37d, type: 3}
   m_Name: Chicken
   m_EditorClassIdentifier: 
-  _kindOfItem: 0
+  _kindOfItem: 1
   _itemIcon: {fileID: 0}
   _itemName: "\u9D8F\u8089"
   _foodObj: {fileID: 8665331324527074544, guid: 13b8b60f815009d4da96d5188201e508,
