@@ -10,21 +10,24 @@ public class BoilController : MonoBehaviour
     [SerializeField, Tooltip("鍋の中心座標のオブジェクト")]
     private GameObject _potCenterPos;
 
-    private GameObject _bakeMator;
+    private GameObject _boilMator;
     private GameObject _foodParent;
-    private Slider     _bakeSlider;
+    private Slider     _boilSlider;
 
     private PlayerInventoryContainer _playerContainer;
 
     // 調理が完了しているか否か
     private bool _isCompleteCooking = false;
 
+    // 現在調理中の食材
+    public static Item foodBeingBoiled;
+
     // Start is called before the first frame update
     void Start()
     {
-        _bakeMator = GameObject.FindGameObjectWithTag("BoilMator");
+        _boilMator  = GameObject.FindGameObjectWithTag("BoilMator");
         _foodParent = GameObject.FindGameObjectWithTag("FoodParent");
-        _bakeSlider = _bakeMator.GetComponent<FireControl>()._slider;
+        _boilSlider = _boilMator.GetComponent<FireControl>()._slider;
 
         _playerContainer = TmpInventoryManager.Instance.PlayerContainer;
     }
@@ -41,7 +44,7 @@ public class BoilController : MonoBehaviour
     /// </summary>
     private void CookingCompleteListener()
     {
-        if (_bakeSlider.value >= 100 && !_isCompleteCooking)
+        if (_boilSlider.value >= 100 && !_isCompleteCooking)
         {
             _isCompleteCooking = true;
         }
@@ -56,11 +59,11 @@ public class BoilController : MonoBehaviour
             Destroy(_foodParent.transform.GetChild(0).gameObject);
 
             // プレイヤーインベントリに戻す
-            _playerContainer.UpdateItem(puttedSlotIndex, FireControl.foodInProgress, FoodState.Boil);
+            _playerContainer.UpdateItem(puttedSlotIndex, foodBeingBoiled, FoodState.Boil);
 
             _isCompleteCooking = false;
             FireControl.clickBool = true;
-            FireControl.foodInProgress = null;
+            foodBeingBoiled = null;
         }
     }
 

@@ -37,6 +37,12 @@ public class CutGauge : MonoBehaviour
             SceneManager.LoadScene("GameScenes");
         }
 
+        // 調理メーターがMAXになったら戻す
+        if (_slider.value >= 100)
+        {
+            _slider.value = 0;
+        }
+
         if (clickBool == true) return;
 
         if (Input.GetKeyDown("joystick button 2") || Input.GetKeyDown(KeyCode.Q))
@@ -85,11 +91,11 @@ public class CutGauge : MonoBehaviour
             }
             else if (cutGauge.value >= 20 && 32 >= cutGauge.value || cutGauge.value >= 68 && 80 >= cutGauge.value)
             {
-                _slider.value += 5;     
+                _slider.value += 5;
             }
 
             cutGauge.value = 0;
-            StartCoroutine(waitTime(1.0f));            
+            StartCoroutine(waitTime(1.0f));
         }
     }
     IEnumerator waitTime(float time)

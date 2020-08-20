@@ -102,6 +102,7 @@ public class FireControl : MonoBehaviour
             }
         }
 
+        // 調理メーターがMAXになったら戻す
         if (_slider.value >= 100)
         {
             _slider.value = 0;
