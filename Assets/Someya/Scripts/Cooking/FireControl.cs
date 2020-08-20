@@ -71,7 +71,7 @@ public class FireControl : MonoBehaviour
 
         float dph = Input.GetAxis("D_Pad_H");
 
-        if (dph < 0 && fireChange != 0)
+        if (dph > 0 && fireChange != 0)
         {
             if(fireChange <= 0)
             {
@@ -86,7 +86,7 @@ public class FireControl : MonoBehaviour
                 fireChange--;
             }
         }
-        if(dph > 0 && fireChange != 2)
+        if(dph < 0 && fireChange != 2)
         {
             if (fireChange >= 2)
             {
