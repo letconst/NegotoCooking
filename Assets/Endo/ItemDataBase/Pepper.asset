@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _kindOfItem: 0
   _itemIcon: {fileID: 0}
-  _itemName: "\u6545\u969C"
-  _itemDesc: 
+  _itemName: "\u80E1\u6912"
+  _foodObj: {fileID: 7051983101457213819, guid: dccd828eaa3cf5d4d9975462a04f83c7,
+    type: 3}
+  _isUsable: 0
