@@ -17,16 +17,17 @@ public class Player : SingletonMonoBehaviour<Player>
     [SerializeField, Tooltip("回転速度")]
     private int _rotateSpeed = 10;
 
+    // プレイヤーが停止状態か否か
+    public  bool                isStop = false;
     private CharacterController _controller;
     private Vector3             _moveDirection = Vector3.zero;
-    public bool _isTouch;
-    private Animator animator;
+    private Animator            _animator;
 
     // Start is called before the first frame update
     void Start()
     {
         _controller = GetComponent<CharacterController>();
-        animator = GetComponent<Animator>();
+        _animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -41,9 +42,14 @@ public class Player : SingletonMonoBehaviour<Player>
     private void Movement()
     {
         Quaternion rot;
-        float
-            _h = Input.GetAxis("Horizontal"), // 水平
-            _v = Input.GetAxis("Vertical");   // 垂直
+        // 水平入力
+        float _h = (isStop)
+            ? 0
+            : Input.GetAxis("Horizontal");
+        // 垂直入力
+        float _v = (isStop)
+            ? 0
+            : Input.GetAxis("Vertical"); ;
 
         // 接地判定
         if (_controller.isGrounded)
@@ -81,41 +87,11 @@ public class Player : SingletonMonoBehaviour<Player>
         //アニメーション
         if(_h==0 && _v==0)
         {
-            animator.SetBool("Walk", false);
+            _animator.SetBool("Walk", false);
         }
         else
         {
-            animator.SetBool("Walk", true);
-        }
-    }
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.gameObject.name.CompareTo("Bakekitchen") == 0)
-        {
-            if (Input.GetMouseButtonDown(0) && !_isTouch)
-            {
-                _isTouch = true;
-                // シーンを追加
-                SceneManager.LoadSceneAsync("BakeScenes", LoadSceneMode.Additive);
-            }
-        }
-        if (other.gameObject.name.CompareTo("Boilkitchen") == 0)
-        {
-            if (Input.GetMouseButtonDown(0) && !_isTouch)
-            {
-                _isTouch = true;
-                // シーンを追加
-                SceneManager.LoadSceneAsync("BoilScenes", LoadSceneMode.Additive);
-            }
-        }
-        if (other.gameObject.name.CompareTo("Cutkitchen") == 0)
-        {
-            if (Input.GetMouseButtonDown(0) && !_isTouch)
-            {
-                _isTouch = true;
-                // シーンを追加
-                SceneManager.LoadSceneAsync("CutScenes", LoadSceneMode.Additive);
-            }
+            _animator.SetBool("Walk", true);
         }
     }
 }
