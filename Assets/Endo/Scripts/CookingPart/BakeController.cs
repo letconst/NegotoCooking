@@ -14,6 +14,9 @@ public class BakeController : MonoBehaviour
 
     private PlayerInventoryContainer _playerContainer;
 
+    // 調理が完了しているか否か
+    private bool _isCompleteCooking = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -36,16 +39,16 @@ public class BakeController : MonoBehaviour
     /// </summary>
     private void CookingCompleteListener()
     {
-        if (_bakeSlider.value >= 100 && !FireControl.bakeBool)
-        {
-            FireControl.bakeBool = true;
-        }
-
         int               puttedSlotIndex = TmpInventoryManager.Instance.puttedSlotIndex;
         InventorySlotBase puttedSlot      = _playerContainer.Container[puttedSlotIndex];
 
+        if (_bakeSlider.value >= 100 && !_isCompleteCooking)
+        {
+            _isCompleteCooking = true;
+        }
+
         // 調理完了した食材をインベントリに戻す
-        if (FireControl.bakeBool && puttedSlot.Item == null)
+        if (_isCompleteCooking && puttedSlot.Item == null)
         {
             // 出ていた食材を削除
             Destroy(_foodParent.transform.GetChild(0).gameObject);
@@ -53,8 +56,8 @@ public class BakeController : MonoBehaviour
             // プレイヤーインベントリに戻す
             _playerContainer.UpdateItem(puttedSlotIndex, FireControl.foodInProgress, FoodState.Cooked);
 
+            _isCompleteCooking = false;
             FireControl.clickBool = true;
-            FireControl.bakeBool = false;
             FireControl.foodInProgress = null;
         }
     }

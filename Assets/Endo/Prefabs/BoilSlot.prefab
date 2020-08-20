@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5723900591348096003}
   - component: {fileID: 6155751003138338437}
   - component: {fileID: 8247959180140777976}
-  - component: {fileID: 1091213248951341553}
+  - component: {fileID: 3850919002105464971}
   m_Layer: 5
   m_Name: BoilSlot
   m_TagString: CookingInventorySlot
@@ -119,8 +119,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1091213248951341553}
-        m_MethodName: OnClick
+      - m_Target: {fileID: 3850919002105464971}
+        m_MethodName: OnClickForBakeAndBoil
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -130,7 +130,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &1091213248951341553
+--- !u!114 &3850919002105464971
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -139,11 +139,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 7395243517525022678}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2b5b07b9b3bd224db6a6e09a8c88107, type: 3}
+  m_Script: {fileID: 11500000, guid: aef439e3354f3ad4a9ee3f620b11575f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selfItem: {fileID: 0}
-  itemName: {fileID: 7651054846558219410}
 --- !u!1 &8818888977480379038
 GameObject:
   m_ObjectHideFlags: 0

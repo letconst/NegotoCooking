@@ -138,7 +138,7 @@ public class InventorySlotFunctions : MonoBehaviour
     /// <summary>
     /// 焼き調理時のプレイヤーインベントリスロットをクリックした際の動作
     /// </summary>
-    public void OnClickForBake()
+    public void OnClickForBakeAndBoil()
     {
         //食料prefabの親
         GameObject foodParent = GameObject.FindGameObjectWithTag("FoodParent");

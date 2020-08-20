@@ -138,7 +138,7 @@ public class InventorySlotBase
                     break;
 
                 case FoodState.Boil:
-                    result = $"茹でた{Item.ItemName}";
+                    result = $"煮込んだ{Item.ItemName}";
                     break;
 
                 case FoodState.Cut:

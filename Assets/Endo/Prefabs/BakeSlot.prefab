@@ -120,7 +120,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 3591108504274500984}
-        m_MethodName: OnClickForBake
+        m_MethodName: OnClickForBakeAndBoil
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
