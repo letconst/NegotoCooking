@@ -4,8 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-
-public class FireControl : MonoBehaviour
+public class FireControl_boil : MonoBehaviour
 {
     //火加減ごとの値
     [SerializeField]
@@ -40,25 +39,22 @@ public class FireControl : MonoBehaviour
     private bool doOnce = true;
     private int fireChange = 1;
 
-    //焼き処理が終わったか
+    //煮込み処理が終わったか
     [HideInInspector]
-    static public bool bakeBool;
+    static public bool boilBool;
     //今焼き処理中か
     [HideInInspector]
-    static public bool clickBool = true;    
-    private GameObject FlyingPan;
+    static public bool clickBool = true;
+    [SerializeField]
     private GameObject Otama;
-    private bool actionBool;
-    private bool actionBool2;
-
+    [SerializeField]
+    private GameObject Centerpostion;
     void Start()
     {
         // スライダーを取得する
         //_slider = GameObject.Find("Slider").GetComponent<Slider>();
         //中火の色にしておく
         FireChar.GetComponent<Image>().color = Color.yellow;
-        FlyingPan = GameObject.FindGameObjectWithTag("Frypan");
-        Otama = GameObject.FindGameObjectWithTag("Otama");
     }
 
     void Update()
@@ -69,11 +65,11 @@ public class FireControl : MonoBehaviour
         }
 
         float dph = Input.GetAxis("D_Pad_H");
-        float Stick_V = Input.GetAxis("Vertical"); 
+        float Stick_V = Input.GetAxis("Vertical");
 
         if (dph < 0 && fireChange != 0)
         {
-            if(fireChange <= 0)
+            if (fireChange <= 0)
             {
                 fireChange = 0;
                 return;
@@ -86,7 +82,7 @@ public class FireControl : MonoBehaviour
                 fireChange--;
             }
         }
-        if(dph > 0 && fireChange != 2)
+        if (dph > 0 && fireChange != 2)
         {
             if (fireChange >= 2)
             {
@@ -109,31 +105,10 @@ public class FireControl : MonoBehaviour
 
         if (clickBool == true) return;
 
-        if (Stick_V > 0 || Input.GetKeyDown(KeyCode.S))
-        {
-            if (FlyingPan.transform.position.z <= -6)
-            {
-                FlyingPan.transform.position = new Vector3(FlyingPan.transform.position.x, FlyingPan.transform.position.y, FlyingPan.transform.position.z);
-            }
-
-            if (FlyingPan.transform.position.z > -6)
-            {
-                FlyingPan.transform.position = new Vector3(FlyingPan.transform.position.x, FlyingPan.transform.position.y, FlyingPan.transform.position.z - 2.5f);
-            }   
-        }
-
-        if (Stick_V < 0 || Input.GetKeyDown(KeyCode.W))
-        {
-            if (FlyingPan.transform.position.z >= 114)
-            {
-                FlyingPan.transform.position = new Vector3(FlyingPan.transform.position.x, FlyingPan.transform.position.y, FlyingPan.transform.position.z);
-            }
-
-            if (FlyingPan.transform.position.z < 114)
-            {
-                FlyingPan.transform.position = new Vector3(FlyingPan.transform.position.x, FlyingPan.transform.position.y, FlyingPan.transform.position.z + 2.5f);
-            }
-        }
+        float h = Input.GetAxis("Horizontal");
+        float v = Input.GetAxis("Vertical");
+        Debug.Log(h + "," + v);
+        Otama.transform.position = new Vector3(Centerpostion.transform.position.x + h * 65, Centerpostion.transform.position.y, Centerpostion.transform.position.z + v * 70);
 
         if (fireChange <= 0)
         {

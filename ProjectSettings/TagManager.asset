@@ -19,6 +19,7 @@ TagManager:
   - CutInventory
   - BoilMator
   - FoodPosition
+  - Otama
   layers:
   - Default
   - TransparentFX

@@ -149,9 +149,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 048e14ede5ef3364f87533be2e93f9fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  yowabi: 0.03
+  yowabi: 0.032
   tyubi: 0.05
-  tuyobi: 0.07
+  tuyobi: 0.09
   noiseYowabi: 0.0014
   noiseTyubi: 0.0028
   noiseTuyobi: 0.0056
