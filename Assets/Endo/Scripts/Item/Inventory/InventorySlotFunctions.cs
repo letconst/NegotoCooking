@@ -59,6 +59,9 @@ public class InventorySlotFunctions : MonoBehaviour
         return result;
     }
 
+    /// <summary>
+    /// プレイヤーインベントリスロットをクリックした際の動作
+    /// </summary>
     public void OnClickForPlayer()
     {
         _nearRefContainer = RefrigeratorManager.Instance.NearRefrigeratorContainer;
@@ -89,6 +92,9 @@ public class InventorySlotFunctions : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 冷蔵庫インベントリスロットをクリックした際の動作
+    /// </summary>
     public void OnClickForRefrigerator()
     {
         _nearRefContainer             = RefrigeratorManager.Instance.NearRefrigeratorContainer;
@@ -129,6 +135,9 @@ public class InventorySlotFunctions : MonoBehaviour
         // ここから先はOnClickForPlayer()
     }
 
+    /// <summary>
+    /// 焼き調理時のプレイヤーインベントリスロットをクリックした際の動作
+    /// </summary>
     public void OnClickForBake()
     {
         //食料prefabの親

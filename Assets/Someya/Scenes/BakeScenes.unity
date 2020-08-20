@@ -161,7 +161,6 @@ MonoBehaviour:
   FireChar: {fileID: 638983359}
   leftAllow: {fileID: 509208432}
   RightAllow: {fileID: 501704883}
-  FlyingPan: {fileID: 1269237327655512596}
 --- !u!224 &77144312
 RectTransform:
   m_ObjectHideFlags: 0
@@ -214,6 +213,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ed92188dcac4554cbfd5fb6f3af3bbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FlyingPan: {fileID: 1269237327655512596}
 --- !u!4 &359538283
 Transform:
   m_ObjectHideFlags: 0
