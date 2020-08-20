@@ -59,11 +59,12 @@ public class MasterController : SingletonMonoBehaviour<MasterController>
         {
             foreach (var requireFood in foodsToJudge.ToList())
             {
-                foreach (var state in requireFood.States)
+                foreach (var requireState in requireFood.States)
                 {
                     // 要件を満たす食材が大皿にあればチェックリストから当該食材を外す
+                    // TODO: 複数の状態が必要な場合への対応
                     if (foodInPlate.Item == requireFood.Food &&
-                        foodInPlate.State == state)
+                        foodInPlate.State == requireState)
                     {
                         foodsToJudge.Remove(requireFood);
                     }

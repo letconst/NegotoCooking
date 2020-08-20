@@ -20,8 +20,8 @@ MonoBehaviour:
     - _food: {fileID: 11400000, guid: 1ec43f4c12d11cc46acece93cd2f07bd, type: 2}
       _states: 04000000
     - _food: {fileID: 11400000, guid: 9ff3228755c3e514e95f9a47753fa65b, type: 2}
-      _states: 
+      _states: 00000000
     - _food: {fileID: 11400000, guid: 249e24904ae17624d87195e14f12ddae, type: 2}
       _states: 05000000
     - _food: {fileID: 11400000, guid: bbe1f14281c868b4b8c383905e59e2fc, type: 2}
-      _states: 03000000
+      _states: 02000000

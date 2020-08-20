@@ -8,6 +8,5 @@ public class BakeScript : MonoBehaviour
     public void OnClickButton()
     {
         SceneManager.UnloadSceneAsync("BakeScenes");
-        Player.Instance._isTouch = false;
     }
 }
