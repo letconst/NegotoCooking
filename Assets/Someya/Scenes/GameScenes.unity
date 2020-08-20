@@ -748,19 +748,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 941632742}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &113171653
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 113171652}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efef5a034035861458b4d2713ef72e66, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pos: {x: 38, y: 101, z: 5}
 --- !u!65 &113171654
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -774,6 +761,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.7500002, y: 1.1400001, z: 1.9621038}
   m_Center: {x: -1.3600612e-16, y: 0.57000005, z: 0.046094097}
+--- !u!114 &113171658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 113171652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c56b17aeb4a199a42bc63e48d076b009, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _warpTo: {x: 38, y: 100, z: 6}
+  _yRotationAfterWarp: 180
+  _isLookSameRotation: 0
+  _waitTimeAfterWarp: 0
 --- !u!1001 &143656456
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1934,7 +1937,7 @@ MonoBehaviour:
   _walkSpeed: 10
   _gravity: 50
   _rotateSpeed: 700
-  _isTouch: 0
+  isStop: 0
 --- !u!143 &289014399
 CharacterController:
   m_ObjectHideFlags: 0
@@ -10562,19 +10565,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 829710352}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1694019247
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1694019246}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9330269f7cdb063459982faa25c3358f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pos: {x: 5, y: 2, z: 23}
 --- !u!65 &1694019251
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10586,8 +10576,24 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.75, y: 1.14, z: 1.8699156}
-  m_Center: {x: 0, y: 0.57, z: 0}
+  m_Size: {x: 0.75, y: 1.6036258, z: 1.8699156}
+  m_Center: {x: 0, y: 0.8018129, z: 0}
+--- !u!114 &1694019252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1694019246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c56b17aeb4a199a42bc63e48d076b009, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _warpTo: {x: 6, y: 0, z: 25}
+  _yRotationAfterWarp: 270
+  _isLookSameRotation: 0
+  _waitTimeAfterWarp: 0
 --- !u!1 &1695217136 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 99a0095beb076824a843c1c43e0c6308,
