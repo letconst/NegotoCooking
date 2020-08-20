@@ -2737,12 +2737,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _defaultItems:
-  - {fileID: 11400000, guid: 753232919155f2943b154226573fa8ad, type: 2}
-  - {fileID: 11400000, guid: 249e24904ae17624d87195e14f12ddae, type: 2}
-  - {fileID: 11400000, guid: 8993772b79e0bc1468fd314663db50d2, type: 2}
-  - {fileID: 11400000, guid: 8993772b79e0bc1468fd314663db50d2, type: 2}
-  - {fileID: 11400000, guid: 8993772b79e0bc1468fd314663db50d2, type: 2}
-  - {fileID: 11400000, guid: 8993772b79e0bc1468fd314663db50d2, type: 2}
+  - _item: {fileID: 11400000, guid: 753232919155f2943b154226573fa8ad, type: 2}
+    _state: 5
+  - _item: {fileID: 11400000, guid: 1ec43f4c12d11cc46acece93cd2f07bd, type: 2}
+    _state: 4
+  - _item: {fileID: 11400000, guid: 9ff3228755c3e514e95f9a47753fa65b, type: 2}
+    _state: 0
+  - _item: {fileID: 11400000, guid: 249e24904ae17624d87195e14f12ddae, type: 2}
+    _state: 5
+  - _item: {fileID: 11400000, guid: bbe1f14281c868b4b8c383905e59e2fc, type: 2}
+    _state: 4
+  - _item: {fileID: 0}
+    _state: 0
 --- !u!65 &416193395
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7894,12 +7900,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8bdd50592201604aa4989a3ded645a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerContainer: {fileID: 11400000, guid: be535e889645ad34094e3b4a19ddfdd7, type: 2}
-  largePlateContainer: {fileID: 11400000, guid: a8bf5aaa472f507418cbeeac0cb41321,
+  _playerContainer: {fileID: 11400000, guid: be535e889645ad34094e3b4a19ddfdd7, type: 2}
+  _largePlateContainer: {fileID: 11400000, guid: a8bf5aaa472f507418cbeeac0cb41321,
     type: 2}
-  refContainers: {fileID: 11400000, guid: da88f3328f6567043b71198a7c840562, type: 2}
-  itemToSwapFromRef: {fileID: 0}
-  itemStateToSwap: 0
+  _refContainers: {fileID: 11400000, guid: da88f3328f6567043b71198a7c840562, type: 2}
+  _recipeDatabase: {fileID: 11400000, guid: 840ca7424c23deb438540fc54b741e02, type: 2}
 --- !u!4 &1334797559
 Transform:
   m_ObjectHideFlags: 0
@@ -9141,13 +9146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e191987284c01c428619317daad1d2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _defaultItems:
-  - {fileID: 11400000, guid: 36742457895ab44489aacb94a97964a5, type: 2}
-  - {fileID: 0}
-  - {fileID: 11400000, guid: 58f8d27339ce9b64dba3a3447ad7c98c, type: 2}
-  - {fileID: 11400000, guid: 3483be7673b123b4b93b9dfd58e6d572, type: 2}
-  - {fileID: 11400000, guid: bbe1f14281c868b4b8c383905e59e2fc, type: 2}
-  - {fileID: 11400000, guid: 964110bd62ab36c4b98f1d1898b4c742, type: 2}
+  _defaultItems: []
 --- !u!65 &1523005387
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12588,8 +12587,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f9697a17a564844dad64a3ac6c63fb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  largePlateContainer: {fileID: 11400000, guid: a8bf5aaa472f507418cbeeac0cb41321,
-    type: 2}
 --- !u!4 &2061363003 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 3e3437395c65f5646be5a2512d4b1eeb,
