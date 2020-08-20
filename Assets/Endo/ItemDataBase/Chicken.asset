@@ -15,4 +15,6 @@ MonoBehaviour:
   _kindOfItem: 0
   _itemIcon: {fileID: 0}
   _itemName: "\u9D8F\u8089"
-  _itemDesc: 
+  _foodObj: {fileID: 8665331324527074544, guid: 13b8b60f815009d4da96d5188201e508,
+    type: 3}
+  _isUsable: 0

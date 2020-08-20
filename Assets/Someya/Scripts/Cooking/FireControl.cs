@@ -40,6 +40,10 @@ public class FireControl : MonoBehaviour
     private bool doOnce = true;
     private int fireChange = 1;
 
+    // 調理中の食材
+    [HideInInspector]
+    public static Item foodInProgress;
+
     //焼き処理が終わったか
     [HideInInspector]
     static public bool bakeBool;
@@ -47,9 +51,6 @@ public class FireControl : MonoBehaviour
     [HideInInspector]
     static public bool clickBool = true;    
     private GameObject FlyingPan;
-    private GameObject Otama;
-    private bool actionBool;
-    private bool actionBool2;
 
     void Start()
     {
@@ -58,7 +59,6 @@ public class FireControl : MonoBehaviour
         //中火の色にしておく
         FireChar.GetComponent<Image>().color = Color.yellow;
         FlyingPan = GameObject.FindGameObjectWithTag("Frypan");
-        Otama = GameObject.FindGameObjectWithTag("Otama");
     }
 
     void Update()
@@ -118,7 +118,7 @@ public class FireControl : MonoBehaviour
 
             if (FlyingPan.transform.position.z > -6)
             {
-                FlyingPan.transform.position = new Vector3(FlyingPan.transform.position.x, FlyingPan.transform.position.y, FlyingPan.transform.position.z - 2.5f);
+                FlyingPan.transform.position = new Vector3(FlyingPan.transform.position.x, FlyingPan.transform.position.y, FlyingPan.transform.position.z - 3.0f);
             }   
         }
 
@@ -131,7 +131,7 @@ public class FireControl : MonoBehaviour
 
             if (FlyingPan.transform.position.z < 114)
             {
-                FlyingPan.transform.position = new Vector3(FlyingPan.transform.position.x, FlyingPan.transform.position.y, FlyingPan.transform.position.z + 2.5f);
+                FlyingPan.transform.position = new Vector3(FlyingPan.transform.position.x, FlyingPan.transform.position.y, FlyingPan.transform.position.z + 3.0f);
             }
         }
 

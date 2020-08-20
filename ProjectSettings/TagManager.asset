@@ -20,6 +20,7 @@ TagManager:
   - BoilMator
   - FoodPosition
   - Otama
+  - Frypan
   layers:
   - Default
   - TransparentFX
