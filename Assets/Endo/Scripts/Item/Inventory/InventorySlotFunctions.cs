@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class InventorySlotFunctions : MonoBehaviour
 {
-    private GameObject                         _nearRefObj;
     private GameObject                         _refInvObj;
     private TmpInventoryManager                _invManager;
     private PlayerInventoryContainer           _playerContainer;
@@ -15,7 +16,6 @@ public class InventorySlotFunctions : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _nearRefObj        = RefrigeratorManager.Instance.currentNearObj;
         _refInvObj         = GameObject.FindGameObjectWithTag("RefrigeratorInventory");
         _invManager        = TmpInventoryManager.Instance;
         _playerContainer   = _invManager.PlayerContainer;
@@ -25,13 +25,17 @@ public class InventorySlotFunctions : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_refInvObj == null)
+        // メインシーンのときに、冷蔵庫インベントリオブジェが未取得なら取得を試みる
+        if (SceneManager.GetActiveScene().name == "GameScene")
         {
-            _refInvObj = GameObject.FindGameObjectWithTag("RefrigeratorInventory");
-        }
-        else if (_refInvRenderer == null)
-        {
-            _refInvRenderer = _refInvObj.GetComponent<InventoryRenderer>();
+            if (_refInvObj == null)
+            {
+                _refInvObj = GameObject.FindGameObjectWithTag("RefrigeratorInventory");
+            }
+            else if (_refInvRenderer == null)
+            {
+                _refInvRenderer = _refInvObj.GetComponent<InventoryRenderer>();
+            }
         }
     }
 
@@ -62,13 +66,15 @@ public class InventorySlotFunctions : MonoBehaviour
         // 交換モードなら
         if (_invManager.isSwapMode)
         {
+            int selfIndex = GetSelfIndex();
+
             // 交換先にアイテムを渡す
             _nearRefContainer.UpdateItem(_refInvRenderer.LastSelectedIndex,
-                                         _playerContainer.GetItem(GetSelfIndex()),
-                                         _playerContainer.GetState(GetSelfIndex()));
+                                         _playerContainer.GetItem(selfIndex),
+                                         _playerContainer.GetState(selfIndex));
 
             // 選択スロットに交換先のアイテムを配置
-            _playerContainer.UpdateItem(GetSelfIndex(),
+            _playerContainer.UpdateItem(selfIndex,
                                         _invManager.itemToSwapFromRef,
                                         _invManager.itemStateToSwap);
 
@@ -85,10 +91,11 @@ public class InventorySlotFunctions : MonoBehaviour
 
     public void OnClickForRefrigerator()
     {
-        _nearRefContainer = RefrigeratorManager.Instance.NearRefrigeratorContainer;
-        InventorySlotBase nearRefSlot      = _nearRefContainer.Container[GetSelfIndex()];
-        Item              selfItem         = nearRefSlot.Item;
-        FoodState         selfState        = nearRefSlot.State;
+        _nearRefContainer             = RefrigeratorManager.Instance.NearRefrigeratorContainer;
+        int               selfIndex   = GetSelfIndex();
+        InventorySlotBase nearRefSlot = _nearRefContainer.Container[selfIndex];
+        Item              selfItem    = nearRefSlot.Item;
+        FoodState         selfState   = nearRefSlot.State;
 
         // スロットにアイテムがなければ弾く
         if (selfItem == null) return;
@@ -102,7 +109,7 @@ public class InventorySlotFunctions : MonoBehaviour
                 _playerContainer.UpdateItem(i, selfItem, selfState);
 
                 // 冷蔵庫スロットは空にする
-                _nearRefContainer.RemoveItem(GetSelfIndex());
+                _nearRefContainer.RemoveItem(selfIndex);
 
                 return;
             }
@@ -120,5 +127,43 @@ public class InventorySlotFunctions : MonoBehaviour
         _playerInvRenderer.SelectSlot();
 
         // ここから先はOnClickForPlayer()
+    }
+
+    public void OnClickForBake()
+    {
+        //食料prefabの親
+        GameObject foodParent = GameObject.FindGameObjectWithTag("FoodParent");
+
+        GameObject foodPosition = GameObject.FindGameObjectWithTag("FoodPosition");
+        Transform  foodTrf      = foodPosition.transform;
+
+        int selfIndex = GetSelfIndex();
+
+        PlayerInventoryContainer playerContainer = TmpInventoryManager.Instance.PlayerContainer;
+        InventorySlotBase selfSlot               = playerContainer.Container[selfIndex];
+
+        // 条件に満たない食材は投入できない
+        if (!FireControl.clickBool             ||
+            selfSlot.Item == null              ||
+            selfSlot.State == FoodState.Cooked ||
+            selfSlot.Item.KindOfItem1 == Item.KindOfItem.Seasoning) return;
+
+        FireControl.clickBool = false;
+
+        // 食材を表示
+        GameObject foodChild = Instantiate(selfSlot.Item.FoodObj,
+                                           foodTrf.position,
+                                           new Quaternion(foodTrf.rotation.x,
+                                                          foodTrf.rotation.y,
+                                                          foodTrf.rotation.z,
+                                                          foodTrf.rotation.w));
+        foodChild.transform.parent = foodParent.transform;
+        FireControl.foodInProgress = selfSlot.Item;
+
+        // プレイヤーコンテナから投入アイテムを削除
+        playerContainer.RemoveItem(selfIndex);
+
+        // 投入元のスロットインデックスを記憶
+        TmpInventoryManager.Instance.puttedSlotIndex = selfIndex;
     }
 }

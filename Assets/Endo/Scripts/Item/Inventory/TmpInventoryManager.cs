@@ -13,14 +13,19 @@ public class TmpInventoryManager : SingletonMonoBehaviour<TmpInventoryManager>
     [SerializeField]
     private RecipeDatabase                  _recipeDatabase;
 
+    // 交換用: アイテム交換モードか否か
+    [System.NonSerialized]
+    public bool isSwapMode = false;
+    // 交換用: 冷蔵庫アイテムのキャッシュ
     [System.NonSerialized]
     public Item itemToSwapFromRef;
+    // 交換用: 冷蔵庫アイテムの状態のキャッシュ
     [System.NonSerialized]
     public FoodState itemStateToSwap;
 
-    // アイテム交換モードか否か
+    // 調理用: 食材を投入したスロットインデックス
     [System.NonSerialized]
-    public bool isSwapMode = false;
+    public int puttedSlotIndex;
 
     public PlayerInventoryContainer        PlayerContainer     { get => _playerContainer; }
     public InventoryContainerBase          LargePlateContainer { get => _largePlateContainer; }

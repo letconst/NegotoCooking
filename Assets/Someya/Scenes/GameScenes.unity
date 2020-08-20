@@ -9149,7 +9149,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e191987284c01c428619317daad1d2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _defaultItems: []
+  _defaultItems:
+  - _item: {fileID: 11400000, guid: 249e24904ae17624d87195e14f12ddae, type: 2}
+    _state: 1
+  - _item: {fileID: 11400000, guid: bbe1f14281c868b4b8c383905e59e2fc, type: 2}
+    _state: 1
+  - _item: {fileID: 0}
+    _state: 0
+  - _item: {fileID: 0}
+    _state: 0
+  - _item: {fileID: 0}
+    _state: 0
+  - _item: {fileID: 0}
+    _state: 0
 --- !u!65 &1523005387
 BoxCollider:
   m_ObjectHideFlags: 0
