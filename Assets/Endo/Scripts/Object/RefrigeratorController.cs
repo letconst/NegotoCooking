@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class RefrigeratorController : MonoBehaviour
 {
-    [SerializeField, Tooltip("冷蔵庫内に初期配置させるアイテム（3個まで）")]
-    private Item[] _defaultItems = new Item[3];
+    [SerializeField, Tooltip("冷蔵庫内に初期配置させるアイテム")]
+    private List<DefaultItems> _defaultItems = new List<DefaultItems>();
 
     // 近くにいるか否か
     private bool _isNear = false;
-
-    private int _slotSize = 3;
 
     private GameObject _playerInvObj;
     private GameObject _refInvObj;
@@ -20,7 +18,8 @@ public class RefrigeratorController : MonoBehaviour
     private RefrigeratorInventoryContainers    _refContainers;
     private RefrigeratorInventoryContainerBase _selfContainer;
 
-    public Item[] DefaultItems { get => _defaultItems; private set => _defaultItems = value; }
+    public List<DefaultItems> DefaultItems { get => _defaultItems; }
+
 
     // Start is called before the first frame update
     void Start()
@@ -30,7 +29,7 @@ public class RefrigeratorController : MonoBehaviour
 
         _playerInvRenderer = _playerInvObj.GetComponent<InventoryRenderer>();
         _selfInvRenderer   = _refInvObj.GetComponent<InventoryRenderer>();
-        _refContainers     = TmpInventoryManager.Instance.refContainers;
+        _refContainers     = TmpInventoryManager.Instance.RefContainers;
 
         CreateContainer();
     }
@@ -71,16 +70,21 @@ public class RefrigeratorController : MonoBehaviour
     /// </summary>
     private void CreateContainer()
     {
-        _refContainers.AddContainer(gameObject);
+        // コンテナがすでに作成されていたら追加を行わない
+        if (_refContainers.GetContainer(gameObject.name) != null) return;
 
-        _selfContainer = _refContainers.GetContainer(gameObject.GetInstanceID());
+        _refContainers.AddContainer(gameObject.name);
 
-        for (int i = 0; i < _slotSize; i++)
+        _selfContainer = _refContainers.GetContainer(gameObject.name);
+
+        for (int i = 0; i < RefrigeratorManager.Instance.slotSize; i++)
         {
-            Item selfSlotDefaultItem = DefaultItems[i];
+            Item selfSlotDefaultItem = (DefaultItems.Count != 0)
+                ? DefaultItems[i].Item
+                : null;
 
             // スロットインデックスがアイテム数以上の場合は空アイテムを追加
-            if (i >= DefaultItems.Length)
+            if (i >= DefaultItems.Count)
             {
                 _selfContainer.AddItem(null);
                 continue;
@@ -91,17 +95,17 @@ public class RefrigeratorController : MonoBehaviour
             {
                 _selfContainer.AddItem(selfSlotDefaultItem,
                                        // アイテムが存在するかによって状態変化
-                                       (selfSlotDefaultItem == null)
-                                           ? FoodState.None
-                                           : FoodState.Raw);
+                                       (selfSlotDefaultItem != null)
+                                           ? DefaultItems[i].State
+                                           : FoodState.None);
             }
             // すでにコンテナに同一インデックスのスロットが存在するなら内容更新
             else
             {
                 _selfContainer.UpdateItem(i, selfSlotDefaultItem,
-                                          (selfSlotDefaultItem == null)
-                                              ? FoodState.None
-                                              : FoodState.Raw);
+                                          (selfSlotDefaultItem != null)
+                                              ? DefaultItems[i].State
+                                              : FoodState.None);
             }
         }
     }
