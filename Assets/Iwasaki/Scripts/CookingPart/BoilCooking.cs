@@ -18,7 +18,7 @@ public class BoilCooking : InventorySlot
     {
         //調理ゲージ
         GameObject noiseMator = GameObject.FindGameObjectWithTag("BoilMator");
-        _slider = noiseMator.GetComponent<FireControl>()._slider;
+        _slider = noiseMator.GetComponent<FireControl_boil>()._slider;
         //食料prefabの親
         foodParent = GameObject.FindGameObjectWithTag("FoodParent");
 
@@ -33,26 +33,26 @@ public class BoilCooking : InventorySlot
     // Update is called once per frame
     void Update()
     {
-        if (_slider.value >= 100 && FireControl.boilBool == false)
+        if (_slider.value >= 100 && FireControl_boil.boilBool == false)
         {
             //Debug.Log("inbakeBool");
             //if (bakeBool) return;
-            FireControl.boilBool = true;
+            FireControl_boil.boilBool = true;
         }
 
         //調理完了した食材をインベントリに戻す。(空いていたら)
         BoilCooking _playerInvSlot;
         _playerInvSlot = _selfInvSlotObjs[CIB.lastPuttedSlotIndex].GetComponent<BoilCooking>();
 
-        if (FireControl.boilBool && _playerInvSlot.selfItem == null)
+        if (FireControl_boil.boilBool && _playerInvSlot.selfItem == null)
         {
             //出ていた野菜を消す。
             Destroy(foodParent.transform.GetChild(0).gameObject);
             //保持していたscriptableObjectを入れる。
             CIB.AllItems[CIB.lastPuttedSlotIndex] = boilItem;
             BoilFoodName(CIB, CIB.lastPuttedSlotIndex);
-            FireControl.clickBool = true;
-            FireControl.boilBool = false;
+            FireControl_boil.clickBool = true;
+            FireControl_boil.boilBool = false;
 
             if (CIB.AllItems[CIB.lastPuttedSlotIndex] == null) return;
 
@@ -62,11 +62,11 @@ public class BoilCooking : InventorySlot
     public override void OnClick()
     {
         int selfIndex = GetSelfIndex(_selfInvSlotObjs, gameObject);
-        if (FireControl.clickBool == false ||
+        if (FireControl_boil.clickBool == false ||
             GetInAllItem(CIB) == null ||
             CIB.container.Container[selfIndex].State != FoodState.Raw) return;
 
-        FireControl.clickBool = false;
+        FireControl_boil.clickBool = false;
         foodChild = Instantiate(GetInAllItem(CIB).FoodObj, new Vector3(GetInAllItem(CIB).FoodObj.transform.position.x,
                                                            GetInAllItem(CIB).FoodObj.transform.position.y,
                                                            GetInAllItem(CIB).FoodObj.transform.position.z), Quaternion.identity);
