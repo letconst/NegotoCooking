@@ -40,14 +40,17 @@ public class FireControl : MonoBehaviour
     private bool doOnce = true;
     private int fireChange = 1;
 
+    // 調理中の食材
+    [HideInInspector]
+    public static Item foodInProgress;
+
     //焼き処理が終わったか
     [HideInInspector]
     static public bool bakeBool;
     //今焼き処理中か
     [HideInInspector]
     static public bool clickBool = true;
-    [SerializeField]
-    private GameObject FlyingPan;
+
     private bool actionBool;
     private bool actionBool2;
 
@@ -67,9 +70,8 @@ public class FireControl : MonoBehaviour
         }
 
         float dph = Input.GetAxis("D_Pad_H");
-        float Stick_V = Input.GetAxis("Vertical"); 
 
-        if (dph < 0 && fireChange != 0)
+        if (dph > 0 && fireChange != 0)
         {
             if(fireChange <= 0)
             {
@@ -84,7 +86,7 @@ public class FireControl : MonoBehaviour
                 fireChange--;
             }
         }
-        if(dph > 0 && fireChange != 2)
+        if(dph < 0 && fireChange != 2)
         {
             if (fireChange >= 2)
             {
@@ -100,40 +102,13 @@ public class FireControl : MonoBehaviour
             }
         }
 
+        // 調理メーターがMAXになったら戻す
         if (_slider.value >= 100)
         {
             _slider.value = 0;
         }
 
         if (clickBool == true) return;
-
-        if (Stick_V > 0 || Input.GetKeyDown(KeyCode.S))
-        {
-            if (FlyingPan.transform.position.z <= -6)
-            {
-                FlyingPan.transform.position = new Vector3(FlyingPan.transform.position.x, FlyingPan.transform.position.y, FlyingPan.transform.position.z);
-            }
-
-            if (FlyingPan.transform.position.z > -6)
-            {
-                FlyingPan.transform.position = new Vector3(FlyingPan.transform.position.x, FlyingPan.transform.position.y, FlyingPan.transform.position.z - 1.5f);
-            }   
-        }
-
-        if (Stick_V < 0 || Input.GetKeyDown(KeyCode.W))
-        {
-            if (FlyingPan.transform.position.z >= 114)
-            {
-                Debug.Log("114ue");
-                FlyingPan.transform.position = new Vector3(FlyingPan.transform.position.x, FlyingPan.transform.position.y, FlyingPan.transform.position.z);
-            }
-
-            if (FlyingPan.transform.position.z < 114)
-            {
-                Debug.Log("114shita");
-                FlyingPan.transform.position = new Vector3(FlyingPan.transform.position.x, FlyingPan.transform.position.y, FlyingPan.transform.position.z + 1.5f);
-            }
-        }
 
         if (fireChange <= 0)
         {
