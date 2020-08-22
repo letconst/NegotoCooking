@@ -26,7 +26,7 @@ public class InventorySlotFunctions : MonoBehaviour
     void Update()
     {
         // メインシーンのときに、冷蔵庫インベントリオブジェが未取得なら取得を試みる
-        if (SceneManager.GetActiveScene().name == "GameScene")
+        if (SceneManager.GetActiveScene().name == "GameScenes")
         {
             if (_refInvObj == null)
             {
