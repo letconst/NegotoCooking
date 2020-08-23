@@ -8,5 +8,5 @@ public class ItemDatabase : ScriptableObject
     [SerializeField]
     private List<Item> _itemLists = new List<Item>();
 
-    public List<Item> ItemLists { get => _itemLists; }
+    public List<Item> ItemLists => _itemLists;
 }

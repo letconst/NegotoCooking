@@ -27,7 +27,7 @@ public class InventoryContainerBase : ScriptableObject
     /// <summary>
     /// インベントリにアイテムを追加する
     /// </summary>
-    /// <param name="item"><追加するアイテム/param>
+    /// <param name="item">追加するアイテム</param>
     /// <param name="state">アイテムの状態</param>
     public virtual void AddItem(Item item, FoodState state = FoodState.None)
     {
@@ -109,7 +109,7 @@ public class InventorySlotBase
     {
         get
         {
-            string result = "";
+            var result = "";
 
             if (Item == null) return result;
 
@@ -186,6 +186,6 @@ public class DefaultItems
     [SerializeField]
     private FoodState _state;
 
-    public Item      Item  { get => _item; }
-    public FoodState State { get => _state; }
+    public Item      Item  => _item;
+    public FoodState State => _state;
 }

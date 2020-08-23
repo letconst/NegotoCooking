@@ -8,21 +8,22 @@ public class DoorController : MonoBehaviour
     private float _closeLimit;
 
     // プレイヤーが近くにいるか否か
-    private bool _isNear = false;
+    private bool _isNear;
 
     private Animator _anim;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         _anim = transform.parent.GetComponent<Animator>();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         // ドア開閉
-        if ((Input.GetKeyDown("joystick button 2") || Input.GetKeyDown(KeyCode.E)) && _isNear)
+        if (_isNear && (Input.GetKeyDown("joystick button 2") ||
+                        Input.GetKeyDown(KeyCode.E)))
         {
             SwitchOpen();
 
@@ -39,12 +40,12 @@ public class DoorController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player") _isNear = true;
+        if (other.CompareTag("Player")) _isNear = true;
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Player") _isNear = false;
+        if (other.CompareTag("Player")) _isNear = false;
     }
 
     /// <summary>

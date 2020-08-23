@@ -5,30 +5,30 @@ using UnityEngine.UI;
 
 public class CutController : MonoBehaviour
 {
-    private GameObject _cutMator;
+    private GameObject _cutMeter;
     private GameObject _foodParent;
     private Slider     _cutSlider;
 
     private PlayerInventoryContainer _playerContainer;
 
     // 調理が完了しているか否か
-    private bool _isCompleteCooking = false;
+    private bool _isCompleteCooking;
 
     // 現在調理中の食材
-    public static Item foodBeingCut;
+    public static Item FoodBeingCut;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        _cutMator   = GameObject.FindGameObjectWithTag("BakeMator");
+        _cutMeter   = GameObject.FindGameObjectWithTag("BakeMator");
         _foodParent = GameObject.FindGameObjectWithTag("FoodParent");
-        _cutSlider  = _cutMator.GetComponent<CutGauge>()._slider;
+        _cutSlider  = _cutMeter.GetComponent<CutGauge>()._slider;
 
-        _playerContainer = TmpInventoryManager.Instance.PlayerContainer;
+        _playerContainer = InventoryManager.Instance.PlayerContainer;
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         CookingCompleteListener();
     }
@@ -38,7 +38,7 @@ public class CutController : MonoBehaviour
     /// </summary>
     private void CookingCompleteListener()
     {
-        int puttedSlotIndex = TmpInventoryManager.Instance.puttedSlotIndex;
+        int puttedSlotIndex          = InventoryManager.Instance.PuttedSlotIndex;
         InventorySlotBase puttedSlot = _playerContainer.Container[puttedSlotIndex];
 
         if (_cutSlider.value >= 100 && !_isCompleteCooking)
@@ -46,18 +46,17 @@ public class CutController : MonoBehaviour
             _isCompleteCooking = true;
         }
 
-        // 調理完了した食材をインベントリに戻す
-        if (_isCompleteCooking && puttedSlot.Item == null)
-        {
-            // 出ていた食材を削除
-            Destroy(_foodParent.transform.GetChild(0).gameObject);
+        // 調理が完了していないか、投入元のスロットにアイテムがある場合は動作しない
+        if (!_isCompleteCooking || puttedSlot.Item != null) return;
 
-            // プレイヤーインベントリに戻す
-            _playerContainer.UpdateItem(puttedSlotIndex, foodBeingCut, FoodState.Cut);
+        // 出ていた食材を削除
+        Destroy(_foodParent.transform.GetChild(0).gameObject);
 
-            _isCompleteCooking = false;
-            CutGauge.clickBool = true;
-            foodBeingCut = null;
-        }
+        // プレイヤーインベントリに戻す
+        _playerContainer.UpdateItem(puttedSlotIndex, FoodBeingCut, FoodState.Cut);
+
+        _isCompleteCooking = false;
+        CutGauge.clickBool = true;
+        FoodBeingCut = null;
     }
 }

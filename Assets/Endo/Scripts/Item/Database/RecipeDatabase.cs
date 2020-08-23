@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Recipe Database", menuName = "Inventory/Create Recipe Database")]
@@ -8,7 +9,7 @@ public class RecipeDatabase : ScriptableObject
     [SerializeField]
     private List<RecipeEntry> _entries = new List<RecipeEntry>();
 
-    public List<RecipeEntry> Entries { get => _entries; private set => _entries = value; }
+    public List<RecipeEntry> Entries => _entries;
 
     /// <summary>
     /// 登録されている全レシピの名前をリストで取得する
@@ -16,14 +17,7 @@ public class RecipeDatabase : ScriptableObject
     /// <returns>レシピ名のリスト</returns>
     public List<string> GetAllRecipeNames()
     {
-        List<string> results = new List<string>();
-
-        foreach (var entry in Entries)
-        {
-            results.Add(entry.RecipeName);
-        }
-
-        return results;
+        return Entries.Select(entry => entry.RecipeName).ToList();
     }
 
     /// <summary>
@@ -33,18 +27,7 @@ public class RecipeDatabase : ScriptableObject
     /// <returns>レシピデータ || null</returns>
     public RecipeEntry GetRecipeByName(string name)
     {
-        RecipeEntry result = null;
-
-        foreach (var entry in Entries)
-        {
-            if (entry.RecipeName == name)
-            {
-                result = entry;
-                break;
-            }
-        }
-
-        return result;
+        return Entries.FirstOrDefault(entry => entry.RecipeName == name);
     }
 }
 
@@ -57,8 +40,8 @@ public class RecipeEntry
     [SerializeField]
     private List<RequireFoods> _requireFoods = new List<RequireFoods>();
 
-    public string RecipeName { get => _recipeName; }
-    public List<RequireFoods> RequireFoods { get => _requireFoods; }
+    public string             RecipeName   => _recipeName;
+    public List<RequireFoods> RequireFoods => _requireFoods;
 }
 
 [System.Serializable]
@@ -70,6 +53,6 @@ public class RequireFoods
     [SerializeField]
     private List<FoodState> _states = new List<FoodState>();
 
-    public Item Food { get => _food; }
-    public List<FoodState> States { get => _states; }
+    public Item Food              => _food;
+    public List<FoodState> States => _states;
 }

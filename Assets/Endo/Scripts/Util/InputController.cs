@@ -20,7 +20,7 @@ public class InputController : SingletonMonoBehaviour<InputController>
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         // ボタンのフォーカスが外れている時、フォーカスを復活させる
         if (EventSystem.current.currentSelectedGameObject == null)

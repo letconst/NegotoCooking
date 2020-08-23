@@ -19,9 +19,6 @@ public class InventoryRenderer : MonoBehaviour
     [SerializeField, Tooltip("冷蔵庫用のインベントリか否か")]
     private bool _isForRefrigerator;
 
-    // 最後に選択していたスロットのインデックス
-    private int _lastSelectedIndex = 0;
-
     // 最大スロット数
     private int _selfSlotSize;
 
@@ -32,24 +29,25 @@ public class InventoryRenderer : MonoBehaviour
     private GameObject _lastSelectedObj;
 
     // 現在表示されているスロット情報
-    private Dictionary<GameObject, InventorySlotBase> _itemsDisplayed = new Dictionary<GameObject, InventorySlotBase>();
+    private readonly Dictionary<GameObject, InventorySlotBase> _itemsDisplayed = new Dictionary<GameObject, InventorySlotBase>();
 
-    public int LastSelectedIndex { get => _lastSelectedIndex; private set => _lastSelectedIndex = value; }
+    // 最後に選択していたスロットのインデックス
+    public int LastSelectedIndex { get; private set; } = 0;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         _selfSlotSize = (_inventory != null)
             ? _inventory.SlotSize
             : (_isForRefrigerator)
-            ? RefrigeratorManager.Instance.slotSize
+            ? RefrigeratorManager.Instance.SlotSize
             : 0;
 
         InitRender();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         UpdateRender();
         UpdateLastSelectedIndex();
@@ -70,7 +68,7 @@ public class InventoryRenderer : MonoBehaviour
             }
 
             // 冷蔵庫用の処理
-            for (int i = 0; i < RefrigeratorManager.Instance.slotSize; i++)
+            for (var i = 0; i < RefrigeratorManager.Instance.SlotSize; i++)
             {
                 GameObject slotObj = Instantiate(_slotPrefab, transform.position, Quaternion.identity, _slotWrapper.transform);
 
@@ -80,7 +78,7 @@ public class InventoryRenderer : MonoBehaviour
             return;
         }
 
-        for (int i = 0; i < _inventory.SlotSize; i++)
+        for (var i = 0; i < _inventory.SlotSize; i++)
         {
             // インベントリコンテナのスロット数がスロットサイズに満たなければスロット確保
             if (_inventory.Container.Count < _inventory.SlotSize)
@@ -104,14 +102,14 @@ public class InventoryRenderer : MonoBehaviour
         // 冷蔵庫ならまず中身を取得
         if (_isForRefrigerator)
         {
-            int i = 0;
-            GameObject             curNearRef = RefrigeratorManager.Instance.currentNearObj;
-            RefrigeratorController refCtrlr   = curNearRef.GetComponent<RefrigeratorController>();
+            var i = 0;
+            var curNearRef = RefrigeratorManager.Instance.CurrentNearObj;
+            var refCtrlr   = curNearRef.GetComponent<RefrigeratorController>();
 
             // 初回表示時は初期アイテム表示
-            if (TmpInventoryManager.Instance.RefContainers.GetContainer(curNearRef.name) == null)
+            if (InventoryManager.Instance.RefContainers.GetContainer(curNearRef.name) == null)
             {
-                foreach (GameObject slotObj in _itemsDisplayed.Keys.ToArray())
+                foreach (var slotObj in _itemsDisplayed.Keys.ToArray())
                 {
                     _itemsDisplayed[slotObj] = new InventorySlotBase(refCtrlr.DefaultItems[i].Item,
                                                                      refCtrlr.DefaultItems[i].State);
@@ -124,7 +122,7 @@ public class InventoryRenderer : MonoBehaviour
             {
                 var nearRefContainer = RefrigeratorManager.Instance.NearRefrigeratorContainer;
 
-                foreach (GameObject slotObj in _itemsDisplayed.Keys.ToArray())
+                foreach (var slotObj in _itemsDisplayed.Keys.ToArray())
                 {
                     _itemsDisplayed[slotObj] = new InventorySlotBase(nearRefContainer.GetItem(i), nearRefContainer.GetState(i));
 
@@ -134,19 +132,14 @@ public class InventoryRenderer : MonoBehaviour
 
         }
 
-        foreach (KeyValuePair<GameObject, InventorySlotBase> slot in _itemsDisplayed)
+        foreach (var slot in _itemsDisplayed)
         {
-            Text slotText = slot.Key.GetComponentInChildren<Text>();
+            var slotText = slot.Key.GetComponentInChildren<Text>();
 
             // アイテムがあればアイテム名表示
-            if (slot.Value.Item != null)
-            {
-                slotText.text = slot.Value.FullItemName;
-            }
-            else
-            {
-                slotText.text = "";
-            }
+            slotText.text = (slot.Value.Item != null)
+                ? slot.Value.FullItemName
+                : "";
         }
     }
 
@@ -155,9 +148,9 @@ public class InventoryRenderer : MonoBehaviour
     /// </summary>
     public void ClearRender()
     {
-        foreach (GameObject slotObj in _itemsDisplayed.Keys.ToArray())
+        foreach (var slotObj in _itemsDisplayed.Keys.ToArray())
         {
-            Text slotText            = slotObj.GetComponentInChildren<Text>();
+            var slotText             = slotObj.GetComponentInChildren<Text>();
             slotText.text            = "";
             _itemsDisplayed[slotObj] = new InventorySlotBase();
         }
@@ -189,14 +182,14 @@ public class InventoryRenderer : MonoBehaviour
 
         if (_currentSelectedObj != _lastSelectedObj)
         {
-            Transform slotWrapperTrf = transform.Find("SlotWrapper");
+            var slotWrapperTrf = transform.Find("SlotWrapper");
 
             if (slotWrapperTrf == null)
             {
                 slotWrapperTrf = transform.Find("InventoryWrapper/SlotWrapper");
             }
 
-            for (int i = 0; i < slotWrapperTrf.childCount; i++)
+            for (var i = 0; i < slotWrapperTrf.childCount; i++)
             {
                 if (slotWrapperTrf.GetChild(i).gameObject == _currentSelectedObj)
                 {
@@ -213,7 +206,7 @@ public class InventoryRenderer : MonoBehaviour
     /// </summary>
     public void EnableAllSlot()
     {
-        foreach (GameObject slot in _itemsDisplayed.Keys)
+        foreach (var slot in _itemsDisplayed.Keys)
         {
             slot.GetComponent<Button>().enabled = true;
         }
@@ -224,7 +217,7 @@ public class InventoryRenderer : MonoBehaviour
     /// </summary>
     public void DisableAllSlot()
     {
-        foreach (GameObject slot in _itemsDisplayed.Keys)
+        foreach (var slot in _itemsDisplayed.Keys)
         {
             slot.GetComponent<Button>().enabled = false;
         }

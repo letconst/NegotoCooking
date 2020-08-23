@@ -190,7 +190,7 @@ GameObject:
   - component: {fileID: 7900804597160029304}
   - component: {fileID: 8443512423636377577}
   m_Layer: 5
-  m_Name: IntaractName
+  m_Name: InteractName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -360,7 +360,7 @@ GameObject:
   - component: {fileID: 7900804597685481402}
   - component: {fileID: 7900804597685481401}
   m_Layer: 5
-  m_Name: IntaractButton
+  m_Name: InteractButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

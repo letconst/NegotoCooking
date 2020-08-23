@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class MasterController : SingletonMonoBehaviour<MasterController>
 {
     // 近くにいるか否か
-    private bool _isNear = false;
+    private bool _isNear;
 
     // 食材がすべて調理できているか否か
     private bool _isComplete = true;
@@ -15,30 +15,24 @@ public class MasterController : SingletonMonoBehaviour<MasterController>
     private InventoryContainerBase _largePlateContainer;
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (_largePlateContainer == null)
         {
-            _largePlateContainer = TmpInventoryManager.Instance.LargePlateContainer;
+            _largePlateContainer = InventoryManager.Instance.LargePlateContainer;
         }
 
         // X押下および接近時に調理完了を行う
-        if ((Input.GetKeyDown("joystick button 2") || Input.GetKeyDown(KeyCode.E)) && _isNear)
+        if (_isNear && (Input.GetKeyDown("joystick button 2") ||
+                        Input.GetKeyDown(KeyCode.E)))
         {
             // 調理判定
             Judgement();
 
             // 大皿に食材があり、すべて調理済みならゲームクリア（仮）
-            if (_isComplete)
-            {
-                // ゲームクリアシーン読み込み
-                SceneChanger.Instance.SceneLoad(SceneChanger.SceneName.GameClear);
-            }
-            // 調理できていなければゲームオーバー
-            else
-            {
-                SceneChanger.Instance.SceneLoad(SceneChanger.SceneName.GameOverScenes);
-            }
+            SceneChanger.Instance.SceneLoad((_isComplete)
+                ? SceneChanger.SceneName.GameClear
+                : SceneChanger.SceneName.GameOverScenes);
         }
     }
 
@@ -47,12 +41,12 @@ public class MasterController : SingletonMonoBehaviour<MasterController>
     /// </summary>
     private void Judgement()
     {
-        RecipeDatabase recipeDB = TmpInventoryManager.Instance.RecipeDatabase;
+        var recipeDB = InventoryManager.Instance.RecipeDatabase;
         // TODO: 最終的にはランダムに選択されたレシピで処理する
-        RecipeEntry targetRecipe = recipeDB.GetRecipeByName("エビのスープ");
+        var targetRecipe = recipeDB.GetRecipeByName("エビのスープ");
 
         // 必須食材のコピー（チェックリスト用）
-        List<RequireFoods> foodsToJudge = new List<RequireFoods>(targetRecipe.RequireFoods);
+        var foodsToJudge = new List<RequireFoods>(targetRecipe.RequireFoods);
 
         // 大皿の中身がレシピ通りかチェック
         foreach (var foodInPlate in _largePlateContainer.Container)

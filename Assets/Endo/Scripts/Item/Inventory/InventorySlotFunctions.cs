@@ -1,29 +1,26 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class InventorySlotFunctions : MonoBehaviour
 {
     private GameObject                         _refInvObj;
-    private TmpInventoryManager                _invManager;
+    private InventoryManager                _invManager;
     private PlayerInventoryContainer           _playerContainer;
     private RefrigeratorInventoryContainerBase _nearRefContainer;
     private InventoryRenderer                  _playerInvRenderer;
     private InventoryRenderer                  _refInvRenderer;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         _refInvObj         = GameObject.FindGameObjectWithTag("RefrigeratorInventory");
-        _invManager        = TmpInventoryManager.Instance;
+        _invManager        = InventoryManager.Instance;
         _playerContainer   = _invManager.PlayerContainer;
         _playerInvRenderer = GameObject.FindGameObjectWithTag("PlayerInventory").GetComponent<InventoryRenderer>();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         // メインシーンのときに、冷蔵庫インベントリオブジェが未取得なら取得を試みる
         if (SceneManager.GetActiveScene().name == "GameScenes")
@@ -46,9 +43,9 @@ public class InventorySlotFunctions : MonoBehaviour
     /// <returns>インデックス</returns>
     public int GetSelfIndex()
     {
-        int result = -1;
+        var result = -1;
 
-        for (int i = 0; i < transform.parent.childCount; i++)
+        for (var i = 0; i < transform.parent.childCount; i++)
         {
             if (transform.parent.GetChild(i).gameObject == gameObject)
             {
@@ -67,29 +64,28 @@ public class InventorySlotFunctions : MonoBehaviour
         _nearRefContainer = RefrigeratorManager.Instance.NearRefrigeratorContainer;
 
         // 交換モードなら
-        if (_invManager.isSwapMode)
-        {
-            int selfIndex = GetSelfIndex();
+        if (!_invManager.IsSwapMode) return;
 
-            // 交換先にアイテムを渡す
-            _nearRefContainer.UpdateItem(_refInvRenderer.LastSelectedIndex,
-                                         _playerContainer.GetItem(selfIndex),
-                                         _playerContainer.GetState(selfIndex));
+        var selfIndex = GetSelfIndex();
 
-            // 選択スロットに交換先のアイテムを配置
-            _playerContainer.UpdateItem(selfIndex,
-                                        _invManager.itemToSwapFromRef,
-                                        _invManager.itemStateToSwap);
+        // 交換先にアイテムを渡す
+        _nearRefContainer.UpdateItem(_refInvRenderer.LastSelectedIndex,
+                                     _playerContainer.GetItem(selfIndex),
+                                     _playerContainer.GetState(selfIndex));
 
-            // フォーカスを冷蔵庫に戻す
-            _playerInvRenderer.DisableAllSlot();
-            _refInvRenderer.EnableAllSlot();
-            _refInvRenderer.SelectSlot();
+        // 選択スロットに交換先のアイテムを配置
+        _playerContainer.UpdateItem(selfIndex,
+                                    _invManager.ItemToSwapFromRef,
+                                    _invManager.ItemStateToSwap);
 
-            // キャッシュアイテムクリア
-            _invManager.itemToSwapFromRef = null;
-            _invManager.itemStateToSwap   = FoodState.None;
-        }
+        // フォーカスを冷蔵庫に戻す
+        _playerInvRenderer.DisableAllSlot();
+        _refInvRenderer.EnableAllSlot();
+        _refInvRenderer.SelectSlot();
+
+        // キャッシュアイテムクリア
+        _invManager.ItemToSwapFromRef = null;
+        _invManager.ItemStateToSwap   = FoodState.None;
     }
 
     /// <summary>
@@ -109,24 +105,23 @@ public class InventorySlotFunctions : MonoBehaviour
         for (int i = 0; i < _playerContainer.Container.Count; i++)
         {
             // プレイヤーインベントリに空きがあったら
-            if (_playerContainer.Container[i].Item == null)
-            {
-                // そのスロットにアイテムを配置
-                _playerContainer.UpdateItem(i, selfItem, selfState);
+            if (_playerContainer.Container[i].Item != null) continue;
 
-                // 冷蔵庫スロットは空にする
-                _nearRefContainer.RemoveItem(selfIndex);
+            // そのスロットにアイテムを配置
+            _playerContainer.UpdateItem(i, selfItem, selfState);
 
-                return;
-            }
+            // 冷蔵庫スロットは空にする
+            _nearRefContainer.RemoveItem(selfIndex);
+
+            return;
         }
 
         // プレイヤーとアイテム交換
         // 交換アイテムをキャッシュ
-        _invManager.itemToSwapFromRef = selfItem;
-        _invManager.itemStateToSwap   = selfState;
+        _invManager.ItemToSwapFromRef = selfItem;
+        _invManager.ItemStateToSwap   = selfState;
         // 交換モード発動
-        _invManager.isSwapMode = true;
+        _invManager.IsSwapMode = true;
         // プレイヤースロットにフォーカス
         _refInvRenderer.DisableAllSlot();
         _playerInvRenderer.EnableAllSlot();
@@ -141,21 +136,21 @@ public class InventorySlotFunctions : MonoBehaviour
     public void OnClickForCooking()
     {
         //食料prefabの親
-        GameObject foodParent = GameObject.FindGameObjectWithTag("FoodParent");
+        var foodParent = GameObject.FindGameObjectWithTag("FoodParent");
 
-        GameObject foodPosition = GameObject.FindGameObjectWithTag("FoodPosition");
-        Transform  foodTrf      = foodPosition.transform;
+        var foodPosition = GameObject.FindGameObjectWithTag("FoodPosition");
+        var foodTrf      = foodPosition.transform;
 
         int selfIndex = GetSelfIndex();
 
-        PlayerInventoryContainer playerContainer = TmpInventoryManager.Instance.PlayerContainer;
+        PlayerInventoryContainer playerContainer = InventoryManager.Instance.PlayerContainer;
         InventorySlotBase selfSlot               = playerContainer.Container[selfIndex];
 
         // 現在のシーン名
-        string curSceneName = SceneManager.GetActiveScene().name;
+        var curSceneName = SceneManager.GetActiveScene().name;
 
         // 投入できない食材の状態
-        FoodState disallowState = FoodState.None;
+        var disallowState = FoodState.None;
 
         switch (curSceneName)
         {
@@ -204,15 +199,15 @@ public class InventorySlotFunctions : MonoBehaviour
         switch (curSceneName)
         {
             case "BakeScenes":
-                BakeController.foodBeingBaked = selfSlot.Item;
+                BakeController.FoodBeingBaked = selfSlot.Item;
                 break;
 
             case "BoilScenes":
-                BoilController.foodBeingBoiled = selfSlot.Item;
+                BoilController.FoodBeingBoiled = selfSlot.Item;
                 break;
 
             case "CutScenes":
-                CutController.foodBeingCut = selfSlot.Item;
+                CutController.FoodBeingCut = selfSlot.Item;
                 break;
 
             default:
@@ -224,6 +219,6 @@ public class InventorySlotFunctions : MonoBehaviour
         playerContainer.RemoveItem(selfIndex);
 
         // 投入元のスロットインデックスを記憶
-        TmpInventoryManager.Instance.puttedSlotIndex = selfIndex;
+        InventoryManager.Instance.PuttedSlotIndex = selfIndex;
     }
 }

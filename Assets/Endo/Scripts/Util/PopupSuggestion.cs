@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PopupSuggention : MonoBehaviour
+public class PopupSuggestion : MonoBehaviour
 {
     [SerializeField, Tooltip("インタラクトをするボタンの名称（一文字）")]
-    private string _intaractButton;
+    private string _interactButton;
 
     [SerializeField, Tooltip("インタラクトによって起こる動作の名称")]
-    private string _intaractName;
+    private string _interactName;
 
     [SerializeField, Tooltip("Xのオフセット値")]
     private float _xOffset = 0;
@@ -23,24 +23,30 @@ public class PopupSuggention : MonoBehaviour
     private GameObject _popupObj;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         _popupObj = Instantiate(_popupPrefab, transform);
 
-        Transform trfWrapper = _popupObj.transform.Find("Wrapper");
+        var trfWrapper = _popupObj.transform.Find("Wrapper");
 
         // 表示位置設定
         trfWrapper.position = new Vector3(trfWrapper.position.x + _xOffset,
                                           trfWrapper.position.y + _yOffset);
 
         // 文字列設定
-        trfWrapper.Find("IntaractButton/ButtonName").GetComponent<Text>().text = _intaractButton;
-        trfWrapper.Find("IntaractName").GetComponent<Text>().text              = _intaractName;
+        trfWrapper.Find("InteractButton/ButtonName").GetComponent<Text>().text = _interactButton;
+        trfWrapper.Find("InteractName").GetComponent<Text>().text              = _interactName;
 
         _popupObj.SetActive(false);
     }
 
-    private void OnTriggerEnter() => _popupObj.SetActive(true);
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player")) _popupObj.SetActive(true);
+    }
 
-    private void OnTriggerExit() => _popupObj.SetActive(false);
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player")) _popupObj.SetActive(false);
+    }
 }

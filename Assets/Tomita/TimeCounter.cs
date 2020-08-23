@@ -6,28 +6,28 @@ using UnityEngine.UI;
 public class TimeCounter : MonoBehaviour
 {
     //カウントアップ
-    public static float countup = 400.0f;
+    public static float Countup = 400.0f;
 
     [System.NonSerialized]
-    public static float currentTime = countup;
+    public static float CurrentTime = Countup;
 
     //タイムリミット
-    public float timeLimit = 0.0f;
+    public float TimeLimit = 0.0f;
 
     //時間を表示するText型の変数
-    public Text timeText;
+    public Text TimeText;
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         //時間をカウントする
-        currentTime -= Time.deltaTime;
+        CurrentTime -= Time.deltaTime;
 
         //時間を表示する
-        timeText.text = currentTime.ToString("0");
+        TimeText.text = CurrentTime.ToString("0");
 
         // タイムアップでゲームオーバー
-        if (currentTime <= timeLimit)
+        if (CurrentTime <= TimeLimit)
         {
             SceneChanger.Instance.SceneLoad(SceneChanger.SceneName.GameOverScenes);
         }

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Refrigerator Inventorys", menuName = "Inventory/Create Refrigerator Inventorys")]
@@ -16,13 +17,14 @@ public class RefrigeratorInventoryContainers : ScriptableObject
     /// <param name="refObjName">追加する冷蔵庫のオブジェクトの名前</param>
     public void AddContainer(string refObjName)
     {
-        // 同じインスタンスIDのコンテナがあれば追加しない
-        foreach (var container in RefInvContainers)
+        // 同じ名前のコンテナがあれば追加しない
+        if (RefInvContainers != null &&
+            RefInvContainers.Any(container => container.SelfObjName == refObjName))
         {
-            if (container.selfObjName == refObjName) return;
+            return;
         }
 
-        RefInvContainers.Add(new RefrigeratorInventoryContainerBase(refObjName));
+        RefInvContainers?.Add(new RefrigeratorInventoryContainerBase(refObjName));
     }
 
     /// <summary>
@@ -33,18 +35,7 @@ public class RefrigeratorInventoryContainers : ScriptableObject
     /// <returns>コンテナ || null</returns>
     public RefrigeratorInventoryContainerBase GetContainer(string refObjName)
     {
-        RefrigeratorInventoryContainerBase result = null;
-
-        foreach (var container in RefInvContainers)
-        {
-            if (container.selfObjName == refObjName)
-            {
-                result = container;
-                break;
-            }
-        }
-
-        return result;
+        return RefInvContainers.FirstOrDefault(container => container.SelfObjName == refObjName);
     }
 }
 
@@ -53,7 +44,7 @@ public class RefrigeratorInventoryContainerBase
 {
     // TODO: 冷蔵庫判別にオブジェクト名を使用しているが、同一名称が使われる恐れがあるため、できれば他の方法に切り替えたい
     [SerializeField, Tooltip("個々の冷蔵庫オブジェクトの名前")]
-    public string selfObjName;
+    public string SelfObjName;
 
     [SerializeField]
     private List<InventorySlotBase> _container = new List<InventorySlotBase>();
@@ -62,18 +53,18 @@ public class RefrigeratorInventoryContainerBase
 
     public RefrigeratorInventoryContainerBase(string objName)
     {
-        selfObjName = objName;
+        SelfObjName = objName;
     }
 
     /// <summary>
     /// インベントリにアイテムを追加する
     /// </summary>
-    /// <param name="item"><追加するアイテム/param>
+    /// <param name="item">追加するアイテム</param>
     /// <param name="state">アイテムの状態</param>
     public void AddItem(Item item, FoodState state = FoodState.None)
     {
         // スロットサイズを超過する場合は追加しない
-        if (Container.Count >= RefrigeratorManager.Instance.slotSize) return;
+        if (Container.Count >= RefrigeratorManager.Instance.SlotSize) return;
 
         Container.Add(new InventorySlotBase(item, state));
     }

@@ -17,10 +17,10 @@ public class WarpPortal : MonoBehaviour
     private float _waitTimeAfterWarp;
 
     // 抑制時間のカウンター
-    private float _waitTimeCounter = 0;
+    private float _waitTimeCounter;
 
     // ワープが実行されたか否か
-    private bool _isWarped = false;
+    private bool _isWarped;
 
     private void Update()
     {
@@ -29,7 +29,7 @@ public class WarpPortal : MonoBehaviour
         {
             _waitTimeCounter += Time.deltaTime;
 
-            Player.Instance.isStop = _isWarped = _waitTimeCounter < _waitTimeAfterWarp;
+            Player.Instance.IsStop = _isWarped = _waitTimeCounter < _waitTimeAfterWarp;
         }
         // 抑制時間が過ぎたらカウンターをリセット
         else if (_waitTimeCounter > _waitTimeAfterWarp)

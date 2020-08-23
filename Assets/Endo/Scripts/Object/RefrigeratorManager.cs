@@ -5,10 +5,10 @@ using UnityEngine;
 public class RefrigeratorManager : SingletonMonoBehaviour<RefrigeratorManager>
 {
     // プレイヤーのインタラクト範囲にある冷蔵庫
-    public GameObject currentNearObj;
+    public GameObject CurrentNearObj;
 
     // 冷蔵庫の最大スロット数
-    public int slotSize;
+    public int SlotSize;
 
     // 冷蔵庫のインベントリオブジェクト
     private GameObject _refInvObj;
@@ -20,16 +20,16 @@ public class RefrigeratorManager : SingletonMonoBehaviour<RefrigeratorManager>
         {
             RefrigeratorInventoryContainerBase result = null;
 
-            if (currentNearObj == null) return result;
+            if (CurrentNearObj == null) return result;
 
-            result = TmpInventoryManager.Instance.RefContainers.GetContainer(currentNearObj.name);
+            result = InventoryManager.Instance.RefContainers.GetContainer(CurrentNearObj.name);
 
             return result;
         }
     }
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         _refInvObj = GameObject.FindGameObjectWithTag("RefrigeratorInventory");
 
