@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Player Inventory", menuName = "Inventory/Create Player Inventory")]
 public class PlayerInventoryContainer : InventoryContainerBase

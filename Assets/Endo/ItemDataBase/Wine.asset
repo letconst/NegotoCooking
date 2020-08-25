@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b6947bccaf59ac4ca7b1bcf2dc1c37d, type: 3}
   m_Name: Wine
   m_EditorClassIdentifier: 
-  _kindOfItem: 0
-  _itemIcon: {fileID: 0}
-  _itemName: "\u30EF\u30A4\u30F3"
-  _itemDesc: 
+  kindOfItem: 0
+  itemIcon: {fileID: 0}
+  itemName: "\u30EF\u30A4\u30F3"
+  foodObj: {fileID: 0}

@@ -993,7 +993,7 @@ PrefabInstance:
     - target: {fileID: 41472411289846920, guid: f4b12d467e210834b9dfed9c2db64d26,
         type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 41472411289846920, guid: f4b12d467e210834b9dfed9c2db64d26,
         type: 3}
@@ -1398,9 +1398,9 @@ MonoBehaviour:
   text: {fileID: 853849757}
   _slider: {fileID: 851102056}
   noiseMator: {fileID: 1000580551}
-  FireChar: {fileID: 853849756}
+  fireChar: {fileID: 853849756}
   leftAllow: {fileID: 853849755}
-  RightAllow: {fileID: 853849754}
+  rightAllow: {fileID: 853849754}
 --- !u!1001 &1500479914
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1849,6 +1849,23 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7395243517525022678, guid: d4f7db75b9098fd4d931df6fa8877816,
         type: 3}
+    - target: {fileID: 7485420130902453000, guid: d96400bc8dfb4f443b8b7de57ebdbfe9,
+        type: 3}
+      propertyPath: inventory
+      value: 
+      objectReference: {fileID: 11400000, guid: be535e889645ad34094e3b4a19ddfdd7,
+        type: 2}
+    - target: {fileID: 7485420130902453000, guid: d96400bc8dfb4f443b8b7de57ebdbfe9,
+        type: 3}
+      propertyPath: slotPrefab
+      value: 
+      objectReference: {fileID: 7395243517525022678, guid: d4f7db75b9098fd4d931df6fa8877816,
+        type: 3}
+    - target: {fileID: 7485420130902453000, guid: d96400bc8dfb4f443b8b7de57ebdbfe9,
+        type: 3}
+      propertyPath: slotWrapper
+      value: 
+      objectReference: {fileID: 2115749590}
     - target: {fileID: 7485420130902453002, guid: d96400bc8dfb4f443b8b7de57ebdbfe9,
         type: 3}
       propertyPath: m_Name
@@ -1967,6 +1984,12 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 2115749588}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2115749590 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3993574266759314107, guid: d96400bc8dfb4f443b8b7de57ebdbfe9,
+    type: 3}
+  m_PrefabInstance: {fileID: 2115749588}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2134391359
 GameObject:
   m_ObjectHideFlags: 0
@@ -2031,5 +2054,5 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

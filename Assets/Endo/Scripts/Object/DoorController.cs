@@ -1,16 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class DoorController : MonoBehaviour
 {
     [SerializeField]
-    private float _closeLimit;
+    private float closeLimit;
 
     // プレイヤーが近くにいるか否か
     private bool _isNear;
 
     private Animator _anim;
+
+    private static readonly int IsOpen = Animator.StringToHash("IsOpen");
 
     // Start is called before the first frame update
     private void Start()
@@ -28,12 +31,12 @@ public class DoorController : MonoBehaviour
             SwitchOpen();
 
             // 指定時間経過後に自動で閉じる
-            Invoke("SwitchOpen", _closeLimit);
+            Invoke(nameof(SwitchOpen), closeLimit);
 
             // 閉じたときは自動で開かないようにする
-            if (!_anim.GetBool("IsOpen"))
+            if (!_anim.GetBool(IsOpen))
             {
-                CancelInvoke("SwitchOpen");
+                CancelInvoke(nameof(SwitchOpen));
             }
         }
     }
@@ -53,6 +56,6 @@ public class DoorController : MonoBehaviour
     /// </summary>
     private void SwitchOpen()
     {
-        _anim.SetBool("IsOpen", !_anim.GetBool("IsOpen"));
+        _anim.SetBool(IsOpen, !_anim.GetBool(IsOpen));
     }
 }

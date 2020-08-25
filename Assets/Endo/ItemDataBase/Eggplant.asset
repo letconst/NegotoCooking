@@ -12,9 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b6947bccaf59ac4ca7b1bcf2dc1c37d, type: 3}
   m_Name: Eggplant
   m_EditorClassIdentifier: 
-  _kindOfItem: 1
-  _itemIcon: {fileID: 0}
-  _itemName: "\u30CA\u30B9"
-  _foodObj: {fileID: 7370294695255969759, guid: eceedaf4894ad26408b6409e478e8ff1,
-    type: 3}
-  _isUsable: 0
+  kindOfItem: 1
+  itemIcon: {fileID: 0}
+  itemName: "\u30CA\u30B9"
+  foodObj: {fileID: 7370294695255969759, guid: eceedaf4894ad26408b6409e478e8ff1, type: 3}

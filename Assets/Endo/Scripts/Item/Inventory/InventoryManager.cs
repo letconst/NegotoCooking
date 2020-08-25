@@ -1,17 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class InventoryManager : SingletonMonoBehaviour<InventoryManager>
 {
     [SerializeField]
-    private PlayerInventoryContainer        _playerContainer;
+    private PlayerInventoryContainer        playerContainer;
     [SerializeField]
-    private InventoryContainerBase          _largePlateContainer;
+    private InventoryContainerBase          largePlateContainer;
     [SerializeField]
-    private RefrigeratorInventoryContainers _refContainers;
+    private RefrigeratorInventoryContainers refContainers;
     [SerializeField]
-    private RecipeDatabase                  _recipeDatabase;
+    private RecipeDatabase                  recipeDatabase;
 
     // 交換用: アイテム交換モードか否か
     [System.NonSerialized]
@@ -27,10 +28,10 @@ public class InventoryManager : SingletonMonoBehaviour<InventoryManager>
     [System.NonSerialized]
     public int PuttedSlotIndex;
 
-    public PlayerInventoryContainer        PlayerContainer     => _playerContainer;
-    public InventoryContainerBase          LargePlateContainer => _largePlateContainer;
-    public RefrigeratorInventoryContainers RefContainers       => _refContainers;
-    public RecipeDatabase                  RecipeDatabase      => _recipeDatabase;
+    public PlayerInventoryContainer        PlayerContainer     => playerContainer;
+    public InventoryContainerBase          LargePlateContainer => largePlateContainer;
+    public RefrigeratorInventoryContainers RefContainers       => refContainers;
+    public RecipeDatabase                  RecipeDatabase      => recipeDatabase;
 
     private void Awake()
     {

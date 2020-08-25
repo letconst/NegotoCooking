@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b6947bccaf59ac4ca7b1bcf2dc1c37d, type: 3}
   m_Name: SeaFish
   m_EditorClassIdentifier: 
-  _kindOfItem: 1
-  _itemIcon: {fileID: 0}
-  _itemName: "\u6D77\u9B5A"
-  _itemDesc: 
+  kindOfItem: 1
+  itemIcon: {fileID: 0}
+  itemName: "\u6D77\u9B5A"
+  foodObj: {fileID: 0}

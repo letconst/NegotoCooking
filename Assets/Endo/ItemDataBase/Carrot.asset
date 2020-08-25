@@ -12,9 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b6947bccaf59ac4ca7b1bcf2dc1c37d, type: 3}
   m_Name: Carrot
   m_EditorClassIdentifier: 
-  _kindOfItem: 1
-  _itemIcon: {fileID: 0}
-  _itemName: "\u4EBA\u53C2"
-  _foodObj: {fileID: 8756561244182462144, guid: 24788a8447de74e499e5959945fb9908,
-    type: 3}
-  _isUsable: 0
+  kindOfItem: 1
+  itemIcon: {fileID: 0}
+  itemName: "\u30CB\u30F3\u30B8\u30F3"
+  foodObj: {fileID: 8756561244182462144, guid: 24788a8447de74e499e5959945fb9908, type: 3}

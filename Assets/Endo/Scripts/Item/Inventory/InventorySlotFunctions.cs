@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 public class InventorySlotFunctions : MonoBehaviour
 {
     private GameObject                         _refInvObj;
-    private InventoryManager                _invManager;
+    private InventoryManager                   _invManager;
     private PlayerInventoryContainer           _playerContainer;
     private RefrigeratorInventoryContainerBase _nearRefContainer;
     private InventoryRenderer                  _playerInvRenderer;
@@ -94,10 +94,10 @@ public class InventorySlotFunctions : MonoBehaviour
     public void OnClickForRefrigerator()
     {
         _nearRefContainer             = RefrigeratorManager.Instance.NearRefrigeratorContainer;
-        int               selfIndex   = GetSelfIndex();
-        InventorySlotBase nearRefSlot = _nearRefContainer.Container[selfIndex];
-        Item              selfItem    = nearRefSlot.Item;
-        FoodState         selfState   = nearRefSlot.State;
+        var selfIndex   = GetSelfIndex();
+        var nearRefSlot = _nearRefContainer.Container[selfIndex];
+        var selfItem    = nearRefSlot.Item;
+        var selfState   = nearRefSlot.State;
 
         // スロットにアイテムがなければ弾く
         if (selfItem == null) return;
@@ -141,10 +141,10 @@ public class InventorySlotFunctions : MonoBehaviour
         var foodPosition = GameObject.FindGameObjectWithTag("FoodPosition");
         var foodTrf      = foodPosition.transform;
 
-        int selfIndex = GetSelfIndex();
+        var selfIndex = GetSelfIndex();
 
-        PlayerInventoryContainer playerContainer = InventoryManager.Instance.PlayerContainer;
-        InventorySlotBase selfSlot               = playerContainer.Container[selfIndex];
+        var playerContainer = InventoryManager.Instance.PlayerContainer;
+        var selfSlot        = playerContainer.Container[selfIndex];
 
         // 現在のシーン名
         var curSceneName = SceneManager.GetActiveScene().name;
@@ -188,12 +188,13 @@ public class InventorySlotFunctions : MonoBehaviour
         }
 
         // 食材を表示
-        GameObject foodChild = Instantiate(selfSlot.Item.FoodObj,
-                                           foodTrf.position,
-                                           new Quaternion(foodTrf.rotation.x,
-                                                          foodTrf.rotation.y,
-                                                          foodTrf.rotation.z,
-                                                          foodTrf.rotation.w));
+        var foodRotation = foodTrf.rotation;
+        var foodChild    = Instantiate(selfSlot.Item.FoodObj,
+                                       foodTrf.position,
+                                       new Quaternion(foodRotation.x,
+                                                      foodRotation.y,
+                                                      foodRotation.z,
+                                                      foodRotation.w));
         foodChild.transform.parent = foodParent.transform;
 
         switch (curSceneName)

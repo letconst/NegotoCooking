@@ -1,21 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class TimeCounter : MonoBehaviour
 {
     //カウントアップ
-    public static float Countup = 400.0f;
+    public static float CountUp = 400.0f;
 
-    [System.NonSerialized]
-    public static float CurrentTime = Countup;
+    public static float CurrentTime = CountUp;
 
     //タイムリミット
-    public float TimeLimit = 0.0f;
+    [SerializeField]
+    private float timeLimit;
 
     //時間を表示するText型の変数
-    public Text TimeText;
+    [SerializeField]
+    private Text timeText;
 
     // Update is called once per frame
     private void Update()
@@ -24,10 +23,10 @@ public class TimeCounter : MonoBehaviour
         CurrentTime -= Time.deltaTime;
 
         //時間を表示する
-        TimeText.text = CurrentTime.ToString("0");
+        timeText.text = CurrentTime.ToString("0");
 
         // タイムアップでゲームオーバー
-        if (CurrentTime <= TimeLimit)
+        if (CurrentTime <= timeLimit)
         {
             SceneChanger.Instance.SceneLoad(SceneChanger.SceneName.GameOverScenes);
         }

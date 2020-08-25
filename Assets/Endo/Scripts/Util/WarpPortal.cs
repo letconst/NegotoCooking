@@ -1,20 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class WarpPortal : MonoBehaviour
 {
     [SerializeField, Tooltip("ワープ先のポジション")]
-    private Vector3 _warpTo;
+    private Vector3 warpTo;
 
     [SerializeField, Tooltip("ワープ後の向き (Y)")]
-    private float _yRotationAfterWarp;
+    private float yRotationAfterWarp;
 
     [SerializeField, Tooltip("ワープ後の向きをワープ時の向きにするか否か")]
-    private bool _isLookSameRotation;
+    private bool isLookSameRotation;
 
     [SerializeField, Tooltip("ワープ後にプレイヤーの移動を抑制する時間")]
-    private float _waitTimeAfterWarp;
+    private float waitTimeAfterWarp;
 
     // 抑制時間のカウンター
     private float _waitTimeCounter;
@@ -29,10 +27,10 @@ public class WarpPortal : MonoBehaviour
         {
             _waitTimeCounter += Time.deltaTime;
 
-            Player.Instance.IsStop = _isWarped = _waitTimeCounter < _waitTimeAfterWarp;
+            Player.Instance.isStop = _isWarped = _waitTimeCounter < waitTimeAfterWarp;
         }
         // 抑制時間が過ぎたらカウンターをリセット
-        else if (_waitTimeCounter > _waitTimeAfterWarp)
+        else if (_waitTimeCounter > waitTimeAfterWarp)
         {
             _waitTimeCounter = 0;
         }
@@ -43,15 +41,15 @@ public class WarpPortal : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             // ワープ時の向きにするようになっていたらそちらを使用
-            if (_isLookSameRotation)
+            if (isLookSameRotation)
             {
-                _yRotationAfterWarp = other.transform.rotation.y;
+                yRotationAfterWarp = other.transform.rotation.y;
             }
 
             other.gameObject.SetActive(false);
 
-            other.transform.position = _warpTo;
-            other.transform.rotation = Quaternion.Euler(new Vector3(0, _yRotationAfterWarp));
+            other.transform.position = warpTo;
+            other.transform.rotation = Quaternion.Euler(new Vector3(0, yRotationAfterWarp));
 
             other.gameObject.SetActive(true);
         }

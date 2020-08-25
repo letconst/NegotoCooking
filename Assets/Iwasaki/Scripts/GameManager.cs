@@ -60,7 +60,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         InventoryManager.Instance.PlayerContainer.Container.Clear();
         InventoryManager.Instance.RefContainers.RefInvContainers.Clear();
         InventoryManager.Instance.LargePlateContainer.Container.Clear();
-        TimeCounter.CurrentTime = TimeCounter.Countup;
+        TimeCounter.CurrentTime = TimeCounter.CountUp;
         NoiseMator = 0;
     }
 }

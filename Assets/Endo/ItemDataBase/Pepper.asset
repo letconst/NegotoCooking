@@ -12,9 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b6947bccaf59ac4ca7b1bcf2dc1c37d, type: 3}
   m_Name: Pepper
   m_EditorClassIdentifier: 
-  _kindOfItem: 0
-  _itemIcon: {fileID: 0}
-  _itemName: "\u80E1\u6912"
-  _foodObj: {fileID: 7051983101457213819, guid: dccd828eaa3cf5d4d9975462a04f83c7,
-    type: 3}
-  _isUsable: 0
+  kindOfItem: 0
+  itemIcon: {fileID: 0}
+  itemName: "\u30B3\u30B7\u30E7\u30A6"
+  foodObj: {fileID: 7051983101457213819, guid: dccd828eaa3cf5d4d9975462a04f83c7, type: 3}

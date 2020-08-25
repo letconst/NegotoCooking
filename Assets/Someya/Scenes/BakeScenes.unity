@@ -158,9 +158,9 @@ MonoBehaviour:
   text: {fileID: 703045050}
   _slider: {fileID: 1330125089}
   noiseMator: {fileID: 2004258867}
-  FireChar: {fileID: 638983359}
+  fireChar: {fileID: 638983359}
   leftAllow: {fileID: 509208432}
-  RightAllow: {fileID: 501704883}
+  rightAllow: {fileID: 501704883}
 --- !u!224 &77144312
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1248,6 +1248,23 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7395243517525022678, guid: aba26a622ea3d364ea67bfefcab5e7c5,
         type: 3}
+    - target: {fileID: 7485420130902453000, guid: d96400bc8dfb4f443b8b7de57ebdbfe9,
+        type: 3}
+      propertyPath: inventory
+      value: 
+      objectReference: {fileID: 11400000, guid: be535e889645ad34094e3b4a19ddfdd7,
+        type: 2}
+    - target: {fileID: 7485420130902453000, guid: d96400bc8dfb4f443b8b7de57ebdbfe9,
+        type: 3}
+      propertyPath: slotPrefab
+      value: 
+      objectReference: {fileID: 7395243517525022678, guid: aba26a622ea3d364ea67bfefcab5e7c5,
+        type: 3}
+    - target: {fileID: 7485420130902453000, guid: d96400bc8dfb4f443b8b7de57ebdbfe9,
+        type: 3}
+      propertyPath: slotWrapper
+      value: 
+      objectReference: {fileID: 1797984899}
     - target: {fileID: 7485420130902453002, guid: d96400bc8dfb4f443b8b7de57ebdbfe9,
         type: 3}
       propertyPath: m_Name
@@ -1363,6 +1380,12 @@ PrefabInstance:
 --- !u!224 &1797984898 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7485420130902453005, guid: d96400bc8dfb4f443b8b7de57ebdbfe9,
+    type: 3}
+  m_PrefabInstance: {fileID: 1797984897}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1797984899 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3993574266759314107, guid: d96400bc8dfb4f443b8b7de57ebdbfe9,
     type: 3}
   m_PrefabInstance: {fileID: 1797984897}
   m_PrefabAsset: {fileID: 0}

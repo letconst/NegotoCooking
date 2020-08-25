@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -8,16 +7,16 @@ using UnityEngine.UI;
 public class InventoryRenderer : MonoBehaviour
 {
     [SerializeField, Tooltip("表示させる対象のインベントリコンテナ。冷蔵庫用の場合は未指定で良い")]
-    private InventoryContainerBase _inventory;
+    private InventoryContainerBase inventory;
 
     [SerializeField, Tooltip("表示させるスロットプレハブ")]
-    private GameObject _slotPrefab;
+    private GameObject slotPrefab;
 
     [SerializeField, Tooltip("生成する場所の親オブジェクト")]
-    private GameObject _slotWrapper;
+    private GameObject slotWrapper;
 
     [SerializeField, Tooltip("冷蔵庫用のインベントリか否か")]
-    private bool _isForRefrigerator;
+    private bool isForRefrigerator;
 
     // 最大スロット数
     private int _selfSlotSize;
@@ -32,15 +31,15 @@ public class InventoryRenderer : MonoBehaviour
     private readonly Dictionary<GameObject, InventorySlotBase> _itemsDisplayed = new Dictionary<GameObject, InventorySlotBase>();
 
     // 最後に選択していたスロットのインデックス
-    public int LastSelectedIndex { get; private set; } = 0;
+    public int LastSelectedIndex { get; private set; }
 
     // Start is called before the first frame update
     private void Start()
     {
-        _selfSlotSize = (_inventory != null)
-            ? _inventory.SlotSize
-            : (_isForRefrigerator)
-            ? RefrigeratorManager.Instance.SlotSize
+        _selfSlotSize = (inventory != null)
+            ? inventory.SlotSize
+            : (isForRefrigerator)
+            ? RefrigeratorManager.Instance.slotSize
             : 0;
 
         InitRender();
@@ -59,18 +58,18 @@ public class InventoryRenderer : MonoBehaviour
     private void InitRender()
     {
         // 例外および冷蔵庫かの判定
-        if (_inventory == null)
+        if (inventory == null)
         {
-            if (!_isForRefrigerator)
+            if (!isForRefrigerator)
             {
                 Debug.LogError("表示対象のインベントリコンテナが未指定です");
                 return;
             }
 
             // 冷蔵庫用の処理
-            for (var i = 0; i < RefrigeratorManager.Instance.SlotSize; i++)
+            for (var i = 0; i < RefrigeratorManager.Instance.slotSize; i++)
             {
-                GameObject slotObj = Instantiate(_slotPrefab, transform.position, Quaternion.identity, _slotWrapper.transform);
+                var slotObj = Instantiate(slotPrefab, transform.position, Quaternion.identity, slotWrapper.transform);
 
                 _itemsDisplayed.Add(slotObj, new InventorySlotBase());
             }
@@ -78,17 +77,17 @@ public class InventoryRenderer : MonoBehaviour
             return;
         }
 
-        for (var i = 0; i < _inventory.SlotSize; i++)
+        for (var i = 0; i < inventory.SlotSize; i++)
         {
             // インベントリコンテナのスロット数がスロットサイズに満たなければスロット確保
-            if (_inventory.Container.Count < _inventory.SlotSize)
+            if (inventory.Container.Count < inventory.SlotSize)
             {
-                _inventory.AddItem(null);
+                inventory.AddItem(null);
             }
 
-            GameObject slotObj = Instantiate(_slotPrefab, transform.position, Quaternion.identity, _slotWrapper.transform);
+            var slotObj = Instantiate(slotPrefab, transform.position, Quaternion.identity, slotWrapper.transform);
 
-            _itemsDisplayed.Add(slotObj, _inventory.Container[i]);
+            _itemsDisplayed.Add(slotObj, inventory.Container[i]);
         }
 
         SelectSlot(0);
@@ -100,19 +99,19 @@ public class InventoryRenderer : MonoBehaviour
     private void UpdateRender()
     {
         // 冷蔵庫ならまず中身を取得
-        if (_isForRefrigerator)
+        if (isForRefrigerator)
         {
             var i = 0;
-            var curNearRef = RefrigeratorManager.Instance.CurrentNearObj;
-            var refCtrlr   = curNearRef.GetComponent<RefrigeratorController>();
+            var curNearRef    = RefrigeratorManager.Instance.currentNearObj;
+            var refController = curNearRef.GetComponent<RefrigeratorController>();
 
             // 初回表示時は初期アイテム表示
             if (InventoryManager.Instance.RefContainers.GetContainer(curNearRef.name) == null)
             {
                 foreach (var slotObj in _itemsDisplayed.Keys.ToArray())
                 {
-                    _itemsDisplayed[slotObj] = new InventorySlotBase(refCtrlr.DefaultItems[i].Item,
-                                                                     refCtrlr.DefaultItems[i].State);
+                    _itemsDisplayed[slotObj] = new InventorySlotBase(refController.DefaultItems[i].Item,
+                                                                     refController.DefaultItems[i].State);
 
                     i++;
                 }

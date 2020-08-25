@@ -1,15 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Refrigerator Inventorys", menuName = "Inventory/Create Refrigerator Inventorys")]
+[CreateAssetMenu(fileName = "New Refrigerator Inventories", menuName = "Inventory/Create Refrigerator Inventories")]
 public class RefrigeratorInventoryContainers : ScriptableObject
 {
     [SerializeField]
-    private List<RefrigeratorInventoryContainerBase> _refInvContainers = new List<RefrigeratorInventoryContainerBase>();
+    private List<RefrigeratorInventoryContainerBase> refInvContainers = new List<RefrigeratorInventoryContainerBase>();
 
-    public List<RefrigeratorInventoryContainerBase> RefInvContainers { get => _refInvContainers; private set => _refInvContainers = value; }
+    public List<RefrigeratorInventoryContainerBase> RefInvContainers => refInvContainers;
 
     /// <summary>
     /// 冷蔵庫コンテナを新規追加する
@@ -19,7 +18,7 @@ public class RefrigeratorInventoryContainers : ScriptableObject
     {
         // 同じ名前のコンテナがあれば追加しない
         if (RefInvContainers != null &&
-            RefInvContainers.Any(container => container.SelfObjName == refObjName))
+            RefInvContainers.Any(container => container.selfObjName == refObjName))
         {
             return;
         }
@@ -35,7 +34,7 @@ public class RefrigeratorInventoryContainers : ScriptableObject
     /// <returns>コンテナ || null</returns>
     public RefrigeratorInventoryContainerBase GetContainer(string refObjName)
     {
-        return RefInvContainers.FirstOrDefault(container => container.SelfObjName == refObjName);
+        return RefInvContainers.FirstOrDefault(container => container.selfObjName == refObjName);
     }
 }
 
@@ -44,16 +43,16 @@ public class RefrigeratorInventoryContainerBase
 {
     // TODO: 冷蔵庫判別にオブジェクト名を使用しているが、同一名称が使われる恐れがあるため、できれば他の方法に切り替えたい
     [SerializeField, Tooltip("個々の冷蔵庫オブジェクトの名前")]
-    public string SelfObjName;
+    public string selfObjName;
 
     [SerializeField]
-    private List<InventorySlotBase> _container = new List<InventorySlotBase>();
+    private List<InventorySlotBase> container = new List<InventorySlotBase>();
 
-    public List<InventorySlotBase> Container { get => _container; private set => _container = value; }
+    public List<InventorySlotBase> Container { get => container; private set => container = value; }
 
     public RefrigeratorInventoryContainerBase(string objName)
     {
-        SelfObjName = objName;
+        selfObjName = objName;
     }
 
     /// <summary>
@@ -64,7 +63,7 @@ public class RefrigeratorInventoryContainerBase
     public void AddItem(Item item, FoodState state = FoodState.None)
     {
         // スロットサイズを超過する場合は追加しない
-        if (Container.Count >= RefrigeratorManager.Instance.SlotSize) return;
+        if (Container.Count >= RefrigeratorManager.Instance.slotSize) return;
 
         Container.Add(new InventorySlotBase(item, state));
     }

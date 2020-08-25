@@ -1,8 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-[SerializeField]
 [CreateAssetMenu(fileName = "Item", menuName = "Create Item")]
 public class Item : ScriptableObject
 {
@@ -14,22 +11,22 @@ public class Item : ScriptableObject
 
     // アイテムの種類
     [SerializeField]
-    private KindOfItem _kindOfItem;
+    private KindOfItem kindOfItem;
 
     // アイテムアイコン
     [SerializeField]
-    private Sprite _itemIcon;
+    private Sprite itemIcon;
 
     // アイテム名
     [SerializeField]
-    private string _itemName;
+    private string itemName;
 
     // 食材3Dオブジェクト
     [SerializeField]
-    private GameObject _foodObj;
+    private GameObject foodObj;
 
-    public KindOfItem KindOfItem1 => _kindOfItem;
-    public Sprite     ItemIcon    => _itemIcon;
-    public GameObject FoodObj     => _foodObj;
-    public string     ItemName    => _itemName;
+    public KindOfItem KindOfItem1 => kindOfItem;
+    public Sprite     ItemIcon    => itemIcon;
+    public GameObject FoodObj     => foodObj;
+    public string     ItemName    => itemName;
 }

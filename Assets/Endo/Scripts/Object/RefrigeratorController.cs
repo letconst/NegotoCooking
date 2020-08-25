@@ -1,11 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class RefrigeratorController : MonoBehaviour
 {
     [SerializeField, Tooltip("冷蔵庫内に初期配置させるアイテム")]
-    private List<DefaultItems> _defaultItems = new List<DefaultItems>();
+    private List<DefaultItems> defaultItems = new List<DefaultItems>();
 
     // 近くにいるか否か
     private bool _isNear;
@@ -18,7 +17,7 @@ public class RefrigeratorController : MonoBehaviour
     private RefrigeratorInventoryContainers    _refContainers;
     private RefrigeratorInventoryContainerBase _selfContainer;
 
-    public List<DefaultItems> DefaultItems => _defaultItems;
+    public List<DefaultItems> DefaultItems => defaultItems;
 
 
     // Start is called before the first frame update
@@ -77,7 +76,7 @@ public class RefrigeratorController : MonoBehaviour
 
         _selfContainer = _refContainers.GetContainer(gameObject.name);
 
-        for (var i = 0; i < RefrigeratorManager.Instance.SlotSize; i++)
+        for (var i = 0; i < RefrigeratorManager.Instance.slotSize; i++)
         {
             var selfSlotDefaultItem = (DefaultItems.Count != 0)
                 ? DefaultItems[i].Item
@@ -115,7 +114,7 @@ public class RefrigeratorController : MonoBehaviour
         if (!other.CompareTag("Player")) return;
 
         _isNear = true;
-        RefrigeratorManager.Instance.CurrentNearObj = gameObject;
+        RefrigeratorManager.Instance.currentNearObj = gameObject;
     }
 
     private void OnTriggerExit(Collider other)
@@ -123,7 +122,7 @@ public class RefrigeratorController : MonoBehaviour
         if (!other.CompareTag("Player")) return;
 
         _isNear = false;
-        RefrigeratorManager.Instance.CurrentNearObj = null;
+        RefrigeratorManager.Instance.currentNearObj = null;
 
         // インベントリが開いている時
         if (_refInvObj.activeSelf)

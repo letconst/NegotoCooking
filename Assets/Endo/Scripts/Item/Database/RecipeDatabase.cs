@@ -1,15 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu(fileName = "New Recipe Database", menuName = "Inventory/Create Recipe Database")]
 public class RecipeDatabase : ScriptableObject
 {
     [SerializeField]
-    private List<RecipeEntry> _entries = new List<RecipeEntry>();
+    private List<RecipeEntry> entries = new List<RecipeEntry>();
 
-    public List<RecipeEntry> Entries => _entries;
+    public List<RecipeEntry> Entries => entries;
 
     /// <summary>
     /// 登録されている全レシピの名前をリストで取得する
@@ -35,24 +35,24 @@ public class RecipeDatabase : ScriptableObject
 public class RecipeEntry
 {
     [SerializeField]
-    private string _recipeName;
+    private string recipeName;
 
     [SerializeField]
-    private List<RequireFoods> _requireFoods = new List<RequireFoods>();
+    private List<RequireFoods> requireFoods = new List<RequireFoods>();
 
-    public string             RecipeName   => _recipeName;
-    public List<RequireFoods> RequireFoods => _requireFoods;
+    public string             RecipeName   => recipeName;
+    public List<RequireFoods> RequireFoods => requireFoods;
 }
 
 [System.Serializable]
 public class RequireFoods
 {
     [SerializeField]
-    private Item _food;
+    private Item food;
 
     [SerializeField]
-    private List<FoodState> _states = new List<FoodState>();
+    private List<FoodState> states = new List<FoodState>();
 
-    public Item Food              => _food;
-    public List<FoodState> States => _states;
+    public Item Food              => food;
+    public List<FoodState> States => states;
 }

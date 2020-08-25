@@ -20,16 +20,17 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        var playerPos = MyP.transform.position;
 
-        if (MyP.transform.position.z >= -22)
+        if (playerPos.z >= -22)
         {
             // カメラの位置をプレイヤーに追従
-            transform.position = new Vector3(MyP.transform.position.x, MyP.transform.position.y + 15, MyP.transform.position.z - 15);
+            transform.position = new Vector3(playerPos.x, playerPos.y + 15, playerPos.z - 15);
         }
         else
         {
             // カメラの位置をプレイヤーに追従
-            transform.position = new Vector3(MyP.transform.position.x, MyP.transform.position.y + 15, -37);
+            transform.position = new Vector3(playerPos.x, playerPos.y + 15, -37);
         }
     }
 }

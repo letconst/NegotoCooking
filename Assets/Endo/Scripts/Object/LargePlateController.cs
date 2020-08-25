@@ -1,13 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class LargePlateController : MonoBehaviour
 {
     // インベントリアセット
-    public InventoryContainerBase SelfContainer;
+    [SerializeField]
+    private InventoryContainerBase selfContainer;
+
     // 近くにいるか否か
-    private bool _isNear = false;
+    private bool _isNear;
 
     private GameObject               _soup;
     private GameObject               _playerInvObj;
@@ -39,7 +39,7 @@ public class LargePlateController : MonoBehaviour
                                                                           selectedFoodState == FoodState.Raw) ) return;
 
             // 大皿に現在選択しているアイテムをぶち込む
-            SelfContainer.AddItem(_playerInvContainer.GetItem(_playerInvRenderer.LastSelectedIndex),
+            selfContainer.AddItem(_playerInvContainer.GetItem(_playerInvRenderer.LastSelectedIndex),
                                   selectedFoodState);
 
             // プレイヤーのアイテムを削除
@@ -47,7 +47,7 @@ public class LargePlateController : MonoBehaviour
         }
 
         // コンテナにアイテムが1つでも入ったらスープを表示
-        if (SelfContainer.Container.Count > 0) _soup.SetActive(true);
+        if (selfContainer.Container.Count > 0) _soup.SetActive(true);
     }
 
     private void OnTriggerEnter(Collider other)

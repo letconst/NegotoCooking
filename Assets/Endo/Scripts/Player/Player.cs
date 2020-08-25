@@ -1,24 +1,19 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
 
 public class Player : SingletonMonoBehaviour<Player>
 {
     // プレイヤーの各パラメーター
     [SerializeField, Tooltip("移動速度")]
-    private float _walkSpeed;
+    private float walkSpeed;
 
     [SerializeField, Tooltip("重力")]
-    private float _gravity;
+    private float gravity;
 
     [SerializeField, Tooltip("回転速度")]
-    private int _rotateSpeed;
+    private int rotateSpeed;
 
     // プレイヤーが停止状態か否か
-    public  bool                IsStop = false;
+    public  bool                isStop;
     private CharacterController _controller;
     private Vector3             _moveDirection = Vector3.zero;
     private Animator            _animator;
@@ -41,20 +36,19 @@ public class Player : SingletonMonoBehaviour<Player>
     /// </summary>
     private void Movement()
     {
-        Quaternion rot;
         // 水平入力
-        var h = (IsStop)
+        var h = (isStop)
             ? 0
             : Input.GetAxis("Horizontal");
         // 垂直入力
-        var v = (IsStop)
+        var v = (isStop)
             ? 0
             : Input.GetAxis("Vertical"); ;
 
         // 接地判定
         if (_controller.isGrounded)
         {
-            _moveDirection = new Vector3(h * _walkSpeed, 0, v * _walkSpeed);
+            _moveDirection = new Vector3(h * walkSpeed, 0, v * walkSpeed);
         }
         else
         {
@@ -62,7 +56,7 @@ public class Player : SingletonMonoBehaviour<Player>
             if (!(_moveDirection.y < -100))
             {
                 // 重力による落下
-                _moveDirection.y -= _gravity * Time.deltaTime;
+                _moveDirection.y -= gravity * Time.deltaTime;
             }
         }
 
@@ -73,8 +67,8 @@ public class Player : SingletonMonoBehaviour<Player>
         // 入力時に向きを変更
         if (h != 0 || v != 0)
         {
-            rot = Quaternion.LookRotation(new Vector3(_moveDirection.x, 0, _moveDirection.z));
-            transform.rotation = Quaternion.Slerp(transform.rotation, rot, Time.deltaTime * _rotateSpeed);
+            var rot            = Quaternion.LookRotation(new Vector3(_moveDirection.x, 0, _moveDirection.z));
+            transform.rotation = Quaternion.Slerp(transform.rotation, rot, Time.deltaTime * rotateSpeed);
         }
 
         //アニメーション
