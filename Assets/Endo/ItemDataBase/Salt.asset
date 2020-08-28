@@ -12,9 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b6947bccaf59ac4ca7b1bcf2dc1c37d, type: 3}
   m_Name: Salt
   m_EditorClassIdentifier: 
-  _kindOfItem: 0
-  _itemIcon: {fileID: 0}
-  _itemName: "\u5869"
-  _foodObj: {fileID: 6255071344880862049, guid: f6f3834fb7bc07e45822f8b7f19ddf6f,
-    type: 3}
-  _isUsable: 0
+  kindOfItem: 0
+  itemIcon: {fileID: 0}
+  itemName: "\u5869"
+  foodObj: {fileID: 6255071344880862049, guid: f6f3834fb7bc07e45822f8b7f19ddf6f, type: 3}

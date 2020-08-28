@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class RefrigeratorManager : SingletonMonoBehaviour<RefrigeratorManager>
 {
@@ -14,22 +12,12 @@ public class RefrigeratorManager : SingletonMonoBehaviour<RefrigeratorManager>
     private GameObject _refInvObj;
 
     // インタラクト範囲にある冷蔵庫のコンテナ
-    public RefrigeratorInventoryContainerBase NearRefrigeratorContainer
-    {
-        get
-        {
-            RefrigeratorInventoryContainerBase result = null;
-
-            if (currentNearObj == null) return result;
-
-            result = TmpInventoryManager.Instance.refContainers.GetContainer(currentNearObj.GetInstanceID());
-            
-            return result;
-        }
-    }
+    public RefrigeratorInventoryContainerBase NearRefrigeratorContainer => (currentNearObj == null)
+        ? null
+        : InventoryManager.Instance.RefContainers.GetContainer(currentNearObj.name);
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         _refInvObj = GameObject.FindGameObjectWithTag("RefrigeratorInventory");
 

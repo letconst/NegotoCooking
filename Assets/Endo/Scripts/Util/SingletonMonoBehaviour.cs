@@ -2,23 +2,22 @@
 
 public class SingletonMonoBehaviour<T> : MonoBehaviour where T : MonoBehaviour
 {
-    private static T instance;
+    private static T _instance;
 
     public static T Instance
     {
         get
         {
-            if (instance == null)
-            {
-                instance = (T)FindObjectOfType(typeof(T));
+            if (_instance != null) return _instance;
 
-                if (instance == null)
-                {
-                    Debug.LogError(typeof(T) + "がシーンに存在しません。");
-                }
+            _instance = (T)FindObjectOfType(typeof(T));
+
+            if (_instance == null)
+            {
+                Debug.LogError(typeof(T) + "がシーンに存在しません。");
             }
 
-            return instance;
+            return _instance;
         }
     }
 

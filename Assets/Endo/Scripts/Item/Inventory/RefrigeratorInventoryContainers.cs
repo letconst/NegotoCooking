@@ -1,98 +1,64 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Refrigerator Inventorys", menuName = "Inventory/Create Refrigerator Inventorys")]
+[CreateAssetMenu(fileName = "New Refrigerator Inventories", menuName = "Inventory/Create Refrigerator Inventories")]
 public class RefrigeratorInventoryContainers : ScriptableObject
 {
     [SerializeField]
-    private List<RefrigeratorInventoryContainerBase> _refInvContainers = new List<RefrigeratorInventoryContainerBase>();
+    private List<RefrigeratorInventoryContainerBase> refInvContainers = new List<RefrigeratorInventoryContainerBase>();
 
-    public List<RefrigeratorInventoryContainerBase> RefInvContainers { get => _refInvContainers; private set => _refInvContainers = value; }
+    public List<RefrigeratorInventoryContainerBase> RefInvContainers => refInvContainers;
 
     /// <summary>
     /// 冷蔵庫コンテナを新規追加する
     /// </summary>
-    /// <param name="refObj">追加する冷蔵庫のオブジェクト</param>
-    public void AddContainer(GameObject refObj)
+    /// <param name="refObjName">追加する冷蔵庫のオブジェクトの名前</param>
+    public void AddContainer(string refObjName)
     {
-        // 同じインスタンスIDのコンテナがあれば追加しない
-        foreach (var container in RefInvContainers)
+        // 同じ名前のコンテナがあれば追加しない
+        if (RefInvContainers != null &&
+            RefInvContainers.Any(container => container.selfObjName == refObjName))
         {
-            if (container._selfInstanceId == refObj.GetInstanceID()) return;
+            return;
         }
 
-        RefInvContainers.Add(new RefrigeratorInventoryContainerBase(refObj.GetInstanceID()));
+        RefInvContainers?.Add(new RefrigeratorInventoryContainerBase(refObjName));
     }
 
     /// <summary>
     /// 指定したインスタンスIDの冷蔵庫オブジェクトのコンテナを返す
     /// 指定IDに一致するコンテナが見つからない場合はnullを返す
     /// </summary>
-    /// <param name="instanceId">取得したいコンテナの冷蔵庫オブジェクトのインスタンスID</param>
+    /// <param name="refObjName">取得したいコンテナの冷蔵庫オブジェクトの名前</param>
     /// <returns>コンテナ || null</returns>
-    public RefrigeratorInventoryContainerBase GetContainer(int instanceId)
+    public RefrigeratorInventoryContainerBase GetContainer(string refObjName)
     {
-        RefrigeratorInventoryContainerBase result = null;
-
-        foreach (var container in RefInvContainers)
-        {
-            if (container._selfInstanceId == instanceId)
-            {
-                result = container;
-                break;
-            }
-        }
-
-        return result;
-    }
-
-    /// <summary>
-    /// 指定したインスタンスIDの冷蔵庫オブジェクトのコンテナインデックスを返す
-    /// 見つからない場合は-1を返す
-    /// </summary>
-    /// <param name="instanceId">取得したいコンテナの冷蔵庫オブジェクトのインスタンスID</param>
-    /// <returns>コンテナのインデックス || -1</returns>
-    public int GetContainerIndex(int instanceId)
-    {
-        int result = -1;
-        int i      = 0;
-
-        foreach (var container in RefInvContainers)
-        {
-            if (container._selfInstanceId == instanceId)
-            {
-                result = i;
-                break;
-            }
-
-            i++;
-        }
-
-        return result;
+        return RefInvContainers.FirstOrDefault(container => container.selfObjName == refObjName);
     }
 }
 
 [System.Serializable]
 public class RefrigeratorInventoryContainerBase
 {
-    [SerializeField, Tooltip("個々の冷蔵庫オブジェクトのインスタンスID")]
-    public int _selfInstanceId;
+    // TODO: 冷蔵庫判別にオブジェクト名を使用しているが、同一名称が使われる恐れがあるため、できれば他の方法に切り替えたい
+    [SerializeField, Tooltip("個々の冷蔵庫オブジェクトの名前")]
+    public string selfObjName;
 
     [SerializeField]
-    private List<InventorySlotBase> _container = new List<InventorySlotBase>();
+    private List<InventorySlotBase> container = new List<InventorySlotBase>();
 
-    public List<InventorySlotBase> Container { get => _container; private set => _container = value; }
+    public List<InventorySlotBase> Container { get => container; private set => container = value; }
 
-    public RefrigeratorInventoryContainerBase(int instanceId)
+    public RefrigeratorInventoryContainerBase(string objName)
     {
-        _selfInstanceId = instanceId;
+        selfObjName = objName;
     }
 
     /// <summary>
     /// インベントリにアイテムを追加する
     /// </summary>
-    /// <param name="item"><追加するアイテム/param>
+    /// <param name="item">追加するアイテム</param>
     /// <param name="state">アイテムの状態</param>
     public void AddItem(Item item, FoodState state = FoodState.None)
     {

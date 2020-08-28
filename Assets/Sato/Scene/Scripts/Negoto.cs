@@ -30,10 +30,10 @@ public class Negoto : MonoBehaviour
         // プレイヤーと師匠の距離が指定距離以内だったら寝言表示
         if (Vector3.Distance(transform.position, _playerObj.transform.position) < _showDistance)
         {
-            RectTransform negotoRTrf = _negotoPanel.GetComponent<RectTransform>();
+            var negotoRTrf = _negotoPanel.GetComponent<RectTransform>();
 
-            Vector2 offset = new Vector2(Screen.width  * negotoRTrf.anchorMax.x + _xOffset,
-                                         Screen.height * negotoRTrf.anchorMax.y + _yOffset);
+            var offset = new Vector2(Screen.width  * negotoRTrf.anchorMax.x + _xOffset,
+                                     Screen.height * negotoRTrf.anchorMax.y + _yOffset);
 
             negotoRTrf.position = RectTransformUtility.WorldToScreenPoint(Camera.main,
                                                                           transform.position) - offset;

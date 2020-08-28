@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b6947bccaf59ac4ca7b1bcf2dc1c37d, type: 3}
   m_Name: Crab
   m_EditorClassIdentifier: 
-  _kindOfItem: 1
-  _itemIcon: {fileID: 0}
-  _itemName: "\u30AB\u30CB"
-  _itemDesc: 
+  kindOfItem: 1
+  itemIcon: {fileID: 0}
+  itemName: "\u30AB\u30CB"
+  foodObj: {fileID: 0}

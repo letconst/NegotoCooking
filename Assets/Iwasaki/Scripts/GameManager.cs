@@ -10,8 +10,6 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     private Scene _tmpScene;
 
     private float noiseValue;
-    private Vector3 playerPos;
-    private Vector3 playerRotate;
 
     public float NoiseMator
     {
@@ -25,29 +23,9 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         }
     }
 
-    public Vector3 PlayerPos
-    {
-        set
-        {
-            playerPos = value;
-        }
-        get
-        {
-            return playerPos;
-        }
-    }
+    public Vector3 PlayerPos { set; get; }
 
-    public Vector3 PlayerRotate
-    {
-        set
-        {
-            playerRotate = value;
-        }
-        get
-        {
-            return playerRotate;
-        }
-    }
+    public Vector3 PlayerRotate { set; get; }
 
     public void Awake()
     {
@@ -79,10 +57,10 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     /// </summary>
     public void ResetAllValues()
     {
-        TmpInventoryManager.Instance.PlayerContainer.Container.Clear();
-        TmpInventoryManager.Instance.RefContainers.RefInvContainers.Clear();
-        TmpInventoryManager.Instance.LargePlateContainer.Container.Clear();
-        TimeCounter.currentTime = TimeCounter.countup;
+        InventoryManager.Instance.PlayerContainer.Container.Clear();
+        InventoryManager.Instance.RefContainers.RefInvContainers.Clear();
+        InventoryManager.Instance.LargePlateContainer.Container.Clear();
+        TimeCounter.CurrentTime = TimeCounter.CountUp;
         NoiseMator = 0;
     }
 }

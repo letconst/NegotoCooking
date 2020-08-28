@@ -10,30 +10,30 @@ public class BoilController : MonoBehaviour
     [SerializeField, Tooltip("鍋の中心座標のオブジェクト")]
     private GameObject _potCenterPos;
 
-    private GameObject _boilMator;
+    private GameObject _boilMeter;
     private GameObject _foodParent;
     private Slider     _boilSlider;
 
     private PlayerInventoryContainer _playerContainer;
 
     // 調理が完了しているか否か
-    private bool _isCompleteCooking = false;
+    private bool _isCompleteCooking;
 
     // 現在調理中の食材
-    public static Item foodBeingBoiled;
+    public static Item FoodBeingBoiled;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        _boilMator  = GameObject.FindGameObjectWithTag("BoilMator");
+        _boilMeter  = GameObject.FindGameObjectWithTag("BoilMator");
         _foodParent = GameObject.FindGameObjectWithTag("FoodParent");
-        _boilSlider = _boilMator.GetComponent<FireControl>()._slider;
+        _boilSlider = _boilMeter.GetComponent<FireControl>()._slider;
 
-        _playerContainer = TmpInventoryManager.Instance.PlayerContainer;
+        _playerContainer = InventoryManager.Instance.PlayerContainer;
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         CookingCompleteListener();
         PotActionHandler();
@@ -49,22 +49,21 @@ public class BoilController : MonoBehaviour
             _isCompleteCooking = true;
         }
 
-        int               puttedSlotIndex = TmpInventoryManager.Instance.puttedSlotIndex;
+        int               puttedSlotIndex = InventoryManager.Instance.PuttedSlotIndex;
         InventorySlotBase puttedSlot      = _playerContainer.Container[puttedSlotIndex];
 
         // 調理完了した食材をインベントリに戻す
-        if (_isCompleteCooking && puttedSlot.Item == null)
-        {
-            // 出ていた食材を削除
-            Destroy(_foodParent.transform.GetChild(0).gameObject);
+        if (!_isCompleteCooking || puttedSlot.Item != null) return;
 
-            // プレイヤーインベントリに戻す
-            _playerContainer.UpdateItem(puttedSlotIndex, foodBeingBoiled, FoodState.Boil);
+        // 調理が完了していないか、投入元のスロットにアイテムがある場合は動作しない
+        Destroy(_foodParent.transform.GetChild(0).gameObject);
 
-            _isCompleteCooking = false;
-            FireControl.clickBool = true;
-            foodBeingBoiled = null;
-        }
+        // プレイヤーインベントリに戻す
+        _playerContainer.UpdateItem(puttedSlotIndex, FoodBeingBoiled, FoodState.Boil);
+
+        _isCompleteCooking = false;
+        FireControl.clickBool = true;
+        FoodBeingBoiled = null;
     }
 
     /// <summary>

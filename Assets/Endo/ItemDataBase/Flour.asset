@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b6947bccaf59ac4ca7b1bcf2dc1c37d, type: 3}
   m_Name: Flour
   m_EditorClassIdentifier: 
-  _kindOfItem: 0
-  _itemIcon: {fileID: 0}
-  _itemName: "\u5C0F\u9EA6\u7C89"
-  _itemDesc: 
+  kindOfItem: 0
+  itemIcon: {fileID: 0}
+  itemName: "\u5C0F\u9EA6\u7C89"
+  foodObj: {fileID: 0}

@@ -1,14 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class RefrigeratorController : MonoBehaviour
 {
-    [SerializeField, Tooltip("冷蔵庫内に初期配置させるアイテム（3個まで）")]
-    private Item[] _defaultItems = new Item[3];
+    [SerializeField, Tooltip("冷蔵庫内に初期配置させるアイテム")]
+    private List<DefaultItems> defaultItems = new List<DefaultItems>();
 
     // 近くにいるか否か
-    private bool _isNear = false;
+    private bool _isNear;
 
     private GameObject _playerInvObj;
     private GameObject _refInvObj;
@@ -18,23 +17,24 @@ public class RefrigeratorController : MonoBehaviour
     private RefrigeratorInventoryContainers    _refContainers;
     private RefrigeratorInventoryContainerBase _selfContainer;
 
-    public Item[] DefaultItems { get => _defaultItems; private set => _defaultItems = value; }
+    public List<DefaultItems> DefaultItems => defaultItems;
+
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         _playerInvObj = GameObject.FindGameObjectWithTag("PlayerInventory");
         _refInvObj    = GameObject.FindGameObjectWithTag("RefrigeratorInventory");
 
         _playerInvRenderer = _playerInvObj.GetComponent<InventoryRenderer>();
         _selfInvRenderer   = _refInvObj.GetComponent<InventoryRenderer>();
-        _refContainers     = TmpInventoryManager.Instance.refContainers;
+        _refContainers     = InventoryManager.Instance.RefContainers;
 
         CreateContainer();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         // X押下でインベントリ開閉
         if (_isNear && (Input.GetKeyDown("joystick button 2") ||
@@ -69,16 +69,21 @@ public class RefrigeratorController : MonoBehaviour
     /// </summary>
     private void CreateContainer()
     {
-        _refContainers.AddContainer(gameObject);
+        // コンテナがすでに作成されていたら追加を行わない
+        if (_refContainers.GetContainer(gameObject.name) != null) return;
 
-        _selfContainer = _refContainers.GetContainer(gameObject.GetInstanceID());
+        _refContainers.AddContainer(gameObject.name);
 
-        for (int i = 0; i < RefrigeratorManager.Instance.slotSize; i++)
+        _selfContainer = _refContainers.GetContainer(gameObject.name);
+
+        for (var i = 0; i < RefrigeratorManager.Instance.slotSize; i++)
         {
-            Item selfSlotDefaultItem = DefaultItems[i];
+            var selfSlotDefaultItem = (DefaultItems.Count != 0)
+                ? DefaultItems[i].Item
+                : null;
 
             // スロットインデックスがアイテム数以上の場合は空アイテムを追加
-            if (i >= DefaultItems.Length)
+            if (i >= DefaultItems.Count)
             {
                 _selfContainer.AddItem(null);
                 continue;
@@ -89,55 +94,52 @@ public class RefrigeratorController : MonoBehaviour
             {
                 _selfContainer.AddItem(selfSlotDefaultItem,
                                        // アイテムが存在するかによって状態変化
-                                       (selfSlotDefaultItem == null)
-                                           ? FoodState.None
-                                           : FoodState.Raw);
+                                       (selfSlotDefaultItem != null)
+                                           ? DefaultItems[i].State
+                                           : FoodState.None);
             }
             // すでにコンテナに同一インデックスのスロットが存在するなら内容更新
             else
             {
                 _selfContainer.UpdateItem(i, selfSlotDefaultItem,
-                                          (selfSlotDefaultItem == null)
-                                              ? FoodState.None
-                                              : FoodState.Raw);
+                                          (selfSlotDefaultItem != null)
+                                              ? DefaultItems[i].State
+                                              : FoodState.None);
             }
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
-        {
-            _isNear = true;
-            RefrigeratorManager.Instance.currentNearObj = gameObject;
-        }
+        if (!other.CompareTag("Player")) return;
+
+        _isNear = true;
+        RefrigeratorManager.Instance.currentNearObj = gameObject;
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (!other.CompareTag("Player")) return;
+
+        _isNear = false;
+        RefrigeratorManager.Instance.currentNearObj = null;
+
+        // インベントリが開いている時
+        if (_refInvObj.activeSelf)
         {
-            _isNear = false;
-            RefrigeratorManager.Instance.currentNearObj = null;
+            // 閉じる
+            _refInvObj.SetActive(false);
+            _selfInvRenderer.ClearRender();
 
-            // インベントリが開いている時
-            if (_refInvObj.activeSelf)
-            {
-                // 閉じる
-                _refInvObj.SetActive(false);
-                _selfInvRenderer.ClearRender();
-
-                // プレイヤーインベントリ有効化
-                _playerInvRenderer.EnableAllSlot();
-                _playerInvRenderer.SelectSlot();
-            }
-
-            // アイテム交換モードだったら解除し、冷蔵庫をenabledに戻す
-            if (TmpInventoryManager.Instance.isSwapMode)
-            {
-                TmpInventoryManager.Instance.isSwapMode = false;
-                _selfInvRenderer.EnableAllSlot();
-            }
+            // プレイヤーインベントリ有効化
+            _playerInvRenderer.EnableAllSlot();
+            _playerInvRenderer.SelectSlot();
         }
+
+        // アイテム交換モードだったら解除し、冷蔵庫をenabledに戻す
+        if (!InventoryManager.Instance.IsSwapMode) return;
+
+        InventoryManager.Instance.IsSwapMode = false;
+        _selfInvRenderer.EnableAllSlot();
     }
 }

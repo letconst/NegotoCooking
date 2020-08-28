@@ -1,14 +1,24 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu(fileName = "New Recipe Database", menuName = "Inventory/Create Recipe Database")]
 public class RecipeDatabase : ScriptableObject
 {
     [SerializeField]
-    private List<RecipeEntry> _entries = new List<RecipeEntry>();
+    private List<RecipeEntry> entries = new List<RecipeEntry>();
 
-    public List<RecipeEntry> Entries { get => _entries; private set => _entries = value; }
+    public List<RecipeEntry> Entries => entries;
+
+    /// <summary>
+    /// 登録されている全レシピの名前をリストで取得する
+    /// </summary>
+    /// <returns>レシピ名のリスト</returns>
+    public List<string> GetAllRecipeNames()
+    {
+        return Entries.Select(entry => entry.RecipeName).ToList();
+    }
 
     /// <summary>
     /// 指定した名前のレシピデータを取得する
@@ -17,18 +27,7 @@ public class RecipeDatabase : ScriptableObject
     /// <returns>レシピデータ || null</returns>
     public RecipeEntry GetRecipeByName(string name)
     {
-        RecipeEntry result = null;
-
-        foreach (var entry in Entries)
-        {
-            if (entry.RecipeName == name)
-            {
-                result = entry;
-                break;
-            }
-        }
-
-        return result;
+        return Entries.FirstOrDefault(entry => entry.RecipeName == name);
     }
 }
 
@@ -36,24 +35,24 @@ public class RecipeDatabase : ScriptableObject
 public class RecipeEntry
 {
     [SerializeField]
-    private string _recipeName;
+    private string recipeName;
 
     [SerializeField]
-    private List<RequireFoods> _requireFoods = new List<RequireFoods>();
+    private List<RequireFoods> requireFoods = new List<RequireFoods>();
 
-    public string RecipeName { get => _recipeName; }
-    public List<RequireFoods> RequireFoods { get => _requireFoods; }
+    public string             RecipeName   => recipeName;
+    public List<RequireFoods> RequireFoods => requireFoods;
 }
 
 [System.Serializable]
 public class RequireFoods
 {
     [SerializeField]
-    private Item _food;
+    private Item food;
 
     [SerializeField]
-    private List<FoodState> _states = new List<FoodState>();
+    private List<FoodState> states = new List<FoodState>();
 
-    public Item Food { get => _food; }
-    public List<FoodState> States { get => _states; }
+    public Item Food              => food;
+    public List<FoodState> States => states;
 }

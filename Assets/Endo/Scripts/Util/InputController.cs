@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class InputController : SingletonMonoBehaviour<InputController>
@@ -20,7 +18,7 @@ public class InputController : SingletonMonoBehaviour<InputController>
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         // ボタンのフォーカスが外れている時、フォーカスを復活させる
         if (EventSystem.current.currentSelectedGameObject == null)

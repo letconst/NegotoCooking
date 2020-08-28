@@ -5,13 +5,12 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     private GameObject _player;
-    private Player p;
-    private float playerPos;
+    private float _playerPos;
 
-    public Player MyP { get => p; private set => p = value; }
+    public Player MyP { get; private set; }
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         // プレイヤーオブジェクト取得
         //_player = GameObject.FindGameObjectWithTag("Player");
@@ -19,18 +18,19 @@ public class CameraController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
-        if (MyP.transform.position.z >= -22)
+        var playerPos = MyP.transform.position;
+
+        if (playerPos.z >= -22)
         {
             // カメラの位置をプレイヤーに追従
-            transform.position = new Vector3(MyP.transform.position.x, MyP.transform.position.y + 15, MyP.transform.position.z - 15);
+            transform.position = new Vector3(playerPos.x, playerPos.y + 15, playerPos.z - 15);
         }
         else
         {
             // カメラの位置をプレイヤーに追従
-            transform.position = new Vector3(MyP.transform.position.x, MyP.transform.position.y + 15, -37);
+            transform.position = new Vector3(playerPos.x, playerPos.y + 15, -37);
         }
     }
 }
