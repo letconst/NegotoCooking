@@ -55,7 +55,7 @@ public class DogNav : MonoBehaviour
         //NavMeshAgentを止める
         agent.isStopped = true;
         //待ち時間を数える
-        if(DogMoveStop)
+        if(!DogMoveStop)
         {
             time += Time.deltaTime;
         }

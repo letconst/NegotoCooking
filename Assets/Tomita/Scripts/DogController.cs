@@ -16,16 +16,26 @@ public class DogController : MonoBehaviour
     private SphereCollider searchArea;
     [SerializeField]
     private float searchAngle;
+    private DogNav dogNav;
     // Start is called before the first frame update
     void Start()
     {
-        
+        dogNav = gameObject.GetComponent<DogNav>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        // 検知範囲にプレイヤーがいたら吠える
+        if (State == DogState.FindPlayer)
+        {
+            dogNav.DogMoveStop = true;
+            GameManager.Instance.NoiseMator += 0.001f;
+        }
+        else
+        {
+            dogNav.DogMoveStop = false;
+        }
     }
 
     private void OnTriggerStay(Collider other)
@@ -41,6 +51,10 @@ public class DogController : MonoBehaviour
             {
                 Debug.Log("主人公発見");
                 State = DogState.FindPlayer;
+            }
+            else
+            {
+                State = DogState.Idle;
             }
         }
     }
