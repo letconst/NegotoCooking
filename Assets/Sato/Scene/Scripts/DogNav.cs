@@ -87,9 +87,16 @@ public class DogNav : MonoBehaviour
             StopHere();
         }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Vector3 dogFood = GameObject.Find("DogFood").transform.position;
+        agent.destination = dogFood;
+        
+    }
 }
 
 //犬に視線の範囲をつけ、範囲内にプレイヤーが入ったら止まって吠える
-//餌を見つけたらそこへ向かい止まる
+//ある一定の範囲内に入ったら目線が向てなくても餌に向かい20秒間そこで止まる
 //犬のモーション導入
 //2秒ごとにcentralpositionをランダムな位置に移動させる
