@@ -111,7 +111,6 @@ public class FireControl : MonoBehaviour
             text.text = "弱";
             //スライダーに値を設定
             _slider.value += yowabi;
-            noiseMator.fillAmount -= noiseYowabi * 0.01f;
             GameManager.Instance.NoiseMator += noiseYowabi * 0.01f;
         }
         else if (fireChange == 1)
@@ -121,7 +120,6 @@ public class FireControl : MonoBehaviour
             _fireCharImage.color = Color.yellow;
             text.text = "中";
             _slider.value += tyubi;
-            noiseMator.fillAmount -= noiseTyubi * 0.01f;
             GameManager.Instance.NoiseMator += noiseTyubi * 0.01f;
         }
         else if (fireChange >= 2)
@@ -130,7 +128,6 @@ public class FireControl : MonoBehaviour
             _fireCharImage.color = Color.red;
             text.text = "強";
             _slider.value += tuyobi;
-            noiseMator.fillAmount -= noiseTuyobi * 0.01f;
             GameManager.Instance.NoiseMator += noiseTuyobi * 0.01f;
         }
     }
