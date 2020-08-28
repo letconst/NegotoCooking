@@ -37,7 +37,7 @@ public class CameraController : MonoBehaviour
         }
 
         //回転させる角度
-        float angle = Input.GetAxis("Horizontal") * rotateSpeed;
+        float angle = Input.GetAxis("R_Stick_H") * rotateSpeed;
  
         //プレイヤー位置情報
         Vector3 _playerPos = MyP.transform.position;

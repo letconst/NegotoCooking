@@ -11244,7 +11244,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c56b17aeb4a199a42bc63e48d076b009, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  warpTo: {x: -33, y: -2.583748, z: 16}
+  warpTo: {x: -33, y: 0, z: 16}
   yRotationAfterWarp: 0
   isLookSameRotation: 0
   waitTimeAfterWarp: 0
