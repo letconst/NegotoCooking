@@ -21,6 +21,7 @@ TagManager:
   - FoodPosition
   - Otama
   - Frypan
+  - DogFood
   layers:
   - Default
   - TransparentFX
