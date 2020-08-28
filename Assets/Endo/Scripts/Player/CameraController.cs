@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    //プレイヤーを変数に格納
     private GameObject _player;
     private float _playerPos;
+    //回転させるスピード
+    public float rotateSpeed = 3.0f;
 
     public Player MyP { get; private set; }
 
@@ -32,5 +35,15 @@ public class CameraController : MonoBehaviour
             // カメラの位置をプレイヤーに追従
             transform.position = new Vector3(playerPos.x, playerPos.y + 15, -37);
         }
+
+        //回転させる角度
+        float angle = Input.GetAxis("Horizontal") * rotateSpeed;
+
+        //プレイヤー位置情報
+        Vector3 _playerPos = MyP.transform.position;
+
+        //カメラを回転させる
+        transform.RotateAround(playerPos, Vector3.up, angle);
+
     }
 }
