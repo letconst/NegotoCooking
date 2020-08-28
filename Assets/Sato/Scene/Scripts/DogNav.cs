@@ -20,6 +20,8 @@ public class DogNav : MonoBehaviour
     //餌を食べる時間
     private float eatTime = 20;
 
+    public bool DogMoveStop;
+
     Vector3 pos;
 
     // Start is called before the first frame update
@@ -53,8 +55,11 @@ public class DogNav : MonoBehaviour
         //NavMeshAgentを止める
         agent.isStopped = true;
         //待ち時間を数える
-        time += Time.deltaTime;
-
+        if(DogMoveStop)
+        {
+            time += Time.deltaTime;
+        }
+        
         //待ち時間が設定された数値を超えると発動
         if (time > waitTime)
         {
@@ -78,9 +83,9 @@ public class DogNav : MonoBehaviour
     {
         Debug.Log("餌発見！");
         //餌のオブジェクト発見
-        Vector3 dogFood = GameObject.Find("DogFoodKari").transform.position;
+        GameObject dogFood = GameObject.FindGameObjectWithTag("DogFood");
         //餌を目標地点に設定する
-        agent.destination = dogFood;
+        agent.destination = dogFood.transform.position;
 
         //餌までの距離が0.5未満なら
         if(agent.remainingDistance<0.5)
