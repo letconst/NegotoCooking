@@ -16,6 +16,8 @@ public class DogController : MonoBehaviour
     private SphereCollider searchArea;
     [SerializeField]
     private float searchAngle;
+    [SerializeField]
+    private float decreaseValue;
     private DogNav dogNav;
     // Start is called before the first frame update
     void Start()
@@ -30,7 +32,7 @@ public class DogController : MonoBehaviour
         if (State == DogState.FindPlayer)
         {
             dogNav.DogMoveStop = true;
-            GameManager.Instance.NoiseMator += 0.001f;
+            GameManager.Instance.NoiseMator += (decreaseValue / 100) * Time.deltaTime;
         }
         else
         {
