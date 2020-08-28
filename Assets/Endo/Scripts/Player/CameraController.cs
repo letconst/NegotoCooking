@@ -38,12 +38,11 @@ public class CameraController : MonoBehaviour
 
         //回転させる角度
         float angle = Input.GetAxis("Horizontal") * rotateSpeed;
-
+ 
         //プレイヤー位置情報
         Vector3 _playerPos = MyP.transform.position;
 
         //カメラを回転させる
         transform.RotateAround(playerPos, Vector3.up, angle);
-
     }
 }
