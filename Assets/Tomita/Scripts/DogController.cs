@@ -27,6 +27,7 @@ public class DogController : MonoBehaviour
     {
         
     }
+
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -41,6 +42,14 @@ public class DogController : MonoBehaviour
                 Debug.Log("主人公発見");
                 State = DogState.FindPlayer;
             }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            State = DogState.Idle;
         }
     }
 }
