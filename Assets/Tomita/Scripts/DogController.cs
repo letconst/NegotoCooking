@@ -36,10 +36,14 @@ public class DogController : MonoBehaviour
         {
             dogNav.DogMoveStop = true;
             GameManager.Instance.NoiseMator += (decreaseValue / 100) * Time.deltaTime;
+            _animator.SetBool("Walk", false);
+            _animator.SetBool("Bark", true);
         }
         else
         {
             dogNav.DogMoveStop = false;
+            _animator.SetBool("Walk", true);
+            _animator.SetBool("Bark", false);
         }
     }
 
@@ -56,12 +60,10 @@ public class DogController : MonoBehaviour
             {
                 Debug.Log("主人公発見");
                 State = DogState.FindPlayer;
-                _animator.SetBool("Bark", true);
             }
             else
             {
                 State = DogState.Idle;
-                _animator.SetBool("Bark", false);
             }
         }
     }
