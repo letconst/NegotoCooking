@@ -79,7 +79,7 @@ public class DogNav : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter(Collider other)
+    void OnTriggerStay(Collider other)
     {
         Debug.Log("餌発見！");
         //餌のオブジェクト発見
