@@ -6,8 +6,6 @@ public class RandomMovePosition : MonoBehaviour
 {
     public Transform centerPos;
 
-    private Vector3 startPosition;
-
     private Vector3 destination;
 
     [SerializeField]
@@ -22,7 +20,7 @@ public class RandomMovePosition : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        startPosition = GameObject.Find("CentralPoint").transform.position;
+
     }
 
     // Update is called once per frame
@@ -39,7 +37,7 @@ public class RandomMovePosition : MonoBehaviour
 
     private void RandomPosition()
     {
-        Vector3 ctp=centerPos.position;
+        Vector3 ctp = centerPos.position;
 
         float posX = Random.Range(-1 * radius, radius);
         float posZ = Random.Range(-1 * radius, radius);
