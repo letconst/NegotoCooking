@@ -35,6 +35,7 @@ public class DogController : MonoBehaviour
     [SerializeField] float waitTime = 2;
     //待機時間を数える
     [SerializeField] float time = 0;
+    [SerializeField] float time2 = 0;
     //餌を食べる時間
     private float eatTime = 20;
 
@@ -78,7 +79,7 @@ public class DogController : MonoBehaviour
         _animator.SetBool("Walk", false);
 
         //待ち時間を数える
-        if (!DogMoveStop)
+        if (!DogMoveStop && State != DogState.FindFood)
         {
             time += Time.deltaTime;
         }
@@ -129,6 +130,38 @@ public class DogController : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
+        Debug.Log(other.tag);
+        if (other.CompareTag("DogFood"))
+        {
+            Debug.Log("餌発見");
+            DogMoveStop = true;
+
+            State = DogState.FindFood;
+
+            agent.destination = other.transform.position;
+
+            //餌までの距離が0.5未満なら
+            if (agent.remainingDistance < 0.5 && DogMoveStop)
+            {
+                Debug.Log("餌食べる");
+                agent.isStopped = true;
+                //時間を数える
+                time2 += Time.deltaTime;
+            }
+            //犬が食べ終わったら動き出す
+            if (time2 > eatTime)
+            {
+                //目標地点を設定し直す
+                GotoNextPoint();
+                time2 = 0;
+                DogMoveStop = false;
+
+                Destroy(other.gameObject);
+
+                State = DogState.Idle;
+            }
+        }
+
         if (other.CompareTag("Player"))
         {
             //主人公の方向
@@ -146,6 +179,8 @@ public class DogController : MonoBehaviour
                 State = DogState.Idle;
             }
         }
+
+        
     }
 
     private void OnTriggerExit(Collider other)
