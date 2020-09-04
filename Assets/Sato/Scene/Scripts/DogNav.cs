@@ -55,11 +55,11 @@ public class DogNav : MonoBehaviour
         //NavMeshAgentを止める
         agent.isStopped = true;
         //待ち時間を数える
-        if(!DogMoveStop)
+        if (!DogMoveStop)
         {
             time += Time.deltaTime;
         }
-        
+
         //待ち時間が設定された数値を超えると発動
         if (time > waitTime)
         {
@@ -73,35 +73,38 @@ public class DogNav : MonoBehaviour
     {
         //経路探索の準備ができておらず
         //目標地点までの距離が0.5m未満ならNavMeshAgentを止める
-        if (!agent.pathPending && agent.remainingDistance < 0.5f)
+        if (!agent.pathPending && agent.remainingDistance < 0.5f && !DogMoveStop)
         {
             StopHere();
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
         Debug.Log("餌発見！");
         //餌のオブジェクト発見
-        GameObject dogFood = GameObject.FindGameObjectWithTag("DogFood");
-        //餌を目標地点に設定する
-        agent.destination = dogFood.transform.position;
+        if (other.CompareTag("DogFood"))
+        {
+            //餌を目標地点に設定する
+            agent.destination = other.transform.position;
+        }
 
         //餌までの距離が0.5未満なら
-        if(agent.remainingDistance<0.5)
+        if (agent.remainingDistance < 0.5 && DogMoveStop)
         {
             Debug.Log("餌食べる");
             agent.isStopped = true;
             //時間を数える
             time += Time.deltaTime;
         }
-        
+
         //犬が食べ終わったら動き出す
-        if(time>eatTime)
+        if (time > eatTime)
         {
             //目標地点を設定し直す
             GotoNextPoint();
             time = 0;
+            DogMoveStop = false;
         }
     }
 }
