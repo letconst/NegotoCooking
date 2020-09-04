@@ -5,7 +5,7 @@ ModelImporter:
   internalIDToNameTable:
   - first:
       74: 1827226128182048838
-    second: Take 001
+    second: DogBark
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -36,7 +36,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -45,7 +45,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Take 001
+      name: DogBark
       takeName: Take 001
       internalID: 0
       firstFrame: 0
@@ -115,7 +115,207 @@ ModelImporter:
   humanDescription:
     serializedVersion: 3
     human: []
-    skeleton: []
+    skeleton:
+    - name: Dog_Bark_Z(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Dog
+      parentName: Dog_Bark_Z(Clone)
+      position: {x: -0, y: 0.0265315, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Dog_Mesh
+      parentName: Dog
+      position: {x: -0, y: -0.0265315, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: LeftEye
+      parentName: Dog
+      position: {x: -0, y: -0.0265315, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: RightEye
+      parentName: Dog
+      position: {x: -0, y: -0.0265315, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Tail_IkHandle
+      parentName: Dog_Bark_Z(Clone)
+      position: {x: -0, y: 0.055100683, z: 0.64780223}
+      rotation: {x: -0, y: -0.7071068, z: 0, w: 0.7071068}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Dog_Rig
+      parentName: Dog_Bark_Z(Clone)
+      position: {x: -0, y: 0.44247687, z: 0}
+      rotation: {x: 0.60645556, y: 0.39197147, z: 0.5637781, w: 0.40090424}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Spine
+      parentName: Dog_Rig
+      position: {x: 0.32638445, y: -0.028181616, z: -5.848943e-10}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Spine2
+      parentName: Spine
+      position: {x: 0.09539935, y: -0.013369225, z: 5.848943e-10}
+      rotation: {x: 0.03850605, y: 0.9992584, z: -6.354475e-17, w: 5.882912e-17}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Tail
+      parentName: Spine2
+      position: {x: -0.09351197, y: -0.026000902, z: 4.6195092e-10}
+      rotation: {x: 0.128176, y: 0.44255823, z: -0.17725483, w: 0.86965156}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint7
+      parentName: Tail
+      position: {x: -0.044834595, y: -0.105735235, z: 3.7886852e-10}
+      rotation: {x: 0.13360792, y: -0.0046381354, z: -0.075592004, w: 0.9881363}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint8
+      parentName: joint7
+      position: {x: -0.00911741, y: -0.11013296, z: 2.2701645e-10}
+      rotation: {x: 1.3688649e-10, y: 3.5939277e-12, z: 0.02624576, w: 0.99965554}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint9
+      parentName: joint8
+      position: {x: -0.009354348, y: -0.12439671, z: 2.3575628e-10}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Right_HindFoot
+      parentName: Spine2
+      position: {x: -0.0020063706, y: -0.02600045, z: -0.037454512}
+      rotation: {x: 0.3886706, y: 0.287825, z: 0.23624371, w: 0.84278166}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint31
+      parentName: Right_HindFoot
+      position: {x: 0.03550481, y: -0.12961486, z: -0.047}
+      rotation: {x: 0.25701874, y: -0.29094633, z: 0.2821241, w: 0.87732416}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint32
+      parentName: joint31
+      position: {x: -0.09531261, y: -0.1795258, z: -0.0062567955}
+      rotation: {x: 0, y: 0, z: 0.32435715, w: 0.9459347}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint33
+      parentName: joint32
+      position: {x: 0.04595071, y: -0.15328111, z: -0.0043001}
+      rotation: {x: 0, y: -0, z: -0.20517603, w: 0.9787251}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint34
+      parentName: joint33
+      position: {x: 0.02318529, y: -0.0045541273, z: 0.00045100003}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Left_HindFoot
+      parentName: Spine2
+      position: {x: -0.0020063703, y: -0.02600045, z: 0.0374545}
+      rotation: {x: -0.355588, y: -0.23730817, z: 0.23473403, w: 0.8730074}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint43
+      parentName: Left_HindFoot
+      position: {x: 0.03550481, y: -0.12961486, z: 0.047}
+      rotation: {x: -0.25893536, y: 0.29258382, z: 0.2784991, w: 0.87737423}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint44
+      parentName: joint43
+      position: {x: -0.09531261, y: -0.1795258, z: 0.00620411}
+      rotation: {x: -0.009973928, y: -0.027647287, z: -0.40615737, w: 0.9133304}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint45
+      parentName: joint44
+      position: {x: 0.04595071, y: -0.15328111, z: 0.0043001003}
+      rotation: {x: 0, y: -0, z: -0.20517603, w: 0.9787251}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint46
+      parentName: joint45
+      position: {x: 0.02318529, y: -0.0045541273, z: -0.000451}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Right_ForeFoot
+      parentName: Dog_Rig
+      position: {x: -0.01296486, y: -0.016552327, z: 0.039934468}
+      rotation: {x: -0.111081615, y: -0.14467882, z: -0.5183245, w: 0.835505}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint35
+      parentName: Right_ForeFoot
+      position: {x: -0.06986481, y: -0.107481465, z: 0.04497373}
+      rotation: {x: -0.091550045, y: -0.12429667, z: -0.37660936, w: 0.913419}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint36
+      parentName: joint35
+      position: {x: 0.059561934, y: -0.1114479, z: 0.011750353}
+      rotation: {x: 0, y: -0, z: -0.44500586, w: 0.8955277}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint37
+      parentName: joint36
+      position: {x: -0.021979775, y: -0.29058924, z: -0.0022344}
+      rotation: {x: 0, y: 0, z: 0.25901625, w: 0.96587294}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint38
+      parentName: joint37
+      position: {x: -0.030509565, y: -0.0053089997, z: -0.0005514}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Left_ForeFoot
+      parentName: Dog_Rig
+      position: {x: -0.01296486, y: -0.016552327, z: -0.039934497}
+      rotation: {x: 0, y: -0, z: -0.017046358, w: 0.99985474}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint39
+      parentName: Left_ForeFoot
+      position: {x: -0.06942221, y: -0.10872214, z: -0.044973698}
+      rotation: {x: 0, y: 0, z: 0.18423264, w: 0.9828827}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint40
+      parentName: joint39
+      position: {x: 0.06285903, y: -0.1137992, z: -0.0122893}
+      rotation: {x: 0, y: -0, z: -0.45679995, w: 0.88956946}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint41
+      parentName: joint40
+      position: {x: -0.02457033, y: -0.2903555, z: 0.0022344}
+      rotation: {x: 0, y: 0, z: 0.2439149, w: 0.96979666}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint42
+      parentName: joint41
+      position: {x: -0.030509565, y: -0.0053089997, z: 0.0005514}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Head
+      parentName: Dog_Rig
+      position: {x: -0.10120596, y: 0.012308833, z: 5.684342e-16}
+      rotation: {x: -0.0013342798, y: -0.0012874603, z: 0.034836426, w: 0.9993913}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Head2
+      parentName: Head
+      position: {x: -0.1011523, y: 0.0818252, z: 0.000028670143}
+      rotation: {x: -0.004880747, y: -0.013214385, z: -0.19083631, w: 0.98152083}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mouse
+      parentName: Head2
+      position: {x: -0.064101115, y: -0.026969023, z: 0.003506867}
+      rotation: {x: -0.030495778, y: 0.018201072, z: 0.014955409, w: 0.9992573}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mouse_up
+      parentName: Mouse
+      position: {x: -0.017349634, y: 0.0116189895, z: 0.003949839}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint49
+      parentName: Mouse_up
+      position: {x: -0.096487574, y: -0.02084145, z: -0.006999451}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mouse_Down
+      parentName: Mouse
+      position: {x: -0.012627863, y: -0.02167318, z: 0.0016969104}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint51
+      parentName: Mouse_Down
+      position: {x: -0.07447601, y: -0.0117425835, z: -0.005420032}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
     armTwist: 0.5
     foreArmTwist: 0.5
     upperLegTwist: 0.5
@@ -129,7 +329,7 @@ ModelImporter:
     hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 1
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

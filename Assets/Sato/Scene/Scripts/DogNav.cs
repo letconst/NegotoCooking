@@ -20,6 +20,8 @@ public class DogNav : MonoBehaviour
     //餌を食べる時間
     private float eatTime = 20;
 
+    private Animator anim;
+
     public bool DogMoveStop;
 
     Vector3 pos;
@@ -28,6 +30,8 @@ public class DogNav : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+
+        anim = GetComponent<Animator>();
         //目標地点に近づいても速度を落とさなくなる
         agent.autoBraking = false;
 
@@ -48,12 +52,15 @@ public class DogNav : MonoBehaviour
 
         //NavMeshAgentに目標地点を設定する
         agent.destination = pos;
+
+
     }
 
     void StopHere()
     {
         //NavMeshAgentを止める
         agent.isStopped = true;
+
         //待ち時間を数える
         if (!DogMoveStop)
         {
@@ -81,12 +88,14 @@ public class DogNav : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        Debug.Log("餌発見！");
         //餌のオブジェクト発見
         if (other.CompareTag("DogFood"))
         {
+            GotoNextPoint(); enabled = false;
+
             //餌を目標地点に設定する
             agent.destination = other.transform.position;
+            Debug.Log("餌発見！");
         }
 
         //餌までの距離が0.5未満なら
