@@ -111,7 +111,8 @@ public class InventorySlotFunctions : MonoBehaviour
             _playerContainer.UpdateItem(i, selfItem, selfState);
 
             // 冷蔵庫スロットは空にする
-            _nearRefContainer.RemoveItem(selfIndex);
+            // 無限獲得可能への仕様変更につきCO
+            // _nearRefContainer.RemoveItem(selfIndex);
 
             return;
         }
