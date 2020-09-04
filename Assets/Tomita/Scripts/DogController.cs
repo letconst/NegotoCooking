@@ -19,10 +19,13 @@ public class DogController : MonoBehaviour
     [SerializeField]
     private float decreaseValue;
     private DogNav dogNav;
+    private Animator _animator;
+
     // Start is called before the first frame update
     void Start()
     {
         dogNav = gameObject.GetComponent<DogNav>();
+        _animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -33,10 +36,14 @@ public class DogController : MonoBehaviour
         {
             dogNav.DogMoveStop = true;
             GameManager.Instance.NoiseMator += (decreaseValue / 100) * Time.deltaTime;
+            _animator.SetBool("Walk", false);
+            _animator.SetBool("Bark", true);
         }
         else
         {
             dogNav.DogMoveStop = false;
+            _animator.SetBool("Walk", true);
+            _animator.SetBool("Bark", false);
         }
     }
 
