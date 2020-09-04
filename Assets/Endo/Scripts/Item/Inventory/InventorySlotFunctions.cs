@@ -173,22 +173,29 @@ public class InventorySlotFunctions : MonoBehaviour
 
         // 条件に満たない食材は投入できない
         if (!FireControl.clickBool          ||
+            !FireControl_boil.clickBool     ||
             !CutGauge.clickBool             ||
             selfSlot.Item == null           ||
             selfSlot.State == disallowState ||
             selfSlot.Item.KindOfItem1 == Item.KindOfItem.Seasoning) return;
-
+        
         if (curSceneName == "CutScenes")
         {
             CutGauge.clickBool = false;
+            CutGauge.cantBackBool = false;
         }
-        else
+        else if(curSceneName == "BoilScenes")
+        {
+            GameManager.Instance.BubblePoint = 0;
+            FireControl_boil.clickBool = false;
+        }
+        else if (curSceneName == "BakeScenes")
         {
             FireControl.clickBool = false;
         }
 
-        // 食材を表示
-        var foodRotation = foodTrf.rotation;
+            // 食材を表示
+            var foodRotation = foodTrf.rotation;
         var foodChild    = Instantiate(selfSlot.Item.FoodObj,
                                        foodTrf.position,
                                        new Quaternion(foodRotation.x,

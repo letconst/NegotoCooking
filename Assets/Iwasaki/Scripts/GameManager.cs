@@ -10,6 +10,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     private Scene _tmpScene;
 
     private float noiseValue;
+    private int bubblePoint;
 
     public float NoiseMator
     {
@@ -20,6 +21,17 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         get
         {
             return noiseValue;
+        }
+    }
+    public int BubblePoint
+    {
+        set
+        {
+            bubblePoint = Mathf.Clamp(value, 0, 100);
+        }
+        get
+        {
+            return bubblePoint;
         }
     }
 
