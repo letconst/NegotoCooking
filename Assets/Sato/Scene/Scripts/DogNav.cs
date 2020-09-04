@@ -53,13 +53,15 @@ public class DogNav : MonoBehaviour
         //NavMeshAgentに目標地点を設定する
         agent.destination = pos;
 
-
+        anim.SetBool("Walk", true);
     }
 
     void StopHere()
     {
         //NavMeshAgentを止める
         agent.isStopped = true;
+
+        anim.SetBool("Walk", false) ;
 
         //待ち時間を数える
         if (!DogMoveStop)
