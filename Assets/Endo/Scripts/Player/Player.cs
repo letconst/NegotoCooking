@@ -63,7 +63,6 @@ public class Player : SingletonMonoBehaviour<Player>
         // 移動
         _controller.Move(_moveDirection * Time.deltaTime);
 
-
         // 入力時に向きを変更
         if (h != 0 || v != 0)
         {
