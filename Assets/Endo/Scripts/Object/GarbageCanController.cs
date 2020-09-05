@@ -20,8 +20,7 @@ public class GarbageCanController : MonoBehaviour
     {
         // X押下で選択アイテムを捨てる
         if (_isNear &&
-            (Input.GetKeyDown("joystick button 2") ||
-             Input.GetKeyDown(KeyCode.E)))
+            Input.GetButtonDown("Interact"))
         {
             _playerContainer.RemoveItem(_playerInvRenderer.LastSelectedIndex);
         }

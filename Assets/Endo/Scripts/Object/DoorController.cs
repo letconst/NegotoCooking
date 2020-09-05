@@ -23,8 +23,7 @@ public class DoorController : MonoBehaviour
     {
         // ドア開閉
         if (_isNear &&
-            (Input.GetKeyDown("joystick button 2") ||
-             Input.GetKeyDown(KeyCode.E)))
+            Input.GetButtonDown("Interact"))
         {
             SwitchOpen();
 

@@ -22,8 +22,7 @@ public class MasterController : SingletonMonoBehaviour<MasterController>
 
         // X押下および接近時に調理完了を行う
         if (_isNear &&
-            (Input.GetKeyDown("joystick button 2") ||
-             Input.GetKeyDown(KeyCode.E)))
+            Input.GetButtonDown("Interact"))
         {
             // 調理判定
             Judgement();

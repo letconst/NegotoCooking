@@ -29,8 +29,7 @@ public class LargePlateController : MonoBehaviour
     private void Update()
     {
         if (_isNear &&
-            (Input.GetKeyDown("joystick button 2") ||
-             Input.GetKeyDown(KeyCode.E)))
+            Input.GetButtonDown("Interact"))
         {
             var selectedFood      = _playerInvContainer.GetItem(_playerInvRenderer.LastSelectedIndex);
             var selectedFoodState = _playerInvContainer.GetState(_playerInvRenderer.LastSelectedIndex);
