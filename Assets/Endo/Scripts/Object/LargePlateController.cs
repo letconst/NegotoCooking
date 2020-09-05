@@ -28,15 +28,17 @@ public class LargePlateController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (_isNear && (Input.GetKeyDown("joystick button 2") ||
-                        Input.GetKeyDown(KeyCode.E)))
+        if (_isNear &&
+            (Input.GetKeyDown("joystick button 2") ||
+             Input.GetKeyDown(KeyCode.E)))
         {
             var selectedFood      = _playerInvContainer.GetItem(_playerInvRenderer.LastSelectedIndex);
             var selectedFoodState = _playerInvContainer.GetState(_playerInvRenderer.LastSelectedIndex);
 
             // 調味料か調理済みの食材のみ受け付ける
-            if (selectedFood.KindOfItem1 != Item.KindOfItem.Seasoning && (selectedFoodState == FoodState.None ||
-                                                                          selectedFoodState == FoodState.Raw) ) return;
+            if (selectedFood.KindOfItem1 != Item.KindOfItem.Seasoning &&
+                (selectedFoodState == FoodState.None ||
+                 selectedFoodState == FoodState.Raw)) return;
 
             // 大皿に現在選択しているアイテムをぶち込む
             selfContainer.AddItem(_playerInvContainer.GetItem(_playerInvRenderer.LastSelectedIndex),

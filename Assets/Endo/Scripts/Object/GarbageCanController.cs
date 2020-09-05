@@ -1,13 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GarbageCanController : MonoBehaviour
 {
-    [SerializeField]
-    private PlayerInventoryContainer playerContainer;
-
-    private InventoryRenderer _playerInvRenderer;
+    private PlayerInventoryContainer _playerContainer;
+    private InventoryRenderer        _playerInvRenderer;
 
     // プレイヤーが近くにいるか否か
     private bool _isNear;
@@ -15,19 +11,19 @@ public class GarbageCanController : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        playerContainer = InventoryManager.Instance.PlayerContainer;
-        _playerInvRenderer = GameObject.FindGameObjectWithTag("PlayerInventory")
-                                       .GetComponent<InventoryRenderer>();
+        _playerContainer   = InventoryManager.Instance.PlayerContainer;
+        _playerInvRenderer = GameObject.FindGameObjectWithTag("PlayerInventory").GetComponent<InventoryRenderer>();
     }
 
     // Update is called once per frame
     private void Update()
     {
         // X押下で選択アイテムを捨てる
-        if (_isNear && (Input.GetKeyDown("joystick button 2") ||
-                        Input.GetKeyDown(KeyCode.E)))
+        if (_isNear &&
+            (Input.GetKeyDown("joystick button 2") ||
+             Input.GetKeyDown(KeyCode.E)))
         {
-            playerContainer.RemoveItem(_playerInvRenderer.LastSelectedIndex);
+            _playerContainer.RemoveItem(_playerInvRenderer.LastSelectedIndex);
         }
     }
 

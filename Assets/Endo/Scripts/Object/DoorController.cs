@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Serialization;
+﻿using UnityEngine;
 
 public class DoorController : MonoBehaviour
 {
@@ -25,8 +22,9 @@ public class DoorController : MonoBehaviour
     private void Update()
     {
         // ドア開閉
-        if (_isNear && (Input.GetKeyDown("joystick button 2") ||
-                        Input.GetKeyDown(KeyCode.E)))
+        if (_isNear &&
+            (Input.GetKeyDown("joystick button 2") ||
+             Input.GetKeyDown(KeyCode.E)))
         {
             SwitchOpen();
 

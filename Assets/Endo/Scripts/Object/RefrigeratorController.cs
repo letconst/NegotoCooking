@@ -19,7 +19,6 @@ public class RefrigeratorController : MonoBehaviour
 
     public List<DefaultItems> DefaultItems => defaultItems;
 
-
     // Start is called before the first frame update
     private void Start()
     {
@@ -37,8 +36,9 @@ public class RefrigeratorController : MonoBehaviour
     private void Update()
     {
         // X押下でインベントリ開閉
-        if (_isNear && (Input.GetKeyDown("joystick button 2") ||
-                        Input.GetKeyDown(KeyCode.E)))
+        if (_isNear &&
+            (Input.GetKeyDown("joystick button 2") ||
+             Input.GetKeyDown(KeyCode.E)))
         {
             // 開閉切り替え
             _refInvObj.SetActive(!_refInvObj.activeSelf);
@@ -79,13 +79,14 @@ public class RefrigeratorController : MonoBehaviour
         for (var i = 0; i < RefrigeratorManager.Instance.slotSize; i++)
         {
             var selfSlotDefaultItem = (DefaultItems.Count != 0)
-                ? DefaultItems[i].Item
-                : null;
+                                          ? DefaultItems[i].Item
+                                          : null;
 
             // スロットインデックスがアイテム数以上の場合は空アイテムを追加
             if (i >= DefaultItems.Count)
             {
                 _selfContainer.AddItem(null);
+
                 continue;
             }
 
@@ -113,7 +114,7 @@ public class RefrigeratorController : MonoBehaviour
     {
         if (!other.CompareTag("Player")) return;
 
-        _isNear = true;
+        _isNear                                     = true;
         RefrigeratorManager.Instance.currentNearObj = gameObject;
     }
 
@@ -121,7 +122,7 @@ public class RefrigeratorController : MonoBehaviour
     {
         if (!other.CompareTag("Player")) return;
 
-        _isNear = false;
+        _isNear                                     = false;
         RefrigeratorManager.Instance.currentNearObj = null;
 
         // インベントリが開いている時

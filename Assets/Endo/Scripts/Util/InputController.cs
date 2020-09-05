@@ -11,6 +11,7 @@ public class InputController : SingletonMonoBehaviour<InputController>
         if (this != Instance)
         {
             Destroy(gameObject);
+
             return;
         }
 
@@ -24,7 +25,8 @@ public class InputController : SingletonMonoBehaviour<InputController>
         if (EventSystem.current.currentSelectedGameObject == null)
         {
             // 十字ボタンの入力があるときだけ実行
-            if (Input.GetAxis("D_Pad_V") == 0 && Input.GetAxis("D_Pad_H") == 0) return;
+            if (Input.GetAxis("D_Pad_V") == 0 &&
+                Input.GetAxis("D_Pad_H") == 0) return;
 
             EventSystem.current.SetSelectedGameObject(_lastSelectedObj);
         }
