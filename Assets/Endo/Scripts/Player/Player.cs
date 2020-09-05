@@ -56,12 +56,9 @@ public class Player : SingletonMonoBehaviour<Player>
                     ? 0
                     : Input.GetAxis("Vertical");
 
-        ;
-
         // ダッシュ入力受付
         _isRecieveSprint = _isRecieveSprint ||
-                           (Input.GetKey("joystick button 8") ||
-                            Input.GetKey(KeyCode.LeftShift));
+                           Input.GetButton("Sprint");
 
         // ダッシュ入力の有無で移動速度を変動
         var moveSpeed = (_isRecieveSprint)
