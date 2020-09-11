@@ -18,6 +18,8 @@ public class CutGauge : MonoBehaviour
     //今切り処理中か
     [HideInInspector]
     static public bool clickBool = true;
+    [HideInInspector]
+    static public bool cantBackBool = true;
     //切り終わるまでのメーター
     public Slider _slider;
     ////騒音のメーター
@@ -32,7 +34,7 @@ public class CutGauge : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("joystick button 1") && _slider.value == 0)
+        if (Input.GetKeyDown("joystick button 1") && cantBackBool || Input.GetKeyDown(KeyCode.E) && cantBackBool)
         {
             SceneManager.LoadScene("GameScenes");
         }
@@ -93,7 +95,7 @@ public class CutGauge : MonoBehaviour
             {
                 _slider.value += 5;
             }
-
+            //一番左にもどす
             cutGauge.value = 0;
             StartCoroutine(waitTime(1.0f));
         }

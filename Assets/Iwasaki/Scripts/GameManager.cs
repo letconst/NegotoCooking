@@ -13,6 +13,11 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     private Scene _tmpScene;
 
     private float noiseValue;
+    private int bubblePoint;
+    private int fireChange;
+    [HideInInspector]
+    public bool alertBool;
+    private int bakePoint;
 
     public float NoiseMator
     {
@@ -23,6 +28,42 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         get
         {
             return noiseValue;
+        }
+    }
+
+    public int BubblePoint
+    {
+        set
+        {
+            bubblePoint = Mathf.Clamp(value, 0, 100);
+        }
+        get
+        {
+            return bubblePoint;
+        }
+    }
+
+    public int BakePoint
+    {
+        set
+        {
+            bakePoint = Mathf.Clamp(value, 0, 100);
+        }
+        get
+        {
+            return bakePoint;
+        }
+    }
+
+    public int FireChange
+    {
+        set
+        {
+            fireChange = Mathf.Clamp(value, 0, 2);
+        }
+        get
+        {
+            return fireChange;
         }
     }
 

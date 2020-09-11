@@ -27,7 +27,7 @@ public class BoilController : MonoBehaviour
     {
         _boilMeter  = GameObject.FindGameObjectWithTag("BoilMator");
         _foodParent = GameObject.FindGameObjectWithTag("FoodParent");
-        _boilSlider = _boilMeter.GetComponent<FireControl>()._slider;
+        _boilSlider = _boilMeter.GetComponent<FireControl_boil>()._slider;
 
         _playerContainer = InventoryManager.Instance.PlayerContainer;
     }
@@ -36,7 +36,7 @@ public class BoilController : MonoBehaviour
     private void Update()
     {
         CookingCompleteListener();
-        PotActionHandler();
+        //PotActionHandler();
     }
 
     /// <summary>
@@ -62,7 +62,7 @@ public class BoilController : MonoBehaviour
         _playerContainer.UpdateItem(puttedSlotIndex, FoodBeingBoiled, FoodState.Boil);
 
         _isCompleteCooking = false;
-        FireControl.clickBool = true;
+        FireControl_boil.clickBool = true;
         FoodBeingBoiled = null;
     }
 
