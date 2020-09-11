@@ -36,9 +36,7 @@ public class FireControl_boil : MonoBehaviour
     [SerializeField]
     private GameObject RightAllow;
 
-    private bool doOnce = true;
-    private bool doOnceAlert = true;
-    private int fireChange = 1;
+    private bool doOnce = true;    
 
     //煮込み処理が終わったか
     [HideInInspector]
@@ -50,17 +48,24 @@ public class FireControl_boil : MonoBehaviour
     private GameObject Otama;
     [SerializeField]
     private GameObject Centerpostion;
-    private bool bubbleBool;
+    [HideInInspector]
+    static public bool bubbleBool;
     private float timeleft;
     void Start()
     {
         //中火の色にしておく
         FireChar.GetComponent<Image>().color = Color.yellow;
+        GameManager.Instance.FireChange = 1;
     }
 
     void Update()
     {
-        Debug.Log(GameManager.Instance.BubblePoint);
+        if (GameManager.Instance.alertBool)
+        {
+            noiseMator.GetComponent<Image>().fillAmount -= 0.0005f * 0.01f;
+            GameManager.Instance.NoiseMator += 0.0005f * 0.01f;
+        }
+
         if (_slider.value == 0)
         {
             bubbleBool = false;
@@ -68,46 +73,15 @@ public class FireControl_boil : MonoBehaviour
             {
                 SceneManager.LoadScene("GameScenes");
             }
-        }
-        
-        if (GameManager.Instance.BubblePoint == 100 && doOnceAlert)
-        {
-            doOnceAlert = false;
-            SoundManager.Instance.PlayBgm(BGM.Alert);
-        }
-        if (GameManager.Instance.BubblePoint < 100 && !doOnceAlert)
-        {
-            SoundManager.Instance.FadeOutBgm(1.0f);
-            doOnceAlert = true;
-        }
-
-        if (bubbleBool)
-        {
-            timeleft -= Time.deltaTime;
-            if (timeleft <= 0.0)
-            {
-
-                Debug.Log("PotAction");
-                timeleft = 1.0f;
-                //中だと1秒で10ポイント増える。強だと1秒で25ポイント。100ポイント溜まってしまうと泡があふれて警報が鳴る。
-                if(fireChange == 1)
-                {
-                    GameManager.Instance.BubblePoint += 10;
-                }   
-                else if(fireChange == 2)
-                {
-                    GameManager.Instance.BubblePoint += 25;
-                }
-            }
-        }
+        }                
 
         float dph = Input.GetAxis("D_Pad_H");
         
-        if (dph < 0 && fireChange != 0 || Input.GetKeyDown(KeyCode.LeftArrow) && fireChange != 0)
+        if (dph < 0 && GameManager.Instance.FireChange != 0 || Input.GetKeyDown(KeyCode.LeftArrow) && GameManager.Instance.FireChange != 0)
         {
-            if (fireChange <= 0)
+            if (GameManager.Instance.FireChange <= 0)
             {
-                fireChange = 0;
+                GameManager.Instance.FireChange = 0;
                 return;
             }
 
@@ -115,15 +89,15 @@ public class FireControl_boil : MonoBehaviour
             {
                 doOnce = false;
                 StartCoroutine(WaitForSeconds(1.0f));
-                fireChange--;
+                GameManager.Instance.FireChange--;
             }
         }
 
-        if (dph > 0 && fireChange != 2 || Input.GetKeyDown(KeyCode.RightArrow) && fireChange != 2)
+        if (dph > 0 && GameManager.Instance.FireChange != 2 || Input.GetKeyDown(KeyCode.RightArrow) && GameManager.Instance.FireChange != 2)
         {
-            if (fireChange >= 2)
+            if (GameManager.Instance.FireChange >= 2)
             {
-                fireChange = 2;
+                GameManager.Instance.FireChange = 2;
                 return;
             }
 
@@ -131,7 +105,7 @@ public class FireControl_boil : MonoBehaviour
             {
                 doOnce = false;
                 StartCoroutine(WaitForSeconds(1.0f));
-                fireChange++;
+                GameManager.Instance.FireChange++;
             }
         }
         
@@ -157,7 +131,7 @@ public class FireControl_boil : MonoBehaviour
             }
         }
 
-        if (fireChange <= 0)
+        if (GameManager.Instance.FireChange <= 0)
         {
             bubbleBool = false;
             leftAllow.gameObject.SetActive(false);
@@ -168,7 +142,7 @@ public class FireControl_boil : MonoBehaviour
             noiseMator.GetComponent<Image>().fillAmount -= noiseYowabi * 0.01f;
             GameManager.Instance.NoiseMator += noiseYowabi * 0.01f;
         }
-        else if (fireChange == 1)
+        else if (GameManager.Instance.FireChange == 1)
         {
             bubbleBool = true;
             leftAllow.gameObject.SetActive(true);
@@ -179,7 +153,7 @@ public class FireControl_boil : MonoBehaviour
             noiseMator.GetComponent<Image>().fillAmount -= noiseTyubi * 0.01f;
             GameManager.Instance.NoiseMator += noiseTyubi * 0.01f;
         }
-        else if (fireChange >= 2)
+        else if (GameManager.Instance.FireChange >= 2)
         {
             bubbleBool = true;
             RightAllow.gameObject.SetActive(false);
