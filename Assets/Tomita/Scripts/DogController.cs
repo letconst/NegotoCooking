@@ -6,7 +6,6 @@ using UnityEngine.AI;
 //オブジェクトにNavMeshAgentをコンポーネントを設置
 [RequireComponent(typeof(NavMeshAgent))]
 
-
 public class DogController : MonoBehaviour
 {
     public enum DogState
@@ -98,6 +97,7 @@ public class DogController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Debug.Log(State);
         // 検知範囲にプレイヤーがいたら吠える
         if (State == DogState.FindPlayer)
         {
@@ -105,12 +105,14 @@ public class DogController : MonoBehaviour
             GameManager.Instance.NoiseMator += (decreaseValue / 100) * Time.deltaTime;
             _animator.SetBool("Walk", false);
             _animator.SetBool("Bark", true);
+            //GetComponent<AudioSource>().PlayDelayed(0.5f);
         }
         else
         {
             DogMoveStop = false;
             _animator.SetBool("Walk", true);
             _animator.SetBool("Bark", false);
+            GetComponent<AudioSource>().PlayDelayed(0.5f);  //逆だけどなんか鳴くんだけど
         }
 
         //経路探索の準備ができておらず
@@ -130,7 +132,7 @@ public class DogController : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        Debug.Log(other.tag);
+        //Debug.Log(other.tag);
         if (other.CompareTag("DogFood"))
         {
             Debug.Log("餌発見");
