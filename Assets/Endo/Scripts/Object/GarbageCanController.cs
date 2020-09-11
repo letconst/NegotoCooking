@@ -20,9 +20,11 @@ public class GarbageCanController : MonoBehaviour
     {
         // X押下で選択アイテムを捨てる
         if (_isNear &&
-            Input.GetButtonDown("Interact"))
+            Input.GetButtonDown("Interact")&&
+            _playerContainer.GetItem(_playerInvRenderer.LastSelectedIndex)!=null)
         {
             _playerContainer.RemoveItem(_playerInvRenderer.LastSelectedIndex);
+            GameManager.Instance.StatisticsManager.throwInCount++;
         }
     }
 

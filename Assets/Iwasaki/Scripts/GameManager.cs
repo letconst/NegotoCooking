@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : SingletonMonoBehaviour<GameManager>
 {
+    [SerializeField]
+    private StatisticsManager statisticsManager;
+
     // 現在のシーン
     private Scene _currentScene;
     private Scene _tmpScene;
@@ -26,6 +29,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     public Vector3 PlayerPos { set; get; }
 
     public Vector3 PlayerRotate { set; get; }
+    public StatisticsManager StatisticsManager { get => statisticsManager; }
 
     public void Awake()
     {
@@ -62,5 +66,9 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         InventoryManager.Instance.LargePlateContainer.Container.Clear();
         TimeCounter.CurrentTime = TimeCounter.CountUp;
         NoiseMator = 0;
+    }
+    private void OnApplicationQuit()
+    {
+        statisticsManager.throwInCount = 0;
     }
 }
