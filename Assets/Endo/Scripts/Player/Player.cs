@@ -15,6 +15,9 @@ public class Player : SingletonMonoBehaviour<Player>
     [SerializeField, Tooltip("回転速度")]
     private int rotateSpeed;
 
+    [SerializeField]
+    private Transform CamPos;
+
     // プレイヤーが停止状態か否か
     public bool isStop;
 
@@ -46,6 +49,7 @@ public class Player : SingletonMonoBehaviour<Player>
     /// </summary>
     private void Movement()
     {
+        Vector3 Camforward = Vector3.Scale(CamPos.forward, new Vector3(1, 0, 1)).normalized;
         // 水平入力
         var h = (isStop)
                     ? 0
@@ -56,6 +60,7 @@ public class Player : SingletonMonoBehaviour<Player>
                     ? 0
                     : Input.GetAxis("Vertical");
 
+
         // ダッシュ入力受付
         _isRecieveSprint = _isRecieveSprint ||
                            Input.GetButton("Sprint");
@@ -65,10 +70,12 @@ public class Player : SingletonMonoBehaviour<Player>
                             ? sprintSpeed
                             : walkSpeed;
 
+        Vector3 ido = (v * Camforward * moveSpeed) / 10 + (h * CamPos.right * moveSpeed) / 10;
         // 接地判定
         if (_controller.isGrounded)
         {
-            _moveDirection = new Vector3(h * moveSpeed, 0, v * moveSpeed);
+            _moveDirection = new Vector3(ido.x * moveSpeed, 0, ido.z * moveSpeed);
+      
         }
         else
         {

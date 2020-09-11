@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using System.Collections;
 
 public class CameraController : MonoBehaviour
 {
@@ -13,6 +15,8 @@ public class CameraController : MonoBehaviour
 
     // カメラの親（軸）オブジェクト
     private GameObject _wrapper;
+
+    // カメラの角度
 
     // Start is called before the first frame update
     private void Start()
@@ -42,5 +46,6 @@ public class CameraController : MonoBehaviour
 
         //カメラを回転させる
         transform.RotateAround(playerPos, Vector3.up, angle);
+
     }
 }
