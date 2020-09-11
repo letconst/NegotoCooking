@@ -44,6 +44,8 @@ public class DogNav : MonoBehaviour
 
     void GotoNextPoint()
     {
+        
+
         //NavMeshAgentのストップの解除
         agent.isStopped = false;
 
@@ -54,6 +56,9 @@ public class DogNav : MonoBehaviour
         agent.destination = pos;
 
         anim.SetBool("Walk", true);
+
+        //引数が指定されていれば指定した座標に向かい
+        //指定されてなければランダム
     }
 
     void StopHere()
@@ -76,6 +81,8 @@ public class DogNav : MonoBehaviour
             GotoNextPoint();
             time = 0;
         }
+
+        
     }
     // Update is called once per frame
     void Update()
@@ -86,38 +93,45 @@ public class DogNav : MonoBehaviour
         {
             StopHere();
         }
+
+        if (DogMoveStop)
+        {
+            agent.destination = transform.position;
+            agent.isStopped = true;
+            Debug.Log("aaaa");
+            return;
+        }
     }
 
-    //void OnTriggerStay(Collider other)
-    //{
-    //    //餌のオブジェクト発見
-    //    if (other.CompareTag("DogFood"))
-    //    {
-    //        GotoNextPoint(); enabled = false;
+    void OnTriggerStay(Collider other)
+    {
+        //餌のオブジェクト発見
+        if (other.CompareTag("DogFood"))
+        {
+            
+            //餌を目標地点に設定する
+            agent.destination = other.transform.position;
+            Debug.Log("餌発見！");
+        }
 
-    //        //餌を目標地点に設定する
-    //        agent.destination = other.transform.position;
-    //        Debug.Log("餌発見！");
-    //    }
+        //餌までの距離が0.5未満なら
+        if (agent.remainingDistance < 0.5 && DogMoveStop)
+        {
+            Debug.Log("餌食べる");
+            agent.isStopped = true;
+            //時間を数える
+            time += Time.deltaTime;
+        }
 
-    //    //餌までの距離が0.5未満なら
-    //    if (agent.remainingDistance < 0.5 && DogMoveStop)
-    //    {
-    //        Debug.Log("餌食べる");
-    //        agent.isStopped = true;
-    //        //時間を数える
-    //        time += Time.deltaTime;
-    //    }
-
-    //    //犬が食べ終わったら動き出す
-    //    if (time > eatTime)
-    //    {
-    //        //目標地点を設定し直す
-    //        GotoNextPoint();
-    //        time = 0;
-    //        DogMoveStop = false;
-    //    }
-    //}
+        //犬が食べ終わったら動き出す
+        if (time > eatTime)
+        {
+            //目標地点を設定し直す
+            GotoNextPoint();
+            time = 0;
+            DogMoveStop = false;
+        }
+    }
 }
 
 //犬に視線の範囲をつけ、範囲内にプレイヤーが入ったら止まって吠える

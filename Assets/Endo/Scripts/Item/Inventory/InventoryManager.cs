@@ -1,25 +1,27 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Serialization;
+﻿using UnityEngine;
 
 public class InventoryManager : SingletonMonoBehaviour<InventoryManager>
 {
     [SerializeField]
-    private PlayerInventoryContainer        playerContainer;
+    private PlayerInventoryContainer playerContainer;
+
     [SerializeField]
-    private InventoryContainerBase          largePlateContainer;
+    private InventoryContainerBase largePlateContainer;
+
     [SerializeField]
     private RefrigeratorInventoryContainers refContainers;
+
     [SerializeField]
-    private RecipeDatabase                  recipeDatabase;
+    private RecipeDatabase recipeDatabase;
 
     // 交換用: アイテム交換モードか否か
     [System.NonSerialized]
     public bool IsSwapMode = false;
+
     // 交換用: 冷蔵庫アイテムのキャッシュ
     [System.NonSerialized]
     public Item ItemToSwapFromRef;
+
     // 交換用: 冷蔵庫アイテムの状態のキャッシュ
     [System.NonSerialized]
     public FoodState ItemStateToSwap;
@@ -38,6 +40,7 @@ public class InventoryManager : SingletonMonoBehaviour<InventoryManager>
         if (this != Instance)
         {
             Destroy(gameObject);
+
             return;
         }
 

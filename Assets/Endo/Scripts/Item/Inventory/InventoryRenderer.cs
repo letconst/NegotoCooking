@@ -28,7 +28,8 @@ public class InventoryRenderer : MonoBehaviour
     private GameObject _lastSelectedObj;
 
     // 現在表示されているスロット情報
-    private readonly Dictionary<GameObject, InventorySlotBase> _itemsDisplayed = new Dictionary<GameObject, InventorySlotBase>();
+    private readonly Dictionary<GameObject, InventorySlotBase> _itemsDisplayed =
+        new Dictionary<GameObject, InventorySlotBase>();
 
     // 最後に選択していたスロットのインデックス
     public int LastSelectedIndex { get; private set; }
@@ -36,11 +37,8 @@ public class InventoryRenderer : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        _selfSlotSize = (inventory != null)
-            ? inventory.SlotSize
-            : (isForRefrigerator)
-            ? RefrigeratorManager.Instance.slotSize
-            : 0;
+        _selfSlotSize = (inventory != null) ? inventory.SlotSize :
+                        (isForRefrigerator) ? RefrigeratorManager.Instance.slotSize : 0;
 
         InitRender();
     }
@@ -63,6 +61,7 @@ public class InventoryRenderer : MonoBehaviour
             if (!isForRefrigerator)
             {
                 Debug.LogError("表示対象のインベントリコンテナが未指定です");
+
                 return;
             }
 
@@ -101,7 +100,7 @@ public class InventoryRenderer : MonoBehaviour
         // 冷蔵庫ならまず中身を取得
         if (isForRefrigerator)
         {
-            var i = 0;
+            var i             = 0;
             var curNearRef    = RefrigeratorManager.Instance.currentNearObj;
             var refController = curNearRef.GetComponent<RefrigeratorController>();
 
@@ -123,12 +122,12 @@ public class InventoryRenderer : MonoBehaviour
 
                 foreach (var slotObj in _itemsDisplayed.Keys.ToArray())
                 {
-                    _itemsDisplayed[slotObj] = new InventorySlotBase(nearRefContainer.GetItem(i), nearRefContainer.GetState(i));
+                    _itemsDisplayed[slotObj] =
+                        new InventorySlotBase(nearRefContainer.GetItem(i), nearRefContainer.GetState(i));
 
                     i++;
                 }
             }
-
         }
 
         foreach (var slot in _itemsDisplayed)
@@ -137,8 +136,8 @@ public class InventoryRenderer : MonoBehaviour
 
             // アイテムがあればアイテム名表示
             slotText.text = (slot.Value.Item != null)
-                ? slot.Value.FullItemName
-                : "";
+                                ? slot.Value.FullItemName
+                                : "";
         }
     }
 
@@ -149,7 +148,7 @@ public class InventoryRenderer : MonoBehaviour
     {
         foreach (var slotObj in _itemsDisplayed.Keys.ToArray())
         {
-            var slotText             = slotObj.GetComponentInChildren<Text>();
+            var slotText = slotObj.GetComponentInChildren<Text>();
             slotText.text            = "";
             _itemsDisplayed[slotObj] = new InventorySlotBase();
         }
@@ -173,7 +172,7 @@ public class InventoryRenderer : MonoBehaviour
     /// <summary>
     /// 選択スロットのインデックスを取得する
     /// </summary>
-    public void UpdateLastSelectedIndex()
+    private void UpdateLastSelectedIndex()
     {
         if (EventSystem.current == null) return;
 

@@ -10,5 +10,6 @@ public class PlayerInventoryContainer : InventoryContainerBase
 
         base.AddItem(item, state);
     }
+
     // TODO: 投げ餌専用の管理
 }
