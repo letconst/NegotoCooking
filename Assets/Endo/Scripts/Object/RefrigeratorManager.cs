@@ -12,9 +12,10 @@ public class RefrigeratorManager : SingletonMonoBehaviour<RefrigeratorManager>
     private GameObject _refInvObj;
 
     // インタラクト範囲にある冷蔵庫のコンテナ
-    public RefrigeratorInventoryContainerBase NearRefrigeratorContainer => (currentNearObj == null)
-        ? null
-        : InventoryManager.Instance.RefContainers.GetContainer(currentNearObj.name);
+    public RefrigeratorInventoryContainerBase NearRefrigeratorContainer =>
+        (currentNearObj == null)
+            ? null
+            : InventoryManager.Instance.RefContainers.GetContainer(currentNearObj.name);
 
     // Start is called before the first frame update
     private void Start()

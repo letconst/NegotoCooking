@@ -99,6 +99,7 @@ public class RefrigeratorInventoryContainerBase
         if (Container.Count < index)
         {
             Debug.LogError("UpdateItem: Out of range");
+
             return;
         }
 
@@ -114,6 +115,7 @@ public class RefrigeratorInventoryContainerBase
         if (Container.Count < index)
         {
             Debug.LogError("RemoveItem: Out of range");
+
             return;
         }
 

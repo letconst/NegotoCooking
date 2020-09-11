@@ -10,7 +10,7 @@ public class SingletonMonoBehaviour<T> : MonoBehaviour where T : MonoBehaviour
         {
             if (_instance != null) return _instance;
 
-            _instance = (T)FindObjectOfType(typeof(T));
+            _instance = (T) FindObjectOfType(typeof(T));
 
             if (_instance == null)
             {
@@ -20,5 +20,4 @@ public class SingletonMonoBehaviour<T> : MonoBehaviour where T : MonoBehaviour
             return _instance;
         }
     }
-
 }

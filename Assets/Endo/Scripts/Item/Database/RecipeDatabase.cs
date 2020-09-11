@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 [CreateAssetMenu(fileName = "New Recipe Database", menuName = "Inventory/Create Recipe Database")]
 public class RecipeDatabase : ScriptableObject
@@ -53,6 +52,6 @@ public class RequireFoods
     [SerializeField]
     private List<FoodState> states = new List<FoodState>();
 
-    public Item Food              => food;
+    public Item            Food   => food;
     public List<FoodState> States => states;
 }
