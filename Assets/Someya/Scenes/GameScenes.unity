@@ -828,7 +828,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c56b17aeb4a199a42bc63e48d076b009, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  warpTo: {x: 39.5, y: 100, z: 2}
+  warpTo: {x: 38, y: 100, z: 2}
   yRotationAfterWarp: 0
   isLookSameRotation: 0
   waitTimeAfterWarp: 0
@@ -12243,6 +12243,11 @@ PrefabInstance:
         type: 3}
       propertyPath: minFrontPos
       value: -22
+      objectReference: {fileID: 0}
+    - target: {fileID: 3128167586378305222, guid: 517d1ce23141bf04199e169991b9e017,
+        type: 3}
+      propertyPath: rotateSpeed
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3128167586378305223, guid: 517d1ce23141bf04199e169991b9e017,
         type: 3}
