@@ -49,6 +49,7 @@ public class Player : SingletonMonoBehaviour<Player>
     /// </summary>
     private void Movement()
     {
+        // 2つのベクトルの各成分の乗算(Vector3.Scale)。単位ベクトル化(.normalized)
         Vector3 Camforward = Vector3.Scale(CamPos.forward, new Vector3(1, 0, 1)).normalized;
         // 水平入力
         var h = (isStop)
@@ -69,7 +70,7 @@ public class Player : SingletonMonoBehaviour<Player>
         var moveSpeed = (_isRecieveSprint)
                             ? sprintSpeed
                             : walkSpeed;
-
+        // 移動ベクトルをidoというトランスフォームに代入
         Vector3 ido = (v * Camforward * moveSpeed) / 10 + (h * CamPos.right * moveSpeed) / 10;
         // 接地判定
         if (_controller.isGrounded)
