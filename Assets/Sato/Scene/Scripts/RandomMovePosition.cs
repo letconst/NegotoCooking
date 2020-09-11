@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RandomMovePosition : MonoBehaviour
 {
-    private Vector3 startPosition = GameObject.Find("CentralPoint").transform.position;
+    public Transform centerPos;
 
     private Vector3 destination;
 
@@ -37,11 +37,16 @@ public class RandomMovePosition : MonoBehaviour
 
     private void RandomPosition()
     {
+        Vector3 ctp = centerPos.position;
+
         float posX = Random.Range(-1 * radius, radius);
         float posZ = Random.Range(-1 * radius, radius);
 
+        ctp.x += posX;
+        ctp.z += posZ;
+
         //destination = startPosition + new Vector3(posX, 0, posZ);
 
-        transform.position = startPosition + new Vector3(posX, 0, posZ);
+        transform.position = ctp;
     }
 }

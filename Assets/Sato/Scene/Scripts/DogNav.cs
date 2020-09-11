@@ -17,6 +17,12 @@ public class DogNav : MonoBehaviour
     [SerializeField] float waitTime = 2;
     //待機時間を数える
     [SerializeField] float time = 0;
+    //餌を食べる時間
+    private float eatTime = 20;
+
+    private Animator anim;
+
+    public bool DogMoveStop;
 
     Vector3 pos;
 
@@ -24,6 +30,8 @@ public class DogNav : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+
+        anim = GetComponent<Animator>();
         //目標地点に近づいても速度を落とさなくなる
         agent.autoBraking = false;
 
@@ -36,38 +44,35 @@ public class DogNav : MonoBehaviour
 
     void GotoNextPoint()
     {
+        
+
         //NavMeshAgentのストップの解除
         agent.isStopped = false;
-
-        //目標地点のX軸、Z軸をランダムで決める
-        float posX = Random.Range(-1 * radius, radius);
-        float posZ = Random.Range(-1 * radius, radius);
 
         //CentralPointの位置にPosXとPosZを足す
         pos = central.position;
 
-        pos.x += posX;
-        pos.z += posZ;
-
-        ////Y軸だけ変更しない目標地点
-        //Vector3 direction = new Vector3(pos.x, transform.position.y, pos.z);
-
-        ////Y軸だけ変更しない目標地点から現在地を引いて向きを割り出す
-        //Quaternion rotation = Quaternion.LookRotation(direction-transform.position, Vector3.up);
-
-        ////このオブジェクトの向きを変える
-        //transform.rotation = rotation;
-
         //NavMeshAgentに目標地点を設定する
         agent.destination = pos;
+
+        anim.SetBool("Walk", true);
+
+        //引数が指定されていれば指定した座標に向かい
+        //指定されてなければランダム
     }
 
     void StopHere()
     {
         //NavMeshAgentを止める
         agent.isStopped = true;
+
+        anim.SetBool("Walk", false) ;
+
         //待ち時間を数える
-        time += Time.deltaTime;
+        if (!DogMoveStop)
+        {
+            time += Time.deltaTime;
+        }
 
         //待ち時間が設定された数値を超えると発動
         if (time > waitTime)
@@ -76,27 +81,59 @@ public class DogNav : MonoBehaviour
             GotoNextPoint();
             time = 0;
         }
+
+        
     }
     // Update is called once per frame
     void Update()
     {
         //経路探索の準備ができておらず
         //目標地点までの距離が0.5m未満ならNavMeshAgentを止める
-        if (!agent.pathPending && agent.remainingDistance < 0.5f)
+        if (!agent.pathPending && agent.remainingDistance < 0.5f && !DogMoveStop)
         {
             StopHere();
         }
+
+        if (DogMoveStop)
+        {
+            agent.destination = transform.position;
+            agent.isStopped = true;
+            Debug.Log("aaaa");
+            return;
+        }
     }
 
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerStay(Collider other)
     {
-        Vector3 dogFood = GameObject.Find("DogFood").transform.position;
-        agent.destination = dogFood;
-        
+        //餌のオブジェクト発見
+        if (other.CompareTag("DogFood"))
+        {
+            
+            //餌を目標地点に設定する
+            agent.destination = other.transform.position;
+            Debug.Log("餌発見！");
+        }
+
+        //餌までの距離が0.5未満なら
+        if (agent.remainingDistance < 0.5 && DogMoveStop)
+        {
+            Debug.Log("餌食べる");
+            agent.isStopped = true;
+            //時間を数える
+            time += Time.deltaTime;
+        }
+
+        //犬が食べ終わったら動き出す
+        if (time > eatTime)
+        {
+            //目標地点を設定し直す
+            GotoNextPoint();
+            time = 0;
+            DogMoveStop = false;
+        }
     }
 }
 
 //犬に視線の範囲をつけ、範囲内にプレイヤーが入ったら止まって吠える
 //ある一定の範囲内に入ったら目線が向てなくても餌に向かい20秒間そこで止まる
 //犬のモーション導入
-//2秒ごとにcentralpositionをランダムな位置に移動させる

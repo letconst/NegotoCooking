@@ -5,8 +5,20 @@ using UnityEngine.UI;
 
 public class NoiseMator : MonoBehaviour
 {
+    private Image _mator;
+
     void Start()
     {
-        this.gameObject.GetComponent<Image>().fillAmount = 1 - GameManager.Instance.NoiseMator;
+        _mator = gameObject.GetComponent<Image>();
+    }
+
+    void Update()
+    {
+        _mator.fillAmount = 1 - GameManager.Instance.NoiseMator;
+
+        if (_mator.fillAmount == 0)
+        {
+            SceneChanger.Instance.SceneLoad(SceneChanger.SceneName.GameOverScenes);
+        }
     }
 }

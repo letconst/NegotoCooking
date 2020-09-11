@@ -21,16 +21,16 @@ public class MasterController : SingletonMonoBehaviour<MasterController>
         }
 
         // X押下および接近時に調理完了を行う
-        if (_isNear && (Input.GetKeyDown("joystick button 2") ||
-                        Input.GetKeyDown(KeyCode.E)))
+        if (_isNear &&
+            Input.GetButtonDown("Interact"))
         {
             // 調理判定
             Judgement();
 
             // 大皿に食材があり、すべて調理済みならゲームクリア（仮）
             SceneChanger.Instance.SceneLoad((_isComplete)
-                ? SceneChanger.SceneName.GameClear
-                : SceneChanger.SceneName.GameOverScenes);
+                                                ? SceneChanger.SceneName.GameClear
+                                                : SceneChanger.SceneName.GameOverScenes);
         }
     }
 
@@ -55,13 +55,12 @@ public class MasterController : SingletonMonoBehaviour<MasterController>
                 {
                     // 要件を満たす食材が大皿にあればチェックリストから当該食材を外す
                     // TODO: 複数の状態が必要な場合への対応
-                    if (foodInPlate.Item == requireFood.Food &&
+                    if (foodInPlate.Item  == requireFood.Food &&
                         foodInPlate.State == requireState)
                     {
                         foodsToJudge.Remove(requireFood);
                     }
                 }
-
             }
         }
 

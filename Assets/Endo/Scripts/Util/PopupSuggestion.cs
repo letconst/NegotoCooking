@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Serialization;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class PopupSuggestion : MonoBehaviour
@@ -34,6 +31,7 @@ public class PopupSuggestion : MonoBehaviour
         // 表示位置設定
         popupPos = new Vector3(popupPos.x + xOffset,
                                popupPos.y + yOffset);
+
         trfWrapper.position = popupPos;
 
         // 文字列設定
