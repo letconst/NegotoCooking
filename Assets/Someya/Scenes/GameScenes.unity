@@ -2553,7 +2553,7 @@ MonoBehaviour:
   sprintSpeed: 13
   gravity: 50
   rotateSpeed: 8
-  CamPos: {fileID: 1550603615}
+  camPos: {fileID: 1550603615}
   isStop: 0
 --- !u!143 &289014399
 CharacterController:
@@ -13164,7 +13164,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   warpTo: {x: -37, y: 0, z: 20}
   yRotationAfterWarp: 0
-  isLookSameRotation: 0
+  isLookSameRotation: 1
   waitTimeAfterWarp: 0
 --- !u!1 &1695217136 stripped
 GameObject:

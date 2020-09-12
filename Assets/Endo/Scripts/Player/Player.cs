@@ -15,21 +15,26 @@ public class Player : SingletonMonoBehaviour<Player>
     [SerializeField, Tooltip("回転速度")]
     private int rotateSpeed;
 
-    [SerializeField]
-    private Transform CamPos;
+    [SerializeField, Tooltip("カメラのトランスフォーム")]
+    private Transform camPos;
+
+    [SerializeField, Tooltip("歩行アニメーションの最大スピード"), Range(0, 1)]
+    private float maxWalkAnimSpeed;
+
+    [SerializeField, Tooltip("ダッシュアニメーションの最大スピード"), Range(0, 1)]
+    private float maxSprintAnimSpeed;
+
+    [SerializeField, Tooltip("1フレームごとのアニメーションの変化量"), Range(0, 1)]
+    private float animDeltaTime;
 
     // プレイヤーが停止状態か否か
     public bool isStop;
 
-    // ダッシュボタンが入力され、移動し続けているか否か
-    private bool                _isRecieveSprint;
-    private CharacterController _controller;
-    private Vector3             _moveDirection = Vector3.zero;
+    private bool                _isReceiveSprint;              // ダッシュボタンが入力され、移動し続けているか否か
+    private float               _currentMoveAnimSpeed;         // 現在のアニメーション速度
+    private CharacterController _controller;                   // プレイヤー操作用
+    private Vector3             _moveDirection = Vector3.zero; // 向いている方向
     private Animator            _animator;
-    private float               _currentMoveSpeed;
-    private float               _maxWalkSpeed   = .6f;
-    private float               _maxSprintSpeed = 1f;
-    private float               _animDeltaTime  = .05f;
 
     // Start is called before the first frame update
     private void Start()
@@ -49,8 +54,9 @@ public class Player : SingletonMonoBehaviour<Player>
     /// </summary>
     private void Movement()
     {
-        // 2つのベクトルの各成分の乗算(Vector3.Scale)。単位ベクトル化(.normalized)
-        Vector3 Camforward = Vector3.Scale(CamPos.forward, new Vector3(1, 0, 1)).normalized;
+        // カメラの向いている方向の単位ベクトル
+        var camForward = Vector3.Scale(camPos.forward, new Vector3(1, 0, 1)).normalized;
+
         // 水平入力
         var h = (isStop)
                     ? 0
@@ -61,31 +67,27 @@ public class Player : SingletonMonoBehaviour<Player>
                     ? 0
                     : Input.GetAxis("Vertical");
 
-
         // ダッシュ入力受付
-        _isRecieveSprint = _isRecieveSprint ||
+        _isReceiveSprint = _isReceiveSprint ||
                            Input.GetButton("Sprint");
 
         // ダッシュ入力の有無で移動速度を変動
-        var moveSpeed = (_isRecieveSprint)
+        var moveSpeed = (_isReceiveSprint)
                             ? sprintSpeed
                             : walkSpeed;
-        // 移動ベクトルをidoというトランスフォームに代入
-        Vector3 ido = (v * Camforward * moveSpeed) / 10 + (h * CamPos.right * moveSpeed) / 10;
+
+        // プレイヤーの移動ベクトル
+        var moveVec = (camForward * (v * moveSpeed) + camPos.right * (h * moveSpeed)) / 10;
+
         // 接地判定
         if (_controller.isGrounded)
         {
-            _moveDirection = new Vector3(ido.x * moveSpeed, 0, ido.z * moveSpeed);
-      
+            _moveDirection = new Vector3(moveVec.x * moveSpeed, 0, moveVec.z * moveSpeed);
         }
         else
         {
-            // 一定以上落下時に定位置へ戻す
-            if (!(_moveDirection.y < -100))
-            {
-                // 重力による落下
-                _moveDirection.y -= gravity * Time.deltaTime;
-            }
+            // 重力による落下
+            _moveDirection.y -= gravity * Time.deltaTime;
         }
 
         // 移動
@@ -100,22 +102,22 @@ public class Player : SingletonMonoBehaviour<Player>
             transform.rotation = Quaternion.Slerp(transform.rotation, rot, Time.deltaTime * rotateSpeed);
 
             // アニメーション速度設定
-            _currentMoveSpeed = (_isRecieveSprint)
-                                    ? Mathf.Clamp(_currentMoveSpeed + _animDeltaTime, 0, _maxSprintSpeed)
-                                    : Mathf.Clamp(_currentMoveSpeed + _animDeltaTime, 0, _maxWalkSpeed);
+            _currentMoveAnimSpeed = Mathf.Clamp(_currentMoveAnimSpeed + animDeltaTime,
+                                                0,
+                                                (_isReceiveSprint) ? maxSprintAnimSpeed : maxWalkAnimSpeed);
         }
         else
         {
-            _currentMoveSpeed = Mathf.Clamp(_currentMoveSpeed - _animDeltaTime, 0, _maxSprintSpeed);
+            _currentMoveAnimSpeed = Mathf.Clamp(_currentMoveAnimSpeed - animDeltaTime, 0, maxSprintAnimSpeed);
         }
 
-        //アニメーション
-        _animator.SetFloat(Animator.StringToHash("Speed"), _currentMoveSpeed);
+        // アニメーション
+        _animator.SetFloat(Animator.StringToHash("Speed"), _currentMoveAnimSpeed);
 
         // ダッシュ入力があっても移動してなければダッシュ解除
-        if (_isRecieveSprint && (h == 0 && v == 0))
+        if (_isReceiveSprint && (h == 0 && v == 0))
         {
-            _isRecieveSprint = false;
+            _isReceiveSprint = false;
         }
     }
 }
