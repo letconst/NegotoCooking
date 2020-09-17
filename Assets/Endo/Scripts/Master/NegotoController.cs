@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class NegotoController : MonoBehaviour
 {
@@ -35,9 +34,8 @@ public class NegotoController : MonoBehaviour
     // 達成に必要な食材の状態
     public List<FoodState> requireStates;
 
-    private RecipeDatabase _recipeDB;
-
-    private RecipeEntry _recipe;
+    // レシピリストのコピー
+    private List<RequireFoods> _recipe;
 
     // プレイヤーが表示範囲に入ったか否か
     private bool _isEntered;
@@ -45,16 +43,21 @@ public class NegotoController : MonoBehaviour
     // 寝言表示のフェードインの遅延量
     private float _fadeInDelay;
 
-    //
+    // プレイヤーが寝言表示範囲に入ってからの経過時間
     private float _elapsedTimeForDelay;
 
     // Start is called before the first frame update
     private void Start()
     {
-        _recipeDB = InventoryManager.Instance.RecipeDatabase;
-        _recipe   = _recipeDB.GetRecipeByName("エビのスープ"); // レシピを複数用意する場合は、ランダム選択に変更する必要あり
+        _recipe   = NegotoManager.Instance.Recipe;
 
-        textMesh.text = "テスト";
+        // 初期表示のアイテムをランダムに選定
+        var foodIndex = Random.Range(0, _recipe.Count);
+        requireFood   = _recipe[foodIndex].Food;
+        requireStates = _recipe[foodIndex].States;
+        _recipe.RemoveAt(foodIndex);
+
+        textMesh.text = requireFood.ItemName;
     }
 
     // Update is called once per frame

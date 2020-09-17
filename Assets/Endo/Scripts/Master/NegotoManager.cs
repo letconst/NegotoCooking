@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 public class NegotoManager : SingletonMonoBehaviour<NegotoManager>
 {
@@ -12,10 +14,20 @@ public class NegotoManager : SingletonMonoBehaviour<NegotoManager>
     private int defaultDisplayCount;
 
     [SerializeField, Tooltip("現在の寝言の表示数")]
-    private int _curDisplayCount;
+    private int curDisplayCount;
 
-    private int CurDisplayCount { get => _curDisplayCount; set => _curDisplayCount = Mathf.Clamp(value, 0, 3); }
+    // 寝言の全表示位置
+    private IEnumerable<GameObject> _negotos;
 
+    private RecipeDatabase _recipeDB;
+
+    public List<RequireFoods> Recipe { get; private set; }
+
+    private int CurDisplayCount { get => curDisplayCount; set => curDisplayCount = Mathf.Clamp(value, 0, 3); }
+
+    /// <summary>
+    /// プレイヤーが寝言表示範囲にいるか否か
+    /// </summary>
     public bool IsPlayerNeared { get; private set; }
 
     private void Awake()
@@ -28,6 +40,10 @@ public class NegotoManager : SingletonMonoBehaviour<NegotoManager>
         }
 
         DontDestroyOnLoad(gameObject);
+
+        _recipeDB = InventoryManager.Instance.RecipeDatabase;
+        // レシピを複数用意する場合は、ランダム選択に変更する必要あり
+        Recipe = new List<RequireFoods>(_recipeDB.GetRecipeByName("エビのスープ").RequireFoods);
     }
 
     // Start is called before the first frame update
@@ -35,6 +51,19 @@ public class NegotoManager : SingletonMonoBehaviour<NegotoManager>
     {
         // 現在の寝言表示数を初期表示数に設定
         CurDisplayCount = defaultDisplayCount;
+        _negotos        = GameObject.FindGameObjectsWithTag("Negoto");
+
+        // 初期表示数の寝言のみを表示
+        foreach (var negoto in _negotos.Select((v, i) => new
+        {
+            v,
+            i
+        }))
+        {
+            if (negoto.i <= defaultDisplayCount - 1) continue;
+
+            negoto.v.SetActive(false);
+        }
     }
 
     // Update is called once per frame

@@ -8221,7 +8221,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1064064354}
   m_Layer: 0
-  m_Name: Pos1 (1)
+  m_Name: Pos2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8442,7 +8442,7 @@ MonoBehaviour:
   playerObj: {fileID: 289014397}
   distanceDisplayed: 10
   defaultDisplayCount: 1
-  _curDisplayCount: 0
+  curDisplayCount: 0
 --- !u!4 &1077597076
 Transform:
   m_ObjectHideFlags: 0
@@ -16105,7 +16105,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2097520706}
   m_Layer: 0
-  m_Name: Pos1 (2)
+  m_Name: Pos3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

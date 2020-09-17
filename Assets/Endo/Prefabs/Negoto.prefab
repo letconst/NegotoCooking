@@ -319,7 +319,7 @@ GameObject:
   - component: {fileID: 8220494770239565773}
   m_Layer: 0
   m_Name: Negoto
-  m_TagString: Untagged
+  m_TagString: Negoto
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
