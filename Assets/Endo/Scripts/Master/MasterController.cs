@@ -31,6 +31,8 @@ public class MasterController : SingletonMonoBehaviour<MasterController>
             SceneChanger.Instance.SceneLoad((_isComplete)
                                                 ? SceneChanger.SceneName.GameClear
                                                 : SceneChanger.SceneName.GameOverScenes);
+            if (TimeCounter.CurrentTime >= 100) ;
+           
         }
     }
 
