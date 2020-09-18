@@ -56,6 +56,7 @@ public class BakeController : MonoBehaviour
         {
             Destroy(_foodParent.transform.GetChild(0).gameObject);
             _bakeSlider.value = 0;
+            FireControl.clickBool = true;
             _playerContainer.RemoveItem(puttedSlotIndex);
         }
 
