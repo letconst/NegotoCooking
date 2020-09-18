@@ -6,14 +6,13 @@ using UnityEngine.AI;
 //オブジェクトにNavMeshAgentをコンポーネントを設置
 [RequireComponent(typeof(NavMeshAgent))]
 
-public class DogController : MonoBehaviour
+public class DogController1 : MonoBehaviour
 {
     public enum DogState
     {
         Idle,
-        Move,
         FindFood,
-        FindPlayer,
+        FindPlayer
     }
     private DogState State = DogState.Idle;
     private bool isNearPlayer;
@@ -59,7 +58,6 @@ public class DogController : MonoBehaviour
 
     void GotoNextPoint()
     {
-        State = DogState.Move;
         //NavMeshAgentのストップの解除
         agent.isStopped = false;
 
@@ -78,7 +76,21 @@ public class DogController : MonoBehaviour
         agent.isStopped = true;
 
         _animator.SetBool("Walk", false);
-        State = DogState.Idle;
+
+        //待ち時間を数える
+        if (!DogMoveStop && State != DogState.FindFood)
+        {
+            time += Time.deltaTime;
+        }
+
+        //待ち時間が設定された数値を超えると発動
+        if (time > waitTime)
+        {
+            //目標地点を設定し直す
+            GotoNextPoint();
+            time = 0;
+        }
+
 
     }
 
@@ -101,23 +113,6 @@ public class DogController : MonoBehaviour
             _animator.SetBool("Walk", true);
             _animator.SetBool("Bark", false);
             GetComponent<AudioSource>().PlayDelayed(0.5f);  //逆だけどなんか鳴くんだけど
-        }
-
-        if(State == DogState.Idle)
-        {
-            //待ち時間を数える
-            if (!DogMoveStop && State != DogState.FindFood)
-            {
-                time += Time.deltaTime;
-            }
-
-            //待ち時間が設定された数値を超えると発動
-            if (time > waitTime)
-            {
-                //目標地点を設定し直す
-                GotoNextPoint();
-                time = 0;
-            }
         }
 
         //経路探索の準備ができておらず
