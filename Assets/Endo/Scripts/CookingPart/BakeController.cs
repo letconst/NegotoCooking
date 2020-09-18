@@ -54,9 +54,9 @@ public class BakeController : MonoBehaviour
 
         if (GameManager.Instance.BakePoint == 100)
         {
-            SoundManager.Instance.PlayBgm(BGM.Alert);
             Destroy(_foodParent.transform.GetChild(0).gameObject);
             _bakeSlider.value = 0;
+            FireControl.clickBool = true;
             _playerContainer.RemoveItem(puttedSlotIndex);
         }
 
@@ -112,7 +112,7 @@ public class BakeController : MonoBehaviour
 
         if (Stick_V > 0 || Input.GetKeyDown(KeyCode.S))
         {
-            if (FlyingPan.transform.position.z > 10)
+            if (FlyingPan.transform.position.z > -10)
             {
                 FlyingPan.transform.position = new Vector3(FlyingPan.transform.position.x, FlyingPan.transform.position.y, FlyingPan.transform.position.z - 3.5f);
                 flyingpanTimes++;
@@ -121,7 +121,7 @@ public class BakeController : MonoBehaviour
 
         if (Stick_V < 0 || Input.GetKeyDown(KeyCode.W))
         {
-            if (FlyingPan.transform.position.z < 110)
+            if (FlyingPan.transform.position.z < 130)
             {                
                 FlyingPan.transform.position = new Vector3(FlyingPan.transform.position.x, FlyingPan.transform.position.y, FlyingPan.transform.position.z + 3.5f);
                 flyingpanTimes++;
