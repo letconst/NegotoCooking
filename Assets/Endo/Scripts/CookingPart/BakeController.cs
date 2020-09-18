@@ -22,6 +22,9 @@ public class BakeController : MonoBehaviour
     // 現在調理中の食材
     public static Item FoodBeingBaked;
 
+    // 現在調理中の食材の状態
+    public static HashSet<FoodState> FoodStatesBeingBaked;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -66,12 +69,14 @@ public class BakeController : MonoBehaviour
         // 出ていた食材を削除
         Destroy(_foodParent.transform.GetChild(0).gameObject);
 
-        // プレイヤーインベントリに戻す
-        _playerContainer.UpdateItem(puttedSlotIndex, FoodBeingBaked, FoodState.Cooked);
+        // 食材に状態を付加し、プレイヤーインベントリに戻す
+        FoodStatesBeingBaked.Add(FoodState.Cooked);
+        _playerContainer.AddItem(FoodBeingBaked, FoodStatesBeingBaked);
 
         _isCompleteCooking = false;
         FireControl.clickBool = true;
         FoodBeingBaked = null;
+        FoodStatesBeingBaked = null;
     }
 
     /// <summary>

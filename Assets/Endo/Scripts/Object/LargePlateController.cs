@@ -36,8 +36,8 @@ public class LargePlateController : MonoBehaviour
 
             // 調味料か調理済みの食材のみ受け付ける
             if (selectedFood.KindOfItem1 != Item.KindOfItem.Seasoning &&
-                (selectedFoodState == FoodState.None ||
-                 selectedFoodState == FoodState.Raw)) return;
+                (selectedFoodState.Contains(FoodState.None) ||
+                 selectedFoodState.Contains(FoodState.Raw))) return;
 
             // 大皿に現在選択しているアイテムをぶち込む
             selfContainer.AddItem(_playerInvContainer.GetItem(_playerInvRenderer.LastSelectedIndex),

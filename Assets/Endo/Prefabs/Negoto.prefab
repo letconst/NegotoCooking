@@ -402,6 +402,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraTrf: {fileID: 0}
   spriteRenderer: {fileID: 8220494770239565775}
+  largePlateContainer: {fileID: 11400000, guid: a8bf5aaa472f507418cbeeac0cb41321,
+    type: 2}
   textMesh: {fileID: 6919196921877372781}
   deltaFade: 0.05
   deltaMinFadeInDelay: 0.01

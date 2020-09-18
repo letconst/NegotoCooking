@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -9,6 +10,9 @@ public class NegotoController : MonoBehaviour
 
     [SerializeField]
     private SpriteRenderer spriteRenderer;
+
+    [SerializeField]
+    private InventoryContainerBase largePlateContainer;
 
     [SerializeField]
     private TextMeshPro textMesh;
@@ -32,7 +36,7 @@ public class NegotoController : MonoBehaviour
     public Item requireFood;
 
     // 達成に必要な食材の状態
-    public List<FoodState> requireStates;
+    public HashSet<FoodState> requireStates;
 
     // レシピリストのコピー
     private List<RequireFoods> _recipe;
@@ -113,5 +117,15 @@ public class NegotoController : MonoBehaviour
         // 寝言の透明度を反映
         spriteRenderer.color = tmpSpriteColor;
         textMesh.color       = tmpTextColor;
+    }
+
+    private void CheckCookingProgress()
+    {
+        if (!NegotoManager.Instance.IsPlayerNeared) return;
+
+        foreach (var food in largePlateContainer.Container)
+        {
+            //if (requireFood == food.Item && requireStates.All(v => food.States)
+        }
     }
 }

@@ -31,6 +31,11 @@ public class MasterController : SingletonMonoBehaviour<MasterController>
             SceneChanger.Instance.SceneLoad((_isComplete)
                                                 ? SceneChanger.SceneName.GameClear
                                                 : SceneChanger.SceneName.GameOverScenes);
+
+            if (TimeCounter.CurrentTime >= 100)
+            {
+
+            }
         }
     }
 
@@ -55,11 +60,11 @@ public class MasterController : SingletonMonoBehaviour<MasterController>
                 {
                     // 要件を満たす食材が大皿にあればチェックリストから当該食材を外す
                     // TODO: 複数の状態が必要な場合への対応
-                    if (foodInPlate.Item  == requireFood.Food &&
-                        foodInPlate.State == requireState)
-                    {
-                        foodsToJudge.Remove(requireFood);
-                    }
+                    //if (foodInPlate.Item  == requireFood.Food &&
+                    //    foodInPlate.States == requireState)
+                    //{
+                    //    foodsToJudge.Remove(requireFood);
+                    //}
                 }
             }
         }

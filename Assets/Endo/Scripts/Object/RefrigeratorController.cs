@@ -96,7 +96,7 @@ public class RefrigeratorController : MonoBehaviour
                                        // アイテムが存在するかによって状態変化
                                        (selfSlotDefaultItem != null)
                                            ? DefaultItems[i].State
-                                           : FoodState.None);
+                                           : new HashSet<FoodState>() { FoodState.None });
             }
             // すでにコンテナに同一インデックスのスロットが存在するなら内容更新
             else
@@ -104,7 +104,7 @@ public class RefrigeratorController : MonoBehaviour
                 _selfContainer.UpdateItem(i, selfSlotDefaultItem,
                                           (selfSlotDefaultItem != null)
                                               ? DefaultItems[i].State
-                                              : FoodState.None);
+                                              : new HashSet<FoodState>() { FoodState.None });
             }
         }
     }

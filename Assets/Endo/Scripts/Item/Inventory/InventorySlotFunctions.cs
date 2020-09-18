@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class InventorySlotFunctions : MonoBehaviour
@@ -85,7 +86,7 @@ public class InventorySlotFunctions : MonoBehaviour
 
         // キャッシュアイテムクリア
         _invManager.ItemToSwapFromRef = null;
-        _invManager.ItemStateToSwap   = FoodState.None;
+        _invManager.ItemStateToSwap   = null;
     }
 
     /// <summary>
@@ -97,7 +98,7 @@ public class InventorySlotFunctions : MonoBehaviour
         var selfIndex   = GetSelfIndex();
         var nearRefSlot = _nearRefContainer.Container[selfIndex];
         var selfItem    = nearRefSlot.Item;
-        var selfState   = nearRefSlot.State;
+        var selfStates  = nearRefSlot.States;
 
         // スロットにアイテムがなければ弾く
         if (selfItem == null) return;
@@ -108,7 +109,7 @@ public class InventorySlotFunctions : MonoBehaviour
             if (_playerContainer.Container[i].Item != null) continue;
 
             // そのスロットにアイテムを配置
-            _playerContainer.UpdateItem(i, selfItem, selfState);
+            _playerContainer.UpdateItem(i, selfItem, selfStates);
 
             // 冷蔵庫スロットは空にする
             // 無限獲得可能への仕様変更につきCO
@@ -120,7 +121,7 @@ public class InventorySlotFunctions : MonoBehaviour
         // プレイヤーとアイテム交換
         // 交換アイテムをキャッシュ
         _invManager.ItemToSwapFromRef = selfItem;
-        _invManager.ItemStateToSwap   = selfState;
+        _invManager.ItemStateToSwap   = selfStates;
         // 交換モード発動
         _invManager.IsSwapMode = true;
         // プレイヤースロットにフォーカス
@@ -177,7 +178,7 @@ public class InventorySlotFunctions : MonoBehaviour
             !FireControl_boil.clickBool     ||
             !CutGauge.clickBool             ||
             selfSlot.Item == null           ||
-            selfSlot.State == disallowState ||
+            selfSlot.States.Contains(disallowState) ||
             selfSlot.Item.KindOfItem1 == Item.KindOfItem.Seasoning) return;
         
         if (curSceneName == "CutScenes")
@@ -209,14 +210,17 @@ public class InventorySlotFunctions : MonoBehaviour
         {
             case "BakeScenes":
                 BakeController.FoodBeingBaked = selfSlot.Item;
+                BakeController.FoodStatesBeingBaked = selfSlot.States;
                 break;
 
             case "BoilScenes":
                 BoilController.FoodBeingBoiled = selfSlot.Item;
+                BoilController.FoodStatesBeingBoiled = selfSlot.States;
                 break;
 
             case "CutScenes":
                 CutController.FoodBeingCut = selfSlot.Item;
+                CutController.FoodStatesBeingCut = selfSlot.States;
                 break;
 
             default:
