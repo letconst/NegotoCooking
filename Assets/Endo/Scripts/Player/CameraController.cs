@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using System.Collections;
 
 public class CameraController : MonoBehaviour
 {
@@ -13,6 +15,14 @@ public class CameraController : MonoBehaviour
 
     // カメラの親（軸）オブジェクト
     private GameObject _wrapper;
+
+    // カメラの角度
+    bool _isAngle = false;
+
+    //回転させる角度
+    float angle = 0;
+
+    private Quaternion targetrotation;
 
     // Start is called before the first frame update
     private void Start()
@@ -37,10 +47,30 @@ public class CameraController : MonoBehaviour
             _wrapper.transform.position = new Vector3(playerPos.x, playerPos.y, minFrontPos);
         }
 
-        //回転させる角度
-        float angle = Input.GetAxis("R_Stick_H") * rotateSpeed;
+        float R_Stick = Input.GetAxis("R_Stick_H");
 
-        //カメラを回転させる
-        transform.RotateAround(playerPos, Vector3.up, angle);
+        if (R_Stick < 0 && !_isAngle)
+        {
+            angle -= 90;
+        }
+        else if (R_Stick > 0 && !_isAngle)
+        {
+            angle += 90;
+        }
+        if(!_isAngle && R_Stick != 0)
+        {
+            //カメラを回転させる
+            //transform.RotateAround(playerPos, Vector3.up, angle);
+            targetrotation = Quaternion.AngleAxis(angle,Vector3.up);
+            Debug.Log(_wrapper.transform.rotation.y);
+            _isAngle = true;
+        }
+        if (R_Stick == 0)
+        {
+            _isAngle = false;
+        }
+        _wrapper.transform.rotation = Quaternion.Slerp(_wrapper.transform.rotation, targetrotation == null
+            ? _wrapper.transform.rotation:
+            targetrotation, 0.5f);
     }
 }

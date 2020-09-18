@@ -39,37 +39,40 @@ public class FireControl : MonoBehaviour
     private Image _fireCharImage;
 
     private bool doOnce = true;
-    private int fireChange = 1;
 
     //焼き処理が終わったか
     public static bool bakeBool;
     //今焼き処理中か
     public static bool clickBool = true;
-
-    private bool actionBool;
-    private bool actionBool2;
+    [HideInInspector]
+    static public bool burntBool;
 
     private void Start()
     {
         // 中火の色にしておく
         _fireCharImage       = fireChar.GetComponent<Image>();
         _fireCharImage.color = Color.yellow;
+        GameManager.Instance.FireChange = 1;
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown("joystick button 1") && _slider.value == 0)
+        if (_slider.value == 0)
         {
-            SceneManager.LoadScene("GameScenes");
+            burntBool = false;
+            if (Input.GetKeyDown("joystick button 1") && Input.GetKeyDown(KeyCode.E))
+            {
+                SceneManager.LoadScene("GameScenes");
+            }
         }
 
         float dph = Input.GetAxis("D_Pad_H");
 
-        if (dph > 0 && fireChange != 0)
+        if (dph > 0 && GameManager.Instance.FireChange != 0)
         {
-            if(fireChange <= 0)
+            if(GameManager.Instance.FireChange <= 0)
             {
-                fireChange = 0;
+                GameManager.Instance.FireChange = 0;
                 return;
             }
 
@@ -77,14 +80,14 @@ public class FireControl : MonoBehaviour
             {
                 doOnce = false;
                 StartCoroutine(WaitForSeconds(1.0f));
-                fireChange--;
+                GameManager.Instance.FireChange--;
             }
         }
-        if(dph < 0 && fireChange != 2)
+        if(dph < 0 && GameManager.Instance.FireChange != 2)
         {
-            if (fireChange >= 2)
+            if (GameManager.Instance.FireChange >= 2)
             {
-                fireChange = 2;
+                GameManager.Instance.FireChange = 2;
                 return;
             }
 
@@ -92,7 +95,7 @@ public class FireControl : MonoBehaviour
             {
                 doOnce = false;
                 StartCoroutine(WaitForSeconds(1.0f));
-                fireChange++;
+                GameManager.Instance.FireChange++;
             }
         }
 
@@ -104,8 +107,9 @@ public class FireControl : MonoBehaviour
 
         if (clickBool == true) return;
 
-        if (fireChange <= 0)
+        if (GameManager.Instance.FireChange <= 0)
         {
+            burntBool = false;
             leftAllow.gameObject.SetActive(false);
             _fireCharImage.color = Color.cyan;
             text.text = "弱";
@@ -113,8 +117,9 @@ public class FireControl : MonoBehaviour
             _slider.value += yowabi;
             GameManager.Instance.NoiseMator += noiseYowabi * 0.01f;
         }
-        else if (fireChange == 1)
+        else if (GameManager.Instance.FireChange == 1)
         {
+            burntBool = true;
             leftAllow.gameObject.SetActive(true);
             rightAllow.gameObject.SetActive(true);
             _fireCharImage.color = Color.yellow;
@@ -122,8 +127,9 @@ public class FireControl : MonoBehaviour
             _slider.value += tyubi;
             GameManager.Instance.NoiseMator += noiseTyubi * 0.01f;
         }
-        else if (fireChange >= 2)
+        else if (GameManager.Instance.FireChange >= 2)
         {
+            burntBool = true;
             rightAllow.gameObject.SetActive(false);
             _fireCharImage.color = Color.red;
             text.text = "強";

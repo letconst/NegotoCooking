@@ -5,11 +5,19 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : SingletonMonoBehaviour<GameManager>
 {
+    [SerializeField]
+    private StatisticsManager statisticsManager;
+
     // 現在のシーン
     private Scene _currentScene;
     private Scene _tmpScene;
 
     private float noiseValue;
+    private int bubblePoint;
+    private int fireChange;
+    [HideInInspector]
+    public bool alertBool;
+    private int bakePoint;
 
     public float NoiseMator
     {
@@ -23,9 +31,46 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         }
     }
 
+    public int BubblePoint
+    {
+        set
+        {
+            bubblePoint = Mathf.Clamp(value, 0, 100);
+        }
+        get
+        {
+            return bubblePoint;
+        }
+    }
+
+    public int BakePoint
+    {
+        set
+        {
+            bakePoint = Mathf.Clamp(value, 0, 100);
+        }
+        get
+        {
+            return bakePoint;
+        }
+    }
+
+    public int FireChange
+    {
+        set
+        {
+            fireChange = Mathf.Clamp(value, 0, 2);
+        }
+        get
+        {
+            return fireChange;
+        }
+    }
+
     public Vector3 PlayerPos { set; get; }
 
     public Vector3 PlayerRotate { set; get; }
+    public StatisticsManager StatisticsManager { get => statisticsManager; }
 
     public void Awake()
     {
@@ -62,5 +107,9 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         InventoryManager.Instance.LargePlateContainer.Container.Clear();
         TimeCounter.CurrentTime = TimeCounter.CountUp;
         NoiseMator = 0;
+    }
+    private void OnApplicationQuit()
+    {
+        statisticsManager.throwInCount = 0;
     }
 }

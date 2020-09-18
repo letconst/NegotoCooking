@@ -5,9 +5,9 @@ using UnityEngine;
 public class OtamaAction : MonoBehaviour
 {
     [SerializeField]
-    private GameObject Otama;
+    private GameObject otama;
     [SerializeField]
-    private GameObject Centerpostion;
+    private GameObject centerPostion;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,7 +19,7 @@ public class OtamaAction : MonoBehaviour
     {
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
-        Debug.Log(h + "," + v);
-        Otama.transform.position = new Vector3(Centerpostion.transform.position.x + h * 65, Centerpostion.transform.position.y, Centerpostion.transform.position.z + v * 70);
+        //Debug.Log(h + "," + v);
+        otama.transform.position = new Vector3(centerPostion.transform.position.x + h * 65, centerPostion.transform.position.y, centerPostion.transform.position.z + v * 70);
     }
 }

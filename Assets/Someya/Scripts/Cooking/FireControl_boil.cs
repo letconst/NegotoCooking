@@ -36,8 +36,7 @@ public class FireControl_boil : MonoBehaviour
     [SerializeField]
     private GameObject RightAllow;
 
-    private bool doOnce = true;
-    private int fireChange = 1;
+    private bool doOnce = true;    
 
     //煮込み処理が終わったか
     [HideInInspector]
@@ -49,29 +48,40 @@ public class FireControl_boil : MonoBehaviour
     private GameObject Otama;
     [SerializeField]
     private GameObject Centerpostion;
+    [HideInInspector]
+    static public bool bubbleBool;
+    private float timeleft;
     void Start()
     {
-        // スライダーを取得する
-        //_slider = GameObject.Find("Slider").GetComponent<Slider>();
         //中火の色にしておく
         FireChar.GetComponent<Image>().color = Color.yellow;
+        GameManager.Instance.FireChange = 1;
     }
 
     void Update()
     {
-        if (Input.GetKeyDown("joystick button 1") && _slider.value == 0)
+        if (GameManager.Instance.alertBool)
         {
-            SceneManager.LoadScene("GameScenes");
+            noiseMator.GetComponent<Image>().fillAmount -= 0.0005f * 0.01f;
+            GameManager.Instance.NoiseMator += 0.0005f * 0.01f;
         }
+
+        if (_slider.value == 0)
+        {
+            bubbleBool = false;
+            if (Input.GetKeyDown("joystick button 1"))
+            {
+                SceneManager.LoadScene("GameScenes");
+            }
+        }                
 
         float dph = Input.GetAxis("D_Pad_H");
-        float Stick_V = Input.GetAxis("Vertical");
-
-        if (dph < 0 && fireChange != 0)
+        
+        if (dph < 0 && GameManager.Instance.FireChange != 0 || Input.GetKeyDown(KeyCode.LeftArrow) && GameManager.Instance.FireChange != 0)
         {
-            if (fireChange <= 0)
+            if (GameManager.Instance.FireChange <= 0)
             {
-                fireChange = 0;
+                GameManager.Instance.FireChange = 0;
                 return;
             }
 
@@ -79,14 +89,15 @@ public class FireControl_boil : MonoBehaviour
             {
                 doOnce = false;
                 StartCoroutine(WaitForSeconds(1.0f));
-                fireChange--;
+                GameManager.Instance.FireChange--;
             }
         }
-        if (dph > 0 && fireChange != 2)
+
+        if (dph > 0 && GameManager.Instance.FireChange != 2 || Input.GetKeyDown(KeyCode.RightArrow) && GameManager.Instance.FireChange != 2)
         {
-            if (fireChange >= 2)
+            if (GameManager.Instance.FireChange >= 2)
             {
-                fireChange = 2;
+                GameManager.Instance.FireChange = 2;
                 return;
             }
 
@@ -94,24 +105,35 @@ public class FireControl_boil : MonoBehaviour
             {
                 doOnce = false;
                 StartCoroutine(WaitForSeconds(1.0f));
-                fireChange++;
+                GameManager.Instance.FireChange++;
             }
         }
-
+        
         if (_slider.value >= 100)
         {
             _slider.value = 0;
-        }
-
+        }    
+    
         if (clickBool == true) return;
 
         float h = Input.GetAxis("Horizontal");
-        float v = Input.GetAxis("Vertical");
-        Debug.Log(h + "," + v);
+        float v = Input.GetAxis("Vertical");        
         Otama.transform.position = new Vector3(Centerpostion.transform.position.x + h * 65, Centerpostion.transform.position.y, Centerpostion.transform.position.z + v * 70);
 
-        if (fireChange <= 0)
+        //1秒分掻きまわすアクションをするとポイントが-25される。
+        if (h != 0 && v != 0)
         {
+            timeleft -= Time.deltaTime;
+            if (timeleft <= 0.0)
+            {
+                timeleft = 1.0f;
+                GameManager.Instance.BubblePoint -= 25;
+            }
+        }
+
+        if (GameManager.Instance.FireChange <= 0)
+        {
+            bubbleBool = false;
             leftAllow.gameObject.SetActive(false);
             FireChar.GetComponent<Image>().color = Color.cyan;
             text.text = "弱";
@@ -120,8 +142,9 @@ public class FireControl_boil : MonoBehaviour
             noiseMator.GetComponent<Image>().fillAmount -= noiseYowabi * 0.01f;
             GameManager.Instance.NoiseMator += noiseYowabi * 0.01f;
         }
-        else if (fireChange == 1)
+        else if (GameManager.Instance.FireChange == 1)
         {
+            bubbleBool = true;
             leftAllow.gameObject.SetActive(true);
             RightAllow.gameObject.SetActive(true);
             FireChar.GetComponent<Image>().color = Color.yellow;
@@ -130,8 +153,9 @@ public class FireControl_boil : MonoBehaviour
             noiseMator.GetComponent<Image>().fillAmount -= noiseTyubi * 0.01f;
             GameManager.Instance.NoiseMator += noiseTyubi * 0.01f;
         }
-        else if (fireChange >= 2)
+        else if (GameManager.Instance.FireChange >= 2)
         {
+            bubbleBool = true;
             RightAllow.gameObject.SetActive(false);
             FireChar.GetComponent<Image>().color = Color.red;
             text.text = "強";
@@ -146,5 +170,5 @@ public class FireControl_boil : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
         doOnce = true;
         yield break;
-    }
+    }        
 }

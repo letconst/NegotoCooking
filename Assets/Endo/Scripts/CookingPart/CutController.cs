@@ -57,6 +57,7 @@ public class CutController : MonoBehaviour
 
         _isCompleteCooking = false;
         CutGauge.clickBool = true;
+        CutGauge.cantBackBool = true;
         FoodBeingCut = null;
     }
 }
