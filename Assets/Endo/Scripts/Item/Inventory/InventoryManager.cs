@@ -25,7 +25,7 @@ public class InventoryManager : SingletonMonoBehaviour<InventoryManager>
 
     // 交換用: 冷蔵庫アイテムの状態のキャッシュ
     [System.NonSerialized]
-    public HashSet<FoodState> ItemStateToSwap;
+    public List<FoodState> ItemStatesToSwap;
 
     // 調理用: 食材を投入したスロットインデックス
     [System.NonSerialized]

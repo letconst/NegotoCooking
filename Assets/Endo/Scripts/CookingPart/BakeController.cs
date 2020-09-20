@@ -23,7 +23,7 @@ public class BakeController : MonoBehaviour
     public static Item FoodBeingBaked;
 
     // 現在調理中の食材の状態
-    public static HashSet<FoodState> FoodStatesBeingBaked;
+    public static List<FoodState> FoodStatesBeingBaked;
 
     // Start is called before the first frame update
     private void Start()
@@ -37,7 +37,7 @@ public class BakeController : MonoBehaviour
 
     // Update is called once per frame
     private void Update()
-    {        
+    {
         CookingCompleteListener();
         FlyingPanActionHandler();
     }
@@ -87,11 +87,11 @@ public class BakeController : MonoBehaviour
         float Stick_V = Input.GetAxis("Vertical");
 
         if (Stick_V != 0)
-        {            
+        {
             timeleft -= Time.deltaTime;
             if (timeleft <= 0.0)
-            {                
-                timeleft = 2.0f;                
+            {
+                timeleft = 2.0f;
             }
 
             if (flyingpanTimes >= 6)
@@ -127,7 +127,7 @@ public class BakeController : MonoBehaviour
         if (Stick_V < 0 || Input.GetKeyDown(KeyCode.W))
         {
             if (FlyingPan.transform.position.z < 130)
-            {                
+            {
                 FlyingPan.transform.position = new Vector3(FlyingPan.transform.position.x, FlyingPan.transform.position.y, FlyingPan.transform.position.z + 3.5f);
                 flyingpanTimes++;
             }

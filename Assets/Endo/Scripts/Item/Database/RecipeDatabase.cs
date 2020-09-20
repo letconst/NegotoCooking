@@ -50,8 +50,8 @@ public class RequireFoods
     private Item food;
 
     [SerializeField]
-    private HashSet<FoodState> states = new HashSet<FoodState>();
+    private List<FoodState> states = new List<FoodState>();
 
     public Item            Food   => food;
-    public HashSet<FoodState> States => states;
+    public List<FoodState> States => states;
 }

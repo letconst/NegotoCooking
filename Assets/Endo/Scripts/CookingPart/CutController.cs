@@ -18,7 +18,7 @@ public class CutController : MonoBehaviour
     public static Item FoodBeingCut;
 
     // 現在調理中の食材の状態
-    public static HashSet<FoodState> FoodStatesBeingCut;
+    public static List<FoodState> FoodStatesBeingCut;
 
     // Start is called before the first frame update
     private void Start()

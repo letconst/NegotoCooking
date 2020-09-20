@@ -29,14 +29,14 @@ public class InventoryContainerBase : ScriptableObject
     /// </summary>
     /// <param name="item">追加するアイテム</param>
     /// <param name="states">アイテムの状態</param>
-    public virtual void AddItem(Item item, HashSet<FoodState> states = null)
+    public virtual void AddItem(Item item, List<FoodState> states = null)
     {
         // スロットサイズを超過する場合は追加しない
         if (Container.Count >= SlotSize) return;
 
         if (states == null)
         {
-            states = new HashSet<FoodState>() { FoodState.None };
+            states = new List<FoodState>() { FoodState.None };
         }
 
         Container.Add(new InventorySlotBase(item, states));
@@ -57,7 +57,7 @@ public class InventoryContainerBase : ScriptableObject
     /// </summary>
     /// <param name="index">スロットのインデックス</param>
     /// <returns></returns>
-    public virtual HashSet<FoodState> GetState(int index)
+    public virtual List<FoodState> GetStates(int index)
     {
         return Container[index].States;
     }
@@ -68,7 +68,7 @@ public class InventoryContainerBase : ScriptableObject
     /// <param name="index">スロットのインデックス</param>
     /// <param name="item">更新アイテム</param>
     /// <param name="states">アイテムの状態</param>
-    public virtual void UpdateItem(int index, Item item, HashSet<FoodState> states)
+    public virtual void UpdateItem(int index, Item item, List<FoodState> states)
     {
         if (Container.Count < index)
         {
@@ -107,11 +107,11 @@ public class InventorySlotBase
     protected Item item;
 
     [SerializeField]
-    protected HashSet<FoodState> states;
+    protected List<FoodState> states = new List<FoodState>();
 
     public int       ID     { get => id;    protected set => id = value; }
     public Item      Item   { get => item;  protected set => item = value; }
-    public HashSet<FoodState> States { get => states; protected set => states = value; }
+    public List<FoodState> States { get => states; protected set => states = value; }
 
     public string FullItemName
     {
@@ -177,22 +177,22 @@ public class InventorySlotBase
         States.Add(FoodState.Raw);
     }
 
-    public InventorySlotBase(Item item, HashSet<FoodState> states = null)
+    public InventorySlotBase(Item item, List<FoodState> states = null)
     {
         if (states == null)
         {
-            states = new HashSet<FoodState>() { FoodState.None };
+            states = new List<FoodState>() { FoodState.None };
         }
 
         Item  = item;
         States = states;
     }
 
-    public void UpdateSlot(Item item, HashSet<FoodState> states = null)
+    public void UpdateSlot(Item item, List<FoodState> states = null)
     {
         if (states == null)
         {
-            states = new HashSet<FoodState>() { FoodState.None };
+            states = new List<FoodState>() { FoodState.None };
         }
 
         Item  = item;
@@ -209,8 +209,8 @@ public class DefaultItems
     private Item item;
 
     [SerializeField]
-    private HashSet<FoodState> state;
+    private List<FoodState> state;
 
     public Item      Item  => item;
-    public HashSet<FoodState> State => state;
+    public List<FoodState> State => state;
 }

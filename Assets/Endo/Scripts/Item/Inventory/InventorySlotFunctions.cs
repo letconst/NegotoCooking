@@ -72,12 +72,12 @@ public class InventorySlotFunctions : MonoBehaviour
         // 交換先にアイテムを渡す
         _nearRefContainer.UpdateItem(_refInvRenderer.LastSelectedIndex,
                                      _playerContainer.GetItem(selfIndex),
-                                     _playerContainer.GetState(selfIndex));
+                                     _playerContainer.GetStates(selfIndex));
 
         // 選択スロットに交換先のアイテムを配置
         _playerContainer.UpdateItem(selfIndex,
                                     _invManager.ItemToSwapFromRef,
-                                    _invManager.ItemStateToSwap);
+                                    _invManager.ItemStatesToSwap);
 
         // フォーカスを冷蔵庫に戻す
         _playerInvRenderer.DisableAllSlot();
@@ -86,7 +86,7 @@ public class InventorySlotFunctions : MonoBehaviour
 
         // キャッシュアイテムクリア
         _invManager.ItemToSwapFromRef = null;
-        _invManager.ItemStateToSwap   = null;
+        _invManager.ItemStatesToSwap   = null;
     }
 
     /// <summary>
@@ -121,7 +121,7 @@ public class InventorySlotFunctions : MonoBehaviour
         // プレイヤーとアイテム交換
         // 交換アイテムをキャッシュ
         _invManager.ItemToSwapFromRef = selfItem;
-        _invManager.ItemStateToSwap   = selfStates;
+        _invManager.ItemStatesToSwap   = selfStates;
         // 交換モード発動
         _invManager.IsSwapMode = true;
         // プレイヤースロットにフォーカス
@@ -180,7 +180,7 @@ public class InventorySlotFunctions : MonoBehaviour
             selfSlot.Item == null           ||
             selfSlot.States.Contains(disallowState) ||
             selfSlot.Item.KindOfItem1 == Item.KindOfItem.Seasoning) return;
-        
+
         if (curSceneName == "CutScenes")
         {
             CutGauge.clickBool = false;

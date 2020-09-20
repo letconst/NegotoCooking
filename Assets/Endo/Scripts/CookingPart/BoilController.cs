@@ -23,7 +23,7 @@ public class BoilController : MonoBehaviour
     public static Item FoodBeingBoiled;
 
     // 現在調理中の食材の状態
-    public static HashSet<FoodState> FoodStatesBeingBoiled;
+    public static List<FoodState> FoodStatesBeingBoiled;
 
     // Start is called before the first frame update
     private void Start()

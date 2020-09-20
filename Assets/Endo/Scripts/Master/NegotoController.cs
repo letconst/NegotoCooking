@@ -36,7 +36,7 @@ public class NegotoController : MonoBehaviour
     public Item requireFood;
 
     // 達成に必要な食材の状態
-    public HashSet<FoodState> requireStates;
+    public List<FoodState> requireStates;
 
     // レシピリストのコピー
     private List<RequireFoods> _recipe;
