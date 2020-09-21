@@ -8,6 +8,8 @@ public class StatisticsManager : ScriptableObject
 {
     [SerializeField]
     public int throwInCount;
+    [SerializeField]
+    public int missItemCount;
 
     // Start is called before the first frame update
     void Start()

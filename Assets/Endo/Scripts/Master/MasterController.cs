@@ -78,3 +78,7 @@ public class MasterController : SingletonMonoBehaviour<MasterController>
         if (other.CompareTag("Player")) _isNear = false;
     }
 }
+
+//ゴミ箱に食材を捨てた３回以上捨てると失敗
+//残り時間が１００秒以下になると失敗
+//食材の状態が３回以上間違っていると失敗

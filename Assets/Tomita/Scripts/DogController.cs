@@ -137,7 +137,7 @@ public class DogController : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        //Debug.Log(other.tag);
+        Debug.Log(other.tag);
         if (other.CompareTag("DogFood"))
         {
             Debug.Log("餌発見");
@@ -154,6 +154,7 @@ public class DogController : MonoBehaviour
                 agent.isStopped = true;
                 //時間を数える
                 time2 += Time.deltaTime;
+                _animator.SetBool("EatFood",true);
             }
             //犬が食べ終わったら動き出す
             if (time2 > eatTime)
@@ -161,6 +162,7 @@ public class DogController : MonoBehaviour
                 //目標地点を設定し直す
                 GotoNextPoint();
                 time2 = 0;
+                _animator.SetBool("EatFood", false);
                 DogMoveStop = false;
 
                 Destroy(other.gameObject);
@@ -186,7 +188,6 @@ public class DogController : MonoBehaviour
                 State = DogState.Idle;
             }
         }
-
         
     }
 

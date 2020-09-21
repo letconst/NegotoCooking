@@ -13,3 +13,6 @@ public class PlayerInventoryContainer : InventoryContainerBase
 
     // TODO: 投げ餌専用の管理
 }
+
+
+//餌用の持たせる領域の確保
