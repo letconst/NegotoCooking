@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public enum FoodState
@@ -27,13 +28,18 @@ public class InventoryContainerBase : ScriptableObject
     /// インベントリにアイテムを追加する
     /// </summary>
     /// <param name="item">追加するアイテム</param>
-    /// <param name="state">アイテムの状態</param>
-    public virtual void AddItem(Item item, FoodState state = FoodState.None)
+    /// <param name="states">アイテムの状態</param>
+    public virtual void AddItem(Item item, List<FoodState> states = null)
     {
         // スロットサイズを超過する場合は追加しない
         if (Container.Count >= SlotSize) return;
 
-        Container.Add(new InventorySlotBase(item, state));
+        if (states == null)
+        {
+            states = new List<FoodState>() { FoodState.None };
+        }
+
+        Container.Add(new InventorySlotBase(item, states));
     }
 
     /// <summary>
@@ -51,9 +57,9 @@ public class InventoryContainerBase : ScriptableObject
     /// </summary>
     /// <param name="index">スロットのインデックス</param>
     /// <returns></returns>
-    public virtual FoodState GetState(int index)
+    public virtual List<FoodState> GetStates(int index)
     {
-        return Container[index].State;
+        return Container[index].States;
     }
 
     /// <summary>
@@ -61,8 +67,8 @@ public class InventoryContainerBase : ScriptableObject
     /// </summary>
     /// <param name="index">スロットのインデックス</param>
     /// <param name="item">更新アイテム</param>
-    /// <param name="state">アイテムの状態</param>
-    public virtual void UpdateItem(int index, Item item, FoodState state)
+    /// <param name="states">アイテムの状態</param>
+    public virtual void UpdateItem(int index, Item item, List<FoodState> states)
     {
         if (Container.Count < index)
         {
@@ -71,7 +77,7 @@ public class InventoryContainerBase : ScriptableObject
             return;
         }
 
-        Container[index].UpdateSlot(item, state);
+        Container[index].UpdateSlot(item, states);
     }
 
     /// <summary>
@@ -101,11 +107,11 @@ public class InventorySlotBase
     protected Item item;
 
     [SerializeField]
-    protected FoodState state;
+    protected List<FoodState> states = new List<FoodState>();
 
-    public int       ID    { get => id;    protected set => id = value; }
-    public Item      Item  { get => item;  protected set => item = value; }
-    public FoodState State { get => state; protected set => state = value; }
+    public int       ID     { get => id;    protected set => id = value; }
+    public Item      Item   { get => item;  protected set => item = value; }
+    public List<FoodState> States { get => states; protected set => states = value; }
 
     public string FullItemName
     {
@@ -115,7 +121,7 @@ public class InventorySlotBase
 
             if (Item == null) return result;
 
-            switch (State)
+            switch (States.ElementAt(0))
             {
                 case FoodState.None:
                     if (Item             != null &&
@@ -154,7 +160,7 @@ public class InventorySlotBase
                     break;
 
                 default:
-                    Debug.LogWarning($"状態「{State}」の接頭辞が未設定です");
+                    Debug.LogWarning($"状態「{States}」の接頭辞が未設定です");
 
                     result = Item.ItemName;
 
@@ -168,22 +174,32 @@ public class InventorySlotBase
     public InventorySlotBase()
     {
         Item  = null;
-        State = FoodState.Raw;
+        States.Add(FoodState.Raw);
     }
 
-    public InventorySlotBase(Item item, FoodState state = FoodState.Raw)
+    public InventorySlotBase(Item item, List<FoodState> states = null)
     {
+        if (states == null)
+        {
+            states = new List<FoodState>() { FoodState.None };
+        }
+
         Item  = item;
-        State = state;
+        States = states;
     }
 
-    public void UpdateSlot(Item item, FoodState state = FoodState.Raw)
+    public void UpdateSlot(Item item, List<FoodState> states = null)
     {
+        if (states == null)
+        {
+            states = new List<FoodState>() { FoodState.None };
+        }
+
         Item  = item;
-        State = state;
+        States = states;
     }
 
-    public void ChangeState(FoodState state) => State = state;
+    public void ChangeState(FoodState state) => States.Add(state);
 }
 
 [System.Serializable]
@@ -193,8 +209,8 @@ public class DefaultItems
     private Item item;
 
     [SerializeField]
-    private FoodState state;
+    private List<FoodState> state;
 
     public Item      Item  => item;
-    public FoodState State => state;
+    public List<FoodState> State => state;
 }

@@ -11,6 +11,8 @@ public class StatisticsManager : ScriptableObject
     [SerializeField]
     public int missItemCount;
 
+    public float a;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +22,6 @@ public class StatisticsManager : ScriptableObject
     // Update is called once per frame
     void Update()
     {
-        
+        a += Time.deltaTime;
     }
 }

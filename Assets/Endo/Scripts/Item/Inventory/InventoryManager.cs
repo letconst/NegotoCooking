@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class InventoryManager : SingletonMonoBehaviour<InventoryManager>
 {
@@ -24,7 +25,7 @@ public class InventoryManager : SingletonMonoBehaviour<InventoryManager>
 
     // 交換用: 冷蔵庫アイテムの状態のキャッシュ
     [System.NonSerialized]
-    public FoodState ItemStateToSwap;
+    public List<FoodState> ItemStatesToSwap;
 
     // 調理用: 食材を投入したスロットインデックス
     [System.NonSerialized]
