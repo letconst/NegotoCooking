@@ -1,12 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class NegotoManager : SingletonMonoBehaviour<NegotoManager>
 {
-    [SerializeField, Tooltip("プレイヤーオブジェクト")]
-    private GameObject playerObj;
-
     [SerializeField, Tooltip("寝言が表示される距離")]
     private float distanceDisplayed;
 
@@ -15,6 +13,8 @@ public class NegotoManager : SingletonMonoBehaviour<NegotoManager>
 
     [SerializeField, Tooltip("現在の寝言の表示数")]
     private int curDisplayCount;
+
+    private GameObject _playerObj;
 
     // 寝言の全表示位置
     private IEnumerable<GameObject> _negotos;
@@ -69,9 +69,15 @@ public class NegotoManager : SingletonMonoBehaviour<NegotoManager>
     // Update is called once per frame
     private void Update()
     {
+        // メインシーンでのみ動作
+        if (SceneManager.GetActiveScene().name != "GameScenes") return;
+
+        // プレイヤー取得（シーンを跨いだ際にも対応できるようにNullチェックで）
+        if (_playerObj == null) _playerObj = GameObject.FindWithTag("Player");
+
         // 寝言表示距離内にプレイヤーがいるか否かを判定
         IsPlayerNeared =
-            Vector3.Distance(MasterController.Instance.transform.position, playerObj.transform.position) <
+            Vector3.Distance(MasterController.Instance.transform.position, _playerObj.transform.position) <
             distanceDisplayed;
     }
 }
