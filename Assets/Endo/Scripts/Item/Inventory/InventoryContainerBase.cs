@@ -23,30 +23,49 @@ public class InventoryContainerBase : ScriptableObject
 
     public List<InventorySlotBase> Container { get => container; protected set => container = value; }
     public int                     SlotSize  { get => slotSize;  protected set => slotSize = value; }
+    public bool                    IsFull    => Container.Count(slot => slot.Item != null) == slotSize;
 
     /// <summary>
-    /// インベントリにアイテムを追加する
+    /// インベントリにスロットを追加する
     /// </summary>
     /// <param name="item">追加するアイテム</param>
     /// <param name="states">アイテムの状態</param>
-    public virtual void AddItem(Item item, List<FoodState> states = null)
+    public virtual void AddSlot(Item item, IEnumerable<FoodState> states = null)
     {
         // スロットサイズを超過する場合は追加しない
         if (Container.Count >= SlotSize) return;
 
         if (states == null)
         {
-            states = new List<FoodState>() { FoodState.None };
+            states = new List<FoodState>()
+            {
+                FoodState.None
+            };
         }
 
         Container.Add(new InventorySlotBase(item, states));
     }
 
     /// <summary>
+    /// 一番頭に近い空きスロットにアイテムを配置する
+    /// </summary>
+    /// <param name="item">配置するアイテム</param>
+    /// <param name="states">配置するアイテムの状態のList</param>
+    public virtual void AddItem(Item item, IEnumerable<FoodState> states)
+    {
+        foreach (var slot in Container.Where(slot => slot.Item == null))
+        {
+            slot.UpdateSlot(item, states.ToList());
+
+            break;
+        }
+    }
+
+    /// <summary>
     /// 指定したインデックスのスロットアイテムを取得する
     /// </summary>
     /// <param name="index">スロットのインデックス</param>
-    /// <returns></returns>
+    /// <returns>スロットのアイテム</returns>
     public virtual Item GetItem(int index)
     {
         return Container[index].Item;
@@ -56,7 +75,7 @@ public class InventoryContainerBase : ScriptableObject
     /// 指定したインデックスのスロットアイテムの状態を取得する
     /// </summary>
     /// <param name="index">スロットのインデックス</param>
-    /// <returns></returns>
+    /// <returns>付加されている状態のリスト</returns>
     public virtual List<FoodState> GetStates(int index)
     {
         return Container[index].States;
@@ -68,7 +87,7 @@ public class InventoryContainerBase : ScriptableObject
     /// <param name="index">スロットのインデックス</param>
     /// <param name="item">更新アイテム</param>
     /// <param name="states">アイテムの状態</param>
-    public virtual void UpdateItem(int index, Item item, List<FoodState> states)
+    public virtual void UpdateItem(int index, Item item, IEnumerable<FoodState> states)
     {
         if (Container.Count < index)
         {
@@ -77,7 +96,7 @@ public class InventoryContainerBase : ScriptableObject
             return;
         }
 
-        Container[index].UpdateSlot(item, states);
+        Container[index].UpdateSlot(item, states.ToList());
     }
 
     /// <summary>
@@ -109,8 +128,8 @@ public class InventorySlotBase
     [SerializeField]
     protected List<FoodState> states = new List<FoodState>();
 
-    public int       ID     { get => id;    protected set => id = value; }
-    public Item      Item   { get => item;  protected set => item = value; }
+    public int             ID     { get => id;     protected set => id = value; }
+    public Item            Item   { get => item;   protected set => item = value; }
     public List<FoodState> States { get => states; protected set => states = value; }
 
     public string FullItemName
@@ -173,33 +192,76 @@ public class InventorySlotBase
 
     public InventorySlotBase()
     {
-        Item  = null;
+        Item = null;
         States.Add(FoodState.Raw);
     }
 
-    public InventorySlotBase(Item item, List<FoodState> states = null)
+    public InventorySlotBase(Item item, IEnumerable<FoodState> states = null)
     {
         if (states == null)
         {
-            states = new List<FoodState>() { FoodState.None };
+            states = new List<FoodState>()
+            {
+                FoodState.None
+            };
         }
 
-        Item  = item;
-        States = states;
+        Item   = item;
+        States = states.ToList();
     }
 
-    public void UpdateSlot(Item item, List<FoodState> states = null)
+    public void UpdateSlot(Item item, IEnumerable<FoodState> states = null)
     {
         if (states == null)
         {
-            states = new List<FoodState>() { FoodState.None };
+            states = new List<FoodState>()
+            {
+                FoodState.None
+            };
         }
 
-        Item  = item;
-        States = states;
+        Item   = item;
+        States = states.ToList();
     }
 
-    public void ChangeState(FoodState state) => States.Add(state);
+    /// <summary>
+    /// スロットのアイテムに状態を付加する
+    /// 状態が重複する場合は付加されない
+    /// </summary>
+    /// <param name="state">付加する状態</param>
+    public void AddState(FoodState state)
+    {
+        // None状態は除去
+        States.RemoveAll(s => s == FoodState.None);
+
+        // 状態の重複は弾く
+        if (States.Contains(state)) return;
+
+        States.Add(state);
+    }
+
+    /// <summary>
+    /// スロットのアイテムから指定した状態を除去する
+    /// </summary>
+    /// <param name="state">除去する状態</param>
+    public void RemoveState(FoodState state)
+    {
+        States.RemoveAll(s => s == state);
+    }
+
+    /// <summary>
+    /// スロットのクローンを作成する
+    /// </summary>
+    /// <returns>スロットのクローン</returns>
+    public InventorySlotBase DeepCopy()
+    {
+        return new InventorySlotBase
+        {
+            id     = id,
+            item   = item,
+            states = states
+        };
+    }
 }
 
 [System.Serializable]
@@ -209,8 +271,8 @@ public class DefaultItems
     private Item item;
 
     [SerializeField]
-    private List<FoodState> state;
+    private List<FoodState> state = new List<FoodState>();
 
-    public Item      Item  => item;
+    public Item            Item  => item;
     public List<FoodState> State => state;
 }

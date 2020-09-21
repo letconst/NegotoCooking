@@ -81,7 +81,7 @@ public class InventoryRenderer : MonoBehaviour
             // インベントリコンテナのスロット数がスロットサイズに満たなければスロット確保
             if (inventory.Container.Count < inventory.SlotSize)
             {
-                inventory.AddItem(null);
+                inventory.AddSlot(null);
             }
 
             var slotObj = Instantiate(slotPrefab, transform.position, Quaternion.identity, slotWrapper.transform);

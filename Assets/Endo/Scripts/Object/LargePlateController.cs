@@ -40,7 +40,7 @@ public class LargePlateController : MonoBehaviour
                  selectedFoodState.Contains(FoodState.Raw))) return;
 
             // 大皿に現在選択しているアイテムをぶち込む
-            selfContainer.AddItem(_playerInvContainer.GetItem(_playerInvRenderer.LastSelectedIndex),
+            selfContainer.AddSlot(_playerInvContainer.GetItem(_playerInvRenderer.LastSelectedIndex),
                                   selectedFoodState);
 
             // プレイヤーのアイテムを削除
