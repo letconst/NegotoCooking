@@ -5,13 +5,19 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : SingletonMonoBehaviour<GameManager>
 {
+    [SerializeField]
+    private StatisticsManager statisticsManager;
+
     // 現在のシーン
     private Scene _currentScene;
     private Scene _tmpScene;
 
     private float noiseValue;
-    private Vector3 playerPos;
-    private Vector3 playerRotate;
+    private int bubblePoint;
+    private int fireChange;
+    [HideInInspector]
+    public bool alertBool;
+    private int bakePoint;
 
     public float NoiseMator
     {
@@ -25,29 +31,46 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         }
     }
 
-    public Vector3 PlayerPos
+    public int BubblePoint
     {
         set
         {
-            playerPos = value;
+            bubblePoint = Mathf.Clamp(value, 0, 100);
         }
         get
         {
-            return playerPos;
+            return bubblePoint;
         }
     }
 
-    public Vector3 PlayerRotate
+    public int BakePoint
     {
         set
         {
-            playerRotate = value;
+            bakePoint = Mathf.Clamp(value, 0, 100);
         }
         get
         {
-            return playerRotate;
+            return bakePoint;
         }
     }
+
+    public int FireChange
+    {
+        set
+        {
+            fireChange = Mathf.Clamp(value, 0, 2);
+        }
+        get
+        {
+            return fireChange;
+        }
+    }
+
+    public Vector3 PlayerPos { set; get; }
+
+    public Vector3 PlayerRotate { set; get; }
+    public StatisticsManager StatisticsManager { get => statisticsManager; }
 
     public void Awake()
     {
@@ -79,10 +102,14 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     /// </summary>
     public void ResetAllValues()
     {
-        TmpInventoryManager.Instance.PlayerContainer.Container.Clear();
-        TmpInventoryManager.Instance.RefContainers.RefInvContainers.Clear();
-        TmpInventoryManager.Instance.LargePlateContainer.Container.Clear();
-        TimeCounter.currentTime = TimeCounter.countup;
+        InventoryManager.Instance.PlayerContainer.Container.Clear();
+        InventoryManager.Instance.RefContainers.RefInvContainers.Clear();
+        InventoryManager.Instance.LargePlateContainer.Container.Clear();
+        TimeCounter.CurrentTime = TimeCounter.CountUp;
         NoiseMator = 0;
+    }
+    private void OnApplicationQuit()
+    {
+        statisticsManager.throwInCount = 0;
     }
 }

@@ -1,50 +1,51 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class DoorController : MonoBehaviour
 {
     [SerializeField]
-    private float _closeLimit;
+    private float closeLimit;
 
     // プレイヤーが近くにいるか否か
-    private bool _isNear = false;
+    private bool _isNear;
 
     private Animator _anim;
 
+    private static readonly int IsOpen = Animator.StringToHash("IsOpen");
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         _anim = transform.parent.GetComponent<Animator>();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         // ドア開閉
-        if ((Input.GetKeyDown("joystick button 2") || Input.GetKeyDown(KeyCode.E)) && _isNear)
+        if (_isNear &&
+            Input.GetButtonDown("Interact"))
         {
             SwitchOpen();
 
             // 指定時間経過後に自動で閉じる
-            Invoke("SwitchOpen", _closeLimit);
+            Invoke(nameof(SwitchOpen), closeLimit);
 
             // 閉じたときは自動で開かないようにする
-            if (!_anim.GetBool("IsOpen"))
+            if (!_anim.GetBool(IsOpen))
             {
-                CancelInvoke("SwitchOpen");
+                CancelInvoke(nameof(SwitchOpen));
             }
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player") _isNear = true;
+        if (other.CompareTag("Player")) _isNear = true;
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Player") _isNear = false;
+        if (other.CompareTag("Player")) _isNear = false;
     }
 
     /// <summary>
@@ -52,6 +53,6 @@ public class DoorController : MonoBehaviour
     /// </summary>
     private void SwitchOpen()
     {
-        _anim.SetBool("IsOpen", !_anim.GetBool("IsOpen"));
+        _anim.SetBool(IsOpen, !_anim.GetBool(IsOpen));
     }
 }

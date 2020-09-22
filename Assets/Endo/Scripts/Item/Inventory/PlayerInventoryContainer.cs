@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Player Inventory", menuName = "Inventory/Create Player Inventory")]
 public class PlayerInventoryContainer : InventoryContainerBase
@@ -12,5 +10,9 @@ public class PlayerInventoryContainer : InventoryContainerBase
 
         base.AddItem(item, state);
     }
+
     // TODO: 投げ餌専用の管理
 }
+
+
+//餌用の持たせる領域の確保

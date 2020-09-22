@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -31,51 +30,49 @@ public class FireControl : MonoBehaviour
     private Image noiseMator;
 
     [SerializeField]
-    private GameObject FireChar;
+    private GameObject fireChar;
     [SerializeField]
     private GameObject leftAllow;
     [SerializeField]
-    private GameObject RightAllow;
+    private GameObject rightAllow;
+
+    private Image _fireCharImage;
 
     private bool doOnce = true;
-    private int fireChange = 1;
-
-    // 調理中の食材
-    [HideInInspector]
-    public static Item foodInProgress;
 
     //焼き処理が終わったか
-    [HideInInspector]
-    static public bool bakeBool;
+    public static bool bakeBool;
     //今焼き処理中か
+    public static bool clickBool = true;
     [HideInInspector]
-    static public bool clickBool = true;
+    static public bool burntBool;
 
-    private bool actionBool;
-    private bool actionBool2;
-
-    void Start()
+    private void Start()
     {
-        // スライダーを取得する
-        //_slider = GameObject.Find("Slider").GetComponent<Slider>();
-        //中火の色にしておく
-        FireChar.GetComponent<Image>().color = Color.yellow;
+        // 中火の色にしておく
+        _fireCharImage       = fireChar.GetComponent<Image>();
+        _fireCharImage.color = Color.yellow;
+        GameManager.Instance.FireChange = 1;
     }
 
-    void Update()
+    private void Update()
     {
-        if (Input.GetKeyDown("joystick button 1") && _slider.value == 0)
+        if (_slider.value == 0)
         {
-            SceneManager.LoadScene("GameScenes");
+            burntBool = false;
+            if (Input.GetKeyDown("joystick button 1") && Input.GetKeyDown(KeyCode.E))
+            {
+                SceneManager.LoadScene("GameScenes");
+            }
         }
 
         float dph = Input.GetAxis("D_Pad_H");
 
-        if (dph > 0 && fireChange != 0)
+        if (dph > 0 && GameManager.Instance.FireChange != 0)
         {
-            if(fireChange <= 0)
+            if(GameManager.Instance.FireChange <= 0)
             {
-                fireChange = 0;
+                GameManager.Instance.FireChange = 0;
                 return;
             }
 
@@ -83,14 +80,14 @@ public class FireControl : MonoBehaviour
             {
                 doOnce = false;
                 StartCoroutine(WaitForSeconds(1.0f));
-                fireChange--;
+                GameManager.Instance.FireChange--;
             }
         }
-        if(dph < 0 && fireChange != 2)
+        if(dph < 0 && GameManager.Instance.FireChange != 2)
         {
-            if (fireChange >= 2)
+            if (GameManager.Instance.FireChange >= 2)
             {
-                fireChange = 2;
+                GameManager.Instance.FireChange = 2;
                 return;
             }
 
@@ -98,7 +95,7 @@ public class FireControl : MonoBehaviour
             {
                 doOnce = false;
                 StartCoroutine(WaitForSeconds(1.0f));
-                fireChange++;
+                GameManager.Instance.FireChange++;
             }
         }
 
@@ -110,41 +107,40 @@ public class FireControl : MonoBehaviour
 
         if (clickBool == true) return;
 
-        if (fireChange <= 0)
+        if (GameManager.Instance.FireChange <= 0)
         {
+            burntBool = false;
             leftAllow.gameObject.SetActive(false);
-            FireChar.GetComponent<Image>().color = Color.cyan;
+            _fireCharImage.color = Color.cyan;
             text.text = "弱";
             //スライダーに値を設定
             _slider.value += yowabi;
-            noiseMator.GetComponent<Image>().fillAmount -= noiseYowabi * 0.01f;
             GameManager.Instance.NoiseMator += noiseYowabi * 0.01f;
         }
-        else if (fireChange == 1)
+        else if (GameManager.Instance.FireChange == 1)
         {
+            burntBool = true;
             leftAllow.gameObject.SetActive(true);
-            RightAllow.gameObject.SetActive(true);
-            FireChar.GetComponent<Image>().color = Color.yellow;
+            rightAllow.gameObject.SetActive(true);
+            _fireCharImage.color = Color.yellow;
             text.text = "中";
             _slider.value += tyubi;
-            noiseMator.GetComponent<Image>().fillAmount -= noiseTyubi * 0.01f;
             GameManager.Instance.NoiseMator += noiseTyubi * 0.01f;
         }
-        else if (fireChange >= 2)
+        else if (GameManager.Instance.FireChange >= 2)
         {
-            RightAllow.gameObject.SetActive(false);
-            FireChar.GetComponent<Image>().color = Color.red;
+            burntBool = true;
+            rightAllow.gameObject.SetActive(false);
+            _fireCharImage.color = Color.red;
             text.text = "強";
             _slider.value += tuyobi;
-            noiseMator.GetComponent<Image>().fillAmount -= noiseTuyobi * 0.01f;
             GameManager.Instance.NoiseMator += noiseTuyobi * 0.01f;
         }
     }
 
-    IEnumerator WaitForSeconds(float waitTime)
+    private IEnumerator WaitForSeconds(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
         doOnce = true;
-        yield break;
     }
 }

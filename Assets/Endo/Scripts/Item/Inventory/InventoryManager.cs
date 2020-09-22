@@ -1,46 +1,57 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public abstract class InventoryManager : MonoBehaviour
+public class InventoryManager : SingletonMonoBehaviour<InventoryManager>
 {
-    // 現在選択しているアイテム
-    [System.NonSerialized]
-    public Item selectedItem;
-    // 最後に選択していたアイテムのインデックス
-    [System.NonSerialized]
-    public int lastSelectedIndex = 0;
-    // スロットが選択可能状態か否か
-    private bool _isSlotEnabled = true;
-    // 交換時の対象アイテム
-    [System.NonSerialized]
-    public Item itemToSwap;
-    // インベントリ内のすべてのアイテム
     [SerializeField]
-    private Item[] _allItems;
+    private PlayerInventoryContainer playerContainer;
 
-    // インベントリが持つスロットの数
     [SerializeField]
-    protected int _slotSize;
+    private InventoryContainerBase largePlateContainer;
 
-    public bool IsSlotEnabled { get => _isSlotEnabled; protected set => _isSlotEnabled = value; }
-    public Item[] AllItems { get => _allItems; protected set => _allItems = value; }
-    public int SlotSize { get => _slotSize; }
+    [SerializeField]
+    private RefrigeratorInventoryContainers refContainers;
 
-    /// <summary>
-    /// 変数として保持したラストインデックスのスロットに選択を戻す
-    /// 引数がない場合はラストインデックスを使用
-    /// </summary>
-    /// <param name="index">選択するインデックス</param>
-    public abstract void SelectSlot(int index);
+    [SerializeField]
+    private RecipeDatabase recipeDatabase;
 
-    /// <summary>
-    /// 全スロットを選択不可にする
-    /// </summary>
-    public abstract void DisableAllSlot();
+    // 交換用: アイテム交換モードか否か
+    [System.NonSerialized]
+    public bool IsSwapMode = false;
 
-    /// <summary>
-    /// 全スロットを選択可能にする
-    /// </summary>
-    public abstract void EnableAllSlot();
+    // 交換用: 冷蔵庫アイテムのキャッシュ
+    [System.NonSerialized]
+    public Item ItemToSwapFromRef;
+
+    // 交換用: 冷蔵庫アイテムの状態のキャッシュ
+    [System.NonSerialized]
+    public FoodState ItemStateToSwap;
+
+    // 調理用: 食材を投入したスロットインデックス
+    [System.NonSerialized]
+    public int PuttedSlotIndex;
+
+    public PlayerInventoryContainer        PlayerContainer     => playerContainer;
+    public InventoryContainerBase          LargePlateContainer => largePlateContainer;
+    public RefrigeratorInventoryContainers RefContainers       => refContainers;
+    public RecipeDatabase                  RecipeDatabase      => recipeDatabase;
+
+    private void Awake()
+    {
+        if (this != Instance)
+        {
+            Destroy(gameObject);
+
+            return;
+        }
+
+        DontDestroyOnLoad(gameObject);
+    }
+
+    private void OnApplicationQuit()
+    {
+        // 終了時にコンテナ消去
+        PlayerContainer.Container.Clear();
+        RefContainers.RefInvContainers.Clear();
+        LargePlateContainer.Container.Clear();
+    }
 }

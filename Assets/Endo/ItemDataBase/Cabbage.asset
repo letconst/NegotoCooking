@@ -12,9 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b6947bccaf59ac4ca7b1bcf2dc1c37d, type: 3}
   m_Name: Cabbage
   m_EditorClassIdentifier: 
-  _kindOfItem: 1
-  _itemIcon: {fileID: 0}
-  _itemName: "\u30AD\u30E3\u30D9\u30C4"
-  _foodObj: {fileID: 8429375758505088266, guid: c555a71b0c650c141bd01808e128f11b,
-    type: 3}
-  _isUsable: 0
+  kindOfItem: 1
+  itemIcon: {fileID: 0}
+  itemName: "\u30AD\u30E3\u30D9\u30C4"
+  foodObj: {fileID: 8429375758505088266, guid: c555a71b0c650c141bd01808e128f11b, type: 3}

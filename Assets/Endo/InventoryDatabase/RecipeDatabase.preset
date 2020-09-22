@@ -1,0 +1,99 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!181963792 &2655988077585873504
+Preset:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: RecipeDatabase
+  m_TargetType:
+    m_NativeTypeID: 114
+    m_ManagedTypePPtr: {fileID: 11500000, guid: 81d67d1b9a7b7644398f377074f9c3d0,
+      type: 3}
+    m_ManagedTypeFallback: 
+  m_Properties:
+  - target: {fileID: 0}
+    propertyPath: m_Enabled
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_EditorHideFlags
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_EditorClassIdentifier
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: entries.Array.size
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: entries.Array.data[0].recipeName
+    value: "\u30A8\u30D3\u306E\u30B9\u30FC\u30D7"
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: entries.Array.data[0].requireFoods.Array.size
+    value: 5
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: entries.Array.data[0].requireFoods.Array.data[0].food
+    value: 
+    objectReference: {fileID: 11400000, guid: 753232919155f2943b154226573fa8ad, type: 2}
+  - target: {fileID: 0}
+    propertyPath: entries.Array.data[0].requireFoods.Array.data[0].states.Array.size
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: entries.Array.data[0].requireFoods.Array.data[0].states.Array.data[0]
+    value: 5
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: entries.Array.data[0].requireFoods.Array.data[1].food
+    value: 
+    objectReference: {fileID: 11400000, guid: 1ec43f4c12d11cc46acece93cd2f07bd, type: 2}
+  - target: {fileID: 0}
+    propertyPath: entries.Array.data[0].requireFoods.Array.data[1].states.Array.size
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: entries.Array.data[0].requireFoods.Array.data[1].states.Array.data[0]
+    value: 4
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: entries.Array.data[0].requireFoods.Array.data[2].food
+    value: 
+    objectReference: {fileID: 11400000, guid: 9ff3228755c3e514e95f9a47753fa65b, type: 2}
+  - target: {fileID: 0}
+    propertyPath: entries.Array.data[0].requireFoods.Array.data[2].states.Array.size
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: entries.Array.data[0].requireFoods.Array.data[2].states.Array.data[0]
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: entries.Array.data[0].requireFoods.Array.data[3].food
+    value: 
+    objectReference: {fileID: 11400000, guid: 249e24904ae17624d87195e14f12ddae, type: 2}
+  - target: {fileID: 0}
+    propertyPath: entries.Array.data[0].requireFoods.Array.data[3].states.Array.size
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: entries.Array.data[0].requireFoods.Array.data[3].states.Array.data[0]
+    value: 5
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: entries.Array.data[0].requireFoods.Array.data[4].food
+    value: 
+    objectReference: {fileID: 11400000, guid: bbe1f14281c868b4b8c383905e59e2fc, type: 2}
+  - target: {fileID: 0}
+    propertyPath: entries.Array.data[0].requireFoods.Array.data[4].states.Array.size
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: entries.Array.data[0].requireFoods.Array.data[4].states.Array.data[0]
+    value: 2
+    objectReference: {fileID: 0}

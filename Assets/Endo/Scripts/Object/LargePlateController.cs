@@ -1,13 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class LargePlateController : MonoBehaviour
 {
     // インベントリアセット
-    public InventoryContainerBase selfContainer;
+    [SerializeField]
+    private InventoryContainerBase selfContainer;
+
     // 近くにいるか否か
-    private bool _isNear = false;
+    private bool _isNear;
 
     private GameObject               _soup;
     private GameObject               _playerInvObj;
@@ -15,28 +15,33 @@ public class LargePlateController : MonoBehaviour
     private InventoryRenderer        _playerInvRenderer;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         _soup               = transform.Find("Soup").gameObject;
         _playerInvObj       = GameObject.FindGameObjectWithTag("PlayerInventory");
-        _playerInvContainer = TmpInventoryManager.Instance.playerContainer;
+        _playerInvContainer = InventoryManager.Instance.PlayerContainer;
         _playerInvRenderer  = _playerInvObj.GetComponent<InventoryRenderer>();
 
         _soup.SetActive(false);
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if ((Input.GetKeyDown("joystick button 2") || Input.GetKeyDown(KeyCode.E)) &&
-            _isNear)
+        if (_isNear &&
+            Input.GetButtonDown("Interact"))
         {
-            // 焼けてるときだけ大皿にぶち込む
-            if (_playerInvContainer.GetState(_playerInvRenderer.LastSelectedIndex) != FoodState.Cooked) return;
+            var selectedFood      = _playerInvContainer.GetItem(_playerInvRenderer.LastSelectedIndex);
+            var selectedFoodState = _playerInvContainer.GetState(_playerInvRenderer.LastSelectedIndex);
+
+            // 調味料か調理済みの食材のみ受け付ける
+            if (selectedFood.KindOfItem1 != Item.KindOfItem.Seasoning &&
+                (selectedFoodState == FoodState.None ||
+                 selectedFoodState == FoodState.Raw)) return;
 
             // 大皿に現在選択しているアイテムをぶち込む
             selfContainer.AddItem(_playerInvContainer.GetItem(_playerInvRenderer.LastSelectedIndex),
-                              _playerInvContainer.GetState(_playerInvRenderer.LastSelectedIndex));
+                                  selectedFoodState);
 
             // プレイヤーのアイテムを削除
             _playerInvContainer.RemoveItem(_playerInvRenderer.LastSelectedIndex);

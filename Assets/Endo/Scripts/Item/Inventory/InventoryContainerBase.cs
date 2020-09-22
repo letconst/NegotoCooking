@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public enum FoodState
@@ -16,18 +15,18 @@ public enum FoodState
 public class InventoryContainerBase : ScriptableObject
 {
     [SerializeField, Tooltip("スロットの最大数（初期値：3）")]
-    private int _slotSize = 3;
+    private int slotSize = 3;
 
     [SerializeField]
-    private List<InventorySlotBase> _container = new List<InventorySlotBase>();
+    private List<InventorySlotBase> container = new List<InventorySlotBase>();
 
-    public List<InventorySlotBase> Container { get => _container; protected set => _container = value; }
-    public int                     SlotSize  { get => _slotSize; protected set => _slotSize = value; }
+    public List<InventorySlotBase> Container { get => container; protected set => container = value; }
+    public int                     SlotSize  { get => slotSize;  protected set => slotSize = value; }
 
     /// <summary>
     /// インベントリにアイテムを追加する
     /// </summary>
-    /// <param name="item"><追加するアイテム/param>
+    /// <param name="item">追加するアイテム</param>
     /// <param name="state">アイテムの状態</param>
     public virtual void AddItem(Item item, FoodState state = FoodState.None)
     {
@@ -68,6 +67,7 @@ public class InventoryContainerBase : ScriptableObject
         if (Container.Count < index)
         {
             Debug.LogError("UpdateItem: Out of range");
+
             return;
         }
 
@@ -83,6 +83,7 @@ public class InventoryContainerBase : ScriptableObject
         if (Container.Count < index)
         {
             Debug.LogError("RemoveItem: Out of range");
+
             return;
         }
 
@@ -94,61 +95,69 @@ public class InventoryContainerBase : ScriptableObject
 public class InventorySlotBase
 {
     [SerializeField]
-    protected int _id;
+    protected int id;
 
     [SerializeField]
-    protected Item _item;
+    protected Item item;
 
     [SerializeField]
-    protected FoodState _state;
+    protected FoodState state;
 
-    public int       ID    { get => _id;    protected set => _id    = value; }
-    public Item      Item  { get => _item;  protected set => _item  = value; }
-    public FoodState State { get => _state; protected set => _state = value; }
+    public int       ID    { get => id;    protected set => id = value; }
+    public Item      Item  { get => item;  protected set => item = value; }
+    public FoodState State { get => state; protected set => state = value; }
+
     public string FullItemName
     {
         get
         {
-            string result = "";
+            var result = "";
 
             if (Item == null) return result;
 
             switch (State)
             {
                 case FoodState.None:
-                    if (Item != null &&
+                    if (Item             != null &&
                         Item.KindOfItem1 != Item.KindOfItem.Seasoning)
                     {
                         Debug.LogWarning($"アイテム「{Item.ItemName}」の状態がNoneです。アイテムを持たせる際は適切な状態を指定してください");
                     }
 
                     result = Item.ItemName;
+
                     break;
 
                 case FoodState.Raw:
                     result = Item.ItemName;
+
                     break;
 
                 case FoodState.Cooked:
                     result = $"焼いた{Item.ItemName}";
+
                     break;
 
                 case FoodState.Burnt:
                     result = $"焦げた{Item.ItemName}";
+
                     break;
 
                 case FoodState.Boil:
                     result = $"煮込んだ{Item.ItemName}";
+
                     break;
 
                 case FoodState.Cut:
                     result = $"切った{Item.ItemName}";
+
                     break;
 
                 default:
                     Debug.LogWarning($"状態「{State}」の接頭辞が未設定です");
 
                     result = Item.ItemName;
+
                     break;
             }
 
@@ -181,11 +190,11 @@ public class InventorySlotBase
 public class DefaultItems
 {
     [SerializeField]
-    private Item _item;
+    private Item item;
 
     [SerializeField]
-    private FoodState _state;
+    private FoodState state;
 
-    public Item      Item  { get => _item; }
-    public FoodState State { get => _state; }
+    public Item      Item  => item;
+    public FoodState State => state;
 }

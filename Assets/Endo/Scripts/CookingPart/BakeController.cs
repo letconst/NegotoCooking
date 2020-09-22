@@ -8,31 +8,33 @@ public class BakeController : MonoBehaviour
     [SerializeField]
     private GameObject FlyingPan;
 
-    private GameObject _bakeMator;
+    private GameObject _bakeMeter;
     private GameObject _foodParent;
     private Slider     _bakeSlider;
+    private int flyingpanTimes = 0;
+    private float timeleft;
 
     private PlayerInventoryContainer _playerContainer;
 
     // 調理が完了しているか否か
-    private bool _isCompleteCooking = false;
+    private bool _isCompleteCooking;
 
     // 現在調理中の食材
-    public static Item foodBeingBaked;
+    public static Item FoodBeingBaked;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        _bakeMator  = GameObject.FindGameObjectWithTag("BakeMator");
+        _bakeMeter  = GameObject.FindGameObjectWithTag("BakeMator");
         _foodParent = GameObject.FindGameObjectWithTag("FoodParent");
-        _bakeSlider = _bakeMator.GetComponent<FireControl>()._slider;
+        _bakeSlider = _bakeMeter.GetComponent<FireControl>()._slider;
 
-        _playerContainer = TmpInventoryManager.Instance.PlayerContainer;
+        _playerContainer = InventoryManager.Instance.PlayerContainer;
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    private void Update()
+    {        
         CookingCompleteListener();
         FlyingPanActionHandler();
     }
@@ -42,7 +44,7 @@ public class BakeController : MonoBehaviour
     /// </summary>
     private void CookingCompleteListener()
     {
-        int               puttedSlotIndex = TmpInventoryManager.Instance.puttedSlotIndex;
+        int               puttedSlotIndex = InventoryManager.Instance.PuttedSlotIndex;
         InventorySlotBase puttedSlot      = _playerContainer.Container[puttedSlotIndex];
 
         if (_bakeSlider.value >= 100 && !_isCompleteCooking)
@@ -50,19 +52,26 @@ public class BakeController : MonoBehaviour
             _isCompleteCooking = true;
         }
 
-        // 調理完了した食材をインベントリに戻す
-        if (_isCompleteCooking && puttedSlot.Item == null)
+        if (GameManager.Instance.BakePoint == 100)
         {
-            // 出ていた食材を削除
+            SoundManager.Instance.PlayBgm(BGM.Alert);
             Destroy(_foodParent.transform.GetChild(0).gameObject);
-
-            // プレイヤーインベントリに戻す
-            _playerContainer.UpdateItem(puttedSlotIndex, foodBeingBaked, FoodState.Cooked);
-
-            _isCompleteCooking = false;
-            FireControl.clickBool = true;
-            foodBeingBaked = null;
+            _bakeSlider.value = 0;
+            _playerContainer.RemoveItem(puttedSlotIndex);
         }
+
+        // 調理が完了していないか、投入元のスロットにアイテムがある場合は動作しない
+        if (!_isCompleteCooking || puttedSlot.Item != null) return;
+
+        // 出ていた食材を削除
+        Destroy(_foodParent.transform.GetChild(0).gameObject);
+
+        // プレイヤーインベントリに戻す
+        _playerContainer.UpdateItem(puttedSlotIndex, FoodBeingBaked, FoodState.Cooked);
+
+        _isCompleteCooking = false;
+        FireControl.clickBool = true;
+        FoodBeingBaked = null;
     }
 
     /// <summary>
@@ -72,31 +81,50 @@ public class BakeController : MonoBehaviour
     {
         float Stick_V = Input.GetAxis("Vertical");
 
-        if (Stick_V > 0 || Input.GetKeyDown(KeyCode.S))
-        {
-            if (FlyingPan.transform.position.z <= -6)
-            {
-                FlyingPan.transform.position = new Vector3(FlyingPan.transform.position.x, FlyingPan.transform.position.y, FlyingPan.transform.position.z);
+        if (Stick_V != 0)
+        {            
+            timeleft -= Time.deltaTime;
+            if (timeleft <= 0.0)
+            {                
+                timeleft = 2.0f;                
             }
 
-            if (FlyingPan.transform.position.z > -6)
+            if (flyingpanTimes >= 6)
             {
-                FlyingPan.transform.position = new Vector3(FlyingPan.transform.position.x, FlyingPan.transform.position.y, FlyingPan.transform.position.z - 1.5f);
+                flyingpanTimes = 6;
+            }
+
+            float value = Mathf.Floor(flyingpanTimes / 2);
+
+            switch (value)
+            {
+                case 1:
+                    GameManager.Instance.BakePoint -= 2;
+                    break;
+                case 2:
+                    GameManager.Instance.BakePoint -= 5;
+                    break;
+                case 3:
+                    GameManager.Instance.BakePoint -= 10;
+                    break;
+            }
+        }
+
+        if (Stick_V > 0 || Input.GetKeyDown(KeyCode.S))
+        {
+            if (FlyingPan.transform.position.z > 10)
+            {
+                FlyingPan.transform.position = new Vector3(FlyingPan.transform.position.x, FlyingPan.transform.position.y, FlyingPan.transform.position.z - 3.5f);
+                flyingpanTimes++;
             }
         }
 
         if (Stick_V < 0 || Input.GetKeyDown(KeyCode.W))
         {
-            if (FlyingPan.transform.position.z >= 114)
-            {
-                Debug.Log("114ue");
-                FlyingPan.transform.position = new Vector3(FlyingPan.transform.position.x, FlyingPan.transform.position.y, FlyingPan.transform.position.z);
-            }
-
-            if (FlyingPan.transform.position.z < 114)
-            {
-                Debug.Log("114shita");
-                FlyingPan.transform.position = new Vector3(FlyingPan.transform.position.x, FlyingPan.transform.position.y, FlyingPan.transform.position.z + 1.5f);
+            if (FlyingPan.transform.position.z < 110)
+            {                
+                FlyingPan.transform.position = new Vector3(FlyingPan.transform.position.x, FlyingPan.transform.position.y, FlyingPan.transform.position.z + 3.5f);
+                flyingpanTimes++;
             }
         }
     }
