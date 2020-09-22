@@ -51,6 +51,12 @@ public class FireControl_boil : MonoBehaviour
     [HideInInspector]
     static public bool bubbleBool;
     private float timeleft;
+    [SerializeField]
+    private ParticleSystem bubble;
+    [SerializeField]
+    private ParticleSystem bubbleAlert;
+    [SerializeField]
+    private ParticleSystem steam;
     void Start()
     {
         //中火の色にしておく
