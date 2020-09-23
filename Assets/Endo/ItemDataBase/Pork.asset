@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Pork
   m_EditorClassIdentifier: 
   kindOfItem: 1
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 21300000, guid: 21d9a8499ce75034b8416ca269e9a08e, type: 3}
   itemName: "\u8C5A\u8089"
   foodObj: {fileID: 6410897938346832181, guid: fc49690bd6c2c7a44b94c1429cc53d76, type: 3}

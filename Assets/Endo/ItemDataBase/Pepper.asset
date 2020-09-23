@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Pepper
   m_EditorClassIdentifier: 
   kindOfItem: 0
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 21300000, guid: 6b9ec1f8ae796df42b57ae2ce4c84a18, type: 3}
   itemName: "\u30B3\u30B7\u30E7\u30A6"
   foodObj: {fileID: 7051983101457213819, guid: dccd828eaa3cf5d4d9975462a04f83c7, type: 3}

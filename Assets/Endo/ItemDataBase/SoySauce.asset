@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: SoySauce
   m_EditorClassIdentifier: 
   kindOfItem: 0
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 21300000, guid: 31f04c819167d0a4b8287a264e9ed15a, type: 3}
   itemName: "\u91A4\u6CB9"
   foodObj: {fileID: 7236920376060197737, guid: 8fa2899dbc648574e9719ed9a3912276, type: 3}
