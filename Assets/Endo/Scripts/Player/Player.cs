@@ -27,6 +27,9 @@ public class Player : SingletonMonoBehaviour<Player>
     [SerializeField, Tooltip("1フレームごとのアニメーションの変化量"), Range(0, 1)]
     private float animDeltaTime;
 
+    [SerializeField]
+    private GameObject dogFood;
+
     // プレイヤーが停止状態か否か
     public bool isStop;
 
@@ -35,6 +38,7 @@ public class Player : SingletonMonoBehaviour<Player>
     private CharacterController _controller;                   // プレイヤー操作用
     private Vector3             _moveDirection = Vector3.zero; // 向いている方向
     private Animator            _animator;
+
 
     // Start is called before the first frame update
     private void Start()
@@ -47,6 +51,12 @@ public class Player : SingletonMonoBehaviour<Player>
     private void Update()
     {
         Movement();
+        if(Input.GetKeyDown("joystick button 3")||Input.GetKeyDown(KeyCode.X))
+        {
+            if (InventoryManager.Instance.PlayerContainer.DogFoodCount == 0) return;
+            Instantiate(dogFood,new Vector3(transform.position.x,transform.position.y+0.5f,transform.position.z),Quaternion.identity);
+            InventoryManager.Instance.PlayerContainer.DogFoodCount--;
+        }
     }
 
     /// <summary>

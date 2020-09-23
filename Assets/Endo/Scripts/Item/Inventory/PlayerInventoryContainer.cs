@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 [CreateAssetMenu(fileName = "New Player Inventory", menuName = "Inventory/Create Player Inventory")]
 public class PlayerInventoryContainer : InventoryContainerBase
@@ -7,7 +8,14 @@ public class PlayerInventoryContainer : InventoryContainerBase
     [SerializeField]
     private int maxDogFoodCount = 4;
     [SerializeField]
-    private List<Item> dogFoodContainer = new List<Item>();
+    private int dogFoodCount;
+
+    public int DogFoodCount 
+    { 
+        get => dogFoodCount;
+        set => dogFoodCount = Mathf.Clamp(value, 0, MaxDogFoodCount);
+    }
+    public int MaxDogFoodCount { get => maxDogFoodCount; }
 
     public override void AddItem(Item item, List<FoodState> states)
     {
@@ -18,7 +26,6 @@ public class PlayerInventoryContainer : InventoryContainerBase
     }
 
     // TODO: 投げ餌専用の管理
-    
 }
 
 

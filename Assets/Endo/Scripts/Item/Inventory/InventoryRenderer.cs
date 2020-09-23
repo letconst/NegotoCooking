@@ -48,6 +48,7 @@ public class InventoryRenderer : MonoBehaviour
     {
         UpdateRender();
         UpdateLastSelectedIndex();
+        UpdateDogToyCountRender();
     }
 
     /// <summary>
@@ -145,6 +146,14 @@ public class InventoryRenderer : MonoBehaviour
                 slotImage.color = new Color(slotImage.color.r, slotImage.color.g, slotImage.color.b, 1);
             }
         }
+    }
+
+    public void UpdateDogToyCountRender()
+    {
+        var dogToyCanvas = GameObject.FindGameObjectWithTag("DogToyCount").GetComponentInChildren<Text>();
+        var playerContainer = InventoryManager.Instance.PlayerContainer;
+
+        dogToyCanvas.text = playerContainer.DogFoodCount.ToString() + "/" + playerContainer.MaxDogFoodCount.ToString();
     }
 
     /// <summary>
