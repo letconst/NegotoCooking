@@ -5,6 +5,9 @@ using UnityEngine;
 public enum BGM
 {
     Alert,
+    BakeSound,
+    BoilSound,
+
 }
 
 public enum SE
