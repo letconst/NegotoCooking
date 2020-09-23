@@ -137,7 +137,6 @@ public class DogController : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        Debug.Log(other.tag);
         if (other.CompareTag("DogFood"))
         {
             Debug.Log("餌発見");
