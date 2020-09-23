@@ -46,6 +46,7 @@ public class FireControl : MonoBehaviour
     public static bool clickBool = true;
     [HideInInspector]
     static public bool burntBool;
+    private bool doOnceBakeSound = true;
 
     private void Start()
     {
@@ -103,10 +104,19 @@ public class FireControl : MonoBehaviour
         if (_slider.value >= 100)
         {
             _slider.value = 0;
+            doOnceBakeSound = true;
+            //焼き調理音をフェードアウトさせる。
+            SoundManager.Instance.FadeOutBgm(0.2f);
         }
 
         if (clickBool == true) return;
 
+        if (doOnceBakeSound)
+        {
+            doOnceBakeSound = false;
+            SoundManager.Instance.PlayBgm(BGM.BakeSound);
+        }
+        
         if (GameManager.Instance.FireChange <= 0)
         {
             burntBool = false;
