@@ -71,7 +71,8 @@ public class CookingManager : SingletonMonoBehaviour<CookingManager>
         {
             SoundManager.Instance.FadeOutBgm(1.0f);            
             doOnceAlert = true;
-            GameManager.Instance.alertBool = false;            
+            GameManager.Instance.alertBool = false;
+            SoundManager.Instance.PlayBgm(BGM.BoilSound);
         }
     }
 }
