@@ -48,6 +48,7 @@ public class InventoryRenderer : MonoBehaviour
     {
         UpdateRender();
         UpdateLastSelectedIndex();
+        UpdateDogToyCountRender();
     }
 
     /// <summary>
@@ -133,12 +134,26 @@ public class InventoryRenderer : MonoBehaviour
         foreach (var slot in _itemsDisplayed)
         {
             var slotText = slot.Key.GetComponentInChildren<Text>();
+            var slotImage = slot.Key.transform.Find("ItemImage")?.GetComponent<Image>();
 
             // アイテムがあればアイテム名表示
             slotText.text = (slot.Value.Item != null)
                                 ? slot.Value.FullItemName
                                 : "";
+            if(slotImage!=null && slot.Value.Item!=null)
+            {
+                slotImage.sprite = slot.Value.Item.ItemIcon;
+                slotImage.color = new Color(slotImage.color.r, slotImage.color.g, slotImage.color.b, 1);
+            }
         }
+    }
+
+    public void UpdateDogToyCountRender()
+    {
+        var dogToyCanvas = GameObject.FindGameObjectWithTag("DogToyCount").GetComponentInChildren<Text>();
+        var playerContainer = InventoryManager.Instance.PlayerContainer;
+
+        dogToyCanvas.text = playerContainer.DogFoodCount.ToString() + "/" + playerContainer.MaxDogFoodCount.ToString();
     }
 
     /// <summary>
@@ -146,11 +161,17 @@ public class InventoryRenderer : MonoBehaviour
     /// </summary>
     public void ClearRender()
     {
-        foreach (var slotObj in _itemsDisplayed.Keys.ToArray())
+        foreach (var slot in _itemsDisplayed.Keys.ToArray())
         {
-            var slotText = slotObj.GetComponentInChildren<Text>();
+            var slotText = slot.GetComponentInChildren<Text>();
+            var slotImage = slot.transform.Find("ItemImage")?.GetComponent<Image>();
             slotText.text            = "";
-            _itemsDisplayed[slotObj] = new InventorySlotBase();
+            _itemsDisplayed[slot] = new InventorySlotBase();
+            if(slotImage!=null)
+            {
+                slotImage.sprite = null;
+                slotImage.color = new Color(slotImage.color.r, slotImage.color.g, slotImage.color.b, 0);
+            }
         }
     }
 

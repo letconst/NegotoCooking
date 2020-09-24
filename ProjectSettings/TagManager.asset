@@ -22,7 +22,7 @@ TagManager:
   - Otama
   - Frypan
   - DogFood
-  - BubbleEffect
+  - DogToyCount
   layers:
   - Default
   - TransparentFX

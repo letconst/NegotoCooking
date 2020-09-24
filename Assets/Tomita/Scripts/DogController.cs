@@ -11,8 +11,9 @@ public class DogController : MonoBehaviour
     public enum DogState
     {
         Idle,
+        Move,
         FindFood,
-        FindPlayer
+        FindPlayer,
     }
     private DogState State = DogState.Idle;
     private bool isNearPlayer;
@@ -58,6 +59,7 @@ public class DogController : MonoBehaviour
 
     void GotoNextPoint()
     {
+        State = DogState.Move;
         //NavMeshAgentのストップの解除
         agent.isStopped = false;
 
@@ -76,21 +78,7 @@ public class DogController : MonoBehaviour
         agent.isStopped = true;
 
         _animator.SetBool("Walk", false);
-
-        //待ち時間を数える
-        if (!DogMoveStop && State != DogState.FindFood)
-        {
-            time += Time.deltaTime;
-        }
-
-        //待ち時間が設定された数値を超えると発動
-        if (time > waitTime)
-        {
-            //目標地点を設定し直す
-            GotoNextPoint();
-            time = 0;
-        }
-
+        State = DogState.Idle;
 
     }
 
@@ -115,6 +103,23 @@ public class DogController : MonoBehaviour
             GetComponent<AudioSource>().PlayDelayed(0.5f);  //逆だけどなんか鳴くんだけど
         }
 
+        if(State == DogState.Idle)
+        {
+            //待ち時間を数える
+            if (!DogMoveStop && State != DogState.FindFood)
+            {
+                time += Time.deltaTime;
+            }
+
+            //待ち時間が設定された数値を超えると発動
+            if (time > waitTime)
+            {
+                //目標地点を設定し直す
+                GotoNextPoint();
+                time = 0;
+            }
+        }
+
         //経路探索の準備ができておらず
         //目標地点までの距離が0.5m未満ならNavMeshAgentを止める
         if (!agent.pathPending && agent.remainingDistance < 0.5f && !DogMoveStop)
@@ -132,7 +137,6 @@ public class DogController : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        //Debug.Log(other.tag);
         if (other.CompareTag("DogFood"))
         {
             Debug.Log("餌発見");
@@ -149,6 +153,7 @@ public class DogController : MonoBehaviour
                 agent.isStopped = true;
                 //時間を数える
                 time2 += Time.deltaTime;
+                _animator.SetBool("EatFood",true);
             }
             //犬が食べ終わったら動き出す
             if (time2 > eatTime)
@@ -156,6 +161,7 @@ public class DogController : MonoBehaviour
                 //目標地点を設定し直す
                 GotoNextPoint();
                 time2 = 0;
+                _animator.SetBool("EatFood", false);
                 DogMoveStop = false;
 
                 Destroy(other.gameObject);
@@ -181,7 +187,6 @@ public class DogController : MonoBehaviour
                 State = DogState.Idle;
             }
         }
-
         
     }
 

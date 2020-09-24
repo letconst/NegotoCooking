@@ -17,6 +17,9 @@ public class CutController : MonoBehaviour
     // 現在調理中の食材
     public static Item FoodBeingCut;
 
+    // 現在調理中の食材の状態
+    public static List<FoodState> FoodStatesBeingCut;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -52,12 +55,14 @@ public class CutController : MonoBehaviour
         // 出ていた食材を削除
         Destroy(_foodParent.transform.GetChild(0).gameObject);
 
-        // プレイヤーインベントリに戻す
-        _playerContainer.UpdateItem(puttedSlotIndex, FoodBeingCut, FoodState.Cut);
+        // 食材に状態を付加し、プレイヤーインベントリに戻す
+        FoodStatesBeingCut.Add(FoodState.Cut);
+        _playerContainer.AddItem(FoodBeingCut, FoodStatesBeingCut);
 
         _isCompleteCooking = false;
         CutGauge.clickBool = true;
         CutGauge.cantBackBool = true;
         FoodBeingCut = null;
+        FoodStatesBeingCut = null;
     }
 }

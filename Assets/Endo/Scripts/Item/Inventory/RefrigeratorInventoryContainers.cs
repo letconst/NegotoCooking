@@ -59,13 +59,18 @@ public class RefrigeratorInventoryContainerBase
     /// インベントリにアイテムを追加する
     /// </summary>
     /// <param name="item">追加するアイテム</param>
-    /// <param name="state">アイテムの状態</param>
-    public void AddItem(Item item, FoodState state = FoodState.None)
+    /// <param name="states">アイテムの状態</param>
+    public void AddItem(Item item, List<FoodState> states = null)
     {
         // スロットサイズを超過する場合は追加しない
         if (Container.Count >= RefrigeratorManager.Instance.slotSize) return;
 
-        Container.Add(new InventorySlotBase(item, state));
+        if (states == null)
+        {
+            states = new List<FoodState>() { FoodState.None };
+        }
+
+        Container.Add(new InventorySlotBase(item, states));
     }
 
     /// <summary>
@@ -83,9 +88,9 @@ public class RefrigeratorInventoryContainerBase
     /// </summary>
     /// <param name="index">スロットのインデックス</param>
     /// <returns></returns>
-    public FoodState GetState(int index)
+    public List<FoodState> GetState(int index)
     {
-        return Container[index].State;
+        return Container[index].States;
     }
 
     /// <summary>
@@ -93,8 +98,8 @@ public class RefrigeratorInventoryContainerBase
     /// </summary>
     /// <param name="index">スロットのインデックス</param>
     /// <param name="item">更新アイテム</param>
-    /// <param name="state">アイテムの状態</param>
-    public void UpdateItem(int index, Item item, FoodState state)
+    /// <param name="states">アイテムの状態</param>
+    public void UpdateItem(int index, Item item, List<FoodState> states)
     {
         if (Container.Count < index)
         {
@@ -103,7 +108,7 @@ public class RefrigeratorInventoryContainerBase
             return;
         }
 
-        Container[index].UpdateSlot(item, state);
+        Container[index].UpdateSlot(item, states);
     }
 
     /// <summary>

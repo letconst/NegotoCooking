@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Eggplant
   m_EditorClassIdentifier: 
   kindOfItem: 1
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 21300000, guid: d64cb717df66b3942ba31f55567d231b, type: 3}
   itemName: "\u30CA\u30B9"
   foodObj: {fileID: 7370294695255969759, guid: eceedaf4894ad26408b6409e478e8ff1, type: 3}
