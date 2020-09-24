@@ -15,6 +15,9 @@ public class InventoryManager : SingletonMonoBehaviour<InventoryManager>
     [SerializeField]
     private RecipeDatabase recipeDatabase;
 
+    [SerializeField]
+    private ItemDatabase itemDatabase;
+
     // 交換用: アイテム交換モードか否か
     [System.NonSerialized]
     public bool IsSwapMode = false;
@@ -36,6 +39,8 @@ public class InventoryManager : SingletonMonoBehaviour<InventoryManager>
     public RefrigeratorInventoryContainers RefContainers       => refContainers;
     public RecipeDatabase                  RecipeDatabase      => recipeDatabase;
 
+    public ItemDatabase ItemDatabase { get => itemDatabase; }
+
     private void Awake()
     {
         if (this != Instance)
@@ -46,6 +51,11 @@ public class InventoryManager : SingletonMonoBehaviour<InventoryManager>
         }
 
         DontDestroyOnLoad(gameObject);
+    }
+
+    private void Start()
+    {
+        PlayerContainer.DogFoodCount = playerContainer.MaxDogFoodCount;
     }
 
     private void OnApplicationQuit()

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Shrimp
   m_EditorClassIdentifier: 
   kindOfItem: 1
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 21300000, guid: a3591aa719eb6a4419e5fef577094770, type: 3}
   itemName: "\u30A8\u30D3"
   foodObj: {fileID: 6282199796171783568, guid: c15339522651e214582ad7f9cbae7ac1, type: 3}

@@ -8,6 +8,8 @@ public class StatisticsManager : ScriptableObject
 {
     [SerializeField]
     public int throwInCount;
+    [SerializeField]
+    public int missItemCount;
 
     public float a;
 

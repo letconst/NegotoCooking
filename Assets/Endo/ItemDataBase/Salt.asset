@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Salt
   m_EditorClassIdentifier: 
   kindOfItem: 0
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 21300000, guid: d8b3eda92c4674f4f9821eb4875faeaf, type: 3}
   itemName: "\u5869"
   foodObj: {fileID: 6255071344880862049, guid: f6f3834fb7bc07e45822f8b7f19ddf6f, type: 3}

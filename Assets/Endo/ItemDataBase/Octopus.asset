@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Octopus
   m_EditorClassIdentifier: 
   kindOfItem: 1
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 21300000, guid: ac1d94c6501c6e545b9a62c630696a34, type: 3}
   itemName: "\u30BF\u30B3\u306E\u8DB3"
   foodObj: {fileID: 0}
