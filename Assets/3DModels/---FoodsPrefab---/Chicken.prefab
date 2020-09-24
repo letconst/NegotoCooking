@@ -27,7 +27,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.004, y: 0.005, z: 0.008}
+  m_Size: {x: 0.005, y: 0.0055, z: 0.0085}
   m_Center: {x: 0, y: -0.0014, z: 0.0005}
 --- !u!114 &7217030562963787110
 MonoBehaviour:
@@ -156,7 +156,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8665331324527074544}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 16.3, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_Children:
   - {fileID: 1087352722519149687}
@@ -222,15 +222,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: a8bb05b3dfb1c494f8e3ef5c1d945d39, type: 3}
       propertyPath: m_LocalScale.x
-      value: 8860.95
+      value: 10000
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: a8bb05b3dfb1c494f8e3ef5c1d945d39, type: 3}
       propertyPath: m_LocalScale.y
-      value: 8860.95
+      value: 10000
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: a8bb05b3dfb1c494f8e3ef5c1d945d39, type: 3}
       propertyPath: m_LocalScale.z
-      value: 8860.95
+      value: 10000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a8bb05b3dfb1c494f8e3ef5c1d945d39, type: 3}

@@ -15,4 +15,4 @@ MonoBehaviour:
   kindOfItem: 1
   itemIcon: {fileID: 21300000, guid: a3fb4614a4e517a47be5adefcc29cd9f, type: 3}
   itemName: "\u30D6\u30ED\u30C3\u30B3\u30EA\u30FC"
-  foodObj: {fileID: 3049764175221811875, guid: 18cf2a18c1da3904fa963a21334e7fc2, type: 3}
+  foodObj: {fileID: 1828497732296972396, guid: 2b2069275a4129c44a1527e97ad5a44f, type: 3}

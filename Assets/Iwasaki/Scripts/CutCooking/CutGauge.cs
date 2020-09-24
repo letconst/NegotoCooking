@@ -26,10 +26,9 @@ public class CutGauge : MonoBehaviour
     //[SerializeField]
     //private Image noiseMator;
     private bool doOnce = true;
-    private bool toRightBool = true;
     void Start()
     {
-        cutGauge.value = 100;
+        cutGauge.value = 0;
     }
 
     // Update is called once per frame
@@ -63,20 +62,18 @@ public class CutGauge : MonoBehaviour
             if (cutGauge.value <= 0)
             {
                 sliderBool = true;
-                toRightBool = false;
             }
             if (cutGauge.value >= 100)
             {
                 sliderBool = false;
             }
 
+            //棒を行き来させる処理。
             if (sliderBool)
             {
-                //一番右にもどす
-                cutGauge.value = 100;
-                StartCoroutine(waitTime(1.0f));
+                cutGauge.value += sliderSpeed;
             }
-            if (!sliderBool && toRightBool)
+            if (!sliderBool)
             {
                 cutGauge.value -= sliderSpeed;
             }
@@ -100,8 +97,8 @@ public class CutGauge : MonoBehaviour
             {
                 _slider.value += 5;
             }
-            //一番右にもどす
-            cutGauge.value = 100;
+            //一番左にもどす
+            cutGauge.value = 0;
             StartCoroutine(waitTime(1.0f));
         }
     }
@@ -109,7 +106,6 @@ public class CutGauge : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
         stopGaugeBool = false;
-        toRightBool = true;
         yield break;
     }
 }
