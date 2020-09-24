@@ -158,7 +158,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -3221030309713437462, guid: 60863688b90dbe94a898fbb99c6c9355, type: 2}
+  - {fileID: -291303953770956513, guid: 127a3dfac7c26694a8b7cf25b4370f04, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -215,15 +215,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 60863688b90dbe94a898fbb99c6c9355, type: 2}
-  m_sharedMaterial: {fileID: -3221030309713437462, guid: 60863688b90dbe94a898fbb99c6c9355,
+  m_fontAsset: {fileID: 11400000, guid: 127a3dfac7c26694a8b7cf25b4370f04, type: 2}
+  m_sharedMaterial: {fileID: -291303953770956513, guid: 127a3dfac7c26694a8b7cf25b4370f04,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 3204448256
+    rgba: 3321888768
   m_fontColor: {r: 0, g: 0, b: 0, a: 0}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -413,5 +413,6 @@ MonoBehaviour:
   maxTransparency: 0.75
   requireFood: {fileID: 0}
   requireStates: 
-  isActive: 0
   selfIndex: 0
+  negotoManager: {fileID: 0}
+  recipe: []
