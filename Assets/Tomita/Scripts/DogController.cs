@@ -44,6 +44,7 @@ public class DogController : MonoBehaviour
     private Collider nearObject;
 
     public bool DogMoveStop;
+    public bool DogBark;
 
     Vector3 pos;
 
@@ -86,7 +87,7 @@ public class DogController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(State);
+        Debug.Log(DogBark);
         // 検知範囲にプレイヤーがいたら吠える
 
         if (State == DogState.Idle)
@@ -95,7 +96,11 @@ public class DogController : MonoBehaviour
             _animator.SetBool("Walk", false);
             _animator.SetBool("Bark", false);
             _animator.SetBool("EatFood", false);
-            //GetComponent<AudioSource>().Play();       Move状態で吠える
+            if(DogBark==true)
+            {
+                GetComponent<AudioSource>().Stop();
+                DogBark = false;
+            }
 
             //待ち時間を数える
             if (!DogMoveStop)
@@ -117,7 +122,6 @@ public class DogController : MonoBehaviour
             _animator.SetBool("Walk", true);
             _animator.SetBool("Bark", false);
             _animator.SetBool("EatFood", false);
-            //GetComponent<AudioSource>().Play();       Idle状態で吠える
         }
         else if (State == DogState.FindFood)
         {
@@ -133,7 +137,11 @@ public class DogController : MonoBehaviour
             _animator.SetBool("Walk", false);
             _animator.SetBool("Bark", true);
             _animator.SetBool("EatFood", false);
-            //GetComponent<AudioSource>().Play();
+            if(DogBark==false)
+            {
+                GetComponent<AudioSource>().PlayDelayed(0.5f);
+                DogBark = true;
+            }
         }
         else
         {
@@ -166,7 +174,6 @@ public class DogController : MonoBehaviour
         {
             if (State == DogState.FindFood || State == DogState.FindPlayer)
             {
-                Debug.Log("aa");
                 State = DogState.Idle;
             }
             return;
@@ -221,7 +228,7 @@ public class DogController : MonoBehaviour
             //サーチする角度内だったら発見
             if (angle <= searchAngle)
             {
-                GetComponent<AudioSource>().Play();
+                //GetComponent<AudioSource>().Play();
                 //Debug.Log("主人公発見");
                 State = DogState.FindPlayer;
             }
