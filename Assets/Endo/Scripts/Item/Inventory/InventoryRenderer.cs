@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class InventoryRenderer : MonoBehaviour
@@ -18,6 +20,9 @@ public class InventoryRenderer : MonoBehaviour
 
     [SerializeField, Tooltip("冷蔵庫用のインベントリか否か")]
     private bool isForRefrigerator;
+
+    [SerializeField, Tooltip("食材の状態アイコンがグレーアウト時の色（プレイヤーインベントリでのみ使用）")]
+    private Color stateGrayOutColor;
 
     // 最大スロット数
     private int _selfSlotSize;
@@ -48,6 +53,7 @@ public class InventoryRenderer : MonoBehaviour
     private void Update()
     {
         UpdateRender();
+        UpdatePlayerInventoryRender();
         UpdateLastSelectedIndex();
         UpdateDogToyCountRender();
     }
@@ -134,17 +140,89 @@ public class InventoryRenderer : MonoBehaviour
 
         foreach (var slot in _itemsDisplayed)
         {
-            var slotText = slot.Key.GetComponentInChildren<Text>();
+            var slotText  = slot.Key.GetComponentInChildren<Text>();
             var slotImage = slot.Key.transform.Find("ItemImage")?.GetComponent<Image>();
 
             // アイテムがあればアイテム名表示
             slotText.text = (slot.Value.Item != null)
-                                ? slot.Value.FullItemName
+                                ? slot.Value.Item.ItemName
                                 : "";
-            if(slotImage!=null && slot.Value.Item!=null)
+
+            if (slotImage       != null &&
+                slot.Value.Item != null)
             {
                 slotImage.sprite = slot.Value.Item.ItemIcon;
-                slotImage.color = new Color(slotImage.color.r, slotImage.color.g, slotImage.color.b, 1);
+                slotImage.color  = new Color(slotImage.color.r, slotImage.color.g, slotImage.color.b, 1);
+            }
+        }
+    }
+
+    /// <summary>
+    /// プレイヤーインベントリの描画を更新する
+    /// </summary>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
+    private void UpdatePlayerInventoryRender()
+    {
+        // プレイヤーインベントリでのみ実行
+        if (isForRefrigerator) return;
+
+        foreach (var slot in _itemsDisplayed)
+        {
+            var bakedIcon  = slot.Key.transform.Find("StateIcons/BakedIcon").gameObject.GetComponent<Image>();
+            var boiledIcon = slot.Key.transform.Find("StateIcons/BoiledIcon").gameObject.GetComponent<Image>();
+            var cutIcon    = slot.Key.transform.Find("StateIcons/CutIcon").gameObject.GetComponent<Image>();
+
+            // スロットにアイテムがなければアイコンを表示しない
+            if (slot.Value.Item == null)
+            {
+                SetAllColor(Color.clear);
+
+                continue;
+            }
+
+            // 一旦グレーアウト
+            SetAllColor(stateGrayOutColor);
+
+            foreach (var state in slot.Value.States)
+            {
+                // 各アイコンの表示設定
+                switch (state)
+                {
+                    case FoodState.Cooked:
+                        bakedIcon.color = Color.white;
+
+                        break;
+
+                    case FoodState.Boil:
+                        boiledIcon.color = Color.white;
+
+                        break;
+
+                    case FoodState.Cut:
+                        cutIcon.color = Color.white;
+
+                        break;
+
+                    // Noneの食材は調味料であり、調理できないためアイコンは表示しない
+                    case FoodState.None:
+                        SetAllColor(Color.clear);
+
+                        break;
+
+                    case FoodState.Raw:
+                    case FoodState.Burnt:
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+
+            void SetAllColor(Color colorToSet)
+            {
+                bakedIcon.color  = colorToSet;
+                boiledIcon.color = colorToSet;
+                cutIcon.color    = colorToSet;
             }
         }
     }
@@ -154,7 +232,7 @@ public class InventoryRenderer : MonoBehaviour
         // メインシーンでのみ動作
         if (SceneManager.GetActiveScene().name != "GameScenes") return;
 
-        var dogToyCanvas = GameObject.FindGameObjectWithTag("DogToyCount").GetComponentInChildren<Text>();
+        var dogToyCanvas    = GameObject.FindGameObjectWithTag("DogToyCount").GetComponentInChildren<Text>();
         var playerContainer = InventoryManager.Instance.PlayerContainer;
 
         dogToyCanvas.text = playerContainer.DogFoodCount + "/" + playerContainer.MaxDogFoodCount;
@@ -167,14 +245,15 @@ public class InventoryRenderer : MonoBehaviour
     {
         foreach (var slot in _itemsDisplayed.Keys.ToArray())
         {
-            var slotText = slot.GetComponentInChildren<Text>();
+            var slotText  = slot.GetComponentInChildren<Text>();
             var slotImage = slot.transform.Find("ItemImage")?.GetComponent<Image>();
-            slotText.text            = "";
+            slotText.text         = "";
             _itemsDisplayed[slot] = new InventorySlotBase();
-            if(slotImage!=null)
+
+            if (slotImage != null)
             {
                 slotImage.sprite = null;
-                slotImage.color = new Color(slotImage.color.r, slotImage.color.g, slotImage.color.b, 0);
+                slotImage.color  = new Color(slotImage.color.r, slotImage.color.g, slotImage.color.b, 0);
             }
         }
     }

@@ -94,8 +94,8 @@ MonoBehaviour:
   m_ChildAlignment: 4
   m_StartCorner: 2
   m_StartAxis: 0
-  m_CellSize: {x: 125, y: 35}
-  m_Spacing: {x: 0, y: 6}
+  m_CellSize: {x: 120, y: 40}
+  m_Spacing: {x: 0, y: 3}
   m_Constraint: 0
   m_ConstraintCount: 2
 --- !u!1 &7485420130902453002
@@ -192,6 +192,7 @@ MonoBehaviour:
     type: 3}
   slotWrapper: {fileID: 3993574266759314107}
   isForRefrigerator: 0
+  stateGrayOutColor: {r: 0.8, g: 0.8, b: 0.8, a: 0.5019608}
 --- !u!114 &4989301650697029255
 MonoBehaviour:
   m_ObjectHideFlags: 0

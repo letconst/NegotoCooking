@@ -373,7 +373,7 @@ GameObject:
   - component: {fileID: 7757893949785848386}
   - component: {fileID: 9220989983308258396}
   m_Layer: 5
-  m_Name: PlayerInventorySlot
+  m_Name: BakeInventorySlot
   m_TagString: PlayerInventorySlot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -480,7 +480,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 9220989983308258396}
-        m_MethodName: OnClickForPlayer
+        m_MethodName: OnClickForCooking
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
