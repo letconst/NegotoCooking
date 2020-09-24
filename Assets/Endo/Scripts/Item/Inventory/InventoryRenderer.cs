@@ -2,6 +2,7 @@
 using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class InventoryRenderer : MonoBehaviour
@@ -150,6 +151,9 @@ public class InventoryRenderer : MonoBehaviour
 
     public void UpdateDogToyCountRender()
     {
+        // メインシーンのみで動作
+        if (SceneManager.GetActiveScene().name != "GameScenes") return;
+
         var dogToyCanvas = GameObject.FindGameObjectWithTag("DogToyCount").GetComponentInChildren<Text>();
         var playerContainer = InventoryManager.Instance.PlayerContainer;
 

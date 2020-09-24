@@ -238,7 +238,6 @@ public class InventorySlotFunctions : MonoBehaviour
 
         // プレイヤーコンテナから投入アイテムを削除
         playerContainer.RemoveItem(selfIndex);
-        Debug.Log(BakeController.FoodSlotBeingBaked.Item);
 
         // 投入元のスロットインデックスを記憶
         InventoryManager.Instance.PuttedSlotIndex = selfIndex;
