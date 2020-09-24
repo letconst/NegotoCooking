@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 7841591139533610677}
   - component: {fileID: 5733861462464803834}
   - component: {fileID: 170316040235119758}
+  - component: {fileID: 1383358783487333866}
   m_Layer: 0
   m_Name: Dog_Toy
-  m_TagString: Untagged
+  m_TagString: DogFood
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -109,3 +110,16 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1383358783487333866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8425737463931234921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0637f6f5ee89dd4cacadfa503a627be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isFoundDogFood: 0
