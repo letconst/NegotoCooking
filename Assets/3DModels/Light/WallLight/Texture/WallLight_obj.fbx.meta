@@ -1,9 +1,24 @@
 fileFormatVersion: 2
-guid: 2be2d0d15d5ed3a498dfb29a058fa514
+guid: c0c0444ad6e00c7468b744dc563d0b6d
 ModelImporter:
   serializedVersion: 26
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Flame
+    second: {fileID: 2100000, guid: 71e1eff12f0cf4643bac02a7667108cc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Glass1
+    second: {fileID: 2100000, guid: 4e1c5f0b666a0a2439014d3826c7f056, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: blinn2
+    second: {fileID: 2100000, guid: a6424bf0fd279e640a1d460f5e365eb8, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

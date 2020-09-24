@@ -62,14 +62,14 @@ public class CookingManager : SingletonMonoBehaviour<CookingManager>
 
         if (GameManager.Instance.BubblePoint == 100 && doOnceAlert)
         {            
-            SoundManager.Instance.PlayBgm(BGM.Alert);
+            SoundManager.Instance.PlayBgm(BGM.Alert);            
             doOnceAlert = false;
             GameManager.Instance.alertBool = true;
         }
 
         if (GameManager.Instance.BubblePoint < 100 && !doOnceAlert)
         {
-            SoundManager.Instance.FadeOutBgm(1.0f);
+            SoundManager.Instance.FadeOutBgm(1.0f);            
             doOnceAlert = true;
             GameManager.Instance.alertBool = false;            
         }

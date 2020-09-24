@@ -30,6 +30,7 @@ public class BakeController : MonoBehaviour
         _bakeSlider = _bakeMeter.GetComponent<FireControl>()._slider;
 
         _playerContainer = InventoryManager.Instance.PlayerContainer;
+        
     }
 
     // Update is called once per frame
@@ -54,7 +55,7 @@ public class BakeController : MonoBehaviour
 
         if (GameManager.Instance.BakePoint == 100)
         {
-            Destroy(_foodParent.transform.GetChild(0).gameObject);
+            Destroy(_foodParent.transform.GetChild(0).gameObject);            
             _bakeSlider.value = 0;
             FireControl.clickBool = true;
             _playerContainer.RemoveItem(puttedSlotIndex);

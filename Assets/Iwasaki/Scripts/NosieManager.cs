@@ -18,7 +18,6 @@ public class NosieManager : MonoBehaviour
     {
         if (GameManager.Instance.alertBool)
         {
-            //
             noiseMator.GetComponent<Image>().fillAmount -= 0.0005f * 0.01f;
             GameManager.Instance.NoiseMator += 0.0005f * 0.01f;
         }

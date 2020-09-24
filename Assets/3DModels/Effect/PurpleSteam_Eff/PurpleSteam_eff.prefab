@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7930747488515991819}
   - component: {fileID: 3841122311927691742}
   m_Layer: 0
-  m_Name: PurpleSteam_eff 1
+  m_Name: PurpleSteam_eff
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 4600898140739857677}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.72595, y: 0.72595, z: 0.9951225}
+  m_LocalScale: {x: 68.39044, y: 66.966095, z: 47.424473}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
