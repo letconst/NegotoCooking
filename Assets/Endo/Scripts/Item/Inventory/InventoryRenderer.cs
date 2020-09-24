@@ -149,15 +149,15 @@ public class InventoryRenderer : MonoBehaviour
         }
     }
 
-    public void UpdateDogToyCountRender()
+    private void UpdateDogToyCountRender()
     {
-        // メインシーンのみで動作
+        // メインシーンでのみ動作
         if (SceneManager.GetActiveScene().name != "GameScenes") return;
 
         var dogToyCanvas = GameObject.FindGameObjectWithTag("DogToyCount").GetComponentInChildren<Text>();
         var playerContainer = InventoryManager.Instance.PlayerContainer;
 
-        dogToyCanvas.text = playerContainer.DogFoodCount.ToString() + "/" + playerContainer.MaxDogFoodCount.ToString();
+        dogToyCanvas.text = playerContainer.DogFoodCount + "/" + playerContainer.MaxDogFoodCount;
     }
 
     /// <summary>

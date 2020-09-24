@@ -43,6 +43,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cdbc0cfe113b0d45ba5024fa48a9731, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerContainer: {fileID: 11400000, guid: be535e889645ad34094e3b4a19ddfdd7, type: 2}
-  largePlateContainer: {fileID: 11400000, guid: a8bf5aaa472f507418cbeeac0cb41321,
-    type: 2}
+  statisticsManager: {fileID: 11400000, guid: 2c7568ed88b8adb44aeb7c0f609aae69, type: 2}
+  alertBool: 0

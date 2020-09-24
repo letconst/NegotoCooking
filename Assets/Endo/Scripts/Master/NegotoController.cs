@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -64,6 +65,15 @@ public class NegotoController : MonoBehaviour
     // プレイヤーが寝言表示範囲に入ってからの経過時間
     private float _elapsedTimeForDelay;
 
+    private Dictionary<FoodState, string> _foodStateName = new Dictionary<FoodState, string>()
+    {
+        {FoodState.None, "振る"},
+        {FoodState.Raw, ""},
+        {FoodState.Cooked, "焼く"},
+        {FoodState.Cut, "切る"},
+        {FoodState.Boil, "煮る"}
+    };
+
     public bool IsActive { get; private set; }
 
     private void Awake()
@@ -86,7 +96,7 @@ public class NegotoController : MonoBehaviour
             requireFood   = selfDatabaseEntry.RequireFood;
             requireStates = selfDatabaseEntry.RequireStates;
             IsActive      = selfDatabaseEntry.IsActive;
-            textMesh.text = requireFood.ItemName;
+            textMesh.text = selfDatabaseEntry.ContentText;
         }
         // なければ初期化
         else
@@ -176,8 +186,7 @@ public class NegotoController : MonoBehaviour
         var foodIndex = Random.Range(0, recipe.Count);
         requireFood   = recipe[foodIndex].Food;
         requireStates = recipe[foodIndex].States;
-        // TODO: 必須状態までを含む文字列を表示するようにし、さらに一部をぼかす
-        textMesh.text = requireFood.ItemName;
+        textMesh.text = BlurringText(requireFood, requireStates);
 
         UpdateNegotoDatabase();
 
@@ -203,12 +212,73 @@ public class NegotoController : MonoBehaviour
         // 寝言情報がデーターベースになければ追加
         if (negotoManager.NegotoData.Entries.All(e => e.SelfIndex != selfIndex))
         {
-            negotoManager.NegotoData.AddEntry(selfIndex, requireFood, requireStates, IsActive);
+            negotoManager.NegotoData.AddEntry(selfIndex, requireFood, requireStates, textMesh.text, IsActive);
         }
         // すでにある場合は上書き更新
         else
         {
-            negotoManager.NegotoData.UpdateEntry(selfIndex, requireFood, requireStates, IsActive);
+            negotoManager.NegotoData.UpdateEntry(selfIndex, requireFood, requireStates, textMesh.text, IsActive);
+        }
+    }
+
+    /// <summary>
+    /// 一部をぼかした寝言の内容を作成する
+    /// </summary>
+    /// <param name="targetFood">ぼかす対象の食材</param>
+    /// <param name="targetStates">ぼかす対象の状態</param>
+    /// <returns>ぼかした寝言</returns>
+    private string BlurringText(Item targetFood, IEnumerable<FoodState> targetStates)
+    {
+        var result = Blurring(targetFood.ItemName) + "を";
+
+        // resultに状態の名称を追記
+        result = targetStates.Aggregate(result, (current, state) => current + Blurring(_foodStateName[state]));
+
+        return result;
+
+        string Blurring(string target)
+        {
+            var localResult = new StringBuilder(target);
+            var tmpResult   = string.Copy(target);
+
+            // 1文字ならぼかさず返す
+            if (target.Length == 1) return localResult.ToString();
+
+            foreach (var c in target.Select((v, i) => new
+            {
+                v,
+                i
+            }))
+            {
+                // 対象文字列が二文字であり、今回処理する文字が一文字目ならぼかさない（暫定）
+                if (target.Length == 2 &&
+                    c.i           == 0) continue;
+
+                var rnd = Random.Range(0, 2);
+
+                // 二文字ではない対象文字列の最後の文字の際、この文字より前の文字がすべてぼかされていなかったらこの文字はぼかす
+                if (target.Length != 2                      &&
+                    c.i           == localResult.Length - 1 &&
+                    localResult.ToString().Substring(0, tmpResult.Length - 1).All(tmpC => tmpC != '…'))
+                {
+                    localResult[c.i] = '…';
+
+                    break;
+                }
+
+                // 最後の文字の際、この文字より前の文字がすべてぼかされていたらこの文字は残す
+                if (c.i == localResult.Length - 1 &&
+                    localResult.ToString().Substring(0, tmpResult.Length - 1).All(tmpC => tmpC == '…'))
+                {
+                    break;
+                }
+
+                if (rnd != 1) continue;
+
+                localResult[c.i] = '…';
+            }
+
+            return localResult.ToString();
         }
     }
 }

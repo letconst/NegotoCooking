@@ -16,9 +16,9 @@ public class NegotoData : ScriptableObject
     /// <param name="requireFood">寝言で必須となっている食材</param>
     /// <param name="requireStates">寝言で必須となっている状態</param>
     /// <param name="isActive">寝言が有効か否か</param>
-    public void AddEntry(int index, Item requireFood, IEnumerable<FoodState> requireStates, bool isActive)
+    public void AddEntry(int index, Item requireFood, IEnumerable<FoodState> requireStates, string contentText, bool isActive)
     {
-        Entries.Add(new NegotoEntry(index, requireFood, requireStates, isActive));
+        Entries.Add(new NegotoEntry(index, requireFood, requireStates, contentText, isActive));
     }
 
     /// <summary>
@@ -28,7 +28,7 @@ public class NegotoData : ScriptableObject
     /// <param name="requireFood">寝言で必須となっている食材</param>
     /// <param name="requireStates">寝言で必須となっている状態</param>
     /// <param name="isActive">寝言が有効か否か</param>
-    public void UpdateEntry(int index, Item requireFood, IEnumerable<FoodState> requireStates, bool isActive)
+    public void UpdateEntry(int index, Item requireFood, IEnumerable<FoodState> requireStates, string contentText, bool isActive)
     {
         // 状態がnullの場合は初期化して更新する
         if (requireStates == null)
@@ -37,7 +37,7 @@ public class NegotoData : ScriptableObject
         }
 
         Entries.First(e => e.SelfIndex == index)
-               ?.UpdateEntry(requireFood, requireStates, isActive);
+               ?.UpdateEntry(requireFood, requireStates, contentText, isActive);
     }
 }
 
@@ -54,25 +54,31 @@ public class NegotoEntry
     private List<FoodState> requireStates;
 
     [SerializeField]
+    private string contentText;
+
+    [SerializeField]
     private bool isActive;
 
-    public NegotoEntry(int selfIndex, Item requireFood, IEnumerable<FoodState> requireStates, bool isActive)
+    public NegotoEntry(int selfIndex, Item requireFood, IEnumerable<FoodState> requireStates, string contentText, bool isActive)
     {
         SelfIndex     = selfIndex;
         RequireFood   = requireFood;
         RequireStates = requireStates.ToList();
+        ContentText   = contentText;
         IsActive      = isActive;
     }
 
     public int             SelfIndex     { get => selfIndex;     private set => selfIndex = value; }
     public Item            RequireFood   { get => requireFood;   private set => requireFood = value; }
     public List<FoodState> RequireStates { get => requireStates; private set => requireStates = value; }
+    public string          ContentText   { get => contentText;   private set => contentText = value; }
     public bool            IsActive      { get => isActive;      private set => isActive = value; }
 
-    public void UpdateEntry(Item requireFood, IEnumerable<FoodState> requireStates, bool isActive)
+    public void UpdateEntry(Item requireFood, IEnumerable<FoodState> requireStates, string contentText, bool isActive)
     {
         RequireFood   = requireFood;
         RequireStates = requireStates.ToList();
+        ContentText   = contentText;
         IsActive      = isActive;
     }
 }
