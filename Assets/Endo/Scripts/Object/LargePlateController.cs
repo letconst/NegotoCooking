@@ -39,12 +39,17 @@ public class LargePlateController : MonoBehaviour
                 (selectedFoodState.Contains(FoodState.None) ||
                  selectedFoodState.Contains(FoodState.Raw))) return;
 
+            var targetFoodIndex = _playerInvRenderer.LastSelectedIndex;
+
             // 大皿に現在選択しているアイテムをぶち込む
-            selfContainer.AddSlot(_playerInvContainer.GetItem(_playerInvRenderer.LastSelectedIndex),
+            selfContainer.AddSlot(_playerInvContainer.GetItem(targetFoodIndex),
                                   selectedFoodState);
 
+            // 表示中の寝言の達成をチェック
+            NegotoManager.Instance.CheckNegotoAchieved(_playerInvContainer.GetItem(targetFoodIndex));
+
             // プレイヤーのアイテムを削除
-            _playerInvContainer.RemoveItem(_playerInvRenderer.LastSelectedIndex);
+            _playerInvContainer.RemoveItem(targetFoodIndex);
         }
 
         // コンテナにアイテムが1つでも入ったらスープを表示

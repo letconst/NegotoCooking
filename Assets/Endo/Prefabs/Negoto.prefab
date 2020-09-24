@@ -224,7 +224,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 3204448256
-  m_fontColor: {r: 0, g: 0, b: 0, a: 0.7490196}
+  m_fontColor: {r: 0, g: 0, b: 0, a: 0}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -405,6 +405,7 @@ MonoBehaviour:
   largePlateContainer: {fileID: 11400000, guid: a8bf5aaa472f507418cbeeac0cb41321,
     type: 2}
   textMesh: {fileID: 6919196921877372781}
+  text: {fileID: 6919196921877372781}
   deltaFade: 0.05
   deltaMinFadeInDelay: 0.01
   deltaMaxFadeInDelay: 0.5
@@ -412,3 +413,5 @@ MonoBehaviour:
   maxTransparency: 0.75
   requireFood: {fileID: 0}
   requireStates: 
+  isActive: 0
+  selfIndex: 0

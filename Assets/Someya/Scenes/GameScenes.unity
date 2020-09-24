@@ -8285,9 +8285,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 731d4776aa10e5842bc02723f083aa1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerObj: {fileID: 289014397}
+  negotoData: {fileID: 11400000, guid: 6614c36f2dff3434c8f937223eddda54, type: 2}
   distanceDisplayed: 10
   defaultDisplayCount: 1
+  maxDisplayCount: 3
   curDisplayCount: 0
 --- !u!4 &1077597076
 Transform:
