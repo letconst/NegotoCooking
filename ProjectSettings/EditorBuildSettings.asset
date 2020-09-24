@@ -29,4 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Sato/Scene/Scenes/GameClear.unity
     guid: ea18e53e6e8f5a54c98aaf64cfb2c252
+  - enabled: 1
+    path: Assets/Iwasaki/Scenes/Result.unity
+    guid: 81b5699939fa0ef47abbd61c288a20ee
   m_configObjects: {}

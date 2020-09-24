@@ -10,7 +10,7 @@ public class MasterController : SingletonMonoBehaviour<MasterController>
     // 食材がすべて調理できているか否か
     private bool _isComplete = true;
 
-    private InventoryContainerBase _largePlateContainer;    
+    private InventoryContainerBase _largePlateContainer;
 
     // Update is called once per frame
     private void Update()
@@ -27,15 +27,8 @@ public class MasterController : SingletonMonoBehaviour<MasterController>
             // 調理判定
             Judgement();
             Debug.Log(GameManager.Instance.FailCount);
-            //// 大皿に食材があり、すべて調理済みならゲームクリア（仮）
-            //SceneChanger.Instance.SceneLoad((_isComplete)
-            //                                    ? SceneChanger.SceneName.GameClear
-            //                                    : SceneChanger.SceneName.GameOverScenes);
 
-            //if (TimeCounter.CurrentTime >= 100)
-            //{
-
-            //}
+            SceneChanger.Instance.SceneLoad(SceneChanger.SceneName.Result);
         }
     }
 
@@ -70,7 +63,7 @@ public class MasterController : SingletonMonoBehaviour<MasterController>
                     // 要件を満たす食材が大皿にあればチェックリストから当該食材を外す
                     // TODO: 複数の状態が必要な場合への対応
                     if (foodInPlate.Item == requireFood.Food &&
-                        foodInPlate.States.All(state => requireFood.States.Contains(state))&& 
+                        foodInPlate.States.All(state => requireFood.States.Contains(state))&&
                         foodInPlate.States.Count == requireFood.States.Count)
                     {
                         foodsToJudge.Remove(requireFood);
