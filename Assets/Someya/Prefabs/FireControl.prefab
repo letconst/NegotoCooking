@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1329394958}
   m_Layer: 0
   m_Name: FireControl
-  m_TagString: BakeMator
+  m_TagString: BoilMator
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -40,12 +40,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 6540084493477503004}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 048e14ede5ef3364f87533be2e93f9fb, type: 3}
+  m_Script: {fileID: 11500000, guid: 65f200e3977907544beaf3d660f0ad2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  yowabi: 0.025
+  yowabi: 0.026
   tyubi: 0.04
-  tuyobi: 0.067
+  tuyobi: 0.05
   noiseYowabi: 0.0014
   noiseTyubi: 0.0028
   noiseTuyobi: 0.0056
@@ -55,3 +55,8 @@ MonoBehaviour:
   FireChar: {fileID: 0}
   leftAllow: {fileID: 0}
   RightAllow: {fileID: 0}
+  Otama: {fileID: 0}
+  Centerpostion: {fileID: 0}
+  bubble: {fileID: 0}
+  steam: {fileID: 0}
+  bubbleAlert: {fileID: 0}

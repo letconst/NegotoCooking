@@ -1,9 +1,14 @@
 fileFormatVersion: 2
-guid: 4a3827a84150d044b99653da5c1b627c
+guid: e399c4c01bf74b64d8d24cd7b7165b2c
 ModelImporter:
   serializedVersion: 26
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BedLight_mat
+    second: {fileID: 2100000, guid: baf04eda2809ae94f8eebb4b302a67a7, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

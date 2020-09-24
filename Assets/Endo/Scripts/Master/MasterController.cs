@@ -10,10 +10,7 @@ public class MasterController : SingletonMonoBehaviour<MasterController>
     // 食材がすべて調理できているか否か
     private bool _isComplete = true;
 
-    private InventoryContainerBase _largePlateContainer;
-
-    //条件を満たせなかった回数
-    private int failCount;
+    private InventoryContainerBase _largePlateContainer;    
 
     // Update is called once per frame
     private void Update()
@@ -29,7 +26,7 @@ public class MasterController : SingletonMonoBehaviour<MasterController>
         {
             // 調理判定
             Judgement();
-            Debug.Log(failCount);
+            Debug.Log(GameManager.Instance.FailCount);
             //// 大皿に食材があり、すべて調理済みならゲームクリア（仮）
             //SceneChanger.Instance.SceneLoad((_isComplete)
             //                                    ? SceneChanger.SceneName.GameClear
@@ -57,12 +54,12 @@ public class MasterController : SingletonMonoBehaviour<MasterController>
         //捨てるべからず
         if(GameManager.Instance.StatisticsManager.throwInCount>=3)
         {
-            failCount++;
+            GameManager.Instance.FailCount++;
         }
         //素早く丁寧に
         if(TimeCounter.CurrentTime<100)
         {
-            failCount++;
+            GameManager.Instance.FailCount++;
         }
 
         // 大皿の中身がレシピ通りかチェック
@@ -85,7 +82,7 @@ public class MasterController : SingletonMonoBehaviour<MasterController>
         //やり方間違えるべからず
         if (foodsToJudge.Count>=3)
         {
-            failCount++;
+            GameManager.Instance.FailCount++;
         }
     }
 

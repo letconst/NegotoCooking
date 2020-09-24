@@ -18,6 +18,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     [HideInInspector]
     public bool alertBool;
     private int bakePoint;
+    private int failCount;
 
     public float NoiseMator
     {
@@ -64,6 +65,19 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         get
         {
             return fireChange;
+        }
+    }
+
+    //条件を満たせなかった回数
+    public int FailCount
+    {
+        set
+        {
+            failCount = Mathf.Clamp(value, 0, 3);
+        }
+        get
+        {
+            return failCount;
         }
     }
 
