@@ -1438,6 +1438,7 @@ MonoBehaviour:
   time: 0
   time2: 0
   DogMoveStop: 0
+  DogBark: 0
 --- !u!82 &156896016
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1450,7 +1451,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: e2b63916f5b3ccd47aeb0fcf8323b150, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -5934,6 +5935,7 @@ MonoBehaviour:
   time: 0
   time2: 0
   DogMoveStop: 0
+  DogBark: 0
 --- !u!82 &764692542
 AudioSource:
   m_ObjectHideFlags: 0
@@ -5946,7 +5948,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: e2b63916f5b3ccd47aeb0fcf8323b150, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -6562,6 +6564,7 @@ MonoBehaviour:
   time: 0
   time2: 0
   DogMoveStop: 0
+  DogBark: 0
 --- !u!82 &863200094
 AudioSource:
   m_ObjectHideFlags: 0
@@ -6574,7 +6577,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: e2b63916f5b3ccd47aeb0fcf8323b150, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -12146,6 +12149,7 @@ MonoBehaviour:
   time: 0
   time2: 0
   DogMoveStop: 0
+  DogBark: 0
 --- !u!82 &1543254740
 AudioSource:
   m_ObjectHideFlags: 0
@@ -12158,7 +12162,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: e2b63916f5b3ccd47aeb0fcf8323b150, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.45
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0
