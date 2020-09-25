@@ -126,7 +126,10 @@ public class FireControl_boil : MonoBehaviour
         
         if (_slider.value >= 100)
         {
+            GameManager.Instance.alertBool = false;
+            bubbleAlert.Stop();
             _slider.value = 0;
+            SoundManager.Instance.FadeOutBgm(0.3f);            
         }    
     
         if (clickBool == true) return;
@@ -135,13 +138,14 @@ public class FireControl_boil : MonoBehaviour
         float v = Input.GetAxis("Vertical");        
         if(h < 0)
         {
-            otamaXMove = 70;
+            otamaXMove = 55;
         }
         else if (h > 0)
         {
             otamaXMove = 30;
         }
-        Otama.transform.position = new Vector3(Centerpostion.transform.position.x + h * otamaXMove, Centerpostion.transform.position.y, Centerpostion.transform.position.z + v * 70);
+        Otama.transform.position = new Vector3(Centerpostion.transform.position.x + h * otamaXMove, Centerpostion.transform.position.y, Centerpostion.transform.position.z + v * 60);
+        //Otama.transform.position = new Vector3(Centerpostion.transform.position.x + h * 65, Centerpostion.transform.position.y, Centerpostion.transform.position.z + v * 70);
 
         //1秒分掻きまわすアクションをするとポイントが-25される。
         if (h != 0 && v != 0)
