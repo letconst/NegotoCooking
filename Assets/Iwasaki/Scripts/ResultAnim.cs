@@ -42,9 +42,9 @@ public class ResultAnim : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
-    
+
     private IEnumerator WaitTime(float waittime)
     {
         yield return new WaitForSeconds(waittime);
@@ -59,15 +59,16 @@ public class ResultAnim : MonoBehaviour
         {
             good.Play();
         }
-        else if(GameManager.Instance.FailCount == 2)
+        // FailCountは3もあり得るので、暫定的に2以上に
+        else if(GameManager.Instance.FailCount >= 2)
         {
             bad.Play();
         }
         yield break;
-    }   
+    }
     public void FinishAnim()
     {
-        clearTimeText.text = (400 - TimeCounter.CurrentTime).ToString(); 
+        clearTimeText.text = (400 - TimeCounter.CurrentTime).ToString();
         //clearTimeText.text = "200";
         clearTime.gameObject.SetActive(true);
         toTitleButton.gameObject.SetActive(true);
