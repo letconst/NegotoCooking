@@ -23,6 +23,8 @@ TagManager:
   - Frypan
   - DogFood
   - DogToyCount
+  - BubbleEffect
+  - SlideShowImagePlaceholder
   layers:
   - Default
   - TransparentFX
