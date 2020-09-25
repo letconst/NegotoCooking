@@ -50,7 +50,13 @@ public class ResultAnim : MonoBehaviour
         yield return new WaitForSeconds(waittime);
         anim.SetTrigger("Cloche");
         yield return new WaitForSeconds(1.0f);
-        if (GameManager.Instance.FailCount == 0)
+        // FailCountは3もあり得るので、暫定的に2以上に
+        if (GameManager.Instance.FailCount                                >= 2 ||
+            InventoryManager.Instance.LargePlateContainer.Container.Count <= 2) // 暫定
+        {
+            bad.Play();
+        }
+        else if(GameManager.Instance.FailCount == 0)
         {
             good.Play();
             kirakira.Play();
@@ -58,11 +64,6 @@ public class ResultAnim : MonoBehaviour
         else if(GameManager.Instance.FailCount == 1)
         {
             good.Play();
-        }
-        // FailCountは3もあり得るので、暫定的に2以上に
-        else if(GameManager.Instance.FailCount >= 2)
-        {
-            bad.Play();
         }
         yield break;
     }
