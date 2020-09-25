@@ -1,9 +1,24 @@
 fileFormatVersion: 2
-guid: 57377bceec801d247b5a45bf12ddb0e6
+guid: a27bcbb79cc07494292c07d25c67ca15
 ModelImporter:
   serializedVersion: 26
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bet_mat
+    second: {fileID: 2100000, guid: 8e6cd387a76378d4d85519223a509ad1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Blanket_mat
+    second: {fileID: 2100000, guid: f28faff2eb3284a4590529eec6bde08d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: PillowAndMat_mat
+    second: {fileID: 2100000, guid: 6d1800151f0d02c4cba013c3e3cdf538, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
