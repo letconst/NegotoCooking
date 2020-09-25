@@ -48,7 +48,19 @@ MonoBehaviour:
   bgmSound:
   - clip: {fileID: 8300000, guid: 19e72c3149d9ad2468660b4e698565f1, type: 3}
     volume: 0.25
-  seSound: []
+  - clip: {fileID: 8300000, guid: ba228870969df0843a7e9cccc3ce157d, type: 3}
+    volume: 0.25
+  - clip: {fileID: 8300000, guid: dbc95f06eb0cec24bbc01a16a56c3b60, type: 3}
+    volume: 0.25
+  seSound:
+  - clip: {fileID: 8300000, guid: 2e1291ac76d7aaa4b88405b4fd2fe64d, type: 3}
+    volume: 0.4
+  - clip: {fileID: 8300000, guid: 69e13a67834a3094e9c2a4233b8b2f96, type: 3}
+    volume: 0.4
+  - clip: {fileID: 8300000, guid: 35bd1e2b5e303c84888f0d955ceba1d0, type: 3}
+    volume: 0.4
+  - clip: {fileID: 8300000, guid: 84702f1ef9165924cac0bbf0b3521754, type: 3}
+    volume: 0.4
   audioSource_BGM: {fileID: 1189408208835049331}
   audioSource_SE: {fileID: 8157298913561168990}
 --- !u!82 &1189408208835049331

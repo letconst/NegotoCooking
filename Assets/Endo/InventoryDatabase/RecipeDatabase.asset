@@ -18,10 +18,10 @@ MonoBehaviour:
     - food: {fileID: 11400000, guid: 753232919155f2943b154226573fa8ad, type: 2}
       states: 05000000
     - food: {fileID: 11400000, guid: 1ec43f4c12d11cc46acece93cd2f07bd, type: 2}
-      states: 04000000
+      states: 0400000005000000
     - food: {fileID: 11400000, guid: 9ff3228755c3e514e95f9a47753fa65b, type: 2}
       states: 00000000
     - food: {fileID: 11400000, guid: 249e24904ae17624d87195e14f12ddae, type: 2}
-      states: 05000000
+      states: 0400000005000000
     - food: {fileID: 11400000, guid: bbe1f14281c868b4b8c383905e59e2fc, type: 2}
-      states: 02000000
+      states: 0400000002000000

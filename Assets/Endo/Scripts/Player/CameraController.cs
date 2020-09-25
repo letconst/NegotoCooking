@@ -5,7 +5,7 @@ using System.Collections;
 public class CameraController : MonoBehaviour
 {
     [SerializeField, Tooltip("回転スピード")]
-    private float rotateSpeed = 3.0f;
+    private float rotateSpeed;
 
     [SerializeField, Tooltip("Zの移動を固定する座標値")]
     private float minFrontPos;
@@ -71,6 +71,6 @@ public class CameraController : MonoBehaviour
         }
         _wrapper.transform.rotation = Quaternion.Slerp(_wrapper.transform.rotation, targetrotation == null
             ? _wrapper.transform.rotation:
-            targetrotation, 0.5f);
+            targetrotation, rotateSpeed);
     }
 }

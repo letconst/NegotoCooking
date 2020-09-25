@@ -23,7 +23,7 @@ public class DogController : MonoBehaviour
     private float searchAngle;
     [SerializeField]
     private float decreaseValue;
-    
+
     private Animator _animator;
 
     public Transform central;
@@ -35,11 +35,16 @@ public class DogController : MonoBehaviour
     [SerializeField] float waitTime = 2;
     //待機時間を数える
     [SerializeField] float time = 0;
+
     [SerializeField] float time2 = 0;
+
     //餌を食べる時間
     private float eatTime = 20;
 
+    private Collider nearObject;
+
     public bool DogMoveStop;
+    public bool DogBark;
 
     Vector3 pos;
 
@@ -68,8 +73,6 @@ public class DogController : MonoBehaviour
 
         //NavMeshAgentに目標地点を設定する
         agent.destination = pos;
-
-        _animator.SetBool("Walk", true);
     }
 
     void StopHere()
@@ -77,7 +80,6 @@ public class DogController : MonoBehaviour
         //NavMeshAgentを止める
         agent.isStopped = true;
 
-        _animator.SetBool("Walk", false);
         State = DogState.Idle;
 
     }
@@ -85,28 +87,23 @@ public class DogController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log(State);
+        // Debug.Log(DogBark);
         // 検知範囲にプレイヤーがいたら吠える
-        if (State == DogState.FindPlayer)
-        {
-            DogMoveStop = true;
-            GameManager.Instance.NoiseMator += (decreaseValue / 100) * Time.deltaTime;
-            _animator.SetBool("Walk", false);
-            _animator.SetBool("Bark", true);
-            //GetComponent<AudioSource>().PlayDelayed(0.5f);
-        }
-        else
+
+        if (State == DogState.Idle)
         {
             DogMoveStop = false;
-            _animator.SetBool("Walk", true);
+            _animator.SetBool("Walk", false);
             _animator.SetBool("Bark", false);
-            GetComponent<AudioSource>().PlayDelayed(0.5f);  //逆だけどなんか鳴くんだけど
-        }
+            _animator.SetBool("EatFood", false);
+            if(DogBark==true)
+            {
+                GetComponent<AudioSource>().Stop();
+                DogBark = false;
+            }
 
-        if(State == DogState.Idle)
-        {
             //待ち時間を数える
-            if (!DogMoveStop && State != DogState.FindFood)
+            if (!DogMoveStop)
             {
                 time += Time.deltaTime;
             }
@@ -119,6 +116,42 @@ public class DogController : MonoBehaviour
                 time = 0;
             }
         }
+        else if (State == DogState.Move)
+        {
+            DogMoveStop = false;
+            _animator.SetBool("Walk", true);
+            _animator.SetBool("Bark", false);
+            _animator.SetBool("EatFood", false);
+        }
+        else if (State == DogState.FindFood)
+        {
+            DogMoveStop = true;
+            _animator.SetBool("Walk", false);
+            _animator.SetBool("Bark", false);
+            _animator.SetBool("EatFood", true);
+        }
+        else if (State == DogState.FindPlayer)
+        {
+            DogMoveStop = true;
+            GameManager.Instance.NoiseMator += (decreaseValue / 100) * Time.deltaTime;
+            _animator.SetBool("Walk", false);
+            _animator.SetBool("Bark", true);
+            _animator.SetBool("EatFood", false);
+            if(DogBark==false)
+            {
+                GetComponent<AudioSource>().PlayDelayed(0.5f);
+                DogBark = true;
+            }
+        }
+        else
+        {
+            DogMoveStop = false;
+            _animator.SetBool("Walk", true);
+            _animator.SetBool("Bark", false);
+            _animator.SetBool("EatFood", false);
+        }
+
+        NearObjectHandler();
 
         //経路探索の準備ができておらず
         //目標地点までの距離が0.5m未満ならNavMeshAgentを止める
@@ -135,67 +168,91 @@ public class DogController : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay(Collider other)
+    private void NearObjectHandler()
     {
-        Debug.Log(other.tag);
-        if (other.CompareTag("DogFood"))
+        if (nearObject == null)
         {
-            Debug.Log("餌発見");
-            DogMoveStop = true;
-
-            State = DogState.FindFood;
-
-            agent.destination = other.transform.position;
-
-            //餌までの距離が0.5未満なら
-            if (agent.remainingDistance < 0.5 && DogMoveStop)
+            if (State == DogState.FindFood || State == DogState.FindPlayer)
             {
-                Debug.Log("餌食べる");
-                agent.isStopped = true;
-                //時間を数える
-                time2 += Time.deltaTime;
-                _animator.SetBool("EatFood",true);
-            }
-            //犬が食べ終わったら動き出す
-            if (time2 > eatTime)
-            {
-                //目標地点を設定し直す
-                GotoNextPoint();
-                time2 = 0;
-                _animator.SetBool("EatFood", false);
-                DogMoveStop = false;
-
-                Destroy(other.gameObject);
-
                 State = DogState.Idle;
             }
+            return;
         }
 
-        if (other.CompareTag("Player"))
+        if (nearObject.CompareTag("DogFood"))
         {
-            //主人公の方向
-            var playerDirection = other.transform.position - transform.position;
-            //敵の前方から主人公の方向
-            var angle = Vector3.Angle(transform.forward, playerDirection);
-            //サーチする角度内だったら発見
-            if(angle<=searchAngle)
+            var DogToy = nearObject.gameObject.GetComponent<DogToyController>();
+            float targetPositionDistance;
+            //Debug.Log(DogToy.isFoundDogFood);
+
+            agent.destination = nearObject.transform.position;
+            Debug.Log(gameObject.name + " " + agent.destination);
+
+            if (agent.pathPending)
             {
-                Debug.Log("主人公発見");
-                State = DogState.FindPlayer;
+                targetPositionDistance = Vector3.Distance(transform.position, agent.destination);
             }
             else
             {
+                targetPositionDistance = agent.remainingDistance;
+            }
+            //餌までの距離が0.5未満なら
+            if (targetPositionDistance < 2f)
+            {
+                State = DogState.FindFood;
+                // Debug.Log("餌食べる");
+                DogMoveStop = true;
+                //時間を数える
+                //time2 += Time.deltaTime;
+                DogToy.dogFoodHealth -= Time.deltaTime;
+            }
+            //犬が食べ終わったら動き出す
+            if (DogToy.dogFoodHealth <= 0)
+            {
+                //time2 = 0;
+
+                DogMoveStop = false;
+                if (nearObject.gameObject != null)
+                {
+                    Destroy(nearObject.gameObject);
+                }
                 State = DogState.Idle;
             }
         }
-        
+        else if (nearObject.CompareTag("Player"))
+        {
+            //主人公の方向
+            var playerDirection = nearObject.transform.position - transform.position;
+            //敵の前方から主人公の方向
+            var angle = Vector3.Angle(transform.forward, playerDirection);
+            //サーチする角度内だったら発見
+            if (angle <= searchAngle)
+            {
+                //GetComponent<AudioSource>().Play();
+                //Debug.Log("主人公発見");
+                State = DogState.FindPlayer;
+            }
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (nearObject == null && (other.CompareTag("Player") || other.CompareTag("DogFood")))
+        {
+            nearObject = other;
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && nearObject.CompareTag("DogFood"))
         {
-            State = DogState.Idle;
+            return;
+        }
+
+        if(other.CompareTag("Player")||other.CompareTag("DogFood"))
+        {
+            nearObject = null;
         }
     }
 }

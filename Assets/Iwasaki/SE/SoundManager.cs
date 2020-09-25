@@ -5,11 +5,16 @@ using UnityEngine;
 public enum BGM
 {
     Alert,
+    BakeSound,
+    BoilSound,
 }
 
 public enum SE
 {
-    
+    CutSound,
+    RifregeratorOpen,
+    DoorOpen,
+    DoorClose,
 }
 
 [System.Serializable]

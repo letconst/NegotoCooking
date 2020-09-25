@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class InventorySlotFunctions : MonoBehaviour
@@ -71,12 +72,12 @@ public class InventorySlotFunctions : MonoBehaviour
         // 交換先にアイテムを渡す
         _nearRefContainer.UpdateItem(_refInvRenderer.LastSelectedIndex,
                                      _playerContainer.GetItem(selfIndex),
-                                     _playerContainer.GetState(selfIndex));
+                                     _playerContainer.GetStates(selfIndex));
 
         // 選択スロットに交換先のアイテムを配置
         _playerContainer.UpdateItem(selfIndex,
                                     _invManager.ItemToSwapFromRef,
-                                    _invManager.ItemStateToSwap);
+                                    _invManager.ItemStatesToSwap);
 
         // フォーカスを冷蔵庫に戻す
         _playerInvRenderer.DisableAllSlot();
@@ -85,7 +86,7 @@ public class InventorySlotFunctions : MonoBehaviour
 
         // キャッシュアイテムクリア
         _invManager.ItemToSwapFromRef = null;
-        _invManager.ItemStateToSwap   = FoodState.None;
+        _invManager.ItemStatesToSwap  = null;
     }
 
     /// <summary>
@@ -93,34 +94,31 @@ public class InventorySlotFunctions : MonoBehaviour
     /// </summary>
     public void OnClickForRefrigerator()
     {
-        _nearRefContainer             = RefrigeratorManager.Instance.NearRefrigeratorContainer;
+        _nearRefContainer = RefrigeratorManager.Instance.NearRefrigeratorContainer;
         var selfIndex   = GetSelfIndex();
         var nearRefSlot = _nearRefContainer.Container[selfIndex];
         var selfItem    = nearRefSlot.Item;
-        var selfState   = nearRefSlot.State;
+        var selfStates  = nearRefSlot.States;
 
         // スロットにアイテムがなければ弾く
         if (selfItem == null) return;
 
-        for (int i = 0; i < _playerContainer.Container.Count; i++)
+        // プレイヤーの空きスロットにアイテム配置
+        if (!_playerContainer.IsFull)
         {
-            // プレイヤーインベントリに空きがあったら
-            if (_playerContainer.Container[i].Item != null) continue;
-
-            // そのスロットにアイテムを配置
-            _playerContainer.UpdateItem(i, selfItem, selfState);
-
-            // 冷蔵庫スロットは空にする
-            // 無限獲得可能への仕様変更につきCO
-            // _nearRefContainer.RemoveItem(selfIndex);
+            _playerContainer.AddItem(selfItem, selfStates);
 
             return;
         }
 
+        // 冷蔵庫スロットは空にする
+        // 無限獲得可能への仕様変更につきCO
+        // _nearRefContainer.RemoveItem(selfIndex);
+
         // プレイヤーとアイテム交換
         // 交換アイテムをキャッシュ
         _invManager.ItemToSwapFromRef = selfItem;
-        _invManager.ItemStateToSwap   = selfState;
+        _invManager.ItemStatesToSwap  = selfStates;
         // 交換モード発動
         _invManager.IsSwapMode = true;
         // プレイヤースロットにフォーカス
@@ -157,70 +155,84 @@ public class InventorySlotFunctions : MonoBehaviour
         {
             case "BakeScenes":
                 disallowState = FoodState.Cooked;
+
                 break;
 
             case "BoilScenes":
                 disallowState = FoodState.Boil;
+
                 break;
 
             case "CutScenes":
                 disallowState = FoodState.Cut;
+
                 break;
 
             default:
                 Debug.LogWarning($"シーン「{curSceneName}」の投入不可状態の指定がありません");
+
                 break;
         }
 
         // 条件に満たない食材は投入できない
-        if (!FireControl.clickBool          ||
-            !FireControl_boil.clickBool     ||
-            !CutGauge.clickBool             ||
-            selfSlot.Item == null           ||
-            selfSlot.State == disallowState ||
+        if (!FireControl.clickBool                  ||
+            !FireControl_boil.clickBool             ||
+            !CutGauge.clickBool                     ||
+            selfSlot.Item == null                   ||
+            selfSlot.States.Contains(disallowState) ||
             selfSlot.Item.KindOfItem1 == Item.KindOfItem.Seasoning) return;
-        
-        if (curSceneName == "CutScenes")
+
+        switch (curSceneName)
         {
-            CutGauge.clickBool = false;
-            CutGauge.cantBackBool = false;
-        }
-        else if(curSceneName == "BoilScenes")
-        {
-            GameManager.Instance.BubblePoint = 0;
-            FireControl_boil.clickBool = false;
-        }
-        else if (curSceneName == "BakeScenes")
-        {
-            FireControl.clickBool = false;
+            case "CutScenes":
+                CutGauge.clickBool    = false;
+                CutGauge.cantBackBool = false;
+
+                break;
+
+            case "BoilScenes":
+                GameManager.Instance.BubblePoint = 0;
+                FireControl_boil.clickBool       = false;
+
+                break;
+
+            case "BakeScenes":
+                FireControl.clickBool = false;
+
+                break;
         }
 
-            // 食材を表示
-            var foodRotation = foodTrf.rotation;
-        var foodChild    = Instantiate(selfSlot.Item.FoodObj,
-                                       foodTrf.position,
-                                       new Quaternion(foodRotation.x,
-                                                      foodRotation.y,
-                                                      foodRotation.z,
-                                                      foodRotation.w));
+        // 食材を表示
+        var foodRotation = foodTrf.rotation;
+        var foodChild = Instantiate(selfSlot.Item.FoodObj,
+                                    foodTrf.position,
+                                    new Quaternion(foodRotation.x,
+                                                   foodRotation.y,
+                                                   foodRotation.z,
+                                                   foodRotation.w));
+
         foodChild.transform.parent = foodParent.transform;
 
         switch (curSceneName)
         {
             case "BakeScenes":
-                BakeController.FoodBeingBaked = selfSlot.Item;
+                BakeController.FoodSlotBeingBaked = selfSlot.DeepCopy();
+
                 break;
 
             case "BoilScenes":
-                BoilController.FoodBeingBoiled = selfSlot.Item;
+                BoilController.FoodSlotBeingBoiled = selfSlot.DeepCopy();
+
                 break;
 
             case "CutScenes":
-                CutController.FoodBeingCut = selfSlot.Item;
+                CutController.FoodSlotBeingCut = selfSlot.DeepCopy();
+
                 break;
 
             default:
                 Debug.LogWarning($"シーン「{curSceneName}」の調理中食材投入先の指定がありません");
+
                 break;
         }
 

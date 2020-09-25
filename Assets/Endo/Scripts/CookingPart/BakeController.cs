@@ -19,8 +19,8 @@ public class BakeController : MonoBehaviour
     // 調理が完了しているか否か
     private bool _isCompleteCooking;
 
-    // 現在調理中の食材
-    public static Item FoodBeingBaked;
+    // 現在調理中の食材（スロット渡し）
+    public static InventorySlotBase FoodSlotBeingBaked;
 
     // Start is called before the first frame update
     private void Start()
@@ -30,11 +30,12 @@ public class BakeController : MonoBehaviour
         _bakeSlider = _bakeMeter.GetComponent<FireControl>()._slider;
 
         _playerContainer = InventoryManager.Instance.PlayerContainer;
+        
     }
 
     // Update is called once per frame
     private void Update()
-    {        
+    {
         CookingCompleteListener();
         FlyingPanActionHandler();
     }
@@ -54,9 +55,9 @@ public class BakeController : MonoBehaviour
 
         if (GameManager.Instance.BakePoint == 100)
         {
-            SoundManager.Instance.PlayBgm(BGM.Alert);
-            Destroy(_foodParent.transform.GetChild(0).gameObject);
+            Destroy(_foodParent.transform.GetChild(0).gameObject);            
             _bakeSlider.value = 0;
+            FireControl.clickBool = true;
             _playerContainer.RemoveItem(puttedSlotIndex);
         }
 
@@ -66,12 +67,14 @@ public class BakeController : MonoBehaviour
         // 出ていた食材を削除
         Destroy(_foodParent.transform.GetChild(0).gameObject);
 
-        // プレイヤーインベントリに戻す
-        _playerContainer.UpdateItem(puttedSlotIndex, FoodBeingBaked, FoodState.Cooked);
+        // 食材の状態を更新し、プレイヤーインベントリに戻す
+        FoodSlotBeingBaked.RemoveState(FoodState.Raw);
+        FoodSlotBeingBaked.AddState(FoodState.Cooked);
+        _playerContainer.AddItem(FoodSlotBeingBaked.Item, FoodSlotBeingBaked.States);
 
-        _isCompleteCooking = false;
+        _isCompleteCooking    = false;
         FireControl.clickBool = true;
-        FoodBeingBaked = null;
+        FoodSlotBeingBaked    = null;
     }
 
     /// <summary>
@@ -82,11 +85,11 @@ public class BakeController : MonoBehaviour
         float Stick_V = Input.GetAxis("Vertical");
 
         if (Stick_V != 0)
-        {            
+        {
             timeleft -= Time.deltaTime;
             if (timeleft <= 0.0)
-            {                
-                timeleft = 2.0f;                
+            {
+                timeleft = 2.0f;
             }
 
             if (flyingpanTimes >= 6)
@@ -112,7 +115,7 @@ public class BakeController : MonoBehaviour
 
         if (Stick_V > 0 || Input.GetKeyDown(KeyCode.S))
         {
-            if (FlyingPan.transform.position.z > 10)
+            if (FlyingPan.transform.position.z > -10)
             {
                 FlyingPan.transform.position = new Vector3(FlyingPan.transform.position.x, FlyingPan.transform.position.y, FlyingPan.transform.position.z - 3.5f);
                 flyingpanTimes++;
@@ -121,8 +124,8 @@ public class BakeController : MonoBehaviour
 
         if (Stick_V < 0 || Input.GetKeyDown(KeyCode.W))
         {
-            if (FlyingPan.transform.position.z < 110)
-            {                
+            if (FlyingPan.transform.position.z < 130)
+            {
                 FlyingPan.transform.position = new Vector3(FlyingPan.transform.position.x, FlyingPan.transform.position.y, FlyingPan.transform.position.z + 3.5f);
                 flyingpanTimes++;
             }

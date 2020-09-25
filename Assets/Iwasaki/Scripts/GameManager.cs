@@ -18,6 +18,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     [HideInInspector]
     public bool alertBool;
     private int bakePoint;
+    private int failCount;
 
     public float NoiseMator
     {
@@ -67,6 +68,19 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         }
     }
 
+    //条件を満たせなかった回数
+    public int FailCount
+    {
+        set
+        {
+            failCount = Mathf.Clamp(value, 0, 3);
+        }
+        get
+        {
+            return failCount;
+        }
+    }
+
     public Vector3 PlayerPos { set; get; }
 
     public Vector3 PlayerRotate { set; get; }
@@ -86,12 +100,17 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     {
         _currentScene = SceneManager.GetActiveScene();
 
-        // シーン遷移後、現在のシーンがゲームクリアまたはゲームオーバーなら値をリセットしてあげる
+        // シーン遷移後、現在のシーンがタイトルなら値をリセットしてあげる
         if (_currentScene.name != _tmpScene.name &&
-            (_currentScene.name == "GameClear" ||
-             _currentScene.name == "GameOverScenes"))
+            (_currentScene.name == "TitleScenes"))
         {
             ResetAllValues();
+        }
+
+        if (_currentScene.name != _tmpScene.name &&
+            _currentScene.name == "GameScenes")
+        {
+            NegotoManager.Instance.Init();
         }
 
         _tmpScene = SceneManager.GetActiveScene();
@@ -106,6 +125,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         InventoryManager.Instance.RefContainers.RefInvContainers.Clear();
         InventoryManager.Instance.LargePlateContainer.Container.Clear();
         TimeCounter.CurrentTime = TimeCounter.CountUp;
+        NegotoManager.Instance.NegotoData.Entries.Clear();
         NoiseMator = 0;
     }
     private void OnApplicationQuit()

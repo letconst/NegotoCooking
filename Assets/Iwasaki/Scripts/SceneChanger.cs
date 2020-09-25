@@ -17,6 +17,7 @@ public class SceneChanger : SingletonMonoBehaviour<SceneChanger>
         GameClear,
         BoilScenes,
         CutScenes,
+        Result
     }
     public void Awake()
     {

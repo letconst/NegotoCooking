@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class InventoryManager : SingletonMonoBehaviour<InventoryManager>
 {
@@ -14,6 +15,9 @@ public class InventoryManager : SingletonMonoBehaviour<InventoryManager>
     [SerializeField]
     private RecipeDatabase recipeDatabase;
 
+    [SerializeField]
+    private ItemDatabase itemDatabase;
+
     // 交換用: アイテム交換モードか否か
     [System.NonSerialized]
     public bool IsSwapMode = false;
@@ -24,7 +28,7 @@ public class InventoryManager : SingletonMonoBehaviour<InventoryManager>
 
     // 交換用: 冷蔵庫アイテムの状態のキャッシュ
     [System.NonSerialized]
-    public FoodState ItemStateToSwap;
+    public List<FoodState> ItemStatesToSwap;
 
     // 調理用: 食材を投入したスロットインデックス
     [System.NonSerialized]
@@ -34,6 +38,8 @@ public class InventoryManager : SingletonMonoBehaviour<InventoryManager>
     public InventoryContainerBase          LargePlateContainer => largePlateContainer;
     public RefrigeratorInventoryContainers RefContainers       => refContainers;
     public RecipeDatabase                  RecipeDatabase      => recipeDatabase;
+
+    public ItemDatabase ItemDatabase { get => itemDatabase; }
 
     private void Awake()
     {
@@ -45,6 +51,11 @@ public class InventoryManager : SingletonMonoBehaviour<InventoryManager>
         }
 
         DontDestroyOnLoad(gameObject);
+    }
+
+    private void Start()
+    {
+        PlayerContainer.DogFoodCount = playerContainer.MaxDogFoodCount;
     }
 
     private void OnApplicationQuit()

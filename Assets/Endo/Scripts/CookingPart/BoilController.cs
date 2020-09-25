@@ -19,8 +19,8 @@ public class BoilController : MonoBehaviour
     // 調理が完了しているか否か
     private bool _isCompleteCooking;
 
-    // 現在調理中の食材
-    public static Item FoodBeingBoiled;
+    // 現在調理中の食材（スロット渡し）
+    public static InventorySlotBase FoodSlotBeingBoiled;
 
     // Start is called before the first frame update
     private void Start()
@@ -58,12 +58,14 @@ public class BoilController : MonoBehaviour
         // 調理が完了していないか、投入元のスロットにアイテムがある場合は動作しない
         Destroy(_foodParent.transform.GetChild(0).gameObject);
 
-        // プレイヤーインベントリに戻す
-        _playerContainer.UpdateItem(puttedSlotIndex, FoodBeingBoiled, FoodState.Boil);
+        // 食材の状態を更新し、プレイヤーインベントリに戻す
+        FoodSlotBeingBoiled.RemoveState(FoodState.Raw);
+        FoodSlotBeingBoiled.AddState(FoodState.Boil);
+        _playerContainer.AddItem(FoodSlotBeingBoiled.Item, FoodSlotBeingBoiled.States);
 
-        _isCompleteCooking = false;
+        _isCompleteCooking         = false;
         FireControl_boil.clickBool = true;
-        FoodBeingBoiled = null;
+        FoodSlotBeingBoiled        = null;
     }
 
     /// <summary>

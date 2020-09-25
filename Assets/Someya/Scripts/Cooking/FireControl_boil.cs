@@ -51,26 +51,41 @@ public class FireControl_boil : MonoBehaviour
     [HideInInspector]
     static public bool bubbleBool;
     private float timeleft;
+    [SerializeField]
+    private ParticleSystem bubble;
+    [SerializeField]
+    private ParticleSystem steam;
+    private float otamaXMove;
+    [SerializeField]
+    private ParticleSystem bubbleAlert;
     void Start()
     {
         //中火の色にしておく
         FireChar.GetComponent<Image>().color = Color.yellow;
         GameManager.Instance.FireChange = 1;
+        bubbleAlert.Stop();
+        SoundManager.Instance.PlayBgm(BGM.BoilSound);
     }
 
     void Update()
     {
         if (GameManager.Instance.alertBool)
         {
+            bubbleAlert.Play();
             noiseMator.GetComponent<Image>().fillAmount -= 0.0005f * 0.01f;
             GameManager.Instance.NoiseMator += 0.0005f * 0.01f;
+        }
+        else
+        {
+            bubbleAlert.Stop();
         }
 
         if (_slider.value == 0)
         {
             bubbleBool = false;
-            if (Input.GetKeyDown("joystick button 1"))
+            if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.E))
             {
+                SoundManager.Instance.FadeOutBgm(0.3f);
                 SceneManager.LoadScene("GameScenes");
             }
         }                
@@ -111,14 +126,26 @@ public class FireControl_boil : MonoBehaviour
         
         if (_slider.value >= 100)
         {
+            GameManager.Instance.alertBool = false;
+            bubbleAlert.Stop();
             _slider.value = 0;
+            SoundManager.Instance.FadeOutBgm(0.3f);            
         }    
     
         if (clickBool == true) return;
 
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");        
-        Otama.transform.position = new Vector3(Centerpostion.transform.position.x + h * 65, Centerpostion.transform.position.y, Centerpostion.transform.position.z + v * 70);
+        if(h < 0)
+        {
+            otamaXMove = 55;
+        }
+        else if (h > 0)
+        {
+            otamaXMove = 30;
+        }
+        Otama.transform.position = new Vector3(Centerpostion.transform.position.x + h * otamaXMove, Centerpostion.transform.position.y, Centerpostion.transform.position.z + v * 60);
+        //Otama.transform.position = new Vector3(Centerpostion.transform.position.x + h * 65, Centerpostion.transform.position.y, Centerpostion.transform.position.z + v * 70);
 
         //1秒分掻きまわすアクションをするとポイントが-25される。
         if (h != 0 && v != 0)
@@ -170,5 +197,5 @@ public class FireControl_boil : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
         doOnce = true;
         yield break;
-    }        
+    }
 }

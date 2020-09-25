@@ -50,6 +50,8 @@ public class CutGauge : MonoBehaviour
         if (Input.GetKeyDown("joystick button 2") || Input.GetKeyDown(KeyCode.Q))
         {
             if (stopGaugeBool) return;
+
+            SoundManager.Instance.PlaySe(SE.CutSound);
             stopGaugeBool = true;
             doOnce = true;
         }

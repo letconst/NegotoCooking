@@ -158,7 +158,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -3221030309713437462, guid: 60863688b90dbe94a898fbb99c6c9355, type: 2}
+  - {fileID: -291303953770956513, guid: 127a3dfac7c26694a8b7cf25b4370f04, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -215,16 +215,16 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 60863688b90dbe94a898fbb99c6c9355, type: 2}
-  m_sharedMaterial: {fileID: -3221030309713437462, guid: 60863688b90dbe94a898fbb99c6c9355,
+  m_fontAsset: {fileID: 11400000, guid: 127a3dfac7c26694a8b7cf25b4370f04, type: 2}
+  m_sharedMaterial: {fileID: -291303953770956513, guid: 127a3dfac7c26694a8b7cf25b4370f04,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 3204448256
-  m_fontColor: {r: 0, g: 0, b: 0, a: 0.7490196}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 0}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -280,7 +280,7 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 47.05757, y: 49.313213, z: 47.063614, w: 49.30658}
+  m_margin: {x: 46.066097, y: 49.313213, z: 46.07214, w: 49.30658}
   m_textInfo:
     textComponent: {fileID: 6919196921877372781}
     characterCount: 0
@@ -382,7 +382,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
-  m_Size: {x: 6, y: 1.5}
+  m_Size: {x: 8, y: 1.5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -402,7 +402,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraTrf: {fileID: 0}
   spriteRenderer: {fileID: 8220494770239565775}
+  largePlateContainer: {fileID: 11400000, guid: a8bf5aaa472f507418cbeeac0cb41321,
+    type: 2}
   textMesh: {fileID: 6919196921877372781}
+  text: {fileID: 6919196921877372781}
   deltaFade: 0.05
   deltaMinFadeInDelay: 0.01
   deltaMaxFadeInDelay: 0.5
@@ -410,3 +413,6 @@ MonoBehaviour:
   maxTransparency: 0.75
   requireFood: {fileID: 0}
   requireStates: 
+  selfIndex: 0
+  negotoManager: {fileID: 0}
+  recipe: []

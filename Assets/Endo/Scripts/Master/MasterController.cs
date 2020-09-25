@@ -26,11 +26,9 @@ public class MasterController : SingletonMonoBehaviour<MasterController>
         {
             // 調理判定
             Judgement();
+            Debug.Log(GameManager.Instance.FailCount);
 
-            // 大皿に食材があり、すべて調理済みならゲームクリア（仮）
-            SceneChanger.Instance.SceneLoad((_isComplete)
-                                                ? SceneChanger.SceneName.GameClear
-                                                : SceneChanger.SceneName.GameOverScenes);
+            SceneChanger.Instance.SceneLoad(SceneChanger.SceneName.Result);
         }
     }
 
@@ -46,26 +44,39 @@ public class MasterController : SingletonMonoBehaviour<MasterController>
         // 必須食材のコピー（チェックリスト用）
         var foodsToJudge = new List<RequireFoods>(targetRecipe.RequireFoods);
 
+        //捨てるべからず
+        if(GameManager.Instance.StatisticsManager.throwInCount>=3)
+        {
+            GameManager.Instance.FailCount++;
+        }
+        //素早く丁寧に
+        if(TimeCounter.CurrentTime<100)
+        {
+            GameManager.Instance.FailCount++;
+        }
+
         // 大皿の中身がレシピ通りかチェック
         foreach (var foodInPlate in _largePlateContainer.Container)
         {
             foreach (var requireFood in foodsToJudge.ToList())
             {
-                foreach (var requireState in requireFood.States)
-                {
                     // 要件を満たす食材が大皿にあればチェックリストから当該食材を外す
                     // TODO: 複数の状態が必要な場合への対応
-                    if (foodInPlate.Item  == requireFood.Food &&
-                        foodInPlate.State == requireState)
+                    if (foodInPlate.Item == requireFood.Food &&
+                        foodInPlate.States.All(state => requireFood.States.Contains(state))&&
+                        foodInPlate.States.Count == requireFood.States.Count)
                     {
                         foodsToJudge.Remove(requireFood);
                     }
-                }
             }
         }
 
         // 必須食材の要件を満たさないものが含まれていたら失敗
-        if (foodsToJudge.Count != 0) _isComplete = false;
+        //やり方間違えるべからず
+        if (foodsToJudge.Count>=3)
+        {
+            GameManager.Instance.FailCount++;
+        }
     }
 
     private void OnTriggerEnter(Collider other)

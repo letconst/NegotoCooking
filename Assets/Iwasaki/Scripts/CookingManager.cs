@@ -7,6 +7,7 @@ public class CookingManager : SingletonMonoBehaviour<CookingManager>
     private float timeleft; 
     private float burntTimeleft;
     private bool doOnceAlert = true;
+    private bool go100Point;
     public void Awake()
     {
         if (this != Instance)
@@ -63,15 +64,27 @@ public class CookingManager : SingletonMonoBehaviour<CookingManager>
         if (GameManager.Instance.BubblePoint == 100 && doOnceAlert)
         {            
             SoundManager.Instance.PlayBgm(BGM.Alert);
+            go100Point = true;
             doOnceAlert = false;
             GameManager.Instance.alertBool = true;
         }
 
         if (GameManager.Instance.BubblePoint < 100 && !doOnceAlert)
         {
-            SoundManager.Instance.FadeOutBgm(1.0f);
+            if (go100Point)
+            {
+                go100Point = false;
+                SoundManager.Instance.FadeOutBgm(0.1f);
+                StartCoroutine(waitTime(0.2f));
+            }                     
             doOnceAlert = true;
-            GameManager.Instance.alertBool = false;            
+            GameManager.Instance.alertBool = false;
         }
+    }
+    private IEnumerator waitTime(float waittime)
+    {
+        yield return new WaitForSeconds(waittime);
+        SoundManager.Instance.PlayBgm(BGM.BoilSound);
+        yield break;
     }
 }

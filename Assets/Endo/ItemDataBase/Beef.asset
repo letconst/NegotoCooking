@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Beef
   m_EditorClassIdentifier: 
   kindOfItem: 1
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 21300000, guid: 0b8b9c8f89182b147b5336a35bd7a0ce, type: 3}
   itemName: "\u725B\u8089"
   foodObj: {fileID: 6280027147318424494, guid: 8845cf9d7b768fc46abd7d53fb186c48, type: 3}

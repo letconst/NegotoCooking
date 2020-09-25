@@ -46,6 +46,7 @@ public class FireControl : MonoBehaviour
     public static bool clickBool = true;
     [HideInInspector]
     static public bool burntBool;
+    private bool doOnceBakeSound = true;
 
     private void Start()
     {
@@ -60,7 +61,7 @@ public class FireControl : MonoBehaviour
         if (_slider.value == 0)
         {
             burntBool = false;
-            if (Input.GetKeyDown("joystick button 1") && Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.E))
             {
                 SceneManager.LoadScene("GameScenes");
             }
@@ -68,7 +69,7 @@ public class FireControl : MonoBehaviour
 
         float dph = Input.GetAxis("D_Pad_H");
 
-        if (dph > 0 && GameManager.Instance.FireChange != 0)
+        if (dph < 0 && GameManager.Instance.FireChange != 0)
         {
             if(GameManager.Instance.FireChange <= 0)
             {
@@ -83,7 +84,7 @@ public class FireControl : MonoBehaviour
                 GameManager.Instance.FireChange--;
             }
         }
-        if(dph < 0 && GameManager.Instance.FireChange != 2)
+        if(dph > 0 && GameManager.Instance.FireChange != 2)
         {
             if (GameManager.Instance.FireChange >= 2)
             {
@@ -103,10 +104,19 @@ public class FireControl : MonoBehaviour
         if (_slider.value >= 100)
         {
             _slider.value = 0;
+            doOnceBakeSound = true;
+            //焼き調理音をフェードアウトさせる。
+            SoundManager.Instance.FadeOutBgm(0.2f);
         }
 
         if (clickBool == true) return;
 
+        if (doOnceBakeSound)
+        {
+            doOnceBakeSound = false;
+            SoundManager.Instance.PlayBgm(BGM.BakeSound);
+        }
+        
         if (GameManager.Instance.FireChange <= 0)
         {
             burntBool = false;

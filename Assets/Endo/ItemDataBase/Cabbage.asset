@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Cabbage
   m_EditorClassIdentifier: 
   kindOfItem: 1
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 21300000, guid: 8661dfb54d182194580ecaf9e691ff3a, type: 3}
   itemName: "\u30AD\u30E3\u30D9\u30C4"
   foodObj: {fileID: 8429375758505088266, guid: c555a71b0c650c141bd01808e128f11b, type: 3}
