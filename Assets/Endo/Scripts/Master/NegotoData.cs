@@ -16,8 +16,15 @@ public class NegotoData : ScriptableObject
     /// <param name="requireFood">寝言で必須となっている食材</param>
     /// <param name="requireStates">寝言で必須となっている状態</param>
     /// <param name="isActive">寝言が有効か否か</param>
-    public void AddEntry(int index, Item requireFood, IEnumerable<FoodState> requireStates, string contentText, bool isActive)
+    public void AddEntry(int  index, Item requireFood, IEnumerable<FoodState> requireStates, string contentText,
+                         bool isActive)
     {
+        // 状態がnullの場合は初期化して追加する（エラー回避）
+        if (requireStates == null)
+        {
+            requireStates = new List<FoodState>();
+        }
+
         Entries.Add(new NegotoEntry(index, requireFood, requireStates, contentText, isActive));
     }
 
@@ -28,7 +35,8 @@ public class NegotoData : ScriptableObject
     /// <param name="requireFood">寝言で必須となっている食材</param>
     /// <param name="requireStates">寝言で必須となっている状態</param>
     /// <param name="isActive">寝言が有効か否か</param>
-    public void UpdateEntry(int index, Item requireFood, IEnumerable<FoodState> requireStates, string contentText, bool isActive)
+    public void UpdateEntry(int  index, Item requireFood, IEnumerable<FoodState> requireStates, string contentText,
+                            bool isActive)
     {
         // 状態がnullの場合は初期化して更新する
         if (requireStates == null)
@@ -59,7 +67,8 @@ public class NegotoEntry
     [SerializeField]
     private bool isActive;
 
-    public NegotoEntry(int selfIndex, Item requireFood, IEnumerable<FoodState> requireStates, string contentText, bool isActive)
+    public NegotoEntry(int  selfIndex, Item requireFood, IEnumerable<FoodState> requireStates, string contentText,
+                       bool isActive)
     {
         SelfIndex     = selfIndex;
         RequireFood   = requireFood;

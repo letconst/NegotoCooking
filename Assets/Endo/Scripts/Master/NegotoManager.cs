@@ -62,20 +62,6 @@ public class NegotoManager : SingletonMonoBehaviour<NegotoManager>
         }
 
         DontDestroyOnLoad(gameObject);
-
-        _recipeDB = InventoryManager.Instance.RecipeDatabase;
-        // レシピを複数用意する場合は、ランダム選択に変更する必要あり
-        Recipe = new List<RequireFoods>(_recipeDB.GetRecipeByName("エビのスープ").RequireFoods);
-    }
-
-    // Start is called before the first frame update
-    private void Start()
-    {
-        // 現在の寝言表示数を初期表示数に設定
-        CurDisplayCount = defaultDisplayCount;
-        _negotos        = GameObject.FindGameObjectsWithTag("Negoto");
-
-        StartCoroutine(nameof(SetAllNegotoIndex), true);
     }
 
     // Update is called once per frame
@@ -107,6 +93,22 @@ public class NegotoManager : SingletonMonoBehaviour<NegotoManager>
             distanceDisplayed;
 
         _tmpSceneName = _curSceneName;
+    }
+
+    /// <summary>
+    /// NegotoManagerを初期化する
+    /// </summary>
+    public void Init()
+    {
+        _recipeDB = InventoryManager.Instance.RecipeDatabase;
+        // レシピを複数用意する場合は、ランダム選択に変更する必要あり
+        Recipe = new List<RequireFoods>(_recipeDB.GetRecipeByName("エビのスープ").RequireFoods);
+
+        // 現在の寝言表示数を初期表示数に設定
+        CurDisplayCount = defaultDisplayCount;
+        _negotos        = GameObject.FindGameObjectsWithTag("Negoto");
+
+        StartCoroutine(nameof(SetAllNegotoIndex), true);
     }
 
     private IEnumerator SetAllNegotoIndex(bool isInit)
@@ -191,6 +193,7 @@ public class NegotoManager : SingletonMonoBehaviour<NegotoManager>
                 negotoInstance.requireFood != food) continue;
 
             negotoInstance.UpdateContent();
+
             IncreaseNegotoDisplay();
 
             break;

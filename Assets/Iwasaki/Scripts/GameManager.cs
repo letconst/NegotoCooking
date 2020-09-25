@@ -107,6 +107,12 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
             ResetAllValues();
         }
 
+        if (_currentScene.name != _tmpScene.name &&
+            _currentScene.name == "GameScenes")
+        {
+            NegotoManager.Instance.Init();
+        }
+
         _tmpScene = SceneManager.GetActiveScene();
     }
 

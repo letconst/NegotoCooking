@@ -80,12 +80,16 @@ public class NegotoController : MonoBehaviour
     {
         selfIndex     = -1;
         negotoManager = NegotoManager.Instance;
-        recipe        = negotoManager.Recipe;
     }
 
     // Start is called before the first frame update
     private IEnumerator Start()
     {
+        // レシピデータが取得可能になるまで待機
+        yield return new WaitWhile((() => negotoManager.Recipe == null));
+
+        recipe = negotoManager.Recipe;
+
         // selfIndexが設定されたら初期化
         yield return new WaitWhile(() => selfIndex == -1);
 
