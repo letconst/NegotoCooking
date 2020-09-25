@@ -100,10 +100,9 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     {
         _currentScene = SceneManager.GetActiveScene();
 
-        // シーン遷移後、現在のシーンがゲームクリアまたはゲームオーバーなら値をリセットしてあげる
+        // シーン遷移後、現在のシーンがタイトルなら値をリセットしてあげる
         if (_currentScene.name != _tmpScene.name &&
-            (_currentScene.name == "GameClear" ||
-             _currentScene.name == "GameOverScenes"))
+            (_currentScene.name == "TitleScenes"))
         {
             ResetAllValues();
         }
@@ -120,6 +119,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         InventoryManager.Instance.RefContainers.RefInvContainers.Clear();
         InventoryManager.Instance.LargePlateContainer.Container.Clear();
         TimeCounter.CurrentTime = TimeCounter.CountUp;
+        NegotoManager.Instance.NegotoData.Entries.Clear();
         NoiseMator = 0;
     }
     private void OnApplicationQuit()

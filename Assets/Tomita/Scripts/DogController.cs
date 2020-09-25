@@ -87,7 +87,7 @@ public class DogController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(DogBark);
+        // Debug.Log(DogBark);
         // 検知範囲にプレイヤーがいたら吠える
 
         if (State == DogState.Idle)
@@ -200,7 +200,7 @@ public class DogController : MonoBehaviour
             if (targetPositionDistance < 2f)
             {
                 State = DogState.FindFood;
-                Debug.Log("餌食べる");
+                // Debug.Log("餌食べる");
                 DogMoveStop = true;
                 //時間を数える
                 //time2 += Time.deltaTime;
@@ -249,7 +249,7 @@ public class DogController : MonoBehaviour
         {
             return;
         }
-        
+
         if(other.CompareTag("Player")||other.CompareTag("DogFood"))
         {
             nearObject = null;

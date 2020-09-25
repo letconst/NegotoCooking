@@ -44,7 +44,7 @@ public class DogNav : MonoBehaviour
 
     void GotoNextPoint()
     {
-        
+
 
         //NavMeshAgentのストップの解除
         agent.isStopped = false;
@@ -82,7 +82,7 @@ public class DogNav : MonoBehaviour
             time = 0;
         }
 
-        
+
     }
     // Update is called once per frame
     void Update()
@@ -98,7 +98,6 @@ public class DogNav : MonoBehaviour
         {
             agent.destination = transform.position;
             agent.isStopped = true;
-            Debug.Log("aaaa");
             return;
         }
     }
@@ -108,16 +107,16 @@ public class DogNav : MonoBehaviour
         //餌のオブジェクト発見
         if (other.CompareTag("DogFood"))
         {
-            
+
             //餌を目標地点に設定する
             agent.destination = other.transform.position;
-            Debug.Log("餌発見！");
+            // Debug.Log("餌発見！");
         }
 
         //餌までの距離が0.5未満なら
         if (agent.remainingDistance < 0.5 && DogMoveStop)
         {
-            Debug.Log("餌食べる");
+            // Debug.Log("餌食べる");
             agent.isStopped = true;
             //時間を数える
             time += Time.deltaTime;
