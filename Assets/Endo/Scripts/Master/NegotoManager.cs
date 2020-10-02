@@ -62,6 +62,12 @@ public class NegotoManager : SingletonMonoBehaviour<NegotoManager>
         }
 
         DontDestroyOnLoad(gameObject);
+
+    }
+
+    private void Start()
+    {
+        Init();
     }
 
     // Update is called once per frame

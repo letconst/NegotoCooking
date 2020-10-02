@@ -18,6 +18,8 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     private int bakePoint;
     private int failCount;
 
+    public bool IsReachedResult { get; private set; }
+
     public float NoiseMator
     {
         set
@@ -97,20 +99,30 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     {
         _currentScene = SceneManager.GetActiveScene();
 
-        // シーン遷移後、現在のシーンがタイトルなら値をリセットしてあげる
         if (_currentScene.name != _tmpScene.name &&
+            _currentScene.name == "Result")
+        {
+            IsReachedResult = true;
+        }
+
+        // リザルト到達後、現在のシーンがタイトルなら値をリセットしてあげる
+        if (IsReachedResult &&
             (_currentScene.name == "TitleScenes"))
         {
             ResetAllValues();
         }
 
-        if (_currentScene.name != _tmpScene.name &&
+        // リザルト到達後にメインシーンに遷移した際は寝言を初期化する
+        if (IsReachedResult &&
             _currentScene.name == "GameScenes")
         {
+            IsReachedResult = false;
             NegotoManager.Instance.Init();
         }
 
-        _tmpScene = SceneManager.GetActiveScene();
+        _tmpScene = (_currentScene.isLoaded)
+            ? _currentScene
+            : _tmpScene;
     }
 
     /// <summary>
