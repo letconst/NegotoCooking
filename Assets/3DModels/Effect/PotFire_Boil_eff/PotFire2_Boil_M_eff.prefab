@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 2836359231334320589}
   - component: {fileID: 945055964089391304}
   m_Layer: 10
-  m_Name: PotFire2_M_eff
-  m_TagString: Untagged
+  m_Name: PotFire2_Boil_M_eff
+  m_TagString: FireM
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4766,8 +4766,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sharedProfile: {fileID: 11400000, guid: d372abb6f1df51b44beca17d031383e6, type: 2}
-  isGlobal: 1
+  sharedProfile: {fileID: 0}
+  isGlobal: 0
   blendDistance: 0
   weight: 1
   priority: 0

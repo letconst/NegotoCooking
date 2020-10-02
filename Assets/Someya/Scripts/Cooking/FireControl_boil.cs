@@ -36,7 +36,8 @@ public class FireControl_boil : MonoBehaviour
     [SerializeField]
     private GameObject RightAllow;
 
-    private bool doOnce = true;    
+    private bool doOnce = true;
+    private bool doOnceFire = true;
 
     //煮込み処理が終わったか
     [HideInInspector]
@@ -58,12 +59,20 @@ public class FireControl_boil : MonoBehaviour
     private float otamaXMove;
     [SerializeField]
     private ParticleSystem bubbleAlert;
+    [SerializeField]
+    private ParticleSystem fireS;
+    [SerializeField]
+    private ParticleSystem fireM;
+    [SerializeField]
+    private ParticleSystem fireL;
     void Start()
     {
         //中火の色にしておく
         FireChar.GetComponent<Image>().color = Color.yellow;
         GameManager.Instance.FireChange = 1;
         bubbleAlert.Stop();
+        fireS.Play();
+        fireL.Play();
         SoundManager.Instance.PlayBgm(BGM.BoilSound);
     }
 
@@ -105,6 +114,7 @@ public class FireControl_boil : MonoBehaviour
                 doOnce = false;
                 StartCoroutine(WaitForSeconds(1.0f));
                 GameManager.Instance.FireChange--;
+                doOnceFire = true;
             }
         }
 
@@ -121,6 +131,7 @@ public class FireControl_boil : MonoBehaviour
                 doOnce = false;
                 StartCoroutine(WaitForSeconds(1.0f));
                 GameManager.Instance.FireChange++;
+                doOnceFire = true;
             }
         }
         
@@ -146,7 +157,7 @@ public class FireControl_boil : MonoBehaviour
         }
         Otama.transform.position = new Vector3(Centerpostion.transform.position.x + h * otamaXMove, 
                                                Centerpostion.transform.position.y, 
-                                               Centerpostion.transform.position.z + v * 60);        
+                                               Centerpostion.transform.position.z + v * 50);        
 
         //1秒分掻きまわすアクションをするとポイントが-25される。
         if (h != 0 && v != 0)
@@ -161,6 +172,13 @@ public class FireControl_boil : MonoBehaviour
 
         if (GameManager.Instance.FireChange <= 0)
         {
+            if (doOnceFire)
+            {
+                doOnceFire = false;
+                fireM.Stop();
+                fireL.Stop();
+                fireS.Play();
+            }
             bubbleBool = false;
             leftAllow.gameObject.SetActive(false);
             FireChar.GetComponent<Image>().color = Color.cyan;
@@ -172,6 +190,13 @@ public class FireControl_boil : MonoBehaviour
         }
         else if (GameManager.Instance.FireChange == 1)
         {
+            if (doOnceFire)
+            {
+                doOnceFire = false;
+                fireS.Stop();
+                fireL.Stop();
+                fireM.Play();
+            }
             bubbleBool = true;
             leftAllow.gameObject.SetActive(true);
             RightAllow.gameObject.SetActive(true);
@@ -183,6 +208,13 @@ public class FireControl_boil : MonoBehaviour
         }
         else if (GameManager.Instance.FireChange >= 2)
         {
+            if (doOnceFire)
+            {
+                doOnceFire = false;
+                fireS.Stop();
+                fireM.Stop();
+                fireL.Play();
+            }
             bubbleBool = true;
             RightAllow.gameObject.SetActive(false);
             FireChar.GetComponent<Image>().color = Color.red;

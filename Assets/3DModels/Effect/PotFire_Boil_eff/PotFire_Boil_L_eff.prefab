@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 7237500257826736711}
   - component: {fileID: 7237500257826736710}
   m_Layer: 0
-  m_Name: PotFire2_L_eff
-  m_TagString: Untagged
+  m_Name: PotFire_Boil_L_eff
+  m_TagString: FireL
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
