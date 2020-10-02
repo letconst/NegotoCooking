@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class GarbageCanController : MonoBehaviour
 {
@@ -22,6 +23,16 @@ public class GarbageCanController : MonoBehaviour
         if (_isNear &&
             Input.GetButtonDown("Interact")&&
             _playerContainer.GetItem(_playerInvRenderer.LastSelectedIndex)!=null)
+        {
+            StartCoroutine("InputHandler");
+        }
+    }
+
+    private IEnumerator InputHandler()
+    {
+        IEnumerator coroutine = ChoicePopup.Instance.showWindow("食材を捨ててもよろしいでしょうか?");
+        yield return coroutine;
+        if((bool) coroutine.Current)
         {
             _playerContainer.RemoveItem(_playerInvRenderer.LastSelectedIndex);
             GameManager.Instance.StatisticsManager.throwInCount++;
