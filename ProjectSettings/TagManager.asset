@@ -25,6 +25,7 @@ TagManager:
   - DogToyCount
   - BubbleEffect
   - SlideShowImagePlaceholder
+  - HeartPosition
   layers:
   - Default
   - TransparentFX
