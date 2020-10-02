@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : SingletonMonoBehaviour<GameManager>
@@ -81,10 +79,9 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         }
     }
 
-    public Vector3 PlayerPos { set; get; }
-
-    public Vector3 PlayerRotate { set; get; }
-    public StatisticsManager StatisticsManager { get => statisticsManager; }
+    public Vector3           PlayerPos         { set; get; }
+    public Vector3           PlayerRotate      { set; get; }
+    public StatisticsManager StatisticsManager => statisticsManager;
 
     public void Awake()
     {
@@ -122,11 +119,15 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     public void ResetAllValues()
     {
         InventoryManager.Instance.PlayerContainer.Container.Clear();
+        InventoryManager.Instance.PlayerContainer.DogFoodCount =
+            InventoryManager.Instance.PlayerContainer.MaxDogFoodCount;
         InventoryManager.Instance.RefContainers.RefInvContainers.Clear();
         InventoryManager.Instance.LargePlateContainer.Container.Clear();
         TimeCounter.CurrentTime = TimeCounter.CountUp;
         NegotoManager.Instance.NegotoData.Entries.Clear();
-        NoiseMator = 0;
+        NoiseMator   = 0;
+        PlayerPos    = Vector3.zero;
+        PlayerRotate = Vector3.zero;
     }
     private void OnApplicationQuit()
     {
