@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 716732ee01c58344ea4ba3b1b04dad08, type: 3}
   m_Name: LargePlateInventory
   m_EditorClassIdentifier: 
-  _slotSize: 99
+  _slotSize: 3
   _container: []
