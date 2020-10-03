@@ -39,6 +39,7 @@ public class FireControl : MonoBehaviour
     private Image _fireCharImage;
 
     private bool doOnce = true;
+    private bool doOnceFire = true;
 
     //焼き処理が終わったか
     public static bool bakeBool;
@@ -47,6 +48,12 @@ public class FireControl : MonoBehaviour
     [HideInInspector]
     static public bool burntBool;
     private bool doOnceBakeSound = true;
+    [SerializeField]
+    private ParticleSystem fireS;
+    [SerializeField]
+    private ParticleSystem fireM;
+    [SerializeField]
+    private ParticleSystem fireL;
 
     private void Start()
     {
@@ -54,6 +61,8 @@ public class FireControl : MonoBehaviour
         _fireCharImage       = fireChar.GetComponent<Image>();
         _fireCharImage.color = Color.yellow;
         GameManager.Instance.FireChange = 1;
+        fireS.Play();
+        fireL.Play();
     }
 
     private void Update()
@@ -82,6 +91,7 @@ public class FireControl : MonoBehaviour
                 doOnce = false;
                 StartCoroutine(WaitForSeconds(1.0f));
                 GameManager.Instance.FireChange--;
+                doOnceFire = true;
             }
         }
         if(dph > 0 && GameManager.Instance.FireChange != 2)
@@ -97,6 +107,7 @@ public class FireControl : MonoBehaviour
                 doOnce = false;
                 StartCoroutine(WaitForSeconds(1.0f));
                 GameManager.Instance.FireChange++;
+                doOnceFire = true;
             }
         }
 
@@ -119,6 +130,13 @@ public class FireControl : MonoBehaviour
         
         if (GameManager.Instance.FireChange <= 0)
         {
+            if (doOnceFire)
+            {
+                doOnceFire = false;
+                fireM.Stop();
+                fireL.Stop();
+                fireS.Play();
+            }
             burntBool = false;
             leftAllow.gameObject.SetActive(false);
             _fireCharImage.color = Color.cyan;
@@ -129,6 +147,13 @@ public class FireControl : MonoBehaviour
         }
         else if (GameManager.Instance.FireChange == 1)
         {
+            if (doOnceFire)
+            {
+                doOnceFire = false;
+                fireS.Stop();
+                fireL.Stop();
+                fireM.Play();
+            }
             burntBool = true;
             leftAllow.gameObject.SetActive(true);
             rightAllow.gameObject.SetActive(true);
@@ -139,6 +164,13 @@ public class FireControl : MonoBehaviour
         }
         else if (GameManager.Instance.FireChange >= 2)
         {
+            if (doOnceFire)
+            {
+                doOnceFire = false;
+                fireS.Stop();
+                fireM.Stop();
+                fireL.Play();
+            }
             burntBool = true;
             rightAllow.gameObject.SetActive(false);
             _fireCharImage.color = Color.red;

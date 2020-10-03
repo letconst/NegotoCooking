@@ -26,9 +26,10 @@ public class CutGauge : MonoBehaviour
     //[SerializeField]
     //private Image noiseMator;
     private bool doOnce = true;
+    private bool toRightBool = true;
     void Start()
     {
-        cutGauge.value = 0;
+        cutGauge.value = 100;
     }
 
     // Update is called once per frame
@@ -50,8 +51,6 @@ public class CutGauge : MonoBehaviour
         if (Input.GetKeyDown("joystick button 2") || Input.GetKeyDown(KeyCode.Q))
         {
             if (stopGaugeBool) return;
-
-            SoundManager.Instance.PlaySe(SE.CutSound);
             stopGaugeBool = true;
             doOnce = true;
         }
@@ -62,18 +61,20 @@ public class CutGauge : MonoBehaviour
             if (cutGauge.value <= 0)
             {
                 sliderBool = true;
+                toRightBool = false;
             }
             if (cutGauge.value >= 100)
             {
                 sliderBool = false;
             }
 
-            //棒を行き来させる処理。
             if (sliderBool)
             {
-                cutGauge.value += sliderSpeed;
+                //一番右にもどす
+                cutGauge.value = 100;
+                StartCoroutine(waitTime(1.0f));
             }
-            if (!sliderBool)
+            if (!sliderBool && toRightBool)
             {
                 cutGauge.value -= sliderSpeed;
             }
@@ -81,6 +82,7 @@ public class CutGauge : MonoBehaviour
         if (stopGaugeBool && doOnce)
         {
             doOnce = false;
+            SoundManager.Instance.PlaySe(SE.CutSound);
             if (cutGauge.value >= 48 && 52 >= cutGauge.value)
             {
                 _slider.value += 20;
@@ -89,7 +91,7 @@ public class CutGauge : MonoBehaviour
             {
                 _slider.value += 15;
             }
-            else if(cutGauge.value >= 33 && 40 >= cutGauge.value || cutGauge.value >= 60 && 67 >= cutGauge.value)
+            else if (cutGauge.value >= 33 && 40 >= cutGauge.value || cutGauge.value >= 60 && 67 >= cutGauge.value)
             {
                 _slider.value += 10;
             }
@@ -97,8 +99,8 @@ public class CutGauge : MonoBehaviour
             {
                 _slider.value += 5;
             }
-            //一番左にもどす
-            cutGauge.value = 0;
+            //一番右にもどす
+            cutGauge.value = 100;
             StartCoroutine(waitTime(1.0f));
         }
     }
@@ -106,6 +108,7 @@ public class CutGauge : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
         stopGaugeBool = false;
+        toRightBool = true;
         yield break;
     }
 }
