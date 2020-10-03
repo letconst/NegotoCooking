@@ -54,6 +54,7 @@ public class InventoryRenderer : MonoBehaviour
     {
         UpdateRender();
         UpdatePlayerInventoryRender();
+        UpdateRefrigeratorInventoryRender();
         UpdateLastSelectedIndex();
         UpdateDogToyCountRender();
     }
@@ -105,39 +106,6 @@ public class InventoryRenderer : MonoBehaviour
     /// </summary>
     private void UpdateRender()
     {
-        // 冷蔵庫ならまず中身を取得
-        if (isForRefrigerator)
-        {
-            var i             = 0;
-            var curNearRef    = RefrigeratorManager.Instance.currentNearObj;
-            var refController = curNearRef.GetComponent<RefrigeratorController>();
-
-            // 初回表示時は初期アイテム表示
-            if (InventoryManager.Instance.RefContainers.GetContainer(curNearRef.name) == null)
-            {
-                foreach (var slotObj in _itemsDisplayed.Keys.ToArray())
-                {
-                    _itemsDisplayed[slotObj] = new InventorySlotBase(refController.DefaultItems[i].Item,
-                                                                     refController.DefaultItems[i].State);
-
-                    i++;
-                }
-            }
-            // 通常はコンテナアイテムを表示
-            else
-            {
-                var nearRefContainer = RefrigeratorManager.Instance.NearRefrigeratorContainer;
-
-                foreach (var slotObj in _itemsDisplayed.Keys.ToArray())
-                {
-                    _itemsDisplayed[slotObj] =
-                        new InventorySlotBase(nearRefContainer.GetItem(i), nearRefContainer.GetState(i));
-
-                    i++;
-                }
-            }
-        }
-
         foreach (var slot in _itemsDisplayed)
         {
             var slotText  = slot.Key.GetComponentInChildren<Text>();
@@ -223,6 +191,48 @@ public class InventoryRenderer : MonoBehaviour
                 bakedIcon.color  = colorToSet;
                 boiledIcon.color = colorToSet;
                 cutIcon.color    = colorToSet;
+            }
+        }
+    }
+
+    /// <summary>
+    /// 冷蔵庫インベントリの描画を更新する
+    /// </summary>
+    private void UpdateRefrigeratorInventoryRender()
+    {
+        // 冷蔵庫インベントリでのみ動作
+        if (!isForRefrigerator) return;
+
+        var i          = 0;
+        var curNearRef = RefrigeratorManager.Instance.currentNearObj;
+
+        // 近くに冷蔵庫がなければ終了
+        if (curNearRef == null) return;
+
+        var refController = curNearRef.GetComponent<RefrigeratorController>();
+
+        // 初回表示時は初期アイテム表示
+        if (InventoryManager.Instance.RefContainers.GetContainer(curNearRef.name) == null)
+        {
+            foreach (var slotObj in _itemsDisplayed.Keys.ToArray())
+            {
+                _itemsDisplayed[slotObj] = new InventorySlotBase(refController.DefaultItems[i].Item,
+                                                                 refController.DefaultItems[i].State);
+
+                i++;
+            }
+        }
+        // 通常はコンテナアイテムを表示
+        else
+        {
+            var nearRefContainer = RefrigeratorManager.Instance.NearRefrigeratorContainer;
+
+            foreach (var slotObj in _itemsDisplayed.Keys.ToArray())
+            {
+                _itemsDisplayed[slotObj] =
+                    new InventorySlotBase(nearRefContainer.GetItem(i), nearRefContainer.GetState(i));
+
+                i++;
             }
         }
     }

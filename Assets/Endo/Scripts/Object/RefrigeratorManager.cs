@@ -22,6 +22,6 @@ public class RefrigeratorManager : SingletonMonoBehaviour<RefrigeratorManager>
     {
         _refInvObj = GameObject.FindGameObjectWithTag("RefrigeratorInventory");
 
-        _refInvObj.SetActive(false);
+        _refInvObj.GetComponent<CanvasGroup>().alpha = 0;
     }
 }

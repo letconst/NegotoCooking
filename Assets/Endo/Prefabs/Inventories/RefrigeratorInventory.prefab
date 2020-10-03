@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 595020985837225737}
   - component: {fileID: 5461450064320938251}
+  - component: {fileID: 5628509972685647779}
   m_Layer: 5
   m_Name: RefrigeratorInventory
   m_TagString: RefrigeratorInventory
@@ -55,6 +56,19 @@ MonoBehaviour:
     type: 3}
   slotWrapper: {fileID: 1175993435181760123}
   isForRefrigerator: 1
+  stateGrayOutColor: {r: 0, g: 0, b: 0, a: 0}
+--- !u!225 &5628509972685647779
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 595020985837225736}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &595020987192357066
 GameObject:
   m_ObjectHideFlags: 0

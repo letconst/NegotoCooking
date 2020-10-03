@@ -12,6 +12,7 @@ public class RefrigeratorController : MonoBehaviour
     private GameObject _playerInvObj;
     private GameObject _refInvObj;
 
+    private CanvasGroup                        _refInvCanvasGroup;
     private InventoryRenderer                  _playerInvRenderer;
     private InventoryRenderer                  _selfInvRenderer;
     private RefrigeratorInventoryContainers    _refContainers;
@@ -22,9 +23,9 @@ public class RefrigeratorController : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        _playerInvObj = GameObject.FindGameObjectWithTag("PlayerInventory");
-        _refInvObj    = GameObject.FindGameObjectWithTag("RefrigeratorInventory");
-
+        _playerInvObj      = GameObject.FindGameObjectWithTag("PlayerInventory");
+        _refInvObj         = GameObject.FindGameObjectWithTag("RefrigeratorInventory");
+        _refInvCanvasGroup = _refInvObj.GetComponent<CanvasGroup>();
         _playerInvRenderer = _playerInvObj.GetComponent<InventoryRenderer>();
         _selfInvRenderer   = _refInvObj.GetComponent<InventoryRenderer>();
         _refContainers     = InventoryManager.Instance.RefContainers;
@@ -39,13 +40,17 @@ public class RefrigeratorController : MonoBehaviour
         if (_isNear &&
             Input.GetButtonDown("Interact"))
         {
+            Debug.Log(_refInvCanvasGroup.alpha);
             // 開閉切り替え
-            _refInvObj.SetActive(!_refInvObj.activeSelf);
+            _refInvCanvasGroup.alpha = (_refInvCanvasGroup.alpha == 0)
+                                           ? 1
+                                           : 0;
+
             // 閉じるときは表示リセット
             _selfInvRenderer.ClearRender();
 
             // 開いたとき
-            if (_refInvObj.activeSelf)
+            if (_refInvCanvasGroup.alpha != 0)
             {
                 // 冷蔵庫インベントリにフォーカス
                 _selfInvRenderer.SelectSlot();
@@ -96,7 +101,10 @@ public class RefrigeratorController : MonoBehaviour
                                        // アイテムが存在するかによって状態変化
                                        (selfSlotDefaultItem != null)
                                            ? DefaultItems[i].State
-                                           : new List<FoodState>() { FoodState.None });
+                                           : new List<FoodState>()
+                                           {
+                                               FoodState.None
+                                           });
             }
             // すでにコンテナに同一インデックスのスロットが存在するなら内容更新
             else
@@ -104,7 +112,10 @@ public class RefrigeratorController : MonoBehaviour
                 _selfContainer.UpdateItem(i, selfSlotDefaultItem,
                                           (selfSlotDefaultItem != null)
                                               ? DefaultItems[i].State
-                                              : new List<FoodState>() { FoodState.None });
+                                              : new List<FoodState>()
+                                              {
+                                                  FoodState.None
+                                              });
             }
         }
     }
@@ -128,7 +139,7 @@ public class RefrigeratorController : MonoBehaviour
         if (_refInvObj.activeSelf)
         {
             // 閉じる
-            _refInvObj.SetActive(false);
+            _refInvCanvasGroup.alpha = 0;
             _selfInvRenderer.ClearRender();
 
             // プレイヤーインベントリ有効化
