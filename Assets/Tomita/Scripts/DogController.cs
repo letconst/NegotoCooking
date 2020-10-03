@@ -87,6 +87,7 @@ public class DogController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(State);
         // Debug.Log(DogBark);
         // 検知範囲にプレイヤーがいたら吠える
 
@@ -181,10 +182,11 @@ public class DogController : MonoBehaviour
 
         if (nearObject.CompareTag("DogFood"))
         {
+            State = DogState.Move;
             var DogToy = nearObject.gameObject.GetComponent<DogToyController>();
             float targetPositionDistance;
             //Debug.Log(DogToy.isFoundDogFood);
-
+            agent.isStopped = false;
             agent.destination = nearObject.transform.position;
             Debug.Log(gameObject.name + " " + agent.destination);
 
@@ -202,15 +204,12 @@ public class DogController : MonoBehaviour
                 State = DogState.FindFood;
                 // Debug.Log("餌食べる");
                 DogMoveStop = true;
-                //時間を数える
-                //time2 += Time.deltaTime;
+                //餌にダメージを与える
                 DogToy.dogFoodHealth -= Time.deltaTime;
             }
             //犬が食べ終わったら動き出す
             if (DogToy.dogFoodHealth <= 0)
             {
-                //time2 = 0;
-
                 DogMoveStop = false;
                 if (nearObject.gameObject != null)
                 {
@@ -228,16 +227,35 @@ public class DogController : MonoBehaviour
             //サーチする角度内だったら発見
             if (angle <= searchAngle)
             {
-                //GetComponent<AudioSource>().Play();
                 //Debug.Log("主人公発見");
                 State = DogState.FindPlayer;
+            }
+            else if(State == DogState.FindPlayer)
+            {
+                State = DogState.Idle;
             }
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (nearObject == null && (other.CompareTag("Player") || other.CompareTag("DogFood")))
+        if (other.CompareTag("DogFood") && (nearObject==null || nearObject.CompareTag("Player")))
+        {
+            nearObject = other;
+        }
+        else if(other.CompareTag("Player") && nearObject==null)
+        {
+            nearObject = other;
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if(State != DogState.FindFood && other.CompareTag("DogFood"))
+        {
+            nearObject = other;
+        }
+        else if(State != DogState.FindFood && other.CompareTag("Player"))
         {
             nearObject = other;
         }
@@ -250,9 +268,10 @@ public class DogController : MonoBehaviour
             return;
         }
 
-        if(other.CompareTag("Player")||other.CompareTag("DogFood"))
+        if(other.CompareTag("Player") || other.CompareTag("DogFood"))
         {
             nearObject = null;
+ 
         }
     }
 }
