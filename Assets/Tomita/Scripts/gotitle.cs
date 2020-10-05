@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 
-public class Gotitle : MonoBehaviour
+public class gotitle : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject titleButton;
    
     // Start is called before the first frame update
     void Start()
@@ -15,11 +17,15 @@ public class Gotitle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if ( Input.GetKeyDown("joystick button 2") ||  Input.GetKeyDown(KeyCode.Q))
+        if(titleButton.gameObject.activeSelf == true)
         {
-            SceneChanger.Instance.SceneLoad(SceneChanger.SceneName.TitleScenes);
-           
+            if (Input.GetKeyDown("joystick button 2") || Input.GetKeyDown(KeyCode.Q))
+            {
+                SceneChanger.Instance.SceneLoad(SceneChanger.SceneName.TitleScenes);
+
+            }
         }
+        
     }
     // Start is called before the first frame update
 

@@ -26,6 +26,7 @@ TagManager:
   - BubbleEffect
   - SlideShowImagePlaceholder
   - HeartPosition
+  - pauseCanvas
   layers:
   - Default
   - TransparentFX
