@@ -65,24 +65,32 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
         }
     }
 
-    public void PlayBgm(BGM key)
+    public void PlayBgm(BGM key, float volume = -1, float pitch = 1)
     {
         Sound sound = bgmdic[key];
         AudioClip clip = sound.clip;
-        float volume = sound.volume;
         //Debug.Log("<color=blue>" + clip.name + ":" + volume + "</color>");
-        audioSource_BGM.clip = clip;
-        audioSource_BGM.volume = volume;
+        audioSource_BGM.clip   = clip;
+        audioSource_BGM.volume = (volume == -1)
+                                     ? sound.volume
+                                     : Mathf.Clamp(volume, 0, 1);
+
+        audioSource_BGM.pitch = Mathf.Clamp(pitch, -3, 3);
+
         audioSource_BGM.Play();
     }
 
-    public void PlaySe(SE key)
+    public void PlaySe(SE key, float volume = -1, float pitch = 1)
     {
         Sound sound = sedic[key];
         AudioClip clip = sound.clip;
-        float volume = sound.volume;
         //Debug.Log("<color=blue>" + clip.name + ":" + volume + "</color>");
-        audioSource_SE.volume = volume;
+        audioSource_SE.volume = (volume == -1)
+                                    ? sound.volume
+                                    : Mathf.Clamp(volume, 0, 1);
+
+        audioSource_SE.pitch = Mathf.Clamp(pitch, -3, 3);
+
         audioSource_SE.PlayOneShot(clip);
     }
 
