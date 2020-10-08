@@ -15,6 +15,8 @@ public enum SE
     RifregeratorOpen,
     DoorOpen,
     DoorClose,
+    PlayerFootstepOnFlooring,
+    PlayerFootstepOnCarpet,
 }
 
 [System.Serializable]
