@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 
 //オブジェクトにNavMeshAgentをコンポーネントを設置
@@ -8,7 +6,7 @@ using UnityEngine.AI;
 
 public class DogController : MonoBehaviour
 {
-    public enum DogState
+    public enum DogState 
     {
         Idle,
         Move,
@@ -16,7 +14,6 @@ public class DogController : MonoBehaviour
         FindPlayer,
     }
     private DogState State = DogState.Idle;
-    private bool isNearPlayer;
     [SerializeField]
     private SphereCollider searchArea;
     [SerializeField]
@@ -35,11 +32,6 @@ public class DogController : MonoBehaviour
     [SerializeField] float waitTime = 2;
     //待機時間を数える
     [SerializeField] float time = 0;
-
-    [SerializeField] float time2 = 0;
-
-    //餌を食べる時間
-    private float eatTime = 20;
 
     private Collider nearObject;
 
@@ -67,10 +59,8 @@ public class DogController : MonoBehaviour
         State = DogState.Move;
         //NavMeshAgentのストップの解除
         agent.isStopped = false;
-
         //CentralPointの位置にPosXとPosZを足す
         pos = central.position;
-
         //NavMeshAgentに目標地点を設定する
         agent.destination = pos;
     }
@@ -79,24 +69,21 @@ public class DogController : MonoBehaviour
     {
         //NavMeshAgentを止める
         agent.isStopped = true;
-
+        
         State = DogState.Idle;
-
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(State);
-        // Debug.Log(DogBark);
-        // 検知範囲にプレイヤーがいたら吠える
-
         if (State == DogState.Idle)
         {
             DogMoveStop = false;
             _animator.SetBool("Walk", false);
             _animator.SetBool("Bark", false);
             _animator.SetBool("EatFood", false);
+
+            //吠える音声を止める
             if(DogBark==true)
             {
                 GetComponent<AudioSource>().Stop();
@@ -185,10 +172,8 @@ public class DogController : MonoBehaviour
             State = DogState.Move;
             var DogToy = nearObject.gameObject.GetComponent<DogToyController>();
             float targetPositionDistance;
-            //Debug.Log(DogToy.isFoundDogFood);
             agent.isStopped = false;
             agent.destination = nearObject.transform.position;
-            Debug.Log(gameObject.name + " " + agent.destination);
 
             if (agent.pathPending)
             {
@@ -202,7 +187,6 @@ public class DogController : MonoBehaviour
             if (targetPositionDistance < 2f)
             {
                 State = DogState.FindFood;
-                // Debug.Log("餌食べる");
                 DogMoveStop = true;
                 //餌にダメージを与える
                 DogToy.dogFoodHealth -= Time.deltaTime;
@@ -227,7 +211,6 @@ public class DogController : MonoBehaviour
             //サーチする角度内だったら発見
             if (angle <= searchAngle)
             {
-                //Debug.Log("主人公発見");
                 State = DogState.FindPlayer;
             }
             else if(State == DogState.FindPlayer)
@@ -271,7 +254,6 @@ public class DogController : MonoBehaviour
         if(other.CompareTag("Player") || other.CompareTag("DogFood"))
         {
             nearObject = null;
- 
         }
     }
 }
