@@ -26,7 +26,8 @@ TagManager:
   - BubbleEffect
   - SlideShowImagePlaceholder
   - HeartPosition
-  - pauseCanvas
+  - FlooringFloor
+  - CarpetFloor
   layers:
   - Default
   - TransparentFX
