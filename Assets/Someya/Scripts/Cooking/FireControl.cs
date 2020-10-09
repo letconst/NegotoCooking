@@ -46,8 +46,7 @@ public class FireControl : MonoBehaviour
     //今焼き処理中か
     public static bool clickBool = true;
     [HideInInspector]
-    static public bool burntBool;
-    private bool doOnceBakeSound = true;
+    static public bool burntBool;    
     [SerializeField]
     private ParticleSystem fireS;
     [SerializeField]
@@ -115,16 +114,17 @@ public class FireControl : MonoBehaviour
         if (_slider.value >= 100)
         {
             _slider.value = 0;
-            doOnceBakeSound = true;
+            BakeController.doOnceBakeSound = true;
             //焼き調理音をフェードアウトさせる。
             SoundManager.Instance.FadeOutBgm(0.2f);
         }
 
         if (clickBool == true) return;
 
-        if (doOnceBakeSound)
+        if (BakeController.doOnceBakeSound)
         {
-            doOnceBakeSound = false;
+            Debug.Log("soundON");
+            BakeController.doOnceBakeSound = false;
             SoundManager.Instance.PlayBgm(BGM.BakeSound);
         }
         
