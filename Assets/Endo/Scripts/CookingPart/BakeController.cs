@@ -13,6 +13,8 @@ public class BakeController : MonoBehaviour
     private Slider     _bakeSlider;
     private int flyingpanTimes = 0;
     private float timeleft;
+    [HideInInspector]
+    public static bool doOnceBakeSound = true;
 
     private PlayerInventoryContainer _playerContainer;
 
@@ -55,8 +57,11 @@ public class BakeController : MonoBehaviour
 
         if (GameManager.Instance.BakePoint == 100)
         {
+            BakeController.doOnceBakeSound = true;
             Destroy(_foodParent.transform.GetChild(0).gameObject);            
             _bakeSlider.value = 0;
+            GameManager.Instance.BakePoint = 0;
+            SoundManager.Instance.FadeOutBgm(0.1f);
             FireControl.clickBool = true;
             _playerContainer.RemoveItem(puttedSlotIndex);
         }

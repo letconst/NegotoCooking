@@ -5,11 +5,29 @@ using UnityEngine;
 
 public class gotitle : MonoBehaviour
 {
-    
-    // Start is called before the first frame update
+    [SerializeField]
+    private GameObject titleButton;
    
-    public void OnClickStartButton()
+    // Start is called before the first frame update
+    void Start()
     {
-        SceneManager.LoadScene("TitleScenes");
+
     }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if(titleButton.gameObject.activeSelf == true)
+        {
+            if (Input.GetKeyDown("joystick button 2") || Input.GetKeyDown(KeyCode.Q))
+            {
+                SceneChanger.Instance.SceneLoad(SceneChanger.SceneName.TitleScenes);
+
+            }
+        }
+        
+    }
+    // Start is called before the first frame update
+
+
 }
