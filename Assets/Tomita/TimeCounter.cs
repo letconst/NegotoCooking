@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class TimeCounter : MonoBehaviour
 {
     //カウントアップ
-    public static float CountUp = 400.0f;
+    public static float CountUp = 500.0f;
 
     public static float CurrentTime = CountUp;
 
