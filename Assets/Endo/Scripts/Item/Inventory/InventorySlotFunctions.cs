@@ -4,7 +4,10 @@ using UnityEngine.SceneManagement;
 
 public class InventorySlotFunctions : MonoBehaviour
 {
+    private GameObject                         _playerInvObj;
     private GameObject                         _refInvObj;
+    private CanvasGroup                        _playerCanvasGroup;
+    private CanvasGroup                        _refCanvasGroup;
     private InventoryManager                   _invManager;
     private PlayerInventoryContainer           _playerContainer;
     private RefrigeratorInventoryContainerBase _nearRefContainer;
@@ -14,10 +17,17 @@ public class InventorySlotFunctions : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
+        _playerInvObj      = GameObject.FindGameObjectWithTag("PlayerInventory");
         _refInvObj         = GameObject.FindGameObjectWithTag("RefrigeratorInventory");
+        _playerCanvasGroup = _playerInvObj.GetComponent<CanvasGroup>();
         _invManager        = InventoryManager.Instance;
         _playerContainer   = _invManager.PlayerContainer;
-        _playerInvRenderer = GameObject.FindGameObjectWithTag("PlayerInventory").GetComponent<InventoryRenderer>();
+        _playerInvRenderer = _playerInvObj.GetComponent<InventoryRenderer>();
+
+        // 冷蔵庫が存在しないシーンならCanvasGroupを取得しない
+        if (_refInvObj == null) return;
+
+        _refCanvasGroup    = _refInvObj.GetComponent<CanvasGroup>();
     }
 
     // Update is called once per frame
@@ -42,7 +52,7 @@ public class InventorySlotFunctions : MonoBehaviour
     /// 返り値が-1なら該当なし
     /// </summary>
     /// <returns>インデックス</returns>
-    public int GetSelfIndex()
+    private int GetSelfIndex()
     {
         var result = -1;
 
@@ -62,10 +72,10 @@ public class InventorySlotFunctions : MonoBehaviour
     /// </summary>
     public void OnClickForPlayer()
     {
-        _nearRefContainer = RefrigeratorManager.Instance.NearRefrigeratorContainer;
-
         // 交換モードなら
         if (!_invManager.IsSwapMode) return;
+
+        _nearRefContainer = RefrigeratorManager.Instance.NearRefrigeratorContainer;
 
         var selfIndex = GetSelfIndex();
 
@@ -80,8 +90,8 @@ public class InventorySlotFunctions : MonoBehaviour
                                     _invManager.ItemStatesToSwap);
 
         // フォーカスを冷蔵庫に戻す
-        _playerInvRenderer.DisableAllSlot();
-        _refInvRenderer.EnableAllSlot();
+        _playerCanvasGroup.interactable = false;
+        _refCanvasGroup.interactable    = true;
         _refInvRenderer.SelectSlot();
 
         // キャッシュアイテムクリア
@@ -122,8 +132,8 @@ public class InventorySlotFunctions : MonoBehaviour
         // 交換モード発動
         _invManager.IsSwapMode = true;
         // プレイヤースロットにフォーカス
-        _refInvRenderer.DisableAllSlot();
-        _playerInvRenderer.EnableAllSlot();
+        _refCanvasGroup.interactable = false;
+        _playerCanvasGroup.interactable = true;
         _playerInvRenderer.SelectSlot();
 
         // ここから先はOnClickForPlayer()
