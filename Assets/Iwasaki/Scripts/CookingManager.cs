@@ -39,7 +39,7 @@ public class CookingManager : SingletonMonoBehaviour<CookingManager>
                 }
                 else if (GameManager.Instance.FireChange == 2)
                 {
-                    GameManager.Instance.BubblePoint += 20;
+                    GameManager.Instance.BubblePoint += 15;
                 }
             }
         }
