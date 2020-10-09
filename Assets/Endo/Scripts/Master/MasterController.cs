@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -9,8 +10,13 @@ public class MasterController : SingletonMonoBehaviour<MasterController>
 
     // 食材がすべて調理できているか否か
     private bool _isComplete = true;
-
     private InventoryContainerBase _largePlateContainer;
+    private ChoicePopup _choicePopup;
+
+    private void Start()
+    {
+        _choicePopup = GameObject.FindGameObjectWithTag("SelectWindow").GetComponent<ChoicePopup>();
+    }
 
     // Update is called once per frame
     private void Update()
@@ -24,12 +30,23 @@ public class MasterController : SingletonMonoBehaviour<MasterController>
         if (_isNear &&
             Input.GetButtonDown("Interact"))
         {
+            StartCoroutine("InputHandler");
+        }
+    }
+
+    private IEnumerator InputHandler()
+    {
+        IEnumerator coroutine = _choicePopup.showWindow("師匠を起こしますか?");
+        yield return coroutine;
+        if ((bool)coroutine.Current)
+        {
             // 調理判定
             Judgement();
             Debug.Log(GameManager.Instance.FailCount);
 
             SceneChanger.Instance.SceneLoad(SceneChanger.SceneName.Result);
         }
+        _choicePopup.HideWindow();
     }
 
     /// <summary>
@@ -86,7 +103,11 @@ public class MasterController : SingletonMonoBehaviour<MasterController>
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player")) _isNear = false;
+        if (other.CompareTag("Player"))
+        {
+            _isNear = false;
+            _choicePopup.HideWindow();
+        }
     }
 }
 

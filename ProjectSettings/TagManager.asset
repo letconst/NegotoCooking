@@ -28,6 +28,7 @@ TagManager:
   - Masterselect
   - Trushboxselect
   - Plateselect
+  - SelectWindow
   layers:
   - Default
   - TransparentFX

@@ -32,7 +32,7 @@ public class GarbageCanController : MonoBehaviour
 
     private IEnumerator InputHandler()
     {
-        IEnumerator coroutine = _choicePopup.showWindow("食材を捨ててもよろしいでしょうか?");
+        IEnumerator coroutine = _choicePopup.showWindow("食材を捨てていいですか?");
         yield return coroutine;
         if((bool) coroutine.Current)
         {

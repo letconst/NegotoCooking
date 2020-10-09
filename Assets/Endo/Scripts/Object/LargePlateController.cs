@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class LargePlateController : MonoBehaviour
 {
@@ -32,13 +33,26 @@ public class LargePlateController : MonoBehaviour
         if (_isNear &&
             Input.GetButtonDown("Interact"))
         {
-            var selectedFood      = _playerInvContainer.GetItem(_playerInvRenderer.LastSelectedIndex);
+            StartCoroutine("InputHandler");
+        }
+
+        // コンテナにアイテムが1つでも入ったらスープを表示
+        if (selfContainer.Container.Count > 0) _soup.SetActive(true);
+    }
+
+    private IEnumerator InputHandler()
+    {
+        IEnumerator coroutine = _choicePopup.showWindow("大皿に素材を投入していいですか?");
+        yield return coroutine;
+        if ((bool)coroutine.Current)
+        {
+            var selectedFood = _playerInvContainer.GetItem(_playerInvRenderer.LastSelectedIndex);
             var selectedFoodState = _playerInvContainer.GetStates(_playerInvRenderer.LastSelectedIndex);
 
             // 調味料か調理済みの食材のみ受け付ける
             if (selectedFood.KindOfItem1 != Item.KindOfItem.Seasoning &&
                 (selectedFoodState.Contains(FoodState.None) ||
-                 selectedFoodState.Contains(FoodState.Raw))) return;
+                 selectedFoodState.Contains(FoodState.Raw))) yield break;
 
             var targetFoodIndex = _playerInvRenderer.LastSelectedIndex;
 
@@ -52,9 +66,7 @@ public class LargePlateController : MonoBehaviour
             // プレイヤーのアイテムを削除
             _playerInvContainer.RemoveItem(targetFoodIndex);
         }
-
-        // コンテナにアイテムが1つでも入ったらスープを表示
-        if (selfContainer.Container.Count > 0) _soup.SetActive(true);
+        _choicePopup.HideWindow();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -64,6 +76,10 @@ public class LargePlateController : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player")) _isNear = false;
+        if (other.CompareTag("Player"))
+        {
+            _isNear = false;
+            _choicePopup.HideWindow();
+        }
     }
 }
