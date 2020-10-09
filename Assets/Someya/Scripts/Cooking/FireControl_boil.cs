@@ -153,11 +153,11 @@ public class FireControl_boil : MonoBehaviour
         }
         else if (h > 0)
         {
-            otamaXMove = 30;
+            otamaXMove = 25;
         }
         Otama.transform.position = new Vector3(Centerpostion.transform.position.x + h * otamaXMove, 
                                                Centerpostion.transform.position.y, 
-                                               Centerpostion.transform.position.z + v * 50);        
+                                               Centerpostion.transform.position.z + v * 30);        
 
         //1秒分掻きまわすアクションをするとポイントが-25される。
         if (h != 0 && v != 0)
