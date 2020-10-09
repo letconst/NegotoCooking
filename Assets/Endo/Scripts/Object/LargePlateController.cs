@@ -13,6 +13,7 @@ public class LargePlateController : MonoBehaviour
     private GameObject               _playerInvObj;
     private PlayerInventoryContainer _playerInvContainer;
     private InventoryRenderer        _playerInvRenderer;
+    private ChoicePopup              _choicePopup;
 
     // Start is called before the first frame update
     private void Start()
@@ -21,7 +22,7 @@ public class LargePlateController : MonoBehaviour
         _playerInvObj       = GameObject.FindGameObjectWithTag("PlayerInventory");
         _playerInvContainer = InventoryManager.Instance.PlayerContainer;
         _playerInvRenderer  = _playerInvObj.GetComponent<InventoryRenderer>();
-
+        _choicePopup        = GameObject.FindGameObjectWithTag("SelectWindow").GetComponent<ChoicePopup>();
         _soup.SetActive(false);
     }
 

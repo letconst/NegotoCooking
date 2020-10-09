@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ChoicePopup : SingletonMonoBehaviour<ChoicePopup>
+public class ChoicePopup : MonoBehaviour
 {
     private CanvasGroup canvasGroup;
     private void Start()

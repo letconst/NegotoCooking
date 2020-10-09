@@ -5,6 +5,7 @@ public class GarbageCanController : MonoBehaviour
 {
     private PlayerInventoryContainer _playerContainer;
     private InventoryRenderer        _playerInvRenderer;
+    private ChoicePopup              _choicePopup;
 
     // プレイヤーが近くにいるか否か
     private bool _isNear;
@@ -14,6 +15,7 @@ public class GarbageCanController : MonoBehaviour
     {
         _playerContainer   = InventoryManager.Instance.PlayerContainer;
         _playerInvRenderer = GameObject.FindGameObjectWithTag("PlayerInventory").GetComponent<InventoryRenderer>();
+        _choicePopup       = GameObject.FindGameObjectWithTag("SelectWindow").GetComponent<ChoicePopup>();
     }
 
     // Update is called once per frame
@@ -30,13 +32,14 @@ public class GarbageCanController : MonoBehaviour
 
     private IEnumerator InputHandler()
     {
-        IEnumerator coroutine = ChoicePopup.Instance.showWindow("食材を捨ててもよろしいでしょうか?");
+        IEnumerator coroutine = _choicePopup.showWindow("食材を捨ててもよろしいでしょうか?");
         yield return coroutine;
         if((bool) coroutine.Current)
         {
             _playerContainer.RemoveItem(_playerInvRenderer.LastSelectedIndex);
             GameManager.Instance.StatisticsManager.throwInCount++;
         }
+        _choicePopup.HideWindow();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -46,6 +49,10 @@ public class GarbageCanController : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player")) _isNear = false;
+        if (other.CompareTag("Player"))
+        {
+            _isNear = false;
+            _choicePopup.HideWindow();
+        }
     }
 }
