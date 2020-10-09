@@ -28,6 +28,7 @@ TagManager:
   - HeartPosition
   - FlooringFloor
   - CarpetFloor
+  - SelectWindow
   layers:
   - Default
   - TransparentFX
