@@ -63,7 +63,7 @@ MonoBehaviour:
     volume: 0.4
   - clip: {fileID: 8300000, guid: 143f7ae3c37d3ff4bb0c1ae3d73b9133, type: 3}
     volume: 0.4
-  - clip: {fileID: 8300000, guid: 5b4acc431c83f3540a37c1f65e4dfa9a, type: 3}
+  - clip: {fileID: 8300000, guid: 0d34d652b1a0af841b34f74aca36eea9, type: 3}
     volume: 0.4
   audioSource_BGM: {fileID: 1189408208835049331}
   audioSource_SE: {fileID: 8157298913561168990}
