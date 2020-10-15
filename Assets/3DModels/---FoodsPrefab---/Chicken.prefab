@@ -16,8 +16,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &5219413684962233444
-BoxCollider:
+--- !u!64 &8478950538176166463
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -26,9 +26,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.005, y: 0.0055, z: 0.0085}
-  m_Center: {x: 0, y: -0.0014, z: 0.0005}
+  serializedVersion: 3
+  m_Convex: 1
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 4300000, guid: a8bb05b3dfb1c494f8e3ef5c1d945d39, type: 3}
 --- !u!114 &7217030562963787110
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42,96 +43,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   acceleration: {x: 0, y: -500, z: 0}
---- !u!1 &1812596233628584329
-GameObject:
+--- !u!65 &4145251963431237752
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1518854480999911430}
-  - component: {fileID: 5265928315719017869}
-  m_Layer: 0
-  m_Name: ChickenCollider2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1518854480999911430
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1812596233628584329}
-  m_LocalRotation: {x: -0.32295755, y: -0.057062387, z: -0.16436876, w: 0.9302824}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 8380181134339145031}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: -38.29, y: 0, z: -20.04}
---- !u!136 &5265928315719017869
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1812596233628584329}
+  m_GameObject: {fileID: 1087352722518790231}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 13.65
-  m_Height: 77.6
-  m_Direction: 1
-  m_Center: {x: -40.8, y: 41.7, z: 8.9}
---- !u!1 &8022385785400351660
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8122929604518856417}
-  - component: {fileID: 7881849253269080412}
-  m_Layer: 0
-  m_Name: ChickenCollider
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8122929604518856417
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8022385785400351660}
-  m_LocalRotation: {x: -0.32295755, y: 0.057062358, z: 0.16436869, w: 0.9302824}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 8380181134339145031}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: -38.29, y: 0, z: 20.04}
---- !u!136 &7881849253269080412
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8022385785400351660}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 13.65
-  m_Height: 77.6
-  m_Direction: 1
-  m_Center: {x: 40.8, y: 41.7, z: 8.9}
+  serializedVersion: 2
+  m_Size: {x: 34.100166, y: 21.537275, z: 60.144165}
+  m_Center: {x: 0, y: -30.863556, z: 9.323425}
 --- !u!1 &8665331324527074544
 GameObject:
   m_ObjectHideFlags: 0
@@ -160,8 +84,6 @@ Transform:
   m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_Children:
   - {fileID: 1087352722519149687}
-  - {fileID: 8122929604518856417}
-  - {fileID: 1518854480999911430}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -222,15 +144,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: a8bb05b3dfb1c494f8e3ef5c1d945d39, type: 3}
       propertyPath: m_LocalScale.x
-      value: 10000
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: a8bb05b3dfb1c494f8e3ef5c1d945d39, type: 3}
       propertyPath: m_LocalScale.y
-      value: 10000
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: a8bb05b3dfb1c494f8e3ef5c1d945d39, type: 3}
       propertyPath: m_LocalScale.z
-      value: 10000
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a8bb05b3dfb1c494f8e3ef5c1d945d39, type: 3}
