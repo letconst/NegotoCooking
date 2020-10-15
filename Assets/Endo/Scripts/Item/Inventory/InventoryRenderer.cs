@@ -4,7 +4,6 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class InventoryRenderer : MonoBehaviour
@@ -26,6 +25,9 @@ public class InventoryRenderer : MonoBehaviour
 
     // 最大スロット数
     private int _selfSlotSize;
+
+    // スロットの通常色
+    private Color _normalSlotColor = Color.white;
 
     // 現在選択しているスロット
     private GameObject _currentSelectedObj;
@@ -311,6 +313,51 @@ public class InventoryRenderer : MonoBehaviour
         }
 
         _lastSelectedObj = _currentSelectedObj;
+    }
+
+    /// <summary>
+    /// 指定したスロットを取得する
+    /// </summary>
+    /// <param name="index">スロットのインデックス</param>
+    /// <returns>指定スロットのゲームオブジェクト</returns>
+    public GameObject GetSlotAt(int index)
+    {
+        return _itemsDisplayed.Keys.ElementAt(index);
+    }
+
+    /// <summary>
+    /// 指定したスロットをハイライトする
+    /// </summary>
+    /// <param name="index">スロットのインデックス</param>
+    public void HighlightSlotAt(int index)
+    {
+        if (index >= _selfSlotSize)
+        {
+            Debug.LogWarning($"インデックス「{index}」のスロットは存在しません");
+
+            return;
+        }
+
+        var targetSlotObj = _itemsDisplayed.Keys.ElementAt(index);
+        var selectedCol   = targetSlotObj.GetComponent<Button>().colors.selectedColor;
+
+        targetSlotObj.GetComponent<Image>().color = selectedCol;
+    }
+
+    /// <summary>
+    /// 指定したスロットのハイライトを解除する
+    /// </summary>
+    /// <param name="index">スロットのインデックス</param>
+    public void UnhighlightSlotAt(int index)
+    {
+        if (index >= _selfSlotSize)
+        {
+            Debug.LogWarning($"インデックス「{index}」のスロットは存在しません");
+
+            return;
+        }
+
+        _itemsDisplayed.Keys.ElementAt(index).GetComponent<Image>().color = _normalSlotColor;
     }
 
     /// <summary>

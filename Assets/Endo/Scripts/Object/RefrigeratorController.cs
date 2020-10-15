@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RefrigeratorController : MonoBehaviour
 {
@@ -67,17 +68,16 @@ public class RefrigeratorController : MonoBehaviour
             _selfInvRenderer.SelectSlot();
 
             // プレイヤーインベントリを無効化
-            // _playerInvRenderer.DisableAllSlot();
             _playerCanvasGroup.interactable = false;
         }
         // 閉じたとき
         else
         {
             // 冷蔵庫インベントリを無効化
+            _selfInvRenderer.UnhighlightSlotAt(_selfInvRenderer.LastSelectedIndex);
             _selfCanvasGroup.interactable = false;
 
             // プレイヤーインベントリを有効化し、フォーカス
-            // _playerInvRenderer.EnableAllSlot();
             _playerCanvasGroup.interactable = true;
             _playerInvRenderer.SelectSlot();
         }
@@ -153,10 +153,15 @@ public class RefrigeratorController : MonoBehaviour
         // 冷蔵庫が開いている時
         if (_selfCanvasGroup.alpha.Equals(1))
         {
+            var selfIndex = _selfInvRenderer.LastSelectedIndex;
             // 閉じる
             _selfCanvasGroup.alpha        = 0;
             _selfCanvasGroup.interactable = false;
             _selfInvRenderer.ClearRender();
+
+            // 交換モードだったときの表示をリセット
+            _selfInvRenderer.GetSlotAt(selfIndex).GetComponent<Button>().enabled = true;
+            _selfInvRenderer.UnhighlightSlotAt(selfIndex);
 
             // プレイヤーインベントリ有効化
             // _playerInvRenderer.EnableAllSlot();
