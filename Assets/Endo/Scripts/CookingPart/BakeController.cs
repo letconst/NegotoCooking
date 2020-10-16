@@ -15,6 +15,9 @@ public class BakeController : MonoBehaviour
     private float timeleft;
     [HideInInspector]
     public static bool doOnceBakeSound = true;
+    private bool doOnce = true;
+    [SerializeField]
+    private ParticleSystem blackSmoke;
 
     private PlayerInventoryContainer _playerContainer;
 
@@ -27,12 +30,12 @@ public class BakeController : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
+        blackSmoke.Stop();
         _bakeMeter  = GameObject.FindGameObjectWithTag("BakeMator");
         _foodParent = GameObject.FindGameObjectWithTag("FoodParent");
         _bakeSlider = _bakeMeter.GetComponent<FireControl>()._slider;
 
         _playerContainer = InventoryManager.Instance.PlayerContainer;
-        
     }
 
     // Update is called once per frame
@@ -40,6 +43,7 @@ public class BakeController : MonoBehaviour
     {
         CookingCompleteListener();
         FlyingPanActionHandler();
+        blackSmoke.transform.position = new Vector3(FlyingPan.transform.position.x, FlyingPan.transform.position.y, FlyingPan.transform.position.z);
     }
 
     /// <summary>
@@ -64,6 +68,17 @@ public class BakeController : MonoBehaviour
             SoundManager.Instance.FadeOutBgm(0.1f);
             FireControl.clickBool = true;
             _playerContainer.RemoveItem(puttedSlotIndex);
+            blackSmoke.Stop();
+        }
+        if (GameManager.Instance.BakePoint >= 70 && doOnce)
+        {           
+            doOnce = false;            
+            blackSmoke.Play();
+        }
+        else if(GameManager.Instance.BakePoint < 70 && !doOnce)
+        {
+            doOnce = true;
+            blackSmoke.Stop();
         }
 
         // 調理が完了していないか、投入元のスロットにアイテムがある場合は動作しない
