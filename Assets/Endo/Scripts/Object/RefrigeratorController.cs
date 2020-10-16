@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RefrigeratorController : MonoBehaviour
 {
@@ -9,10 +10,10 @@ public class RefrigeratorController : MonoBehaviour
     // 近くにいるか否か
     private bool _isNear;
 
-    private GameObject _playerInvObj;
-    private GameObject _refInvObj;
-
-    private CanvasGroup                        _refInvCanvasGroup;
+    private GameObject                         _playerInvObj;
+    private GameObject                         _refInvObj;
+    private CanvasGroup                        _playerCanvasGroup;
+    private CanvasGroup                        _selfCanvasGroup;
     private InventoryRenderer                  _playerInvRenderer;
     private InventoryRenderer                  _selfInvRenderer;
     private RefrigeratorInventoryContainers    _refContainers;
@@ -25,46 +26,60 @@ public class RefrigeratorController : MonoBehaviour
     {
         _playerInvObj      = GameObject.FindGameObjectWithTag("PlayerInventory");
         _refInvObj         = GameObject.FindGameObjectWithTag("RefrigeratorInventory");
-        _refInvCanvasGroup = _refInvObj.GetComponent<CanvasGroup>();
+        _playerCanvasGroup = _playerInvObj.GetComponent<CanvasGroup>();
+        _selfCanvasGroup   = _refInvObj.GetComponent<CanvasGroup>();
         _playerInvRenderer = _playerInvObj.GetComponent<InventoryRenderer>();
         _selfInvRenderer   = _refInvObj.GetComponent<InventoryRenderer>();
         _refContainers     = InventoryManager.Instance.RefContainers;
 
+        // コンテナデータ作成
         CreateContainer();
+        _selfCanvasGroup.interactable = false;
     }
 
     // Update is called once per frame
     private void Update()
     {
+        InteractHandler();
+    }
+
+    /// <summary>
+    /// インタラクト時の処理
+    /// </summary>
+    private void InteractHandler()
+    {
         // X押下でインベントリ開閉
-        if (_isNear &&
-            Input.GetButtonDown("Interact"))
+        if (!_isNear ||
+            !Input.GetButtonDown("Interact")) return;
+
+        // 開閉切り替え
+        _selfCanvasGroup.alpha = (_selfCanvasGroup.alpha == 0)
+                                     ? 1
+                                     : 0;
+
+        // 冷蔵庫インベントリの描画を一度初期化
+        _selfInvRenderer.ClearRender();
+
+        // 開いたとき
+        if (_selfCanvasGroup.alpha.Equals(1))
         {
-            Debug.Log(_refInvCanvasGroup.alpha);
-            // 開閉切り替え
-            _refInvCanvasGroup.alpha = (_refInvCanvasGroup.alpha == 0)
-                                           ? 1
-                                           : 0;
+            // 冷蔵庫インベントリを有効化し、フォーカス
+            _selfCanvasGroup.interactable = true;
+            _selfInvRenderer.SelectSlot();
 
-            // 閉じるときは表示リセット
-            _selfInvRenderer.ClearRender();
+            // プレイヤーインベントリを無効化
+            _playerCanvasGroup.interactable = false;
+        }
+        // 閉じたとき
+        else
+        {
+            // 冷蔵庫インベントリを無効化
+            _selfInvRenderer.UnhighlightSlotAt(_selfInvRenderer.LastSelectedIndex);
+            _selfCanvasGroup.interactable = false;
 
-            // 開いたとき
-            if (_refInvCanvasGroup.alpha != 0)
-            {
-                // 冷蔵庫インベントリにフォーカス
-                _selfInvRenderer.SelectSlot();
-
-                // プレイヤーインベントリを無効化
-                _playerInvRenderer.DisableAllSlot();
-            }
-            // 閉じたとき
-            else
-            {
-                // プレイヤーインベントリを有効化
-                _playerInvRenderer.EnableAllSlot();
-                _playerInvRenderer.SelectSlot();
-            }
+            // プレイヤーインベントリを有効化し、フォーカス
+            _playerCanvasGroup.interactable = true;
+            _playerInvRenderer.SelectSlot();
         }
     }
 
@@ -135,22 +150,28 @@ public class RefrigeratorController : MonoBehaviour
         _isNear                                     = false;
         RefrigeratorManager.Instance.currentNearObj = null;
 
-        // インベントリが開いている時
-        if (_refInvObj.activeSelf)
+        // 冷蔵庫が開いている時
+        if (_selfCanvasGroup.alpha.Equals(1))
         {
+            var selfIndex = _selfInvRenderer.LastSelectedIndex;
             // 閉じる
-            _refInvCanvasGroup.alpha = 0;
+            _selfCanvasGroup.alpha        = 0;
+            _selfCanvasGroup.interactable = false;
             _selfInvRenderer.ClearRender();
 
+            // 交換モードだったときの表示をリセット
+            _selfInvRenderer.GetSlotAt(selfIndex).GetComponent<Button>().enabled = true;
+            _selfInvRenderer.UnhighlightSlotAt(selfIndex);
+
             // プレイヤーインベントリ有効化
-            _playerInvRenderer.EnableAllSlot();
+            // _playerInvRenderer.EnableAllSlot();
+            _playerCanvasGroup.interactable = true;
             _playerInvRenderer.SelectSlot();
         }
 
-        // アイテム交換モードだったら解除し、冷蔵庫をenabledに戻す
+        // アイテム交換モードだったら解除する
         if (!InventoryManager.Instance.IsSwapMode) return;
 
         InventoryManager.Instance.IsSwapMode = false;
-        _selfInvRenderer.EnableAllSlot();
     }
 }

@@ -25,9 +25,9 @@ TagManager:
   - DogToyCount
   - BubbleEffect
   - SlideShowImagePlaceholder
-  - Masterselect
-  - Trushboxselect
-  - Plateselect
+  - HeartPosition
+  - FlooringFloor
+  - CarpetFloor
   - SelectWindow
   layers:
   - Default
@@ -40,7 +40,7 @@ TagManager:
   - 
   - UI1
   - UI2
-  - 
+  - PostProcess
   - 
   - 
   - 

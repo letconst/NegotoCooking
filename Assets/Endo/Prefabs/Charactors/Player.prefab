@@ -31,13 +31,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeed: 10
-  sprintSpeed: 13
+  sprintSpeed: 12
   gravity: 50
   rotateSpeed: 8
   camPos: {fileID: 0}
   maxWalkAnimSpeed: 0.6
   maxSprintAnimSpeed: 1
-  animDeltaTime: 0.3
+  animDeltaTime: 0.06
   dogFood: {fileID: 8425737463931234921, guid: 36d3b73b822826d4ebb54789eac6c8a5, type: 3}
   isStop: 0
 --- !u!114 &289014400
@@ -58,8 +58,8 @@ MonoBehaviour:
   - floorTagName: CarpetFloor
     se: 5
   defaultFootstep: 4
-  minVolume: 0.7
-  maxVolume: 1
+  minVolume: 0.4
+  maxVolume: 0.6
   minPitch: 0.8
   maxPitch: 1.2
 --- !u!1001 &7364957899217047551
