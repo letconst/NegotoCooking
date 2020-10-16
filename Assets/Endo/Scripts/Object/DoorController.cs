@@ -2,21 +2,19 @@
 
 public class DoorController : MonoBehaviour
 {
-    [SerializeField]
+    [SerializeField, Tooltip("インタラクト範囲のコライダー")]
+    private Collider interactRange;
+
+    [SerializeField, Tooltip("ドアの軸に付属するアニメーター")]
+    private Animator pivotAnim;
+
+    [SerializeField, Tooltip("ドアが自動で閉じるまでの時間（秒）")]
     private float closeLimit;
 
     // プレイヤーが近くにいるか否か
     private bool _isNear;
 
-    private Animator _anim;
-
     private static readonly int IsOpen = Animator.StringToHash("IsOpen");
-
-    // Start is called before the first frame update
-    private void Start()
-    {
-        _anim = transform.parent.GetComponent<Animator>();
-    }
 
     // Update is called once per frame
     private void Update()
@@ -31,7 +29,7 @@ public class DoorController : MonoBehaviour
             Invoke(nameof(SwitchOpen), closeLimit);
 
             // 閉じたときは自動で開かないようにする
-            if (!_anim.GetBool(IsOpen))
+            if (!pivotAnim.GetBool(IsOpen))
             {
                 CancelInvoke(nameof(SwitchOpen));
             }
@@ -53,6 +51,6 @@ public class DoorController : MonoBehaviour
     /// </summary>
     private void SwitchOpen()
     {
-        _anim.SetBool(IsOpen, !_anim.GetBool(IsOpen));
+        pivotAnim.SetBool(IsOpen, !pivotAnim.GetBool(IsOpen));
     }
 }
