@@ -42,15 +42,23 @@ public class LargePlateController : MonoBehaviour
 
     private IEnumerator InputHandler()
     {
+        var selectedFood = _playerInvContainer.GetItem(_playerInvRenderer.LastSelectedIndex);
+
+        // 持ってる食材がなければ終了
+        if (selectedFood == null) yield break;
+
         IEnumerator coroutine = _choicePopup.showWindow("大皿に素材を投入していいですか?");
+
+        // ボタン入力を待機
         yield return coroutine;
+
         if ((bool)coroutine.Current)
         {
-            var selectedFood = _playerInvContainer.GetItem(_playerInvRenderer.LastSelectedIndex);
             var selectedFoodState = _playerInvContainer.GetStates(_playerInvRenderer.LastSelectedIndex);
 
             // 調味料か調理済みの食材のみ受け付ける
-            if (selectedFood.KindOfItem1 != Item.KindOfItem.Seasoning &&
+            if (selectedFood == null ||
+                selectedFood.KindOfItem1 != Item.KindOfItem.Seasoning &&
                 (selectedFoodState.Contains(FoodState.None) ||
                  selectedFoodState.Contains(FoodState.Raw))) yield break;
 
