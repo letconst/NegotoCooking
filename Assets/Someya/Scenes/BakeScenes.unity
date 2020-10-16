@@ -1931,6 +1931,12 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1641540316642142644, guid: bbc62deb3ad6db7439fd1e827ca7058f,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 9910373737692bf4195c5fc6eeabb06c,
+        type: 3}
     - target: {fileID: 1641540316642142651, guid: bbc62deb3ad6db7439fd1e827ca7058f,
         type: 3}
       propertyPath: m_SizeDelta.x
@@ -1975,6 +1981,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -20.47
+      objectReference: {fileID: 0}
+    - target: {fileID: 1641540316951185173, guid: bbc62deb3ad6db7439fd1e827ca7058f,
+        type: 3}
+      propertyPath: m_Text
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1641540318224460405, guid: bbc62deb3ad6db7439fd1e827ca7058f,
         type: 3}

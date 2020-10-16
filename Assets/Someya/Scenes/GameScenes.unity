@@ -4909,7 +4909,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd71b62f4d7b0354f98aa8153bc72cba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactButton: X
+  interactButton: 
   interactName: "\u958B\u304F"
   xOffset: 0
   yOffset: 100
@@ -5094,7 +5094,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd71b62f4d7b0354f98aa8153bc72cba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactButton: X
+  interactButton: 
   interactName: "\u713C\u304F"
   xOffset: 0
   yOffset: 100
@@ -5887,7 +5887,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd71b62f4d7b0354f98aa8153bc72cba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactButton: X
+  interactButton: 
   interactName: "\u98DF\u6750\u3092\u6368\u3066\u308B"
   xOffset: 0
   yOffset: 100
@@ -6374,7 +6374,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd71b62f4d7b0354f98aa8153bc72cba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactButton: X
+  interactButton: 
   interactName: "\u8D77\u3053\u3059"
   xOffset: 0
   yOffset: 100
@@ -6708,7 +6708,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd71b62f4d7b0354f98aa8153bc72cba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactButton: X
+  interactButton: 
   interactName: "\u958B\u304F"
   xOffset: 0
   yOffset: 100
@@ -6857,7 +6857,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 4.5904e-41, y: 0, z: 0, w: -7.202504e-15}
+  m_BoundingSphereOverride: {x: 0, y: 7.532e-42, z: 5.7779074e-34, w: -2.8026205e-29}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -10753,7 +10753,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd71b62f4d7b0354f98aa8153bc72cba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactButton: X
+  interactButton: 
   interactName: "\u716E\u8FBC\u3080"
   xOffset: 0
   yOffset: 100
@@ -12658,7 +12658,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd71b62f4d7b0354f98aa8153bc72cba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactButton: X
+  interactButton: 
   interactName: "\u958B\u304F"
   xOffset: 0
   yOffset: 100
@@ -14503,7 +14503,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd71b62f4d7b0354f98aa8153bc72cba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactButton: X
+  interactButton: 
   interactName: "\u958B\u304F"
   xOffset: 0
   yOffset: 100
@@ -18286,7 +18286,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd71b62f4d7b0354f98aa8153bc72cba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactButton: X
+  interactButton: 
   interactName: "\u5207\u308B"
   xOffset: 0
   yOffset: 100
@@ -18775,7 +18775,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd71b62f4d7b0354f98aa8153bc72cba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactButton: X
+  interactButton: 
   interactName: "\u5927\u76BF\u306B\u5165\u308C\u308B"
   xOffset: 0
   yOffset: 100
@@ -19487,7 +19487,7 @@ PrefabInstance:
     - target: {fileID: 7485420130902453005, guid: d96400bc8dfb4f443b8b7de57ebdbfe9,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 7.600006
+      value: 7.5999756
       objectReference: {fileID: 0}
     - target: {fileID: 7485420130902453005, guid: d96400bc8dfb4f443b8b7de57ebdbfe9,
         type: 3}
