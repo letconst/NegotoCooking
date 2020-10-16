@@ -1294,6 +1294,12 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 41472411491656918, guid: f4b12d467e210834b9dfed9c2db64d26,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 9910373737692bf4195c5fc6eeabb06c,
+        type: 3}
     - target: {fileID: 41472411491656921, guid: f4b12d467e210834b9dfed9c2db64d26,
         type: 3}
       propertyPath: m_SizeDelta.x
@@ -1338,6 +1344,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -20.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 41472411832683127, guid: f4b12d467e210834b9dfed9c2db64d26,
+        type: 3}
+      propertyPath: m_Text
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f4b12d467e210834b9dfed9c2db64d26, type: 3}
