@@ -58,7 +58,7 @@ public class InventoryRenderer : MonoBehaviour
         UpdatePlayerInventoryRender();
         UpdateRefrigeratorInventoryRender();
         UpdateLastSelectedIndex();
-        UpdateDogToyCountRender();
+        //UpdateDogToyCountRender();
     }
 
     /// <summary>
@@ -239,16 +239,16 @@ public class InventoryRenderer : MonoBehaviour
         }
     }
 
-    private void UpdateDogToyCountRender()
-    {
-        // メインシーンでのみ動作
-        if (SceneManager.GetActiveScene().name != "GameScenes") return;
+    //private void UpdateDogToyCountRender()
+    //{
+    //    // メインシーンでのみ動作
+    //    if (SceneManager.GetActiveScene().name != "GameScenes") return;
 
-        var dogToyCanvas    = GameObject.FindGameObjectWithTag("DogToyCount").GetComponentInChildren<Text>();
-        var playerContainer = InventoryManager.Instance.PlayerContainer;
+    //    var dogToyCanvas    = GameObject.FindGameObjectWithTag("DogToyCount").GetComponentInChildren<Text>();
+    //    var playerContainer = InventoryManager.Instance.PlayerContainer;
 
-        dogToyCanvas.text = playerContainer.DogFoodCount + "/" + playerContainer.MaxDogFoodCount;
-    }
+    //    dogToyCanvas.text = playerContainer.DogFoodCount + "/" + playerContainer.MaxDogFoodCount;
+    //}
 
     /// <summary>
     /// インベントリスロットの表示を消去する
