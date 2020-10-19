@@ -29,6 +29,10 @@ TagManager:
   - FlooringFloor
   - CarpetFloor
   - SelectWindow
+  - FireM
+  - FireL
+  - FireS
+  - Cam
   layers:
   - Default
   - TransparentFX
