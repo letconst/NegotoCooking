@@ -237,8 +237,10 @@ public class DogController : MonoBehaviour
         if(State != DogState.FindFood && other.CompareTag("DogFood"))
         {
             nearObject = other;
+            return;
         }
-        else if(State != DogState.FindFood && other.CompareTag("Player"))
+
+        if(State != DogState.FindFood && other.CompareTag("Player"))
         {
             nearObject = other;
         }

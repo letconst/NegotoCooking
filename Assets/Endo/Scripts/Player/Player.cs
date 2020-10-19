@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System;
+using UnityEngine.UI;
 
 public class Player : SingletonMonoBehaviour<Player>
 {
@@ -31,6 +32,9 @@ public class Player : SingletonMonoBehaviour<Player>
     [SerializeField]
     private GameObject dogFood;
 
+    [SerializeField]
+    private Image[] m_elmages; //餌画像リスト
+
     // プレイヤーが停止状態か否か
     public bool isStop;
 
@@ -54,8 +58,11 @@ public class Player : SingletonMonoBehaviour<Player>
         Movement();
         if(Input.GetKeyDown("joystick button 3")||Input.GetKeyDown(KeyCode.X))
         {
-            if (InventoryManager.Instance.PlayerContainer.DogFoodCount == 0) return;
+            var dogFoodCount = InventoryManager.Instance.PlayerContainer.DogFoodCount;
+            if (dogFoodCount == 0) return;
             Instantiate(dogFood,new Vector3(transform.position.x,transform.position.y+0.5f,transform.position.z),Quaternion.identity);
+            //餌の画像アイコンを非表示にする
+            m_elmages[dogFoodCount-1].gameObject.SetActive(false);
             InventoryManager.Instance.PlayerContainer.DogFoodCount--;
         }
     }

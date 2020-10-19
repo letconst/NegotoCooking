@@ -811,6 +811,12 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1254367448}
     m_Modifications:
+    - target: {fileID: 1641540316642142644, guid: bbc62deb3ad6db7439fd1e827ca7058f,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: c5f34e5560f4051439a0f267cf9eb952,
+        type: 3}
     - target: {fileID: 1641540316642142651, guid: bbc62deb3ad6db7439fd1e827ca7058f,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -859,7 +865,7 @@ PrefabInstance:
     - target: {fileID: 1641540316951185173, guid: bbc62deb3ad6db7439fd1e827ca7058f,
         type: 3}
       propertyPath: m_Text
-      value: X
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1641540318224460405, guid: bbc62deb3ad6db7439fd1e827ca7058f,
         type: 3}
@@ -1178,6 +1184,12 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1254367448}
     m_Modifications:
+    - target: {fileID: 1641540316642142644, guid: bbc62deb3ad6db7439fd1e827ca7058f,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 9910373737692bf4195c5fc6eeabb06c,
+        type: 3}
     - target: {fileID: 1641540316642142651, guid: bbc62deb3ad6db7439fd1e827ca7058f,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -1227,6 +1239,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_FontData.m_MaxSize
       value: 121
+      objectReference: {fileID: 0}
+    - target: {fileID: 1641540316951185173, guid: bbc62deb3ad6db7439fd1e827ca7058f,
+        type: 3}
+      propertyPath: m_Text
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1641540318224460405, guid: bbc62deb3ad6db7439fd1e827ca7058f,
         type: 3}
@@ -2259,6 +2276,37 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1323492849332260895, guid: dfe8cbb1e6c79cb48af755e95acc40e5,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1323492849332260895, guid: dfe8cbb1e6c79cb48af755e95acc40e5,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1323492849332260895, guid: dfe8cbb1e6c79cb48af755e95acc40e5,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1323492849332260895, guid: dfe8cbb1e6c79cb48af755e95acc40e5,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1323492849332260895, guid: dfe8cbb1e6c79cb48af755e95acc40e5,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: d2e9a117a147fad4d9e7cb502847941a,
+        type: 3}
+    - target: {fileID: 1323492849332260895, guid: dfe8cbb1e6c79cb48af755e95acc40e5,
+        type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5454172387549291488, guid: dfe8cbb1e6c79cb48af755e95acc40e5,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -2273,7 +2321,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 496969f999e9c984f8ffb688eae0f4b8,
+      objectReference: {fileID: 21300000, guid: 3d22d6ac587d8bf4c884c5e0bc972bef,
         type: 3}
     - target: {fileID: 5454172388532914071, guid: dfe8cbb1e6c79cb48af755e95acc40e5,
         type: 3}
@@ -2389,6 +2437,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Value
       value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 5454172388532914089, guid: dfe8cbb1e6c79cb48af755e95acc40e5,
+        type: 3}
+      propertyPath: m_Colors.m_DisabledColor.a
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dfe8cbb1e6c79cb48af755e95acc40e5, type: 3}
