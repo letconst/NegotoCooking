@@ -60,10 +60,8 @@ public class DoorController : MonoBehaviour
     /// </summary>
     private IEnumerator SwitchOpen()
     {
-        var curClipName = pivotAnim.GetCurrentAnimatorClipInfo(0)[0].clip.name;
-
         // ドアがアイドル状態になったらアニメーションを実行
-        yield return new WaitUntil(() => curClipName == "DoorIdle");
+        yield return new WaitUntil(() => pivotAnim.GetCurrentAnimatorClipInfo(0)[0].clip.name == "DoorIdle");
 
         // _isOpen = !_isOpen;
 
