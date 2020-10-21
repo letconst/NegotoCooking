@@ -63,7 +63,7 @@ public class RefrigeratorInventoryContainerBase
     public void AddItem(Item item, List<FoodState> states = null)
     {
         // スロットサイズを超過する場合は追加しない
-        if (Container.Count >= RefrigeratorManager.Instance.slotSize) return;
+        if (Container.Count >= RefrigeratorManager.Instance.SlotSize) return;
 
         if (states == null)
         {

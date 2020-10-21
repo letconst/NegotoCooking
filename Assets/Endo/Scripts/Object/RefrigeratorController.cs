@@ -34,7 +34,6 @@ public class RefrigeratorController : MonoBehaviour
 
         // コンテナデータ作成
         CreateContainer();
-        _selfCanvasGroup.interactable = false;
     }
 
     // Update is called once per frame
@@ -95,7 +94,7 @@ public class RefrigeratorController : MonoBehaviour
 
         _selfContainer = _refContainers.GetContainer(gameObject.name);
 
-        for (var i = 0; i < RefrigeratorManager.Instance.slotSize; i++)
+        for (var i = 0; i < RefrigeratorManager.Instance.SlotSize; i++)
         {
             var selfSlotDefaultItem = (DefaultItems.Count != 0)
                                           ? DefaultItems[i].Item

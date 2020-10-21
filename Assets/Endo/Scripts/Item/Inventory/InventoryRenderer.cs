@@ -46,7 +46,7 @@ public class InventoryRenderer : MonoBehaviour
     private void Start()
     {
         _selfSlotSize = (inventory != null) ? inventory.SlotSize :
-                        (isForRefrigerator) ? RefrigeratorManager.Instance.slotSize : 0;
+                        (isForRefrigerator) ? RefrigeratorManager.Instance.SlotSize : 0;
 
         InitRender();
     }
@@ -77,7 +77,7 @@ public class InventoryRenderer : MonoBehaviour
             }
 
             // 冷蔵庫用の処理
-            for (var i = 0; i < RefrigeratorManager.Instance.slotSize; i++)
+            for (var i = 0; i < RefrigeratorManager.Instance.SlotSize; i++)
             {
                 var slotObj = Instantiate(slotPrefab, transform.position, Quaternion.identity, slotWrapper.transform);
 

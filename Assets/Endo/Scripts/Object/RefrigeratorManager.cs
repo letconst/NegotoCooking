@@ -1,12 +1,13 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class RefrigeratorManager : SingletonMonoBehaviour<RefrigeratorManager>
 {
+    [SerializeField, Tooltip("冷蔵庫の最大スロット数")]
+    private int slotSize;
+
     // プレイヤーのインタラクト範囲にある冷蔵庫
     public GameObject currentNearObj;
-
-    // 冷蔵庫の最大スロット数
-    public int slotSize;
 
     // 冷蔵庫のインベントリオブジェクト
     private GameObject _refInvObj;
@@ -17,11 +18,16 @@ public class RefrigeratorManager : SingletonMonoBehaviour<RefrigeratorManager>
             ? null
             : InventoryManager.Instance.RefContainers.GetContainer(currentNearObj.name);
 
+    public int SlotSize => slotSize;
+
     // Start is called before the first frame update
-    private void Start()
+    private IEnumerator Start()
     {
         _refInvObj = GameObject.FindGameObjectWithTag("RefrigeratorInventory");
 
-        _refInvObj.GetComponent<CanvasGroup>().alpha = 0;
+        // 同一フレーム内でinteractableをfalseにしても何故か反映されないので1フレーム待つ
+        yield return null;
+
+        _refInvObj.GetComponent<CanvasGroup>().interactable = false;
     }
 }
