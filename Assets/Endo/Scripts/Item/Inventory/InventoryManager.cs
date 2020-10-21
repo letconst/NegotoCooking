@@ -62,6 +62,7 @@ public class InventoryManager : SingletonMonoBehaviour<InventoryManager>
     {
         // 終了時にコンテナ消去
         PlayerContainer.Container.Clear();
+        playerContainer.DogFoodCount = playerContainer.MaxDogFoodCount;
         RefContainers.RefInvContainers.Clear();
         LargePlateContainer.Container.Clear();
     }

@@ -50,6 +50,18 @@ public class Player : SingletonMonoBehaviour<Player>
     {
         _controller = GetComponent<CharacterController>();
         _animator   = GetComponent<Animator>();
+        var dogFoodCount = InventoryManager.Instance.PlayerContainer.DogFoodCount;
+        var maxDogFoodCount = InventoryManager.Instance.PlayerContainer.MaxDogFoodCount;
+        var usedDogFoodCount = maxDogFoodCount - dogFoodCount;
+        for(int i = 1; i < usedDogFoodCount+1; i++)
+        {
+            m_elmages[maxDogFoodCount-i].gameObject.SetActive(false);
+        }
+        foreach(var entry in GameManager.Instance.DogToyData.Entries)
+        {
+            var dogToy = Instantiate(dogFood,entry.Position,entry.Rotation);
+            entry.UpdateEntry(entry.Position, entry.Rotation, dogToy.GetInstanceID());
+        }
     }
 
     // Update is called once per frame
@@ -60,7 +72,8 @@ public class Player : SingletonMonoBehaviour<Player>
         {
             var dogFoodCount = InventoryManager.Instance.PlayerContainer.DogFoodCount;
             if (dogFoodCount == 0) return;
-            Instantiate(dogFood,new Vector3(transform.position.x,transform.position.y+0.5f,transform.position.z),Quaternion.identity);
+            var dogToy = Instantiate(dogFood,new Vector3(transform.position.x,transform.position.y+0.5f,transform.position.z),Quaternion.identity);
+            GameManager.Instance.DogToyData.AddEntry(dogToy.transform.position, dogToy.transform.rotation, dogToy.GetInstanceID());
             //餌の画像アイコンを非表示にする
             m_elmages[dogFoodCount-1].gameObject.SetActive(false);
             InventoryManager.Instance.PlayerContainer.DogFoodCount--;

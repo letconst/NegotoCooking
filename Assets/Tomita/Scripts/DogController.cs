@@ -201,14 +201,9 @@ public class DogController : MonoBehaviour
                 DogToy.dogFoodHealth -= Time.deltaTime;
             }
             //犬が食べ終わったら動き出す
-            if (DogToy.dogFoodHealth <= 0)
+            if (DogToy == null)
             {
                 DogMoveStop = false;
-                //犬のおもちゃを消す
-                if (nearObject.gameObject != null)
-                {
-                    Destroy(nearObject.gameObject);
-                }
                 State = DogState.Idle;
             }
         }
