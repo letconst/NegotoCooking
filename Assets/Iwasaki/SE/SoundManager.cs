@@ -67,7 +67,7 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
         }
     }
 
-    public void PlayBgm(BGM key, float volume = -1, float pitch = 1)
+    public void PlayBgm(BGM key, float volume = -1, float pitch = 1, bool isLoop = false)
     {
         Sound sound = bgmdic[key];
         AudioClip clip = sound.clip;
@@ -77,6 +77,7 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
                                      ? sound.volume
                                      : Mathf.Clamp(volume, 0, 1);
 
+        audioSource_BGM.loop  = isLoop;
         audioSource_BGM.pitch = Mathf.Clamp(pitch, -3, 3);
 
         audioSource_BGM.Play();
