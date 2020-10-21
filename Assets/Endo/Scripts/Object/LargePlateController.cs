@@ -33,7 +33,7 @@ public class LargePlateController : MonoBehaviour
         if (_isNear &&
             Input.GetButtonDown("Interact"))
         {
-            StartCoroutine("InputHandler");
+            StartCoroutine(nameof(InputHandler));
         }
 
         // コンテナにアイテムが1つでも入ったらスープを表示
@@ -42,26 +42,24 @@ public class LargePlateController : MonoBehaviour
 
     private IEnumerator InputHandler()
     {
-        var selectedFood = _playerInvContainer.GetItem(_playerInvRenderer.LastSelectedIndex);
+        var selectedFood      = _playerInvContainer.GetItem(_playerInvRenderer.LastSelectedIndex);
+        var selectedFoodState = _playerInvContainer.GetStates(_playerInvRenderer.LastSelectedIndex);
 
-        // 持ってる食材がなければ終了
-        if (selectedFood == null) yield break;
+        // 調味料か調理済みの食材のみ受け付ける
+        if (selectedFood == null ||                                  // 食材を持っていない
+            selectedFood.KindOfItem1 != Item.KindOfItem.Seasoning && // 食材が調味料ではなく、
+            (selectedFoodState.Contains(FoodState.None) ||           // 状態がNoneまたはRawである
+             selectedFoodState.Contains(FoodState.Raw))) yield break;
 
-        IEnumerator coroutine = _choicePopup.showWindow("大皿に素材を投入していいですか?");
+        var coroutine = _choicePopup.showWindow("大皿に素材を投入していいですか?");
 
         // ボタン入力を待機
         yield return coroutine;
 
-        if ((bool)coroutine.Current)
+        // ボタン入力結果がはいだったら大皿に食材を入れる
+        if (coroutine.Current != null &&
+            (bool) coroutine.Current)
         {
-            var selectedFoodState = _playerInvContainer.GetStates(_playerInvRenderer.LastSelectedIndex);
-
-            // 調味料か調理済みの食材のみ受け付ける
-            if (selectedFood == null ||
-                selectedFood.KindOfItem1 != Item.KindOfItem.Seasoning &&
-                (selectedFoodState.Contains(FoodState.None) ||
-                 selectedFoodState.Contains(FoodState.Raw))) yield break;
-
             var targetFoodIndex = _playerInvRenderer.LastSelectedIndex;
 
             // 大皿に現在選択しているアイテムをぶち込む
@@ -74,6 +72,7 @@ public class LargePlateController : MonoBehaviour
             // プレイヤーのアイテムを削除
             _playerInvContainer.RemoveItem(targetFoodIndex);
         }
+
         _choicePopup.HideWindow();
     }
 
