@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CookingManager : SingletonMonoBehaviour<CookingManager>
 {
-    private float timeleft; 
+    private float timeleft;
     private float burntTimeleft;
     private bool doOnceAlert = true;
     private bool go100Point;
@@ -19,7 +19,7 @@ public class CookingManager : SingletonMonoBehaviour<CookingManager>
     }
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -45,7 +45,7 @@ public class CookingManager : SingletonMonoBehaviour<CookingManager>
         }
 
         if (FireControl.burntBool)
-        {            
+        {
             burntTimeleft -= Time.deltaTime;
             if (burntTimeleft <= 0.0)
             {
@@ -62,7 +62,7 @@ public class CookingManager : SingletonMonoBehaviour<CookingManager>
         }
 
         if (GameManager.Instance.BubblePoint == 100 && doOnceAlert)
-        {            
+        {
             SoundManager.Instance.PlayBgm(BGM.Alert);
             go100Point = true;
             doOnceAlert = false;
@@ -76,7 +76,7 @@ public class CookingManager : SingletonMonoBehaviour<CookingManager>
                 go100Point = false;
                 SoundManager.Instance.FadeOutBgm(0.1f);
                 StartCoroutine(waitTime(0.2f));
-            }                     
+            }
             doOnceAlert = true;
             GameManager.Instance.alertBool = false;
         }
@@ -84,7 +84,7 @@ public class CookingManager : SingletonMonoBehaviour<CookingManager>
     private IEnumerator waitTime(float waittime)
     {
         yield return new WaitForSeconds(waittime);
-        SoundManager.Instance.PlayBgm(BGM.BoilSound);
+        SoundManager.Instance.PlayBgm(BGM.BoilSound, isLoop: true);
         yield break;
     }
 }

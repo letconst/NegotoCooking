@@ -73,7 +73,7 @@ public class FireControl_boil : MonoBehaviour
         bubbleAlert.Stop();
         fireS.Play();
         fireL.Play();
-        SoundManager.Instance.PlayBgm(BGM.BoilSound);
+        SoundManager.Instance.PlayBgm(BGM.BoilSound, isLoop: true);
     }
 
     void Update()
@@ -97,10 +97,10 @@ public class FireControl_boil : MonoBehaviour
                 SoundManager.Instance.FadeOutBgm(0.3f);
                 SceneManager.LoadScene("GameScenes");
             }
-        }                
+        }
 
         float dph = Input.GetAxis("D_Pad_H");
-        
+
         if (dph < 0 && GameManager.Instance.FireChange != 0 || Input.GetKeyDown(KeyCode.LeftArrow) && GameManager.Instance.FireChange != 0)
         {
             if (GameManager.Instance.FireChange <= 0)
@@ -134,19 +134,19 @@ public class FireControl_boil : MonoBehaviour
                 doOnceFire = true;
             }
         }
-        
+
         if (_slider.value >= 100)
         {
             GameManager.Instance.alertBool = false;
             bubbleAlert.Stop();
             _slider.value = 0;
-            SoundManager.Instance.FadeOutBgm(0.3f);            
-        }    
-    
+            SoundManager.Instance.FadeOutBgm(0.3f);
+        }
+
         if (clickBool == true) return;
 
         float h = Input.GetAxis("Horizontal");
-        float v = Input.GetAxis("Vertical");        
+        float v = Input.GetAxis("Vertical");
         if(h < 0)
         {
             otamaXMove = 55;
@@ -155,9 +155,9 @@ public class FireControl_boil : MonoBehaviour
         {
             otamaXMove = 25;
         }
-        Otama.transform.position = new Vector3(Centerpostion.transform.position.x + h * otamaXMove, 
-                                               Centerpostion.transform.position.y, 
-                                               Centerpostion.transform.position.z + v * 30);        
+        Otama.transform.position = new Vector3(Centerpostion.transform.position.x + h * otamaXMove,
+                                               Centerpostion.transform.position.y,
+                                               Centerpostion.transform.position.z + v * 30);
 
         //1秒分掻きまわすアクションをするとポイントが-25される。
         if (h != 0 && v != 0)

@@ -50,7 +50,7 @@ MonoBehaviour:
     volume: 0.25
   - clip: {fileID: 8300000, guid: ba228870969df0843a7e9cccc3ce157d, type: 3}
     volume: 0.25
-  - clip: {fileID: 8300000, guid: dbc95f06eb0cec24bbc01a16a56c3b60, type: 3}
+  - clip: {fileID: 8300000, guid: 2eec9b7ef200cb34e861f2b285c07285, type: 3}
     volume: 0.25
   seSound:
   - clip: {fileID: 8300000, guid: 2e1291ac76d7aaa4b88405b4fd2fe64d, type: 3}
