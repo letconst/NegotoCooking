@@ -29,6 +29,9 @@ TagManager:
   - FlooringFloor
   - CarpetFloor
   - SelectWindow
+  - Nav_Sisyou
+  - Nav_Kitchen
+  - Nav_Steps
   layers:
   - Default
   - TransparentFX
