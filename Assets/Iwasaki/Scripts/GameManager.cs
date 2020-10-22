@@ -20,7 +20,10 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     private int bakePoint;
     private int failCount;
 
-    public bool IsReachedResult { get; private set; }
+    public bool IsReachedResult       { get; private set; }
+    public bool IsReachedNavOfNegoto  { get; set; }
+    public bool IsReachedNavOfStairs  { get; set; }
+    public bool IsReachedNavOfKitchen { get; set; }
 
     public float NoiseMator
     {
