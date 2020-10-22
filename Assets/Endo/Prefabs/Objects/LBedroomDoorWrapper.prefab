@@ -91,8 +91,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 7.068012, y: 7.00451, z: 3.642252}
-  m_Center: {x: 0, y: 0.007976055, z: 0.02670002}
+  m_Size: {x: 7.068012, y: 7.00451, z: 4}
+  m_Center: {x: 0, y: 0.007976055, z: 2}
 --- !u!114 &4380816121593587142
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -123,7 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6f7748b3938d64428b9d3753ab6f517, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pivotAnim:
+  pivotAnims:
   - {fileID: 4380816121869512657}
   closeLimit: 5
   audioSource: {fileID: 4380816121593587141}
@@ -283,15 +283,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: e8e747f8356c288429ef829a5d90a82c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.05199886
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: e8e747f8356c288429ef829a5d90a82c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.4899979
+      value: -3.5
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: e8e747f8356c288429ef829a5d90a82c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.7913439
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: e8e747f8356c288429ef829a5d90a82c, type: 3}
       propertyPath: m_LocalRotation.x
@@ -327,7 +327,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: e8e747f8356c288429ef829a5d90a82c, type: 3}
       propertyPath: m_LocalScale.x
-      value: 3.640003
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: e8e747f8356c288429ef829a5d90a82c, type: 3}
       propertyPath: m_LocalScale.y
