@@ -1,5 +1,8 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 // TODO: プレイヤーがいる方向に対する側へ開くようにする
@@ -8,7 +11,7 @@ using Random = UnityEngine.Random;
 public class DoorController : MonoBehaviour
 {
     [SerializeField, Tooltip("ドアの軸に付属するアニメーター")]
-    private Animator pivotAnim;
+    private List<Animator> pivotAnims;
 
     // [SerializeField, Tooltip("ドアが開閉する最大角度")]
     // private float maxAnimAngle;
@@ -70,7 +73,11 @@ public class DoorController : MonoBehaviour
         _animProcessID = rnd;
 
         // ドアがアイドル状態になったらアニメーションを実行
-        yield return new WaitUntil(() => pivotAnim.GetCurrentAnimatorClipInfo(0)[0].clip.name == "DoorIdle");
+        yield return new WaitUntil(() =>
+        {
+            return pivotAnims.All(
+                a => a.GetCurrentAnimatorClipInfo(0)[0].clip.name == "DoorIdle");
+        });
 
         // SEが鳴ってる間は待機
         yield return new WaitWhile(() => audioSource.isPlaying);
@@ -84,14 +91,19 @@ public class DoorController : MonoBehaviour
         //                 ? Quaternion.Inverse(Quaternion.Euler(0, maxAnimAngle, 0))
         //                 : _beforeRot * Quaternion.Euler(0, -maxAnimAngle, 0);
 
-        pivotAnim.SetBool(IsOpen, !pivotAnim.GetBool(IsOpen));
+        foreach (var anim in pivotAnims)
+        {
+            anim.SetBool(IsOpen, !anim.GetBool(IsOpen));
+        }
 
         // 指定時間経過後に自動で閉じる
         yield return new WaitForSeconds(closeLimit);
 
         // ドアが開いている状態であり、IDが同じなら（手動で閉じた後に再度開いていなければ）閉じる
-        if (pivotAnim.GetBool(IsOpen) &&
-            _animProcessID.Equals(rnd)) pivotAnim.SetBool(IsOpen, false);
+        foreach (var anim in pivotAnims.Where(a => a.GetBool(IsOpen) && _animProcessID.Equals(rnd)))
+        {
+            anim.SetBool(IsOpen, false);
+        }
     }
 
     /// <summary>
