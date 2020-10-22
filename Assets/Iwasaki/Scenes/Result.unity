@@ -240,7 +240,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b369de38cb00dfe4c9fed1d963bb8a45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  titleButton: {fileID: 1438630500}
 --- !u!4 &186445619
 Transform:
   m_ObjectHideFlags: 0
@@ -893,6 +892,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 6855589229620812862}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1438630502 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 809836474068037953, guid: ff328da47f7e4ca4195439cefb1d92fb,
+    type: 3}
+  m_PrefabInstance: {fileID: 6855589229620812862}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1438630500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b369de38cb00dfe4c9fed1d963bb8a45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1481075407 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8419328873388741342, guid: 6a88c42128b0c624b809d3fb8da698cf,
@@ -1345,7 +1356,7 @@ PrefabInstance:
     - target: {fileID: 4701930651076519531, guid: 2730070b025e8da498d6df8ad14d52d8,
         type: 3}
       propertyPath: m_RootOrder
-      value: 13
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 4701930651076519531, guid: 2730070b025e8da498d6df8ad14d52d8,
         type: 3}
@@ -1520,6 +1531,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1009454293}
     m_Modifications:
+    - target: {fileID: 6855589228189130329, guid: ff328da47f7e4ca4195439cefb1d92fb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1438630502}
+    - target: {fileID: 6855589228189130329, guid: ff328da47f7e4ca4195439cefb1d92fb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: GoToTitle
+      objectReference: {fileID: 0}
     - target: {fileID: 6855589228189130330, guid: ff328da47f7e4ca4195439cefb1d92fb,
         type: 3}
       propertyPath: m_Name

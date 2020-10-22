@@ -65,11 +65,11 @@ public class ResultAnim : MonoBehaviour
         {
             good.Play();
         }
-        yield break;
     }
+
     public void FinishAnim()
     {
-        clearTimeText.text = (400 - TimeCounter.CurrentTime).ToString();
+        clearTimeText.text = (TimeCounter.CountUp - TimeCounter.CurrentTime).ToString("F1");
         //clearTimeText.text = "200";
         clearTime.gameObject.SetActive(true);
         toTitleButton.gameObject.SetActive(true);
