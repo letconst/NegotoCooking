@@ -51,10 +51,7 @@ public class InventoryManager : SingletonMonoBehaviour<InventoryManager>
         }
 
         DontDestroyOnLoad(gameObject);
-    }
 
-    private void Start()
-    {
         PlayerContainer.DogFoodCount = playerContainer.MaxDogFoodCount;
     }
 }
