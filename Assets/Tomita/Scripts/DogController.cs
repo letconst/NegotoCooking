@@ -116,6 +116,12 @@ public class DogController : MonoBehaviour
             _animator.SetBool("Walk", true);
             _animator.SetBool("Bark", false);
             _animator.SetBool("EatFood", false);
+            //吠える音声を止める
+            if (DogBark == true)
+            {
+                GetComponent<AudioSource>().Stop();
+                DogBark = false;
+            }
         }
         else if (State == DogState.FindFood)
         {
