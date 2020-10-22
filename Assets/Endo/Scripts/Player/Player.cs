@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System;
 using UnityEngine.UI;
 
 public class Player : SingletonMonoBehaviour<Player>
@@ -53,7 +52,7 @@ public class Player : SingletonMonoBehaviour<Player>
         var maxDogFoodCount  = InventoryManager.Instance.PlayerContainer.MaxDogFoodCount;
         var usedDogFoodCount = maxDogFoodCount - dogFoodCount;
 
-        for (int i = 1; i < usedDogFoodCount + 1; i++)
+        for (var i = 1; i < usedDogFoodCount + 1; i++)
         {
             m_elmages[maxDogFoodCount - i].gameObject.SetActive(false);
         }
@@ -87,6 +86,9 @@ public class Player : SingletonMonoBehaviour<Player>
 
             GameManager.Instance.DogToyData.AddEntry(dogToy.transform.position, dogToy.transform.rotation,
                                                      dogToy.GetInstanceID());
+
+            // SE再生
+            SoundManager.Instance.PlaySe(SE.PlaceDogToy);
 
             //餌の画像アイコンを非表示にする
             m_elmages[dogFoodCount - 1].gameObject.SetActive(false);

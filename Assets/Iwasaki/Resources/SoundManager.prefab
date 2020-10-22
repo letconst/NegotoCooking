@@ -53,6 +53,8 @@ MonoBehaviour:
   - clip: {fileID: 8300000, guid: 2eec9b7ef200cb34e861f2b285c07285, type: 3}
     volume: 0.25
   seSound:
+  - clip: {fileID: 0}
+    volume: 0.4
   - clip: {fileID: 8300000, guid: 2e1291ac76d7aaa4b88405b4fd2fe64d, type: 3}
     volume: 0.4
   - clip: {fileID: 8300000, guid: 69e13a67834a3094e9c2a4233b8b2f96, type: 3}
@@ -62,6 +64,18 @@ MonoBehaviour:
   - clip: {fileID: 8300000, guid: 0d34d652b1a0af841b34f74aca36eea9, type: 3}
     volume: 0.4
   - clip: {fileID: 8300000, guid: ce3cca3489c1a29499c07551a6db64ac, type: 3}
+    volume: 0.4
+  - clip: {fileID: 8300000, guid: eb25726df6120604ba6207b8ae0601b4, type: 3}
+    volume: 0.4
+  - clip: {fileID: 8300000, guid: 340912d58e088f14ba6f224744088c59, type: 3}
+    volume: 0.4
+  - clip: {fileID: 8300000, guid: 31317bfaff83da64abda925b7f1f84fc, type: 3}
+    volume: 0.4
+  - clip: {fileID: 8300000, guid: b502c0fbae9a4e148ab421562541b40f, type: 3}
+    volume: 0.4
+  - clip: {fileID: 8300000, guid: f370fd4fc51b7ba47a5f7a258f978168, type: 3}
+    volume: 0.4
+  - clip: {fileID: 8300000, guid: 8417b894251357a4695b6d16e6161843, type: 3}
     volume: 0.4
   audioSource_BGM: {fileID: 1189408208835049331}
   audioSource_SE: {fileID: 8157298913561168990}

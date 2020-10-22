@@ -11,11 +11,18 @@ public enum BGM
 
 public enum SE
 {
+    None,
     CutSound,
     RifregeratorOpen,
     PlayerFootstepOnFlooring,
     PlayerFootstepOnCarpet,
     ThrowOutFood,
+    OpenPause,
+    Select,
+    Submit,
+    Cancel,
+    PlaceDogToy,
+    PutFood,
 }
 
 [System.Serializable]

@@ -28,7 +28,7 @@ public class ChoicePopup : MonoBehaviour
         canvasGroup.interactable = false;
     }
 
-    public IEnumerator showWindow(string TextToDisplay)
+    public IEnumerator ShowWindow(string textToDisplay, SE yesSe = SE.Submit, SE noSe = SE.Cancel)
     {
         // プレイヤーインベントリ無効化
         _playerInvRenderer.DisableAllSlot();
@@ -41,7 +41,7 @@ public class ChoicePopup : MonoBehaviour
         // noButtonにフォーカス
         EventSystem.current.SetSelectedGameObject(noButtonObj);
         // ウィンドウに指定されたテキストを表示
-        transform.Find("SelectText").gameObject.GetComponent<Text>().text = TextToDisplay;
+        transform.Find("SelectText").gameObject.GetComponent<Text>().text = textToDisplay;
 
         GameObject currentSelected;
 
@@ -63,6 +63,10 @@ public class ChoicePopup : MonoBehaviour
 
         // 現在選択中のゲームオブジェクト
         currentSelected = EventSystem.current.currentSelectedGameObject;
+
+        SoundManager.Instance.PlaySe((currentSelected == yesButtonObj)
+                                         ? yesSe
+                                         : noSe);
 
         // 押したボタンがYesかどうか?
         yield return currentSelected == yesButtonObj;

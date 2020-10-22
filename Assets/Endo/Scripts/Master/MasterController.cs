@@ -37,7 +37,7 @@ public class MasterController : SingletonMonoBehaviour<MasterController>
 
     private IEnumerator InputHandler()
     {
-        var coroutine = _choicePopup.showWindow("師匠を起こしますか？");
+        var coroutine = _choicePopup.ShowWindow("師匠を起こしますか？");
 
         // ボタン入力待機
         yield return coroutine;

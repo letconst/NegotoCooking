@@ -37,7 +37,7 @@ public class GarbageCanController : MonoBehaviour
     /// <returns></returns>
     private IEnumerator InputHandler()
     {
-        var coroutine = _choicePopup.showWindow("食材を捨てていいですか?");
+        var coroutine = _choicePopup.ShowWindow("食材を捨てますか？", SE.ThrowOutFood);
 
         // ボタン入力を待機
         yield return coroutine;
@@ -46,9 +46,6 @@ public class GarbageCanController : MonoBehaviour
         if (coroutine.Current != null &&
             (bool) coroutine.Current)
         {
-            // SE再生
-            SoundManager.Instance.PlaySe(SE.ThrowOutFood);
-
             // プレイヤーインベントリから選択食材を削除
             _playerContainer.RemoveItem(_playerInvRenderer.LastSelectedIndex);
 

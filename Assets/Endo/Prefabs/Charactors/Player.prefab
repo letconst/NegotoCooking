@@ -55,10 +55,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   footstepPairs:
   - floorTagName: FlooringFloor
-    se: 2
-  - floorTagName: CarpetFloor
     se: 3
-  defaultFootstep: 2
+  - floorTagName: CarpetFloor
+    se: 4
+  defaultFootstep: 3
   minVolume: 0.4
   maxVolume: 0.6
   minPitch: 0.8

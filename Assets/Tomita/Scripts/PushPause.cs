@@ -95,6 +95,9 @@ public class PushPause : SingletonMonoBehaviour<PushPause>
         // ゲームに戻るボタンを押した際、確認ウィンドウが表示されているとそのまま進んでしまうため1フレーム待つ
         yield return null;
 
+        // SE再生
+        SoundManager.Instance.PlaySe(SE.Cancel);
+
         // ポーズ前に選択していたボタンを選択
         EventSystem.current.SetSelectedGameObject(_lastSelectedObj);
 

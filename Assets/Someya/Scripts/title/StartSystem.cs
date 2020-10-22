@@ -14,6 +14,7 @@ public class StartSystem : MonoBehaviour
     {
         if (Input.GetKeyDown("joystick button 0"))
         {
+            SoundManager.Instance.PlaySe(SE.Submit);
             SceneManager.LoadScene("TutorialScenes");
         }
     }
