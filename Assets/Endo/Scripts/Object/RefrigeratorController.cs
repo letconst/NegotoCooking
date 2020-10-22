@@ -57,6 +57,9 @@ public class RefrigeratorController : MonoBehaviour
                                      ? 1
                                      : 0;
 
+        _selfCanvasGroup.interactable   = !_selfCanvasGroup.interactable;
+        _selfCanvasGroup.blocksRaycasts = !_selfCanvasGroup.blocksRaycasts;
+
         // 冷蔵庫インベントリの描画を一度初期化
         _selfInvRenderer.ClearRender();
 
@@ -66,8 +69,7 @@ public class RefrigeratorController : MonoBehaviour
             // SE再生
             SoundManager.Instance.PlaySe(SE.RifregeratorOpen);
 
-            // 冷蔵庫インベントリを有効化し、フォーカス
-            _selfCanvasGroup.interactable = true;
+            // 冷蔵庫インベントリをフォーカス
             _selfInvRenderer.SelectSlot();
 
             // プレイヤーインベントリを無効化
@@ -78,7 +80,6 @@ public class RefrigeratorController : MonoBehaviour
         {
             // 冷蔵庫インベントリを無効化
             _selfInvRenderer.UnhighlightSlotAt(_selfInvRenderer.LastSelectedIndex);
-            _selfCanvasGroup.interactable = false;
 
             // プレイヤーインベントリを有効化し、フォーカス
             _playerCanvasGroup.interactable = true;

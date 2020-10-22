@@ -25,7 +25,8 @@ public class ChoicePopup : MonoBehaviour
 
         yield return null;
 
-        canvasGroup.interactable = false;
+        canvasGroup.interactable   = false;
+        canvasGroup.blocksRaycasts = false;
     }
 
     public IEnumerator ShowWindow(string textToDisplay, SE yesSe = SE.Submit, SE noSe = SE.Cancel)
@@ -33,8 +34,9 @@ public class ChoicePopup : MonoBehaviour
         // プレイヤーインベントリ無効化
         _playerInvRenderer.DisableAllSlot();
         // ウィンドウを表示
-        canvasGroup.alpha        = 1;
-        canvasGroup.interactable = true;
+        canvasGroup.alpha          = 1;
+        canvasGroup.interactable   = true;
+        canvasGroup.blocksRaycasts = true;
         // ボタンを有効化
         yesButton.enabled = true;
         noButton.enabled  = true;
@@ -75,8 +77,9 @@ public class ChoicePopup : MonoBehaviour
     public void HideWindow()
     {
         // ウィンドウを非表示
-        canvasGroup.alpha        = 0;
-        canvasGroup.interactable = false;
+        canvasGroup.alpha          = 0;
+        canvasGroup.interactable   = false;
+        canvasGroup.blocksRaycasts = false;
         // プレイヤーインベントリ有効化
         _playerInvRenderer.EnableAllSlot();
         _playerInvRenderer.SelectSlot();
