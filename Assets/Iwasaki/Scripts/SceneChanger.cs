@@ -20,25 +20,32 @@ public class SceneChanger : SingletonMonoBehaviour<SceneChanger>
         returngame,
         Result
     }
+
     public void Awake()
     {
         if (this != Instance)
         {
             Destroy(gameObject);
+
             return;
         }
+
         DontDestroyOnLoad(gameObject);
     }
+
     private void Start()
     {
-
     }
+
     //連打対策
     private bool doOnceSceneChange = true;
 
     public void SceneLoad(SceneName sceneName)
     {
         if (doOnceSceneChange == false) return;
+
+        // リザルト遷移時、タイムカウンターを止める
+        if (sceneName == SceneName.Result) TimeCounter.IsStopped = true;
 
         if (doOnceSceneChange)
         {
@@ -51,8 +58,10 @@ public class SceneChanger : SingletonMonoBehaviour<SceneChanger>
         doOnceSceneChange = false;
         var async = SceneManager.LoadSceneAsync(sceneName.ToString());
         async.allowSceneActivation = false;
+
         yield return new WaitForSeconds(waittime);
-        doOnceSceneChange = true;
+
+        doOnceSceneChange          = true;
         async.allowSceneActivation = true;
     }
 }

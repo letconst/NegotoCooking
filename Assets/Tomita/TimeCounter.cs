@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class TimeCounter : MonoBehaviour
 {
     //カウントアップ
-    public static float CountUp = 500.0f;
+    public static float CountUp = 5.0f;
 
     public static float CurrentTime = CountUp;
+
+    // カウントが止まっているか否か
+    public static bool IsStopped;
 
     //タイムリミット
     [SerializeField]
@@ -41,7 +45,7 @@ public class TimeCounter : MonoBehaviour
     private void Update()
     {
         // 朝アイコンの座標が取得されるまで待機（↑の1フレーム待機による処置）
-        if (_morningPos == default) return;
+        if (_morningPos == default || IsStopped) return;
 
         // 時間をカウントする
         CurrentTime -= Time.deltaTime;
@@ -56,7 +60,7 @@ public class TimeCounter : MonoBehaviour
         // タイムアップでゲームオーバー
         if (CurrentTime <= timeLimit)
         {
-            SceneChanger.Instance.SceneLoad(SceneChanger.SceneName.GameOverScenes);
+            SceneChanger.Instance.SceneLoad(SceneChanger.SceneName.Result);
         }
     }
 }
