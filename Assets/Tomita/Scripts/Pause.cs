@@ -1,23 +1,28 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Pause : MonoBehaviour
 {
-    //[SerializeField]
-    private GameObject pauseCanvas;
+    private GameObject  _pauseCanvas;
+    private CanvasGroup _pauseCanvasGroup;
+    private CanvasGroup _playerCanvasGroup;
+
     private void Start()
     {
-        pauseCanvas = GameObject.FindGameObjectWithTag("PauseCanvas");
+        _pauseCanvas      = GameObject.FindGameObjectWithTag("PauseCanvas");
+        _pauseCanvasGroup = _pauseCanvas.GetComponent<CanvasGroup>();
+        _playerCanvasGroup = GameObject.FindGameObjectWithTag("PlayerInventory")
+                                       .GetComponent<CanvasGroup>();
     }
+
     public void GoTitle()
     {
+        _pauseCanvasGroup.alpha = 0;
+        Time.timeScale          = 1f;
         SceneChanger.Instance.SceneLoad(SceneChanger.SceneName.TitleScenes);
     }
 
     public void ReturnGame()
     {
-        pauseCanvas.SetActive(false);
-        Time.timeScale = 1f;
+        StartCoroutine(PushPause.Instance.ReturnToGame());
     }
 }

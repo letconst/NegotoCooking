@@ -56,9 +56,10 @@ public class DoorController : MonoBehaviour
     /// </summary>
     private void InputHandler()
     {
-        // プレイヤーが範囲内におり、インタラクト入力があったときのみ動作
-        if (!_isNear ||
-            !Input.GetButtonDown("Interact")) return;
+        // インタラクトでドア開閉
+        if (!_isNear                         || // インタラクト範囲内にいる
+            !Input.GetButtonDown("Interact") || // インタラクトボタン押下
+            !Time.timeScale.Equals(1)) return;  // ポーズ中ではない
 
         StartCoroutine(nameof(SwitchOpen));
     }

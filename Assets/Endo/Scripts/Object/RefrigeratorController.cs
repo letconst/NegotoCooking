@@ -47,9 +47,10 @@ public class RefrigeratorController : MonoBehaviour
     /// </summary>
     private void InteractHandler()
     {
-        // X押下でインベントリ開閉
-        if (!_isNear ||
-            !Input.GetButtonDown("Interact")) return;
+        // インタラクトでインベントリ開閉
+        if (!_isNear                         || // インタラクト範囲内にいる
+            !Input.GetButtonDown("Interact") || // インタラクトボタン押下
+            !Time.timeScale.Equals(1)) return;  // ポーズ中ではない
 
         // 開閉切り替え
         _selfCanvasGroup.alpha = (_selfCanvasGroup.alpha == 0)
@@ -64,7 +65,7 @@ public class RefrigeratorController : MonoBehaviour
         {
             // SE再生
             SoundManager.Instance.PlaySe(SE.RifregeratorOpen);
-            
+
             // 冷蔵庫インベントリを有効化し、フォーカス
             _selfCanvasGroup.interactable = true;
             _selfInvRenderer.SelectSlot();

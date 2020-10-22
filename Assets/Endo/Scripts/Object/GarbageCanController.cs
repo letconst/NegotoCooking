@@ -21,10 +21,11 @@ public class GarbageCanController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        // X押下で選択アイテムを捨てる
-        if (_isNear                         &&
-            Input.GetButtonDown("Interact") &&
-            _playerContainer.GetItem(_playerInvRenderer.LastSelectedIndex) != null)
+        // インタラクトで選択アイテムを捨てる
+        if (_isNear                         &&                                      // インタラクト範囲内にいる
+            Input.GetButtonDown("Interact") &&                                      // インタラクトボタン押下
+            Time.timeScale.Equals(1)        &&                                      // ポーズ中ではない
+            _playerContainer.GetItem(_playerInvRenderer.LastSelectedIndex) != null) // 食材を選択している
         {
             StartCoroutine(nameof(InputHandler));
         }
