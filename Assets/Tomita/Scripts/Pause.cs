@@ -8,7 +8,7 @@ public class Pause : MonoBehaviour
     private GameObject pauseCanvas;
     private void Start()
     {
-        pauseCanvas = GameObject.FindGameObjectWithTag("pauseCanvas");
+        pauseCanvas = GameObject.FindGameObjectWithTag("PauseCanvas");
     }
     public void GoTitle()
     {

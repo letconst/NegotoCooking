@@ -33,6 +33,7 @@ TagManager:
   - FireL
   - FireS
   - Cam
+  - PauseCanvas
   layers:
   - Default
   - TransparentFX

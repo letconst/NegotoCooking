@@ -40,6 +40,10 @@ public class LargePlateController : MonoBehaviour
         if (selfContainer.Container.Count > 0) _soup.SetActive(true);
     }
 
+    /// <summary>
+    /// ボタン入力を処理する
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator InputHandler()
     {
         var selectedFood      = _playerInvContainer.GetItem(_playerInvRenderer.LastSelectedIndex);

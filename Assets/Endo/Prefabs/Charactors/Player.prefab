@@ -39,6 +39,7 @@ MonoBehaviour:
   maxSprintAnimSpeed: 1
   animDeltaTime: 0.06
   dogFood: {fileID: 8425737463931234921, guid: 36d3b73b822826d4ebb54789eac6c8a5, type: 3}
+  m_elmages: []
   isStop: 0
 --- !u!114 &289014400
 MonoBehaviour:
@@ -54,10 +55,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   footstepPairs:
   - floorTagName: FlooringFloor
-    se: 4
+    se: 2
   - floorTagName: CarpetFloor
-    se: 5
-  defaultFootstep: 4
+    se: 3
+  defaultFootstep: 2
   minVolume: 0.4
   maxVolume: 0.6
   minPitch: 0.8

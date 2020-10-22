@@ -8,7 +8,7 @@ public class PushPause : MonoBehaviour
     private GameObject pauseCanvas;
     private void Start()
     {
-        pauseCanvas = GameObject.FindGameObjectWithTag("pauseCanvas");
+        pauseCanvas = GameObject.FindGameObjectWithTag("PauseCanvas");
     }
 
 
@@ -16,6 +16,7 @@ public class PushPause : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(pauseCanvas);
         if (Input.GetKeyDown("joystick button 7") || Input.GetKeyDown(KeyCode.M))
         {
             pauseCanvas.SetActive(true);

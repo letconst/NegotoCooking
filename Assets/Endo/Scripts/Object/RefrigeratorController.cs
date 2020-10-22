@@ -62,6 +62,9 @@ public class RefrigeratorController : MonoBehaviour
         // 開いたとき
         if (_selfCanvasGroup.alpha.Equals(1))
         {
+            // SE再生
+            SoundManager.Instance.PlaySe(SE.RifregeratorOpen);
+            
             // 冷蔵庫インベントリを有効化し、フォーカス
             _selfCanvasGroup.interactable = true;
             _selfInvRenderer.SelectSlot();

@@ -13,10 +13,9 @@ public enum SE
 {
     CutSound,
     RifregeratorOpen,
-    DoorOpen,
-    DoorClose,
     PlayerFootstepOnFlooring,
     PlayerFootstepOnCarpet,
+    ThrowOutFood,
 }
 
 [System.Serializable]
