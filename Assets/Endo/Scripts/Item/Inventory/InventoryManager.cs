@@ -57,13 +57,4 @@ public class InventoryManager : SingletonMonoBehaviour<InventoryManager>
     {
         PlayerContainer.DogFoodCount = playerContainer.MaxDogFoodCount;
     }
-
-    private void OnApplicationQuit()
-    {
-        // 終了時にコンテナ消去
-        PlayerContainer.Container.Clear();
-        playerContainer.DogFoodCount = playerContainer.MaxDogFoodCount;
-        RefContainers.RefInvContainers.Clear();
-        LargePlateContainer.Container.Clear();
-    }
 }

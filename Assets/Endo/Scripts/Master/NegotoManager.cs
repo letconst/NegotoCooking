@@ -205,9 +205,4 @@ public class NegotoManager : SingletonMonoBehaviour<NegotoManager>
             break;
         }
     }
-
-    private void OnApplicationQuit()
-    {
-        negotoData.Entries.Clear();
-    }
 }

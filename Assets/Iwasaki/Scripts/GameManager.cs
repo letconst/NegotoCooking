@@ -144,13 +144,18 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         InventoryManager.Instance.LargePlateContainer.Container.Clear();
         TimeCounter.CurrentTime = TimeCounter.CountUp;
         NegotoManager.Instance.NegotoData.Entries.Clear();
-        NoiseMator   = 0;
-        PlayerPos    = Vector3.zero;
-        PlayerRotate = Vector3.zero;
+        dogToyData.Entries.Clear();
+        NoiseMator                     = 0;
+        statisticsManager.throwInCount = 0;
+        PlayerPos                      = Vector3.zero;
+        PlayerRotate                   = Vector3.zero;
+        IsReachedNavOfNegoto           = false;
+        IsReachedNavOfStairs           = false;
+        IsReachedNavOfKitchen          = false;
     }
+
     private void OnApplicationQuit()
     {
-        statisticsManager.throwInCount = 0;
-        dogToyData.Entries.Clear();
+        ResetAllValues();
     }
 }
