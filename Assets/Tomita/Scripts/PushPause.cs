@@ -51,6 +51,9 @@ public class PushPause : SingletonMonoBehaviour<PushPause>
             // 選択していたボタンも記憶
             _lastSelectedObj = EventSystem.current.currentSelectedGameObject;
 
+            // SE再生
+            SoundManager.Instance.PlaySe(SE.OpenPause);
+
             // ポーズを表示して選択可能に
             _pauseCanvasGroup.alpha        = 1;
             _pauseCanvasGroup.interactable = true;

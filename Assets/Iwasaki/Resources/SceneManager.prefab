@@ -44,3 +44,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waittime: 0.5
+  fadeObj: {fileID: 686688503580676857, guid: 3ca8f727788a14a498ba7cada67ffc09, type: 3}
