@@ -18,7 +18,8 @@ public class NoiseMator : MonoBehaviour
 
         if (_mator.fillAmount == 0)
         {
-            SceneChanger.Instance.SceneLoad(SceneChanger.SceneName.GameOverScenes);
+            MasterController.Instance.Judgement();
+            SceneChanger.Instance.SceneLoad(SceneChanger.SceneName.Result);
         }
     }
 }

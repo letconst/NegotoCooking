@@ -143,6 +143,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         InventoryManager.Instance.RefContainers.RefInvContainers.Clear();
         InventoryManager.Instance.LargePlateContainer.Container.Clear();
         TimeCounter.CurrentTime = TimeCounter.CountUp;
+        TimeCounter.IsStopped   = false;
         NegotoManager.Instance.NegotoData.Entries.Clear();
         dogToyData.Entries.Clear();
         NoiseMator                     = 0;

@@ -1887,6 +1887,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Slider
       objectReference: {fileID: 0}
+    - target: {fileID: 5629024738103868639, guid: b97e9cb526670a749a865f53928df51c,
+        type: 3}
+      propertyPath: m_Text
+      value: "\u716E\u8FBC\u307F\u7D42\u308F\u308B\u307E\u3067"
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b97e9cb526670a749a865f53928df51c, type: 3}
 --- !u!224 &1356563268 stripped

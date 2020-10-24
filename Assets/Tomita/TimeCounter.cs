@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
@@ -44,11 +45,15 @@ public class TimeCounter : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        Debug.Log("Time: before");
         // 朝アイコンの座標が取得されるまで待機（↑の1フレーム待機による処置）
         if (_morningPos == default || IsStopped) return;
 
+        Debug.Log("Time: after");
+
         // 時間をカウントする
-        CurrentTime -= Time.deltaTime;
+        CurrentTime   -= Time.deltaTime;
+        timeText.text =  CurrentTime.ToString("F1");
 
         // 時間を表示する
         // 時間を表示しなくなったことによりCO
@@ -60,6 +65,7 @@ public class TimeCounter : MonoBehaviour
         // タイムアップでゲームオーバー
         if (CurrentTime <= timeLimit)
         {
+            MasterController.Instance.Judgement();
             SceneChanger.Instance.SceneLoad(SceneChanger.SceneName.Result);
         }
     }

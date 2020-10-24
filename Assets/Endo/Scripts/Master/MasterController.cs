@@ -59,7 +59,7 @@ public class MasterController : SingletonMonoBehaviour<MasterController>
     /// <summary>
     /// 調理の判定を行う
     /// </summary>
-    private void Judgement()
+    public void Judgement()
     {
         var recipeDB = InventoryManager.Instance.RecipeDatabase;
         // TODO: 最終的にはランダムに選択されたレシピで処理する
