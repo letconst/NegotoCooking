@@ -9,20 +9,28 @@ public class SlideShow : MonoBehaviour
     [SerializeField, Tooltip("スライドショーとして表示させる画像")]
     private List<Sprite> showImage;
 
+    private GameObject _placeholder;
+
     // スライドショーの画像を表示する領域
-    private Image _placeholder;
+    private Image _placeholderImg;
+
+    private AspectRatioFitter _placeholderAsp;
 
     // Start is called before the first frame update
     private void Start()
     {
-        //aspectRatioを初期化
-        _placeholder.GetComponent<AspectRatioFitter>().aspectRatio = 1.766666666f;
-        _placeholder = GameObject.FindGameObjectWithTag("SlideShowImagePlaceholder").GetComponent<Image>();
+        _placeholder = GameObject.FindGameObjectWithTag("SlideShowImagePlaceholder");
 
         if (_placeholder == null) return;
 
+        _placeholderImg = _placeholder.GetComponent<Image>();
+        _placeholderAsp = _placeholder.GetComponent<AspectRatioFitter>();
+
+        //aspectRatioを初期化
+        _placeholderAsp.aspectRatio = 1.766666666f;
+
         // 一番目の画像を表示
-        _placeholder.sprite = showImage.First();
+        _placeholderImg.sprite = showImage.First();
     }
 
     // Update is called once per frame
@@ -31,7 +39,7 @@ public class SlideShow : MonoBehaviour
         if (!Input.GetButtonDown("Submit")) return;
 
         // 現在表示してる画像のインデックス
-        var curImageIndex = showImage.IndexOf(_placeholder.sprite);
+        var curImageIndex = showImage.IndexOf(_placeholderImg.sprite);
 
         // 最後の画像に到達したらゲームシーンに遷移
         if (curImageIndex == showImage.Count - 1)
@@ -49,6 +57,6 @@ public class SlideShow : MonoBehaviour
         }
 
         // 次の画像を表示
-        _placeholder.sprite = showImage.ElementAt(curImageIndex + 1);
+        _placeholderImg.sprite = showImage.ElementAt(curImageIndex + 1);
     }
 }
