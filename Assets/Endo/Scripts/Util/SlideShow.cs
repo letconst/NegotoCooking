@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +15,8 @@ public class SlideShow : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
+        //aspectRatioを初期化
+        _placeholder.GetComponent<AspectRatioFitter>().aspectRatio = 1.766666666f;
         _placeholder = GameObject.FindGameObjectWithTag("SlideShowImagePlaceholder").GetComponent<Image>();
 
         if (_placeholder == null) return;
@@ -36,6 +39,13 @@ public class SlideShow : MonoBehaviour
             SceneChanger.Instance.SceneLoad(SceneChanger.SceneName.GameScenes, true);
 
             return;
+        }
+
+        //もし次の画像が最後だった場合
+        if (curImageIndex == showImage.Count - 2)
+        {
+            //aspectRatioをMenu画像に合わせる
+            _placeholder.GetComponent<AspectRatioFitter>().aspectRatio = 0.73f;
         }
 
         // 次の画像を表示
