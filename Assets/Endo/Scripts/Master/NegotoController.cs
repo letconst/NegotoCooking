@@ -16,13 +16,7 @@ public class NegotoController : MonoBehaviour
     private SpriteRenderer spriteRenderer;
 
     [SerializeField]
-    private InventoryContainerBase largePlateContainer;
-
-    [SerializeField]
     private TextMeshPro textMesh;
-
-    [SerializeField]
-    private TMP_Text text;
 
     [SerializeField, Tooltip("寝言のフェード時間"), Range(0, 1)]
     private float deltaFade;
@@ -44,8 +38,6 @@ public class NegotoController : MonoBehaviour
 
     // 達成に必要な食材の状態
     public List<FoodState> requireStates;
-
-    // 寝言がアクティブか否か
 
     // 寝言のインデックス番号
     public int selfIndex;
@@ -74,6 +66,9 @@ public class NegotoController : MonoBehaviour
         {FoodState.Boil, "煮る"}
     };
 
+    /// <summary>
+    /// 寝言がアクティブか否か
+    /// </summary>
     public bool IsActive { get; private set; }
 
     private void Awake()

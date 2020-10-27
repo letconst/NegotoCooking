@@ -21,8 +21,8 @@ public class InventoryContainerBase : ScriptableObject
     [SerializeField]
     private List<InventorySlotBase> container = new List<InventorySlotBase>();
 
-    public List<InventorySlotBase> Container { get => container; protected set => container = value; }
-    public int                     SlotSize  { get => slotSize;  protected set => slotSize = value; }
+    public List<InventorySlotBase> Container => container;
+    public int                     SlotSize  => slotSize;
     public bool                    IsFull    => Container.Count(slot => slot.Item != null) == slotSize;
 
     /// <summary>
@@ -63,56 +63,72 @@ public class InventoryContainerBase : ScriptableObject
 
     /// <summary>
     /// 指定したインデックスのスロットアイテムを取得する
+    /// マイナス指定は不可
     /// </summary>
     /// <param name="index">スロットのインデックス</param>
     /// <returns>スロットのアイテム</returns>
     public virtual Item GetItem(int index)
     {
-        return Container[index].Item;
+        // 範囲内チェック
+        if ((uint) index < (uint) Container.Count) return Container[index].Item;
+
+        Debug.LogError("GetItem: Out of range");
+
+        return null;
     }
 
     /// <summary>
     /// 指定したインデックスのスロットアイテムの状態を取得する
+    /// マイナス指定は不可
     /// </summary>
     /// <param name="index">スロットのインデックス</param>
     /// <returns>付加されている状態のリスト</returns>
     public virtual List<FoodState> GetStates(int index)
     {
-        return Container[index].States;
+        // 範囲内チェック
+        if ((uint) index < (uint) Container.Count) return Container[index].States;
+
+        Debug.LogError("GetStates: Out of range");
+
+        return null;
     }
 
     /// <summary>
     /// 指定したインデックスのスロットのアイテムを更新する
+    /// マイナス指定は不可
     /// </summary>
     /// <param name="index">スロットのインデックス</param>
     /// <param name="item">更新アイテム</param>
     /// <param name="states">アイテムの状態</param>
     public virtual void UpdateItem(int index, Item item, IEnumerable<FoodState> states)
     {
-        if (Container.Count < index)
+        // 範囲内チェック
+        if ((uint) index < (uint) Container.Count)
         {
-            Debug.LogError("UpdateItem: Out of range");
+            Container[index].UpdateSlot(item, states.ToList());
 
             return;
         }
 
-        Container[index].UpdateSlot(item, states.ToList());
+        Debug.LogError("UpdateItem: Out of range");
     }
 
     /// <summary>
     /// 指定したインデックスのスロットにあるアイテムを削除する
+    /// マイナス指定は不可
     /// </summary>
     /// <param name="index">スロットのインデックス</param>
     public virtual void RemoveItem(int index)
     {
-        if (Container.Count < index)
+        // 範囲内チェック
+        if ((uint) index < (uint) Container.Count)
         {
-            Debug.LogError("RemoveItem: Out of range");
+            Container[index].UpdateSlot(null);
 
             return;
         }
 
-        Container[index].UpdateSlot(null);
+        Debug.LogError("RemoveItem: Out of range");
     }
 }
 
@@ -131,64 +147,6 @@ public class InventorySlotBase
     public int             ID     { get => id;     protected set => id = value; }
     public Item            Item   { get => item;   protected set => item = value; }
     public List<FoodState> States { get => states; protected set => states = value; }
-
-    public string FullItemName
-    {
-        get
-        {
-            var result = "";
-
-            if (Item == null) return result;
-
-            switch (States.ElementAt(0))
-            {
-                case FoodState.None:
-                    if (Item             != null &&
-                        Item.KindOfItem1 != Item.KindOfItem.Seasoning)
-                    {
-                        Debug.LogWarning($"アイテム「{Item.ItemName}」の状態がNoneです。アイテムを持たせる際は適切な状態を指定してください");
-                    }
-
-                    result = Item.ItemName;
-
-                    break;
-
-                case FoodState.Raw:
-                    result = Item.ItemName;
-
-                    break;
-
-                case FoodState.Cooked:
-                    result = $"焼いた{Item.ItemName}";
-
-                    break;
-
-                case FoodState.Burnt:
-                    result = $"焦げた{Item.ItemName}";
-
-                    break;
-
-                case FoodState.Boil:
-                    result = $"煮込んだ{Item.ItemName}";
-
-                    break;
-
-                case FoodState.Cut:
-                    result = $"切った{Item.ItemName}";
-
-                    break;
-
-                default:
-                    Debug.LogWarning($"状態「{States}」の接頭辞が未設定です");
-
-                    result = Item.ItemName;
-
-                    break;
-            }
-
-            return result;
-        }
-    }
 
     public InventorySlotBase()
     {
