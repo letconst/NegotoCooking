@@ -1703,6 +1703,18 @@ PrefabInstance:
       propertyPath: fireL
       value: 
       objectReference: {fileID: 3947386248187004739}
+    - target: {fileID: 1329394958, guid: ce882026de3b5c140bf637bf880a00a5, type: 3}
+      propertyPath: tuyobi
+      value: 0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 1329394958, guid: ce882026de3b5c140bf637bf880a00a5, type: 3}
+      propertyPath: tyubi
+      value: 0.045
+      objectReference: {fileID: 0}
+    - target: {fileID: 1329394958, guid: ce882026de3b5c140bf637bf880a00a5, type: 3}
+      propertyPath: yowabi
+      value: 0.03
+      objectReference: {fileID: 0}
     - target: {fileID: 6540084493477503004, guid: ce882026de3b5c140bf637bf880a00a5,
         type: 3}
       propertyPath: m_Name
