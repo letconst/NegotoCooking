@@ -23,7 +23,7 @@ Animator:
   m_GameObject: {fileID: 3950374184105361692}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 2b3cccca16061fd4fbf4fa0f7f442965, type: 2}
+  m_Controller: {fileID: 9100000, guid: 71201db9114d9384abb0192cfe570067, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -57,7 +57,6 @@ GameObject:
   - component: {fileID: 8734916712966844736}
   - component: {fileID: 8734916712966844743}
   - component: {fileID: 8734916712966844739}
-  - component: {fileID: 8734916712966844748}
   m_Layer: 0
   m_Name: RKichenDoorWrapper
   m_TagString: Untagged
@@ -225,23 +224,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!111 &8734916712966844748
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8734916712966844742}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 0}
-  m_Animations:
-  - {fileID: 0}
-  - {fileID: 0}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!1001 &5040479565704992789
 PrefabInstance:
   m_ObjectHideFlags: 0

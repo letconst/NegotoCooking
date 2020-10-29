@@ -2,19 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
-// TODO: プレイヤーがいる方向に対する側へ開くようにする
 [RequireComponent(typeof(Collider))]
 [RequireComponent(typeof(AudioSource))]
 public class DoorController : MonoBehaviour
 {
     [SerializeField, Tooltip("ドアの軸に付属するアニメーター")]
     private List<Animator> pivotAnims;
-
-    // [SerializeField, Tooltip("ドアが開閉する最大角度")]
-    // private float maxAnimAngle;
 
     [SerializeField, Tooltip("ドアが自動で閉じるまでの時間（秒）")]
     private float closeLimit;
@@ -31,19 +26,14 @@ public class DoorController : MonoBehaviour
     // プレイヤーが近くにいるか否か
     private bool _isNear;
 
+    // 近くにいるプレイヤーの座標
+    private Vector3 _nearPlayerPos;
+
     // ドアを開くごとに設定するID
     private float _animProcessID;
 
-    // ドアが開いているか否か
-    // private bool _isOpen;
-
-    // ドアが開く前の回転
-    // private Quaternion _beforeRot;
-
-    // ドアが開いた後の回転
-    // private Quaternion _afterRot;
-
-    private static readonly int IsOpen = Animator.StringToHash("IsOpen");
+    private static readonly int IsOpen  = Animator.StringToHash("IsOpen");
+    private static readonly int IsFront = Animator.StringToHash("IsFront");
 
     // Update is called once per frame
     private void Update()
@@ -83,15 +73,6 @@ public class DoorController : MonoBehaviour
         // SEが鳴ってる間は待機
         yield return new WaitWhile(() => audioSource.isPlaying);
 
-        // _isOpen = !_isOpen;
-
-        // 開く際はアニメーション前の回転を記憶
-        // if (_isOpen) _beforeRot = targetDoor.transform.rotation;
-
-        // _afterRot = (_isOpen)
-        //                 ? Quaternion.Inverse(Quaternion.Euler(0, maxAnimAngle, 0))
-        //                 : _beforeRot * Quaternion.Euler(0, -maxAnimAngle, 0);
-
         foreach (var anim in pivotAnims)
         {
             anim.SetBool(IsOpen, !anim.GetBool(IsOpen));
@@ -100,7 +81,7 @@ public class DoorController : MonoBehaviour
         // 指定時間経過後に自動で閉じる
         yield return new WaitForSeconds(closeLimit);
 
-        // ドアが開いている状態であり、IDが同じなら（手動で閉じた後に再度開いていなければ）閉じる
+        // ドアが手動で閉じられなかったら自動で閉じる
         foreach (var anim in pivotAnims.Where(a => a.GetBool(IsOpen) && _animProcessID.Equals(rnd)))
         {
             anim.SetBool(IsOpen, false);
@@ -132,11 +113,38 @@ public class DoorController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player")) _isNear = true;
+        if (!other.CompareTag("Player")) return;
+
+        _isNear        = true;
+        _nearPlayerPos = other.transform.position;
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (!other.CompareTag("Player")) return;
+
+        // キャッシュ
+        var selfTrf = transform;
+
+        // ドアからプレイヤーへの正規化ベクトル
+        var normPlayer2Door = (_nearPlayerPos - selfTrf.position).normalized;
+
+        // プレイヤーがドアの正面にいるか否か
+        // プレイヤーは、ドアとの内積が正なら正面、負なら背面にいる
+        var isPlayerInFrontOfDoor = Vector3.Dot(selfTrf.right, normPlayer2Door) > 0;
+
+        // ドアの開く方向を指定
+        foreach (var anim in pivotAnims)
+        {
+            anim.SetBool(IsFront, isPlayerInFrontOfDoor);
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player")) _isNear = false;
+        if (!other.CompareTag("Player")) return;
+
+        _isNear        = false;
+        _nearPlayerPos = other.transform.position;
     }
 }
