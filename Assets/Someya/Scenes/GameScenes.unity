@@ -73,7 +73,7 @@ LightmapSettings:
     m_FinalGatherRayCount: 256
     m_ReflectionCompression: 2
     m_MixedBakeMode: 2
-    m_BakeBackend: 2
+    m_BakeBackend: 1
     m_PVRSampling: 1
     m_PVRDirectSampleCount: 16
     m_PVRSampleCount: 128
@@ -5502,6 +5502,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5461450064320938251, guid: c6b8c2b871052394e81032f905f87f8a,
+        type: 3}
+      propertyPath: inventory
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8998688251315817654, guid: c6b8c2b871052394e81032f905f87f8a,
         type: 3}
