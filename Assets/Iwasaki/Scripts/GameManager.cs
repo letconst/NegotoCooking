@@ -17,6 +17,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     public bool alertBool;
     private int bakePoint;
     private int failCount;
+    public bool operationBool { get;  set; }
 
     public bool IsReachedResult { get; private set; }
 

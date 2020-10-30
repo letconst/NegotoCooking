@@ -14,6 +14,7 @@ public class SlideShow : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
+        GameManager.Instance.operationBool = true;
         _placeholder = GameObject.FindGameObjectWithTag("SlideShowImagePlaceholder").GetComponent<Image>();
 
         if (_placeholder == null) return;
