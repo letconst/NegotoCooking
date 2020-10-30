@@ -534,6 +534,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4380816121593587142, guid: 2e901bf42991b9f42a429981aaf54ef1,
+        type: 3}
+      propertyPath: interactName
+      value: "\u958B\u9589\u3059\u308B"
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2e901bf42991b9f42a429981aaf54ef1, type: 3}
 --- !u!4 &93441665 stripped
@@ -4507,6 +4512,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Refrigerator (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1325970683095040676, guid: b7fd0efc7b83a544e8229fcc817cf11f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2611404538126577847, guid: b7fd0efc7b83a544e8229fcc817cf11f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5624,7 +5634,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: -2.5025646e-19}
+  m_BoundingSphereOverride: {x: 7.5343227e+28, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -10324,6 +10334,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1273194064}
     m_Modifications:
+    - target: {fileID: 8734916712966844736, guid: 0c16155381de9094f89aa46893c1b89c,
+        type: 3}
+      propertyPath: interactName
+      value: "\u958B\u9589\u3059\u308B"
+      objectReference: {fileID: 0}
     - target: {fileID: 8734916712966844738, guid: 0c16155381de9094f89aa46893c1b89c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -10677,6 +10692,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1405501631777233106, guid: 2b1a669307bca384ea369d83327f2cea,
+        type: 3}
+      propertyPath: interactName
+      value: "\u958B\u9589\u3059\u308B"
       objectReference: {fileID: 0}
     - target: {fileID: 1405501631777233108, guid: 2b1a669307bca384ea369d83327f2cea,
         type: 3}
@@ -14333,6 +14353,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Refrigerator
+      objectReference: {fileID: 0}
+    - target: {fileID: 1325970683095040676, guid: b7fd0efc7b83a544e8229fcc817cf11f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2611404538126577847, guid: b7fd0efc7b83a544e8229fcc817cf11f,
         type: 3}

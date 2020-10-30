@@ -145,8 +145,8 @@ public class FireControl_boil : MonoBehaviour
 
         if (clickBool == true) return;
 
-        float h = Input.GetAxis("Horizontal");
-        float v = Input.GetAxis("Vertical");
+        float h = Input.GetAxis("R_Stick_H");
+        float v = Input.GetAxis("R_Stick_V");
         if(h < 0)
         {
             otamaXMove = 55;
@@ -157,7 +157,7 @@ public class FireControl_boil : MonoBehaviour
         }
         Otama.transform.position = new Vector3(Centerpostion.transform.position.x + h * otamaXMove,
                                                Centerpostion.transform.position.y,
-                                               Centerpostion.transform.position.z + v * 30);
+                                               Centerpostion.transform.position.z + v * -30);
 
         //1秒分掻きまわすアクションをするとポイントが-25される。
         if (h != 0 && v != 0)
