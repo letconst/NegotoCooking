@@ -47,6 +47,9 @@ public class ChoicePopup : MonoBehaviour
 
         GameObject currentSelected;
 
+        // インタラクトとウィンドウの同時に開かないようにする
+        yield return null;
+
         // A入力待機
         yield return new WaitUntil(() =>
         {
