@@ -2717,7 +2717,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 260169977}
-  - component: {fileID: 260169978}
   - component: {fileID: 260169979}
   m_Layer: 0
   m_Name: Door(Bathroom)
@@ -2741,19 +2740,6 @@ Transform:
   m_Father: {fileID: 129948952}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &260169978
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 260169976}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11aa8c40d03f2544ead1c52451951f86, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _door: {fileID: 317892550}
 --- !u!54 &260169979
 Rigidbody:
   m_ObjectHideFlags: 0
