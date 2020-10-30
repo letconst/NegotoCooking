@@ -145,8 +145,8 @@ public class FireControl_boil : MonoBehaviour
 
         if (clickBool == true) return;
 
-        float h = Input.GetAxis("Horizontal");
-        float v = Input.GetAxis("Vertical");
+        float h = Input.GetAxis("Horizontal_R");
+        float v = Input.GetAxis("Vertical_R");
         if(h < 0)
         {
             otamaXMove = 55;

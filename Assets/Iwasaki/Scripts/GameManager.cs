@@ -19,7 +19,10 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     public bool alertBool;
     private int bakePoint;
     private int failCount;
-    public bool operationBool { get;  set; }
+    public bool cutOperationBool { get;  set; }
+    public bool bakeOperationBool { get; set; }
+    public bool boilOperationBool { get; set; }
+    public bool menuBool { get; set; }
 
     public bool IsReachedResult       { get; private set; }
     public bool IsReachedNavOfNegoto  { get; set; }

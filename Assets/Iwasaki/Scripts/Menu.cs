@@ -15,14 +15,21 @@ public class Menu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Time.timeScale = 0;        
+        menu.SetActive(false);
+        if (GameManager.Instance.menuBool)
+        {
+            menu.SetActive(true);
+            Time.timeScale = 0;
+        }             
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("joystick button 0") || Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown("joystick button 0") && GameManager.Instance.menuBool || 
+            Input.GetKeyDown(KeyCode.Q) && GameManager.Instance.menuBool)
         {
+            GameManager.Instance.menuBool = false;
             Time.timeScale = 1;
             menu.SetActive(false);
             noiseGauge.SetActive(true);
