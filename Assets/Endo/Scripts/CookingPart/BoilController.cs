@@ -73,8 +73,8 @@ public class BoilController : MonoBehaviour
     /// </summary>
     private void PotActionHandler()
     {
-        float h = Input.GetAxis("Horizontal");
-        float v = Input.GetAxis("Vertical");
+        float h = Input.GetAxis("R_Stick_H");
+        float v = Input.GetAxis("R_Stick_V");
         Debug.Log(h + "," + v);
         _ladle.transform.position = new Vector3(_potCenterPos.transform.position.x + h * 65,
                                                 _potCenterPos.transform.position.y,

@@ -102,7 +102,7 @@ public class BakeController : MonoBehaviour
     /// </summary>
     private void FlyingPanActionHandler()
     {
-        float Stick_V = Input.GetAxis("Vertical");
+        float Stick_V = Input.GetAxis("R_Stick_V");
 
         if (Stick_V != 0)
         {
