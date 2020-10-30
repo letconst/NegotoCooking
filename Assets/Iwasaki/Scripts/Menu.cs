@@ -32,9 +32,9 @@ public class Menu : MonoBehaviour
             GameManager.Instance.menuBool = false;
             Time.timeScale = 1;
             menu.SetActive(false);
-            noiseGauge.SetActive(true);
-            dogToyCount.SetActive(true);
-            playeInv.SetActive(true);
+            noiseGauge.GetComponent<CanvasGroup>().alpha = 1;
+            dogToyCount.GetComponent<CanvasGroup>().alpha = 1;
+            playeInv.GetComponent<CanvasGroup>().alpha = 1;
         }
     }
 }
