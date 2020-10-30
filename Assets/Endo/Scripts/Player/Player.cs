@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System;
+using UnityEngine.UI;
 
 public class Player : SingletonMonoBehaviour<Player>
 {
@@ -31,6 +32,9 @@ public class Player : SingletonMonoBehaviour<Player>
     [SerializeField]
     private GameObject dogFood;
 
+    [SerializeField]
+    private Image[] m_elmages; //餌画像リスト
+
     // プレイヤーが停止状態か否か
     public bool isStop;
 
@@ -40,22 +44,52 @@ public class Player : SingletonMonoBehaviour<Player>
     private Vector3             _moveDirection = Vector3.zero; // 向いている方向
     private Animator            _animator;
 
-
     // Start is called before the first frame update
     private void Start()
     {
         _controller = GetComponent<CharacterController>();
         _animator   = GetComponent<Animator>();
+        var dogFoodCount     = InventoryManager.Instance.PlayerContainer.DogFoodCount;
+        var maxDogFoodCount  = InventoryManager.Instance.PlayerContainer.MaxDogFoodCount;
+        var usedDogFoodCount = maxDogFoodCount - dogFoodCount;
+
+        for (int i = 1; i < usedDogFoodCount + 1; i++)
+        {
+            m_elmages[maxDogFoodCount - i].gameObject.SetActive(false);
+        }
+
+        foreach (var entry in GameManager.Instance.DogToyData.Entries)
+        {
+            var dogToy = Instantiate(dogFood, entry.Position, entry.Rotation);
+            entry.UpdateEntry(entry.Position, entry.Rotation, dogToy.GetInstanceID());
+        }
     }
 
     // Update is called once per frame
     private void Update()
     {
+        // ポーズ中は実行させない
+        if (Time.timeScale.Equals(0)) return;
+
         Movement();
-        if(Input.GetKeyDown("joystick button 3")||Input.GetKeyDown(KeyCode.X))
+
+        if (Input.GetKeyDown("joystick button 3") ||
+            Input.GetKeyDown(KeyCode.X))
         {
-            if (InventoryManager.Instance.PlayerContainer.DogFoodCount == 0) return;
-            Instantiate(dogFood,new Vector3(transform.position.x,transform.position.y+0.5f,transform.position.z),Quaternion.identity);
+            var dogFoodCount = InventoryManager.Instance.PlayerContainer.DogFoodCount;
+
+            if (dogFoodCount == 0) return;
+
+            var dogToy =
+                Instantiate(
+                    dogFood, new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z),
+                    Quaternion.identity);
+
+            GameManager.Instance.DogToyData.AddEntry(dogToy.transform.position, dogToy.transform.rotation,
+                                                     dogToy.GetInstanceID());
+
+            //餌の画像アイコンを非表示にする
+            m_elmages[dogFoodCount - 1].gameObject.SetActive(false);
             InventoryManager.Instance.PlayerContainer.DogFoodCount--;
         }
     }

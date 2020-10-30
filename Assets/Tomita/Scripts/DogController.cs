@@ -6,6 +6,7 @@ using UnityEngine.AI;
 
 public class DogController : MonoBehaviour
 {
+    //列挙型で犬の状態を管理する
     public enum DogState 
     {
         Idle,
@@ -13,16 +14,21 @@ public class DogController : MonoBehaviour
         FindFood,
         FindPlayer,
     }
+
     private DogState State = DogState.Idle;
+
+    //犬の探知範囲
     [SerializeField]
     private SphereCollider searchArea;
+    //犬の視界範囲
     [SerializeField]
     private float searchAngle;
+    //睡眠ゲージの減少
     [SerializeField]
     private float decreaseValue;
 
     private Animator _animator;
-
+    //犬の動く先の目的地点
     public Transform central;
 
     private NavMeshAgent agent;
@@ -32,7 +38,7 @@ public class DogController : MonoBehaviour
     [SerializeField] float waitTime = 2;
     //待機時間を数える
     [SerializeField] float time = 0;
-
+    //
     private Collider nearObject;
 
     public bool DogMoveStop;
@@ -110,6 +116,12 @@ public class DogController : MonoBehaviour
             _animator.SetBool("Walk", true);
             _animator.SetBool("Bark", false);
             _animator.SetBool("EatFood", false);
+            //吠える音声を止める
+            if (DogBark == true)
+            {
+                GetComponent<AudioSource>().Stop();
+                DogBark = false;
+            }
         }
         else if (State == DogState.FindFood)
         {
@@ -125,6 +137,7 @@ public class DogController : MonoBehaviour
             _animator.SetBool("Walk", false);
             _animator.SetBool("Bark", true);
             _animator.SetBool("EatFood", false);
+            //吠える音声を流す
             if(DogBark==false)
             {
                 GetComponent<AudioSource>().PlayDelayed(0.5f);
@@ -147,7 +160,7 @@ public class DogController : MonoBehaviour
         {
             StopHere();
         }
-
+        //自分自身に目的を設定する
         if (DogMoveStop)
         {
             agent.destination = transform.position;
@@ -158,6 +171,7 @@ public class DogController : MonoBehaviour
 
     private void NearObjectHandler()
     {
+        //探知範囲にオブジェクトが存在しない場合Idle状態にする
         if (nearObject == null)
         {
             if (State == DogState.FindFood || State == DogState.FindPlayer)
@@ -166,7 +180,7 @@ public class DogController : MonoBehaviour
             }
             return;
         }
-
+        //探知範囲に犬のおもちゃがあったら犬のおもちゃに向かう
         if (nearObject.CompareTag("DogFood"))
         {
             State = DogState.Move;
@@ -174,16 +188,17 @@ public class DogController : MonoBehaviour
             float targetPositionDistance;
             agent.isStopped = false;
             agent.destination = nearObject.transform.position;
-
+            //経路探索が犬のおもちゃに設定する
             if (agent.pathPending)
             {
                 targetPositionDistance = Vector3.Distance(transform.position, agent.destination);
             }
+            //経路探索が準備されてない場合targetPositionDistanceに設定する
             else
             {
                 targetPositionDistance = agent.remainingDistance;
             }
-            //餌までの距離が0.5未満なら
+            //餌までの距離が2未満なら
             if (targetPositionDistance < 2f)
             {
                 State = DogState.FindFood;
@@ -192,16 +207,13 @@ public class DogController : MonoBehaviour
                 DogToy.dogFoodHealth -= Time.deltaTime;
             }
             //犬が食べ終わったら動き出す
-            if (DogToy.dogFoodHealth <= 0)
+            if (DogToy == null)
             {
                 DogMoveStop = false;
-                if (nearObject.gameObject != null)
-                {
-                    Destroy(nearObject.gameObject);
-                }
                 State = DogState.Idle;
             }
         }
+        //探索範囲にプレイヤーがいたらプレイヤーに向かって吠える
         else if (nearObject.CompareTag("Player"))
         {
             //主人公の方向
@@ -237,8 +249,10 @@ public class DogController : MonoBehaviour
         if(State != DogState.FindFood && other.CompareTag("DogFood"))
         {
             nearObject = other;
+            return;
         }
-        else if(State != DogState.FindFood && other.CompareTag("Player"))
+
+        if(State != DogState.FindFood && other.CompareTag("Player"))
         {
             nearObject = other;
         }

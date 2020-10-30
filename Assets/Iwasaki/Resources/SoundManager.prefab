@@ -50,20 +50,18 @@ MonoBehaviour:
     volume: 0.25
   - clip: {fileID: 8300000, guid: ba228870969df0843a7e9cccc3ce157d, type: 3}
     volume: 0.25
-  - clip: {fileID: 8300000, guid: dbc95f06eb0cec24bbc01a16a56c3b60, type: 3}
+  - clip: {fileID: 8300000, guid: 2eec9b7ef200cb34e861f2b285c07285, type: 3}
     volume: 0.25
   seSound:
   - clip: {fileID: 8300000, guid: 2e1291ac76d7aaa4b88405b4fd2fe64d, type: 3}
     volume: 0.4
   - clip: {fileID: 8300000, guid: 69e13a67834a3094e9c2a4233b8b2f96, type: 3}
     volume: 0.4
-  - clip: {fileID: 8300000, guid: 35bd1e2b5e303c84888f0d955ceba1d0, type: 3}
-    volume: 0.4
-  - clip: {fileID: 8300000, guid: 84702f1ef9165924cac0bbf0b3521754, type: 3}
-    volume: 0.4
   - clip: {fileID: 8300000, guid: 143f7ae3c37d3ff4bb0c1ae3d73b9133, type: 3}
     volume: 0.4
   - clip: {fileID: 8300000, guid: 0d34d652b1a0af841b34f74aca36eea9, type: 3}
+    volume: 0.4
+  - clip: {fileID: 8300000, guid: ce3cca3489c1a29499c07551a6db64ac, type: 3}
     volume: 0.4
   audioSource_BGM: {fileID: 1189408208835049331}
   audioSource_SE: {fileID: 8157298913561168990}

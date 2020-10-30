@@ -5,6 +5,8 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 {
     [SerializeField]
     private StatisticsManager statisticsManager;
+    [SerializeField]
+    private DogToyData dogToyData;
 
     // 現在のシーン
     private Scene _currentScene;
@@ -19,7 +21,10 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     private int failCount;
     public bool operationBool { get;  set; }
 
-    public bool IsReachedResult { get; private set; }
+    public bool IsReachedResult       { get; private set; }
+    public bool IsReachedNavOfNegoto  { get; set; }
+    public bool IsReachedNavOfStairs  { get; set; }
+    public bool IsReachedNavOfKitchen { get; set; }
 
     public float NoiseMator
     {
@@ -86,6 +91,8 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     public Vector3           PlayerRotate      { set; get; }
     public StatisticsManager StatisticsManager => statisticsManager;
 
+    public DogToyData DogToyData => dogToyData;
+
     public void Awake()
     {
         if (this != Instance)
@@ -145,5 +152,6 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     private void OnApplicationQuit()
     {
         statisticsManager.throwInCount = 0;
+        dogToyData.Entries.Clear();
     }
 }

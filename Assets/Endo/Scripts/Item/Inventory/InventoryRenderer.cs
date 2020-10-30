@@ -46,7 +46,7 @@ public class InventoryRenderer : MonoBehaviour
     private void Start()
     {
         _selfSlotSize = (inventory != null) ? inventory.SlotSize :
-                        (isForRefrigerator) ? RefrigeratorManager.Instance.slotSize : 0;
+                        (isForRefrigerator) ? RefrigeratorManager.Instance.SlotSize : 0;
 
         InitRender();
     }
@@ -58,7 +58,7 @@ public class InventoryRenderer : MonoBehaviour
         UpdatePlayerInventoryRender();
         UpdateRefrigeratorInventoryRender();
         UpdateLastSelectedIndex();
-        UpdateDogToyCountRender();
+        //UpdateDogToyCountRender();
     }
 
     /// <summary>
@@ -77,7 +77,7 @@ public class InventoryRenderer : MonoBehaviour
             }
 
             // 冷蔵庫用の処理
-            for (var i = 0; i < RefrigeratorManager.Instance.slotSize; i++)
+            for (var i = 0; i < RefrigeratorManager.Instance.SlotSize; i++)
             {
                 var slotObj = Instantiate(slotPrefab, transform.position, Quaternion.identity, slotWrapper.transform);
 
@@ -239,16 +239,16 @@ public class InventoryRenderer : MonoBehaviour
         }
     }
 
-    private void UpdateDogToyCountRender()
-    {
-        // メインシーンでのみ動作
-        if (SceneManager.GetActiveScene().name != "GameScenes") return;
+    //private void UpdateDogToyCountRender()
+    //{
+    //    // メインシーンでのみ動作
+    //    if (SceneManager.GetActiveScene().name != "GameScenes") return;
 
-        var dogToyCanvas    = GameObject.FindGameObjectWithTag("DogToyCount").GetComponentInChildren<Text>();
-        var playerContainer = InventoryManager.Instance.PlayerContainer;
+    //    var dogToyCanvas    = GameObject.FindGameObjectWithTag("DogToyCount").GetComponentInChildren<Text>();
+    //    var playerContainer = InventoryManager.Instance.PlayerContainer;
 
-        dogToyCanvas.text = playerContainer.DogFoodCount + "/" + playerContainer.MaxDogFoodCount;
-    }
+    //    dogToyCanvas.text = playerContainer.DogFoodCount + "/" + playerContainer.MaxDogFoodCount;
+    //}
 
     /// <summary>
     /// インベントリスロットの表示を消去する

@@ -32,6 +32,11 @@ TagManager:
   - Nav_Sisyou
   - Nav_Kitchen
   - Nav_Steps
+  - FireM
+  - FireL
+  - FireS
+  - Cam
+  - PauseCanvas
   layers:
   - Default
   - TransparentFX

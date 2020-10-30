@@ -21,24 +21,41 @@ public class GarbageCanController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        // X押下で選択アイテムを捨てる
-        if (_isNear &&
-            Input.GetButtonDown("Interact")&&
-            _playerContainer.GetItem(_playerInvRenderer.LastSelectedIndex)!=null)
+        // インタラクトで選択アイテムを捨てる
+        if (_isNear                         &&                                      // インタラクト範囲内にいる
+            Input.GetButtonDown("Interact") &&                                      // インタラクトボタン押下
+            Time.timeScale.Equals(1)        &&                                      // ポーズ中ではない
+            _playerContainer.GetItem(_playerInvRenderer.LastSelectedIndex) != null) // 食材を選択している
         {
-            StartCoroutine("InputHandler");
+            StartCoroutine(nameof(InputHandler));
         }
     }
 
+    /// <summary>
+    /// ボタン入力を処理する
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator InputHandler()
     {
-        IEnumerator coroutine = _choicePopup.showWindow("食材を捨てていいですか?");
+        var coroutine = _choicePopup.showWindow("食材を捨てていいですか?");
+
+        // ボタン入力を待機
         yield return coroutine;
-        if((bool) coroutine.Current)
+
+        // はい選択だったら食材を捨てる
+        if (coroutine.Current != null &&
+            (bool) coroutine.Current)
         {
+            // SE再生
+            SoundManager.Instance.PlaySe(SE.ThrowOutFood);
+
+            // プレイヤーインベントリから選択食材を削除
             _playerContainer.RemoveItem(_playerInvRenderer.LastSelectedIndex);
+
+            // 捨てた回数をカウント
             GameManager.Instance.StatisticsManager.throwInCount++;
         }
+
         _choicePopup.HideWindow();
     }
 
@@ -49,10 +66,9 @@ public class GarbageCanController : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
-        {
-            _isNear = false;
-            _choicePopup.HideWindow();
-        }
+        if (!other.CompareTag("Player")) return;
+
+        _isNear = false;
+        _choicePopup.HideWindow();
     }
 }

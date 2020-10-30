@@ -44,4 +44,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statisticsManager: {fileID: 11400000, guid: 2c7568ed88b8adb44aeb7c0f609aae69, type: 2}
+  dogToyData: {fileID: 11400000, guid: 715c136ebdfcb754c8b39fbddc2ed910, type: 2}
   alertBool: 0

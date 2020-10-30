@@ -1,71 +1,39 @@
 fileFormatVersion: 2
-guid: 6000e41f616b00e4793e511fd5db0fca
+guid: e8e747f8356c288429ef829a5d90a82c
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
     100000: door
     100002: //RootNode
-    100004: kanagu
-    100006: kanagu_1
-    100008: kanagu_2
-    100010: kanagu_3
-    100012: kanagu_4
-    100014: kanagu_5
-    100016: kanagu_6
-    100018: nob
-    100020: nob 1
-    100022: nob2
-    100024: nob_shita
-    100026: nob_shita_2
+    100004: nob
+    100006: nob 1
+    100008: nob2
+    100010: nob_shita
+    100012: nob_shita_2
     400000: door
     400002: //RootNode
-    400004: kanagu
-    400006: kanagu_1
-    400008: kanagu_2
-    400010: kanagu_3
-    400012: kanagu_4
-    400014: kanagu_5
-    400016: kanagu_6
-    400018: nob
-    400020: nob 1
-    400022: nob2
-    400024: nob_shita
-    400026: nob_shita_2
+    400004: nob
+    400006: nob 1
+    400008: nob2
+    400010: nob_shita
+    400012: nob_shita_2
     2100000: MAT_door_bedroom_door
     2100002: MAT_door_bedroom_metal
     2300000: door
-    2300002: kanagu_1
-    2300004: kanagu_2
-    2300006: kanagu_3
-    2300008: kanagu_4
-    2300010: kanagu_5
-    2300012: kanagu_6
-    2300014: nob 1
-    2300016: nob2
-    2300018: nob_shita
-    2300020: nob_shita_2
+    2300002: nob 1
+    2300004: nob2
+    2300006: nob_shita
+    2300008: nob_shita_2
     3300000: door
-    3300002: kanagu_1
-    3300004: kanagu_2
-    3300006: kanagu_3
-    3300008: kanagu_4
-    3300010: kanagu_5
-    3300012: kanagu_6
-    3300014: nob 1
-    3300016: nob2
-    3300018: nob_shita
-    3300020: nob_shita_2
+    3300002: nob 1
+    3300004: nob2
+    3300006: nob_shita
+    3300008: nob_shita_2
     4300000: door
-    4300002: kanagu_1
-    4300004: kanagu_2
-    4300006: kanagu_3
-    4300008: kanagu_4
-    4300010: kanagu_5
-    4300012: kanagu_6
-    4300014: nob_shita_2
-    4300016: nob_shita
-    4300018: nob2
-    4300020: nob
+    4300002: nob_shita_2
+    4300004: nob_shita
+    4300006: nob2
+    4300008: nob
   externalObjects: {}
   materials:
     importMaterials: 1
