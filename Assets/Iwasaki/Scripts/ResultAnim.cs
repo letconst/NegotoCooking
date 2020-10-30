@@ -14,6 +14,8 @@ public class ResultAnim : MonoBehaviour
     [SerializeField]
     private ParticleSystem bad;
     [SerializeField]
+    private GameObject emptyPlate;
+    [SerializeField]
     private GameObject goodSoup;
     [SerializeField]
     private GameObject badSoup;
@@ -23,13 +25,21 @@ public class ResultAnim : MonoBehaviour
     private GameObject toTitleButton;
     [SerializeField]
     private Text clearTimeText;
+    private bool isEmpty;
     void Start()
     {
         good.Stop();
         bad.Stop();
         kirakira.Stop();
+        isEmpty = TimeCounter.CountUp - TimeCounter.CurrentTime == 0 || NegotoManager.Instance.CurDisplayCount != 0 || GameManager.Instance.NoiseMator == 0;
         StartCoroutine(WaitTime(2.0f));
-        if (GameManager.Instance.FailCount == 0 || GameManager.Instance.FailCount == 1)
+        if(isEmpty)
+
+
+        {
+            emptyPlate.gameObject.SetActive(true);
+        }
+        else if (GameManager.Instance.FailCount == 0 || GameManager.Instance.FailCount == 1)
         {
             goodSoup.gameObject.SetActive(true);
         }
@@ -37,6 +47,7 @@ public class ResultAnim : MonoBehaviour
         {
             badSoup.gameObject.SetActive(true);
         }
+        
     }
 
     // Update is called once per frame
@@ -51,7 +62,11 @@ public class ResultAnim : MonoBehaviour
         anim.SetTrigger("Cloche");
         yield return new WaitForSeconds(1.0f);
         // FailCountは3もあり得るので、暫定的に2以上に
-        if (GameManager.Instance.FailCount                                >= 2 ||
+        if(isEmpty)
+        {
+            yield break;
+        }
+       else if (GameManager.Instance.FailCount                                >= 2 ||
             InventoryManager.Instance.LargePlateContainer.Container.Count <= 2) // 暫定
         {
             bad.Play();
@@ -65,6 +80,7 @@ public class ResultAnim : MonoBehaviour
         {
             good.Play();
         }
+       
     }
 
     public void FinishAnim()
