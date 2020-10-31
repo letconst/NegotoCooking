@@ -108,7 +108,7 @@ public class SceneChanger : SingletonMonoBehaviour<SceneChanger>
 
         while (_fadeCanvasGroup.alpha < 1)
         {
-            _fadeCanvasGroup.alpha += Time.deltaTime / waittime;
+            _fadeCanvasGroup.alpha += Time.fixedUnscaledDeltaTime / waittime;
 
             yield return null;
         }
@@ -130,7 +130,7 @@ public class SceneChanger : SingletonMonoBehaviour<SceneChanger>
 
         while (_fadeCanvasGroup.alpha > 0)
         {
-            _fadeCanvasGroup.alpha -= Time.deltaTime / waittime;
+            _fadeCanvasGroup.alpha -= Time.fixedUnscaledDeltaTime / waittime;
 
             yield return null;
         }
