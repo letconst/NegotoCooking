@@ -37,7 +37,7 @@ public class SlideShow : MonoBehaviour
         // 最後の画像に到達したらゲームシーンに遷移
         if (curImageIndex == showImage.Count - 1)
         {
-            SceneChanger.Instance.SceneLoad(SceneChanger.SceneName.GameScenes);
+            SceneChanger.Instance.SceneLoad(SceneChanger.SceneName.GameScenes, true);
 
             return;
         }
