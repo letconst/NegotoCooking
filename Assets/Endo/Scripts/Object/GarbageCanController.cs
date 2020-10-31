@@ -10,6 +10,12 @@ public class GarbageCanController : MonoBehaviour
     // プレイヤーが近くにいるか否か
     private bool _isNear;
 
+    // 確認ウィンドウが表示中か否か
+    private bool _isShowingWindow;
+
+    // 確認ウィンドウのコルーチン
+    private IEnumerator _windowCor;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -23,6 +29,7 @@ public class GarbageCanController : MonoBehaviour
     {
         // インタラクトで選択アイテムを捨てる
         if (_isNear                         &&                                      // インタラクト範囲内にいる
+            !_isShowingWindow               &&                                      // 確認ウィンドウ表示中ではない
             Input.GetButtonDown("Interact") &&                                      // インタラクトボタン押下
             Time.timeScale.Equals(1)        &&                                      // ポーズ中ではない
             _playerContainer.GetItem(_playerInvRenderer.LastSelectedIndex) != null) // 食材を選択している
@@ -38,14 +45,15 @@ public class GarbageCanController : MonoBehaviour
     private IEnumerator InputHandler()
     {
         var selectedFoodName = _playerContainer.GetItem(_playerInvRenderer.LastSelectedIndex).ItemName;
-        var coroutine        = _choicePopup.ShowWindow($"{selectedFoodName}を捨てますか？", SE.ThrowOutFood);
+        _windowCor       = _choicePopup.ShowWindow($"{selectedFoodName}を捨てますか？", SE.ThrowOutFood);
+        _isShowingWindow = true;
 
         // ボタン入力を待機
-        yield return coroutine;
+        yield return _windowCor;
 
         // はい選択だったら食材を捨てる
-        if (coroutine.Current != null &&
-            (bool) coroutine.Current)
+        if (_windowCor.Current != null &&
+            (bool) _windowCor.Current)
         {
             // プレイヤーインベントリから選択食材を削除
             _playerContainer.RemoveItem(_playerInvRenderer.LastSelectedIndex);
@@ -55,6 +63,8 @@ public class GarbageCanController : MonoBehaviour
         }
 
         _choicePopup.HideWindow();
+        _isShowingWindow = false;
+        _windowCor       = null;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -66,7 +76,14 @@ public class GarbageCanController : MonoBehaviour
     {
         if (!other.CompareTag("Player")) return;
 
-        _isNear = false;
         _choicePopup.HideWindow();
+        _isNear          = false;
+        _isShowingWindow = false;
+
+        // 確認ウィンドウ表示中だったら入力待機を解除して非表示に
+        if (_windowCor == null) return;
+
+        StopCoroutine(nameof(InputHandler));
+        _windowCor = null;
     }
 }

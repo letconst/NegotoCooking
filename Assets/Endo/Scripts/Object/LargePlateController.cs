@@ -7,14 +7,20 @@ public class LargePlateController : MonoBehaviour
     [SerializeField]
     private InventoryContainerBase selfContainer;
 
-    // 近くにいるか否か
-    private bool _isNear;
-
     private GameObject               _soup;
     private GameObject               _playerInvObj;
     private PlayerInventoryContainer _playerInvContainer;
     private InventoryRenderer        _playerInvRenderer;
     private ChoicePopup              _choicePopup;
+
+    // 近くにいるか否か
+    private bool _isNear;
+
+    // 確認ウィンドウが表示中か否か
+    private bool _isShowingWindow;
+
+    // 確認ウィンドウのコルーチン
+    private IEnumerator _windowCor;
 
     // Start is called before the first frame update
     private void Start()
@@ -30,8 +36,10 @@ public class LargePlateController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (_isNear &&
-            Input.GetButtonDown("Interact"))
+        // インタラクトで食材を投入
+        if (_isNear           &&             // インタラクト範囲内にいる
+            !_isShowingWindow &&             // 確認ウィンドウ表示中ではない
+            Input.GetButtonDown("Interact")) // インタラクトボタン押下
         {
             StartCoroutine(nameof(InputHandler));
         }
@@ -55,14 +63,15 @@ public class LargePlateController : MonoBehaviour
             (selectedFoodState.Contains(FoodState.None) ||           // 状態がNoneまたはRawである
              selectedFoodState.Contains(FoodState.Raw))) yield break;
 
-        var coroutine = _choicePopup.ShowWindow($"{selectedFood.ItemName}を投入しますか？", SE.PutFood);
+        _windowCor       = _choicePopup.ShowWindow($"{selectedFood.ItemName}を入れますか？", SE.PutFood);
+        _isShowingWindow = true;
 
         // ボタン入力を待機
-        yield return coroutine;
+        yield return _windowCor;
 
         // ボタン入力結果がはいだったら大皿に食材を入れる
-        if (coroutine.Current != null &&
-            (bool) coroutine.Current)
+        if (_windowCor.Current != null &&
+            (bool) _windowCor.Current)
         {
             var targetFoodIndex = _playerInvRenderer.LastSelectedIndex;
 
@@ -78,6 +87,7 @@ public class LargePlateController : MonoBehaviour
         }
 
         _choicePopup.HideWindow();
+        _isShowingWindow = false;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -87,10 +97,16 @@ public class LargePlateController : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
-        {
-            _isNear = false;
-            _choicePopup.HideWindow();
-        }
+        if (!other.CompareTag("Player")) return;
+
+        _choicePopup.HideWindow();
+        _isNear          = false;
+        _isShowingWindow = false;
+
+        // 確認ウィンドウ表示中だったら入力待機を解除して非表示に
+        if (_windowCor == null) return;
+
+        StopCoroutine(nameof(InputHandler));
+        _windowCor = null;
     }
 }

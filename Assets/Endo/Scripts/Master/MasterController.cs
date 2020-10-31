@@ -5,29 +5,29 @@ using UnityEngine;
 
 public class MasterController : SingletonMonoBehaviour<MasterController>
 {
+    private ChoicePopup _choicePopup;
+
     // 近くにいるか否か
     private bool _isNear;
 
-    // 食材がすべて調理できているか否か
-    private bool                   _isComplete = true;
-    private InventoryContainerBase _largePlateContainer;
-    private ChoicePopup            _choicePopup;
+    // 確認ウィンドウが表示中か否か
+    private bool _isShowingWindow;
+
+    // 確認ウィンドウのコルーチン
+    private IEnumerator _windowCor;
 
     private void Start()
     {
-        _choicePopup = GameObject.FindGameObjectWithTag("SelectWindow").GetComponent<ChoicePopup>();
+        _choicePopup = GameObject.FindGameObjectWithTag("SelectWindow")
+                                 .GetComponent<ChoicePopup>();
     }
 
     // Update is called once per frame
     private void Update()
     {
-        if (_largePlateContainer == null)
-        {
-            _largePlateContainer = InventoryManager.Instance.LargePlateContainer;
-        }
-
         // インタラクトで調理完了を行う
         if (_isNear                         && // インタラクト範囲内にいる
+            !_isShowingWindow               && // 確認ウィンドウ表示中ではない
             Input.GetButtonDown("Interact") && // インタラクトボタン押下
             Time.timeScale.Equals(1))          // ポーズ中ではない
         {
@@ -37,23 +37,26 @@ public class MasterController : SingletonMonoBehaviour<MasterController>
 
     private IEnumerator InputHandler()
     {
-        var coroutine = _choicePopup.ShowWindow("師匠を起こしますか？");
+        _windowCor       = _choicePopup.ShowWindow("師匠を起こしますか？");
+        _isShowingWindow = true;
 
         // ボタン入力待機
-        yield return coroutine;
+        yield return _windowCor;
 
         // はい選択で判定実行
-        if (coroutine.Current != null &&
-            (bool) coroutine.Current)
+        if (_windowCor.Current != null &&
+            (bool) _windowCor.Current)
         {
             // 調理判定
             Judgement();
-            Debug.Log(GameManager.Instance.FailCount);
+            // Debug.Log($"FailCount: {GameManager.Instance.FailCount}");
 
             SceneChanger.Instance.SceneLoad(SceneChanger.SceneName.Result);
         }
 
         _choicePopup.HideWindow();
+        _isShowingWindow = false;
+        _windowCor       = null;
     }
 
     /// <summary>
@@ -61,7 +64,8 @@ public class MasterController : SingletonMonoBehaviour<MasterController>
     /// </summary>
     public void Judgement()
     {
-        var recipeDB = InventoryManager.Instance.RecipeDatabase;
+        var largePlateContainer = InventoryManager.Instance.LargePlateContainer;
+        var recipeDB            = InventoryManager.Instance.RecipeDatabase;
         // TODO: 最終的にはランダムに選択されたレシピで処理する
         var targetRecipe = recipeDB.GetRecipeByName("エビのスープ");
 
@@ -81,7 +85,7 @@ public class MasterController : SingletonMonoBehaviour<MasterController>
         }
 
         // 大皿の中身がレシピ通りかチェック
-        foreach (var foodInPlate in _largePlateContainer.Container)
+        foreach (var foodInPlate in largePlateContainer.Container)
         {
             foreach (var requireFood in foodsToJudge.ToList())
             {
@@ -113,7 +117,14 @@ public class MasterController : SingletonMonoBehaviour<MasterController>
     {
         if (!other.CompareTag("Player")) return;
 
-        _isNear = false;
         _choicePopup.HideWindow();
+        _isNear          = false;
+        _isShowingWindow = false;
+
+        // 確認ウィンドウ表示中だったら入力待機を解除して非表示に
+        if (_windowCor == null) return;
+
+        StopCoroutine(nameof(InputHandler));
+        _windowCor = null;
     }
 }
