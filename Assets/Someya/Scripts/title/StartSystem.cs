@@ -8,14 +8,7 @@ public class StartSystem : MonoBehaviour
     // スタートボタンを押したら実行する
     public void OnClickStartButton()
     {
+        SoundManager.Instance.PlaySe(SE.Submit);
         SceneManager.LoadScene("TutorialScenes");
-    }
-    private void Update()
-    {
-        if (Input.GetKeyDown("joystick button 0"))
-        {
-            SoundManager.Instance.PlaySe(SE.Submit);
-            SceneManager.LoadScene("TutorialScenes");
-        }
     }
 }
