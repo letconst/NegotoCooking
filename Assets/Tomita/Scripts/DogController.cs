@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
+using System.Linq;
 
 //オブジェクトにNavMeshAgentをコンポーネントを設置
 [RequireComponent(typeof(NavMeshAgent))]
@@ -26,10 +27,13 @@ public class DogController : MonoBehaviour
     //睡眠ゲージの減少
     [SerializeField]
     private float decreaseValue;
+    //犬の動く先の目的地点
+    [SerializeField]
+    private Transform central;
+    [SerializeField]
+    private Transform dogEyes;
 
     private Animator _animator;
-    //犬の動く先の目的地点
-    public Transform central;
 
     private NavMeshAgent agent;
     //ランダムで決める数値の最大値
@@ -38,11 +42,16 @@ public class DogController : MonoBehaviour
     [SerializeField] float waitTime = 2;
     //待機時間を数える
     [SerializeField] float time = 0;
+    //犬の目線距離
+    [SerializeField] float dogEyesDistance = 10;
     //
     private Collider nearObject;
 
     public bool DogMoveStop;
     public bool DogBark;
+
+    private RaycastHit hit;
+    private RaycastHit[] hits;
 
     Vector3 pos;
 
@@ -183,6 +192,40 @@ public class DogController : MonoBehaviour
         //探知範囲に犬のおもちゃがあったら犬のおもちゃに向かう
         if (nearObject.CompareTag("DogFood"))
         {
+            Ray ray = new Ray(transform.position, dogEyes.transform.position);
+
+            if (Physics.Raycast(transform.position,dogEyes.transform.position))
+            {
+                if (hit.transform.gameObject != nearObject)
+                {
+                    return;
+                }
+            }
+
+            //Debug.Log(ray.direction);
+
+            foreach (var (hit, i) in Physics.RaycastAll(ray).ToList().Select((hit, i) => (hit, i)))
+            {
+                Debug.DrawLine(ray.origin, hit.transform.position, Color.red);
+                Debug.Log(hit.transform.gameObject.name);
+                if (hit.collider.CompareTag("Player") && i == 0)
+                {
+
+                }
+            }
+            Physics.Raycast(transform.position, nearObject.transform.position.normalized, out var hitt);
+            Debug.DrawRay(transform.position, hitt.point.normalized, Color.red, Mathf.Infinity);
+            Debug.Log(hitt.transform);
+
+            foreach (var hit in Physics.RaycastAll(ray))
+            {
+                //Debug.DrawLine(ray.origin, hit.transform.position, Color.red);
+                Debug.Log(hit.transform.gameObject.name);
+                //if (hit.collider.CompareTag("Player") && i==0)
+                //{
+
+                //}
+            }
             State = DogState.Move;
             var DogToy = nearObject.gameObject.GetComponent<DogToyController>();
             float targetPositionDistance;
@@ -216,6 +259,15 @@ public class DogController : MonoBehaviour
         //探索範囲にプレイヤーがいたらプレイヤーに向かって吠える
         else if (nearObject.CompareTag("Player"))
         {
+            Ray ray = new Ray(transform.position, nearObject.transform.position);
+
+            if (Physics.Raycast(ray, out hit, dogEyesDistance))
+            {
+                if (hit.transform.gameObject != nearObject)
+                {
+                    return;
+                }
+            }
             //主人公の方向
             var playerDirection = nearObject.transform.position - transform.position;
             //敵の前方から主人公の方向
