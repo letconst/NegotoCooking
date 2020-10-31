@@ -55,7 +55,7 @@ public class LargePlateController : MonoBehaviour
             (selectedFoodState.Contains(FoodState.None) ||           // 状態がNoneまたはRawである
              selectedFoodState.Contains(FoodState.Raw))) yield break;
 
-        var coroutine = _choicePopup.ShowWindow("大皿に食材を投入しますか？", SE.PutFood);
+        var coroutine = _choicePopup.ShowWindow($"{selectedFood.ItemName}を投入しますか？", SE.PutFood);
 
         // ボタン入力を待機
         yield return coroutine;

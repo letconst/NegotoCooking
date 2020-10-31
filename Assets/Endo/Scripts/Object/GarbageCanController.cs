@@ -37,7 +37,8 @@ public class GarbageCanController : MonoBehaviour
     /// <returns></returns>
     private IEnumerator InputHandler()
     {
-        var coroutine = _choicePopup.ShowWindow("食材を捨てますか？", SE.ThrowOutFood);
+        var selectedFoodName = _playerContainer.GetItem(_playerInvRenderer.LastSelectedIndex).ItemName;
+        var coroutine        = _choicePopup.ShowWindow($"{selectedFoodName}を捨てますか？", SE.ThrowOutFood);
 
         // ボタン入力を待機
         yield return coroutine;
