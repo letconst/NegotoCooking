@@ -47,25 +47,18 @@ public class RefrigeratorController : MonoBehaviour
     /// </summary>
     private void InteractHandler()
     {
-        // インタラクトでインベントリ開閉
-        if (!_isNear                         || // インタラクト範囲内にいる
-            !Input.GetButtonDown("Interact") || // インタラクトボタン押下
-            !Time.timeScale.Equals(1)) return;  // ポーズ中ではない
-
-        // 開閉切り替え
-        _selfCanvasGroup.alpha = (_selfCanvasGroup.alpha == 0)
-                                     ? 1
-                                     : 0;
-
-        _selfCanvasGroup.interactable   = !_selfCanvasGroup.interactable;
-        _selfCanvasGroup.blocksRaycasts = !_selfCanvasGroup.blocksRaycasts;
-
-        // 冷蔵庫インベントリの描画を一度初期化
-        _selfInvRenderer.ClearRender();
+        // インタラクト範囲内におり、ポーズ中でなければインタラクトを許可
+        if (!_isNear ||
+            !Time.timeScale.Equals(1)) return;
 
         // 開いたとき
-        if (_selfCanvasGroup.alpha.Equals(1))
+        if (Input.GetButtonDown("Interact") && // インタラクトボタン押下
+            _selfCanvasGroup.alpha.Equals(0))  // インベントリが開かれていない
         {
+            _selfCanvasGroup.alpha          = 1;
+            _selfCanvasGroup.interactable   = true;
+            _selfCanvasGroup.blocksRaycasts = true;
+
             // SE再生
             SoundManager.Instance.PlaySe(SE.RifregeratorOpen);
 
@@ -76,9 +69,18 @@ public class RefrigeratorController : MonoBehaviour
             _playerCanvasGroup.interactable = false;
         }
         // 閉じたとき
-        else
+        else if (Input.GetButtonDown("Cancel") &&  // キャンセルボタン押下
+                 _selfCanvasGroup.alpha.Equals(1)) // インベントリが開かれている
         {
+            // 冷蔵庫インベントリの描画をリセット
+            _selfInvRenderer.ClearRender();
+
             // 冷蔵庫インベントリを無効化
+            _selfCanvasGroup.alpha          = 0;
+            _selfCanvasGroup.interactable   = false;
+            _selfCanvasGroup.blocksRaycasts = false;
+
+            // 冷蔵庫インベントリのハイライトがあったら解除
             _selfInvRenderer.UnhighlightSlotAt(_selfInvRenderer.LastSelectedIndex);
 
             // プレイヤーインベントリを有効化し、フォーカス
