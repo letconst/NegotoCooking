@@ -30,8 +30,6 @@ public class DogController : MonoBehaviour
     //犬の動く先の目的地点
     [SerializeField]
     private Transform central;
-    [SerializeField]
-    private Transform dogEyes;
 
     private Animator _animator;
 
@@ -42,16 +40,12 @@ public class DogController : MonoBehaviour
     [SerializeField] float waitTime = 2;
     //待機時間を数える
     [SerializeField] float time = 0;
-    //犬の目線距離
-    [SerializeField] float dogEyesDistance = 10;
-    //
+
     private Collider nearObject;
 
-    public bool DogMoveStop;
-    public bool DogBark;
-
-    private RaycastHit hit;
-    private RaycastHit[] hits;
+    private bool DogMoveStop;
+    private bool DogBark;
+    private bool dontRay;
 
     Vector3 pos;
 
@@ -138,6 +132,12 @@ public class DogController : MonoBehaviour
             _animator.SetBool("Walk", false);
             _animator.SetBool("Bark", false);
             _animator.SetBool("EatFood", true);
+            //吠える音声を止める
+            if (DogBark == true)
+            {
+                GetComponent<AudioSource>().Stop();
+                DogBark = false;
+            }
         }
         else if (State == DogState.FindPlayer)
         {
@@ -192,40 +192,24 @@ public class DogController : MonoBehaviour
         //探知範囲に犬のおもちゃがあったら犬のおもちゃに向かう
         if (nearObject.CompareTag("DogFood"))
         {
-            Ray ray = new Ray(transform.position, dogEyes.transform.position);
-
-            if (Physics.Raycast(transform.position,dogEyes.transform.position))
+            //餌への方向ベクトルの取得
+            var dogFoodVector = ((nearObject.transform.position) - (transform.position + Vector3.up)).normalized;
+            //Rayを飛ばし、リスト化する
+            var dogFoodHits = Physics.RaycastAll(transform.position + Vector3.up, dogFoodVector).ToList();
+            //近い順に並び替え
+            dogFoodHits.Sort((a, b) => a.distance.CompareTo(b.distance));
+            //餌が一番近い場合またはプレイヤー越しに餌がある場合に餌に食いつく
+            if(!dogFoodHits.ElementAt(0).transform.CompareTag("DogFood") && 
+                (dogFoodHits.Count < 2 || !dogFoodHits.ElementAt(0).transform.CompareTag("Player") || !dogFoodHits.ElementAt(1).transform.CompareTag("DogFood")))
             {
-                if (hit.transform.gameObject != nearObject)
+                if(State == DogState.FindFood)
                 {
-                    return;
+                    State = DogState.Idle;
                 }
+                dontRay = true;
+                return;
             }
-
-            //Debug.Log(ray.direction);
-
-            foreach (var (hit, i) in Physics.RaycastAll(ray).ToList().Select((hit, i) => (hit, i)))
-            {
-                Debug.DrawLine(ray.origin, hit.transform.position, Color.red);
-                Debug.Log(hit.transform.gameObject.name);
-                if (hit.collider.CompareTag("Player") && i == 0)
-                {
-
-                }
-            }
-            Physics.Raycast(transform.position, nearObject.transform.position.normalized, out var hitt);
-            Debug.DrawRay(transform.position, hitt.point.normalized, Color.red, Mathf.Infinity);
-            Debug.Log(hitt.transform);
-
-            foreach (var hit in Physics.RaycastAll(ray))
-            {
-                //Debug.DrawLine(ray.origin, hit.transform.position, Color.red);
-                Debug.Log(hit.transform.gameObject.name);
-                //if (hit.collider.CompareTag("Player") && i==0)
-                //{
-
-                //}
-            }
+            dontRay = false;
             State = DogState.Move;
             var DogToy = nearObject.gameObject.GetComponent<DogToyController>();
             float targetPositionDistance;
@@ -259,15 +243,20 @@ public class DogController : MonoBehaviour
         //探索範囲にプレイヤーがいたらプレイヤーに向かって吠える
         else if (nearObject.CompareTag("Player"))
         {
-            Ray ray = new Ray(transform.position, nearObject.transform.position);
-
-            if (Physics.Raycast(ray, out hit, dogEyesDistance))
+            //プレイヤーへの方向ベクトルの取得
+            var playerFindVector = ((nearObject.transform.position + Vector3.up) - (transform.position + Vector3.up)).normalized;
+            //プレイヤーにRay飛ばす
+            Physics.Raycast(transform.position + Vector3.up, playerFindVector, out var hit, Mathf.Infinity);
+            //プレイヤーだった時のみ吠える
+            if(!hit.transform.CompareTag("Player"))
             {
-                if (hit.transform.gameObject != nearObject)
+                if (State == DogState.FindPlayer)
                 {
-                    return;
+                    State = DogState.Idle;
                 }
+                return;
             }
+
             //主人公の方向
             var playerDirection = nearObject.transform.position - transform.position;
             //敵の前方から主人公の方向
@@ -286,11 +275,18 @@ public class DogController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        //タグが餌であり認識対象がプレイヤーまたは空なら餌を認識対象に変更する
         if (other.CompareTag("DogFood") && (nearObject==null || nearObject.CompareTag("Player")))
         {
             nearObject = other;
         }
-        else if(other.CompareTag("Player") && nearObject==null)
+        //タグがプレイヤーであり認識対象が空または犬の視線範囲外ならプレイヤーを認識対象に変更する
+        else if (other.CompareTag("Player") && (nearObject==null || dontRay))
+        {
+            nearObject = other;
+        }
+        //タグが餌であり犬の視線範囲外なら餌を認識対象に変更する
+        else if (dontRay && other.CompareTag("DogFood"))
         {
             nearObject = other;
         }
@@ -298,13 +294,24 @@ public class DogController : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if(State != DogState.FindFood && other.CompareTag("DogFood"))
+        //認識対象が視線範囲内の餌であるとき何もしない
+        if(nearObject != null && nearObject.CompareTag("DogFood") && !dontRay)
+        {
+            return;
+        }
+        //認識対象が視線範囲外であるときは何もしない
+        if(other == nearObject && dontRay)
+        {
+            return;
+        }
+
+        if(other.CompareTag("DogFood"))
         {
             nearObject = other;
             return;
         }
 
-        if(State != DogState.FindFood && other.CompareTag("Player"))
+        if(other.CompareTag("Player"))
         {
             nearObject = other;
         }
@@ -312,11 +319,12 @@ public class DogController : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        //タグがプレイヤーであり認識対象が餌であるときは何もしない
         if (other.CompareTag("Player") && nearObject.CompareTag("DogFood"))
         {
             return;
         }
-
+        //タグがプレイヤーまたは餌であるとき空にする
         if(other.CompareTag("Player") || other.CompareTag("DogFood"))
         {
             nearObject = null;
