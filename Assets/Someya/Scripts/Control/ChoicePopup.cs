@@ -54,14 +54,14 @@ public class ChoicePopup : MonoBehaviour
         yield return new WaitUntil(() =>
         {
             if (!Input.GetButtonDown("Submit") ||
-                Time.timeScale.Equals(0)) return false;
+                PushPause.Instance.IsNowPausing) return false;
 
             currentSelected = EventSystem.current.currentSelectedGameObject;
 
             if (currentSelected == null) return false;
 
             // YESまたはNOボタンのみ受け付ける
-            return Time.timeScale.Equals(1) &&
+            return !PushPause.Instance.IsNowPausing &&
                    (currentSelected.gameObject == yesButtonObj ||
                     currentSelected.gameObject == noButtonObj);
         });

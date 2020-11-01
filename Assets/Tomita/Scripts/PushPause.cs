@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class PushPause : SingletonMonoBehaviour<PushPause>
 {
@@ -17,18 +18,30 @@ public class PushPause : SingletonMonoBehaviour<PushPause>
     private bool _isInteractablePlayerInv;
     private bool _isInteractableRefInv;
     private bool _isInteractableChoicePopup;
+    private bool _isNowCookingScene;
+
+    // 現在ポーズ中か否か
+    public bool IsNowPausing { get; private set; }
 
     // Start is called before the first frame update
     private IEnumerator Start()
     {
-        _pauseObj               = GameObject.FindGameObjectWithTag("PauseCanvas");
-        _playerInvObj           = GameObject.FindGameObjectWithTag("PlayerInventory");
-        _refInvObj              = GameObject.FindGameObjectWithTag("RefrigeratorInventory");
-        _choicePopupObj         = GameObject.FindGameObjectWithTag("SelectWindow");
-        _pauseCanvasGroup       = _pauseObj.GetComponent<CanvasGroup>();
-        _playerCanvasGroup      = _playerInvObj.GetComponent<CanvasGroup>();
-        _refCanvasGroup         = _refInvObj.GetComponent<CanvasGroup>();
-        _choicePopupCanvasGroup = _choicePopupObj.GetComponent<CanvasGroup>();
+        var curSceneName = SceneManager.GetActiveScene().name;
+        _isNowCookingScene =
+            curSceneName == "BakeScenes" || curSceneName == "BoilScenes" || curSceneName == "CutScenes";
+
+        _playerInvObj      = GameObject.FindGameObjectWithTag("PlayerInventory");
+        _pauseObj          = GameObject.FindGameObjectWithTag("PauseCanvas");
+        _playerCanvasGroup = _playerInvObj.GetComponent<CanvasGroup>();
+        _pauseCanvasGroup  = _pauseObj.GetComponent<CanvasGroup>();
+
+        if (!_isNowCookingScene)
+        {
+            _refInvObj              = GameObject.FindGameObjectWithTag("RefrigeratorInventory");
+            _choicePopupObj         = GameObject.FindGameObjectWithTag("SelectWindow");
+            _refCanvasGroup         = _refInvObj.GetComponent<CanvasGroup>();
+            _choicePopupCanvasGroup = _choicePopupObj.GetComponent<CanvasGroup>();
+        }
 
         yield return null;
 
@@ -43,12 +56,24 @@ public class PushPause : SingletonMonoBehaviour<PushPause>
         // ポーズ画面を開くとき
         if (_pauseCanvasGroup.alpha.Equals(0))
         {
+            IsNowPausing = true;
+
             // 現在の全CanvasGroupのinteractable状態を記憶
             // TODO: CanvasGroupマネージャーを作って管理したい
-            _isInteractablePlayerInv   = _playerCanvasGroup.interactable;
-            _isInteractableRefInv      = _refCanvasGroup.interactable;
-            _isInteractableChoicePopup = _choicePopupCanvasGroup.interactable;
-            // 選択していたボタンも記憶
+            _isInteractablePlayerInv        = _playerCanvasGroup.interactable;
+            _playerCanvasGroup.interactable = false;
+
+            // メインシーンでは冷蔵庫と確認ウィンドウのも記憶
+            if (!_isNowCookingScene)
+            {
+                _isInteractableRefInv      = _refCanvasGroup.interactable;
+                _isInteractableChoicePopup = _choicePopupCanvasGroup.interactable;
+                // 他に選択可能なボタンを一斉無効化
+                _refCanvasGroup.interactable         = false;
+                _choicePopupCanvasGroup.interactable = false;
+            }
+
+            // 選択していたボタンを記憶
             _lastSelectedObj = EventSystem.current.currentSelectedGameObject;
 
             // SE再生
@@ -57,10 +82,7 @@ public class PushPause : SingletonMonoBehaviour<PushPause>
             // ポーズを表示して選択可能に
             _pauseCanvasGroup.alpha        = 1;
             _pauseCanvasGroup.interactable = true;
-            // 他に選択可能なボタンを一斉無効化
-            _playerCanvasGroup.interactable      = false;
-            _refCanvasGroup.interactable         = false;
-            _choicePopupCanvasGroup.interactable = false;
+
             // ザ・ワールド
             Time.timeScale = 0f;
 
@@ -77,6 +99,7 @@ public class PushPause : SingletonMonoBehaviour<PushPause>
 
     public IEnumerator ReturnToGame()
     {
+        IsNowPausing                   = false;
         _pauseCanvasGroup.alpha        = 0;
         _pauseCanvasGroup.interactable = false;
 

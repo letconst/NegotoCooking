@@ -68,7 +68,7 @@ public class Player : SingletonMonoBehaviour<Player>
     private void Update()
     {
         // ポーズ中は実行させない
-        if (Time.timeScale.Equals(0)) return;
+        if (PushPause.Instance.IsNowPausing) return;
 
         Movement();
 

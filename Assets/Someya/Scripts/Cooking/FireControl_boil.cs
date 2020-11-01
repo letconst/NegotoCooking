@@ -78,6 +78,9 @@ public class FireControl_boil : MonoBehaviour
 
     void Update()
     {
+        // ポーズ中は進行および操作させない
+        if (PushPause.Instance.IsNowPausing) return;
+
         if (GameManager.Instance.alertBool)
         {
             bubbleAlert.Play();

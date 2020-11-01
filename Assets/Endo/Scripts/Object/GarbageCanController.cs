@@ -28,10 +28,10 @@ public class GarbageCanController : MonoBehaviour
     private void Update()
     {
         // インタラクトで選択アイテムを捨てる
-        if (_isNear                         &&                                      // インタラクト範囲内にいる
-            !_isShowingWindow               &&                                      // 確認ウィンドウ表示中ではない
-            Input.GetButtonDown("Interact") &&                                      // インタラクトボタン押下
-            Time.timeScale.Equals(1)        &&                                      // ポーズ中ではない
+        if (_isNear                          &&                                     // インタラクト範囲内にいる
+            !_isShowingWindow                &&                                     // 確認ウィンドウ表示中ではない
+            Input.GetButtonDown("Interact")  &&                                     // インタラクトボタン押下
+            !PushPause.Instance.IsNowPausing &&                                     // ポーズ中ではない
             _playerContainer.GetItem(_playerInvRenderer.LastSelectedIndex) != null) // 食材を選択している
         {
             StartCoroutine(nameof(InputHandler));

@@ -29,7 +29,7 @@ public class MasterController : SingletonMonoBehaviour<MasterController>
         if (_isNear                         && // インタラクト範囲内にいる
             !_isShowingWindow               && // 確認ウィンドウ表示中ではない
             Input.GetButtonDown("Interact") && // インタラクトボタン押下
-            Time.timeScale.Equals(1))          // ポーズ中ではない
+            !PushPause.Instance.IsNowPausing)  // ポーズ中ではない
         {
             StartCoroutine(nameof(InputHandler));
         }

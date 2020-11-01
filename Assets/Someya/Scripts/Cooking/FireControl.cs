@@ -46,7 +46,7 @@ public class FireControl : MonoBehaviour
     //今焼き処理中か
     public static bool clickBool = true;
     [HideInInspector]
-    static public bool burntBool;    
+    static public bool burntBool;
     [SerializeField]
     private ParticleSystem fireS;
     [SerializeField]
@@ -66,6 +66,9 @@ public class FireControl : MonoBehaviour
 
     private void Update()
     {
+        // ポーズ中は進行および操作させない
+        if (PushPause.Instance.IsNowPausing) return;
+
         if (_slider.value == 0)
         {
             burntBool = false;
@@ -127,7 +130,7 @@ public class FireControl : MonoBehaviour
             BakeController.doOnceBakeSound = false;
             SoundManager.Instance.PlayBgm(BGM.BakeSound);
         }
-        
+
         if (GameManager.Instance.FireChange <= 0)
         {
             if (doOnceFire)

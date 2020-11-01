@@ -41,6 +41,9 @@ public class BakeController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        // ポーズ中は進行および操作させない
+        if (PushPause.Instance.IsNowPausing) return;
+
         CookingCompleteListener();
         FlyingPanActionHandler();
         blackSmoke.transform.position = new Vector3(FlyingPan.transform.position.x, FlyingPan.transform.position.y, FlyingPan.transform.position.z);
@@ -62,7 +65,7 @@ public class BakeController : MonoBehaviour
         if (GameManager.Instance.BakePoint == 100)
         {
             BakeController.doOnceBakeSound = true;
-            Destroy(_foodParent.transform.GetChild(0).gameObject);            
+            Destroy(_foodParent.transform.GetChild(0).gameObject);
             _bakeSlider.value = 0;
             GameManager.Instance.BakePoint = 0;
             SoundManager.Instance.FadeOutBgm(0.1f);
@@ -71,8 +74,8 @@ public class BakeController : MonoBehaviour
             blackSmoke.Stop();
         }
         if (GameManager.Instance.BakePoint >= 70 && doOnce)
-        {           
-            doOnce = false;            
+        {
+            doOnce = false;
             blackSmoke.Play();
         }
         else if(GameManager.Instance.BakePoint < 70 && !doOnce)

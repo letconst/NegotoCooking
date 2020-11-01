@@ -35,6 +35,9 @@ public class CutGauge : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // ポーズ中は進行および操作させない
+        if (PushPause.Instance.IsNowPausing) return;
+
         if (Input.GetKeyDown("joystick button 1") && cantBackBool || Input.GetKeyDown(KeyCode.E) && cantBackBool)
         {
             SceneManager.LoadScene("GameScenes");

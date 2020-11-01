@@ -35,6 +35,9 @@ public class BoilController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        // ポーズ中は進行および操作させない
+        if (PushPause.Instance.IsNowPausing) return;
+
         CookingCompleteListener();
         //PotActionHandler();
     }

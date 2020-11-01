@@ -29,9 +29,9 @@ public class ToBakeScene : MonoBehaviour
     private void Update()
     {
         // インタラクトで調理移行
-        if (!flontHobBool                    || // インタラクト範囲内にいる
-            !Input.GetButtonDown("Interact") || // インタラクトボタン押下
-            !Time.timeScale.Equals(1)) return;  // ポーズ中ではない
+        if (!flontHobBool                    ||      // インタラクト範囲内にいる
+            !Input.GetButtonDown("Interact") ||      // インタラクトボタン押下
+            PushPause.Instance.IsNowPausing) return; // ポーズ中ではない
 
         GameManager.Instance.PlayerPos    = player.transform.position;
         GameManager.Instance.PlayerRotate = player.transform.localEulerAngles;

@@ -49,7 +49,7 @@ public class RefrigeratorController : MonoBehaviour
     {
         // インタラクト範囲内におり、ポーズ中でなければインタラクトを許可
         if (!_isNear ||
-            !Time.timeScale.Equals(1)) return;
+            PushPause.Instance.IsNowPausing) return;
 
         // 開いたとき
         if (Input.GetButtonDown("Interact") && // インタラクトボタン押下

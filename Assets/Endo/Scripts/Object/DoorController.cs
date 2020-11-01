@@ -47,9 +47,9 @@ public class DoorController : MonoBehaviour
     private void InputHandler()
     {
         // インタラクトでドア開閉
-        if (!_isNear                         || // インタラクト範囲内にいる
-            !Input.GetButtonDown("Interact") || // インタラクトボタン押下
-            !Time.timeScale.Equals(1)) return;  // ポーズ中ではない
+        if (!_isNear                         ||      // インタラクト範囲内にいる
+            !Input.GetButtonDown("Interact") ||      // インタラクトボタン押下
+            PushPause.Instance.IsNowPausing) return; // ポーズ中ではない
 
         StartCoroutine(nameof(SwitchOpen));
     }
