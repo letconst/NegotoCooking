@@ -1013,7 +1013,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   showImage:
-  - {fileID: 21300000, guid: ef1e8cb040c68fd4abb564f27c1120b6, type: 3}
+  - {fileID: 21300000, guid: 98d6d147075591448b14ab13b0cf7703, type: 3}
 --- !u!4 &2103554994
 Transform:
   m_ObjectHideFlags: 0
