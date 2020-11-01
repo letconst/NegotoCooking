@@ -5,12 +5,6 @@ public class WarpPortal : MonoBehaviour
     [SerializeField, Tooltip("ワープ先のポジション")]
     private Vector3 warpTo;
 
-    [SerializeField, Tooltip("ワープ後の向き (Y)")]
-    private float yRotationAfterWarp;
-
-    [SerializeField, Tooltip("ワープ後の向きをワープ時の向きにするか否か")]
-    private bool isLookSameRotation;
-
     [SerializeField, Tooltip("ワープ後にプレイヤーの移動を抑制する時間")]
     private float waitTimeAfterWarp;
 
@@ -40,16 +34,9 @@ public class WarpPortal : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            // ワープ時の向きにするようになっていたらそちらを使用
-            if (isLookSameRotation)
-            {
-                yRotationAfterWarp = other.transform.rotation.y;
-            }
-
             other.gameObject.SetActive(false);
 
             other.transform.position = warpTo;
-            other.transform.rotation = Quaternion.Euler(new Vector3(0, yRotationAfterWarp));
 
             other.gameObject.SetActive(true);
         }
