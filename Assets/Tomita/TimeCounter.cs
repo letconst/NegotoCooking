@@ -45,11 +45,8 @@ public class TimeCounter : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        Debug.Log("Time: before");
         // 朝アイコンの座標が取得されるまで待機（↑の1フレーム待機による処置）
         if (_morningPos == default || IsStopped) return;
-
-        Debug.Log("Time: after");
 
         // 時間をカウントする
         CurrentTime   -= Time.deltaTime;

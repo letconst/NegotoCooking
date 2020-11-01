@@ -1,6 +1,4 @@
-﻿using System;
-using UnityEngine;
-using System.Collections;
+﻿using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
@@ -17,10 +15,10 @@ public class CameraController : MonoBehaviour
     private GameObject _wrapper;
 
     // カメラの角度
-    bool _isAngle = false;
+    private bool _isAngle;
 
     //回転させる角度
-    float angle = 0;
+    private float _angle;
 
     private Quaternion targetrotation;
 
@@ -35,42 +33,39 @@ public class CameraController : MonoBehaviour
     private void Update()
     {
         var playerPos = _player.transform.position;
+        var R_Stick   = Input.GetAxis("R_Stick_H");
 
-        if (playerPos.z >= minFrontPos)
+        // 軸をプレイヤーに追従
+        _wrapper.transform.position = playerPos.z >= minFrontPos
+                                          ? playerPos
+                                          : new Vector3(playerPos.x, playerPos.y, minFrontPos);
+
+        if (R_Stick < 0 &&
+            !_isAngle)
         {
-            // 軸をプレイヤーに追従
-            _wrapper.transform.position = playerPos;
+            _angle -= 90;
         }
-        else
+        else if (R_Stick > 0 &&
+                 !_isAngle)
         {
-            // 軸をプレイヤーに追従
-            _wrapper.transform.position = new Vector3(playerPos.x, playerPos.y, minFrontPos);
+            _angle += 90;
         }
 
-        float R_Stick = Input.GetAxis("R_Stick_H");
+        if (!_isAngle &&
+            R_Stick != 0)
+        {
+            // カメラを回転させる
+            targetrotation = Quaternion.AngleAxis(_angle, Vector3.up);
+            _isAngle       = true;
+        }
 
-        if (R_Stick < 0 && !_isAngle)
-        {
-            angle -= 90;
-        }
-        else if (R_Stick > 0 && !_isAngle)
-        {
-            angle += 90;
-        }
-        if(!_isAngle && R_Stick != 0)
-        {
-            //カメラを回転させる
-            //transform.RotateAround(playerPos, Vector3.up, angle);
-            targetrotation = Quaternion.AngleAxis(angle,Vector3.up);
-            Debug.Log(_wrapper.transform.rotation.y);
-            _isAngle = true;
-        }
         if (R_Stick == 0)
         {
             _isAngle = false;
         }
+
         _wrapper.transform.rotation = Quaternion.Slerp(_wrapper.transform.rotation, targetrotation == null
-            ? _wrapper.transform.rotation:
-            targetrotation, rotateSpeed);
+                                                           ? _wrapper.transform.rotation
+                                                           : targetrotation, rotateSpeed);
     }
 }

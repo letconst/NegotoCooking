@@ -1875,6 +1875,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: OperationCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 4688945078354340254, guid: 145e3915b391eb549af620f2cc6a2327,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 145e3915b391eb549af620f2cc6a2327, type: 3}
 --- !u!1 &1204681807 stripped
@@ -2455,6 +2460,12 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5454172388335355719, guid: dfe8cbb1e6c79cb48af755e95acc40e5,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 496969f999e9c984f8ffb688eae0f4b8,
+        type: 3}
     - target: {fileID: 5454172388532914071, guid: dfe8cbb1e6c79cb48af755e95acc40e5,
         type: 3}
       propertyPath: m_Name
