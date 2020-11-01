@@ -106,6 +106,12 @@ public class MasterController : SingletonMonoBehaviour<MasterController>
         {
             GameManager.Instance.FailCount++;
         }
+
+        // すべての食材が間違っていたらさらに評価ダウン
+        if (foodsToJudge.Count == targetRecipe.RequireFoods.Count)
+        {
+            GameManager.Instance.FailCount++;
+        }
     }
 
     private void OnTriggerEnter(Collider other)

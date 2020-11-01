@@ -65,6 +65,7 @@ public class TimeCounter : MonoBehaviour
         // タイムアップでゲームオーバー
         if (CurrentTime <= timeLimit)
         {
+            GameManager.Instance.FailCount++;
             MasterController.Instance.Judgement();
             SceneChanger.Instance.SceneLoad(SceneChanger.SceneName.Result);
         }

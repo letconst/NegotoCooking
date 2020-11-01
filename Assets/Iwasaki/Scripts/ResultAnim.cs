@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,80 +6,101 @@ public class ResultAnim : MonoBehaviour
 {
     [SerializeField]
     private Animator anim;
+
     [SerializeField]
     private ParticleSystem kirakira;
+
     [SerializeField]
     private ParticleSystem good;
+
     [SerializeField]
     private ParticleSystem bad;
+
     [SerializeField]
     private GameObject emptyPlate;
+
     [SerializeField]
     private GameObject goodSoup;
+
     [SerializeField]
     private GameObject badSoup;
+
     [SerializeField]
     private GameObject clearTime;
+
     [SerializeField]
     private GameObject toTitleButton;
+
     [SerializeField]
     private Text clearTimeText;
+
     private bool isEmpty;
+
     void Start()
     {
         good.Stop();
         bad.Stop();
         kirakira.Stop();
-        isEmpty = TimeCounter.CountUp - TimeCounter.CurrentTime == 0 || NegotoManager.Instance.CurDisplayCount != 0 || GameManager.Instance.NoiseMator == 0;
+        isEmpty = InventoryManager.Instance.LargePlateContainer.Container.Count == 0;
+
         StartCoroutine(WaitTime(2.0f));
-        if(isEmpty)
 
-
+        if (isEmpty)
         {
             emptyPlate.gameObject.SetActive(true);
         }
-        else if (GameManager.Instance.FailCount == 0 || GameManager.Instance.FailCount == 1)
+        else
         {
-            goodSoup.gameObject.SetActive(true);
-        }
-        else if (GameManager.Instance.FailCount == 2)
-        {
-            badSoup.gameObject.SetActive(true);
-        }
-        
-    }
+            switch (GameManager.Instance.FailCount)
+            {
+                case 0:
+                case 1:
+                    goodSoup.gameObject.SetActive(true);
 
-    // Update is called once per frame
-    void Update()
-    {
+                    break;
 
+                case int count when count >= 2:
+                    badSoup.gameObject.SetActive(true);
+
+                    break;
+            }
+        }
     }
 
     private IEnumerator WaitTime(float waittime)
     {
         yield return new WaitForSeconds(waittime);
+
         anim.SetTrigger("Cloche");
+
         yield return new WaitForSeconds(1.0f);
-        // FailCountは3もあり得るので、暫定的に2以上に
-        if(isEmpty)
+
+        if (isEmpty)
         {
             yield break;
         }
-       else if (GameManager.Instance.FailCount                                >= 2 ||
-            InventoryManager.Instance.LargePlateContainer.Container.Count <= 2) // 暫定
+
+        switch (GameManager.Instance.FailCount)
         {
-            bad.Play();
+            // 評価：良い
+            case 0:
+                good.Play();
+                kirakira.Play();
+
+                break;
+
+            // 評価：普通
+            case 1:
+                good.Play();
+
+                break;
+
+            // 評価：悪い
+            case int count when count >= 2:
+                bad.Play();
+
+                break;
         }
-        else if(GameManager.Instance.FailCount == 0)
-        {
-            good.Play();
-            kirakira.Play();
-        }
-        else if(GameManager.Instance.FailCount == 1)
-        {
-            good.Play();
-        }
-       
     }
 
     public void FinishAnim()
