@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class OperationConfirmation : MonoBehaviour
@@ -49,6 +50,7 @@ public class OperationConfirmation : MonoBehaviour
                 notFirst = true;
                 operationCanvas.SetActive(false);
             }
+            StartCoroutine(waitTime(0.3f));
         }        
     }
 
@@ -84,6 +86,7 @@ public class OperationConfirmation : MonoBehaviour
                 notFirst = true;
                 operationCanvas.SetActive(false);
             }
+            StartCoroutine(waitTime(0.3f));
         }
     }
 
@@ -119,6 +122,12 @@ public class OperationConfirmation : MonoBehaviour
                 notFirst = true;
                 operationCanvas.SetActive(false);
             }
+            StartCoroutine(waitTime(0.3f));
         }
+    }
+    private IEnumerator waitTime(float time)
+    {
+        yield return new WaitForSeconds(time);
+        yield break;    
     }
 }
