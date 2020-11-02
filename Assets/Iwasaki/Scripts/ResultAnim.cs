@@ -26,6 +26,21 @@ public class ResultAnim : MonoBehaviour
     private GameObject badSoup;
 
     [SerializeField]
+    private GameObject goodRating;
+
+    [SerializeField]
+    private GameObject normalRating;
+
+    [SerializeField]
+    private GameObject badRating;
+
+    [SerializeField]
+    private GameObject goodHukidashi;
+
+    [SerializeField]
+    private GameObject normalHukidashi;
+
+    [SerializeField]
     private GameObject clearTime;
 
     [SerializeField]
@@ -34,36 +49,41 @@ public class ResultAnim : MonoBehaviour
     [SerializeField]
     private Text clearTimeText;
 
-    private bool isEmpty;
+    // 大皿が空か否か
+    private bool _isEmpty;
 
-    void Start()
+    private void Start()
     {
         good.Stop();
         bad.Stop();
         kirakira.Stop();
-        isEmpty = InventoryManager.Instance.LargePlateContainer.Container.Count == 0;
+        _isEmpty = InventoryManager.Instance.LargePlateContainer.Container.Count == 0;
 
         StartCoroutine(WaitTime(2.0f));
 
-        if (isEmpty)
+        if (_isEmpty)
         {
-            emptyPlate.gameObject.SetActive(true);
+            emptyPlate.SetActive(true);
+
+            return;
         }
-        else
+
+        Debug.Log(GameManager.Instance.FailCount);
+        switch (GameManager.Instance.FailCount)
         {
-            switch (GameManager.Instance.FailCount)
-            {
-                case 0:
-                case 1:
-                    goodSoup.gameObject.SetActive(true);
+            // 評価：良い
+            case 0:
+            // 評価：普通
+            case 1:
+                goodSoup.SetActive(true);
 
-                    break;
+                break;
 
-                case int count when count >= 2:
-                    badSoup.gameObject.SetActive(true);
+            // 評価：悪い
+            case int count when count >= 2:
+                badSoup.SetActive(true);
 
-                    break;
-            }
+                break;
         }
     }
 
@@ -73,12 +93,12 @@ public class ResultAnim : MonoBehaviour
 
         anim.SetTrigger("Cloche");
 
-        yield return new WaitForSeconds(1.0f);
-
-        if (isEmpty)
+        if (_isEmpty)
         {
             yield break;
         }
+
+        yield return new WaitForSeconds(3.0f);
 
         switch (GameManager.Instance.FailCount)
         {
@@ -109,5 +129,31 @@ public class ResultAnim : MonoBehaviour
         //clearTimeText.text = "200";
         clearTime.gameObject.SetActive(true);
         toTitleButton.gameObject.SetActive(true);
+
+        if (_isEmpty) return;
+
+        switch (GameManager.Instance.FailCount)
+        {
+            // 評価：良い
+            case 0:
+                goodHukidashi.SetActive(true);
+                goodRating.SetActive(true);
+
+                break;
+
+            // 評価：普通
+            case 1:
+                normalHukidashi.SetActive(true);
+                normalRating.SetActive(true);
+
+                break;
+
+            // 評価：悪い
+            case int count when count >= 2:
+                normalHukidashi.SetActive(true);
+                badRating.SetActive(true);
+
+                break;
+        }
     }
 }
