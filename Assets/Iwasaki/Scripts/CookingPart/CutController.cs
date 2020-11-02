@@ -17,6 +17,9 @@ public class CutController : MonoBehaviour
     // 現在調理中の食材（スロット渡し）
     public static InventorySlotBase FoodSlotBeingCut;
 
+    [SerializeField]
+    private GameObject operationCanvas;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -32,7 +35,9 @@ public class CutController : MonoBehaviour
     {
         // ポーズ中は進行および操作させない
         if (PushPause.Instance.IsNowPausing) return;
-
+        
+        if (operationCanvas.activeSelf == true) return;
+        
         CookingCompleteListener();
     }
 

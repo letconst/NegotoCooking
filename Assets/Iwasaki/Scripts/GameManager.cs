@@ -28,6 +28,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     public bool IsReachedNavOfNegoto  { get; set; }
     public bool IsReachedNavOfStairs  { get; set; }
     public bool IsReachedNavOfKitchen { get; set; }
+    public bool doOnce { get; set; }
 
     public float NoiseMator
     {

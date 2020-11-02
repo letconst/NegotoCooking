@@ -32,11 +32,11 @@ public class OperationConfirmation : MonoBehaviour
                 GameManager.Instance.cutOperationBool && Input.GetKeyDown(KeyCode.Q))
             {
                 operationCanvas.SetActive(false);
-                GameManager.Instance.cutOperationBool = false;                
+                GameManager.Instance.cutOperationBool = false;
             }
 
             //特定のボタンを押すと操作確認を表示。
-            if (notFirst && !GameManager.Instance.cutOperationBool && Input.GetKeyDown("joystick button 0") ||
+            if (/*notFirst && !GameManager.Instance.cutOperationBool && Input.GetKeyDown("joystick button 0") ||*/
                 notFirst && !GameManager.Instance.cutOperationBool && Input.GetKeyDown(KeyCode.M))
             {
                 notFirst = false;
@@ -44,13 +44,12 @@ public class OperationConfirmation : MonoBehaviour
             }
 
             //再度押すと非表示。
-            else if (!notFirst && !GameManager.Instance.cutOperationBool && Input.GetKeyDown("joystick button 0") ||
+            else if (/*!notFirst && !GameManager.Instance.cutOperationBool && Input.GetKeyDown("joystick button 0") ||*/
                      !notFirst && !GameManager.Instance.cutOperationBool && Input.GetKeyDown(KeyCode.M))
             {
                 notFirst = true;
                 operationCanvas.SetActive(false);
             }
-            StartCoroutine(waitTime(0.3f));
         }        
     }
 
@@ -72,7 +71,7 @@ public class OperationConfirmation : MonoBehaviour
             }
 
             //特定のボタンを押すと操作確認を表示。
-            if (notFirst && !GameManager.Instance.bakeOperationBool && Input.GetKeyDown("joystick button 0") ||
+            if (/*notFirst && !GameManager.Instance.bakeOperationBool && Input.GetKeyDown("joystick button 0") ||*/
                 notFirst && !GameManager.Instance.bakeOperationBool && Input.GetKeyDown(KeyCode.M))
             {
                 notFirst = false;
@@ -80,13 +79,12 @@ public class OperationConfirmation : MonoBehaviour
             }
 
             //再度押すと非表示。
-            else if (!notFirst && !GameManager.Instance.bakeOperationBool && Input.GetKeyDown("joystick button 0") ||
+            else if (/*!notFirst && !GameManager.Instance.bakeOperationBool && Input.GetKeyDown("joystick button 0") ||*/
                      !notFirst && !GameManager.Instance.bakeOperationBool && Input.GetKeyDown(KeyCode.M))
             {
                 notFirst = true;
                 operationCanvas.SetActive(false);
             }
-            StartCoroutine(waitTime(0.3f));
         }
     }
 
@@ -108,7 +106,7 @@ public class OperationConfirmation : MonoBehaviour
             }
 
             //特定のボタンを押すと操作確認を表示。
-            if (notFirst && !GameManager.Instance.boilOperationBool && Input.GetKeyDown("joystick button 0") ||
+            if (/*notFirst && !GameManager.Instance.boilOperationBool && Input.GetKeyDown("joystick button 0") ||*/
                 notFirst && !GameManager.Instance.boilOperationBool && Input.GetKeyDown(KeyCode.M))
             {
                 notFirst = false;
@@ -116,18 +114,12 @@ public class OperationConfirmation : MonoBehaviour
             }
 
             //再度押すと非表示。
-            else if (!notFirst && !GameManager.Instance.boilOperationBool && Input.GetKeyDown("joystick button 0") ||
+            else if (/*!notFirst && !GameManager.Instance.boilOperationBool && Input.GetKeyDown("joystick button 0") ||*/
                      !notFirst && !GameManager.Instance.boilOperationBool && Input.GetKeyDown(KeyCode.M))
             {
                 notFirst = true;
                 operationCanvas.SetActive(false);
             }
-            StartCoroutine(waitTime(0.3f));
         }
-    }
-    private IEnumerator waitTime(float time)
-    {
-        yield return new WaitForSeconds(time);
-        yield break;    
     }
 }

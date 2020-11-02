@@ -26,6 +26,10 @@ public class Menu : MonoBehaviour
 
         menu.SetActive(false);
 
+        if (GameManager.Instance.doOnce) return;
+        GameManager.Instance.doOnce = true;
+        GameManager.Instance.menuBool = true;
+
         if (GameManager.Instance.menuBool)
         {
             _playerInvCanvasGroup.alpha   = 0;
@@ -40,13 +44,13 @@ public class Menu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("joystick button 0") && GameManager.Instance.menuBool ||
+        if (Input.GetKeyDown("joystick button 0") && GameManager.Instance.menuBool || 
             Input.GetKeyDown(KeyCode.Q) && GameManager.Instance.menuBool)
         {
             GameManager.Instance.menuBool = false;
             menu.SetActive(false);
             Time.timeScale = 1;
-
+            
             _playerInvCanvasGroup.alpha = 1;
             _noiseGuageCanvasGroup.alpha = 1;
             _dogToyCountCanvasGroup.alpha = 1;
