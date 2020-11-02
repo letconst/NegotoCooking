@@ -72,8 +72,9 @@ public class Player : SingletonMonoBehaviour<Player>
 
         Movement();
 
-        if (Input.GetKeyDown("joystick button 3") ||
-            Input.GetKeyDown(KeyCode.X))
+        if (Time.timeScale.Equals(1) &&
+            (Input.GetKeyDown("joystick button 3") ||
+             Input.GetKeyDown(KeyCode.X)))
         {
             var dogFoodCount = InventoryManager.Instance.PlayerContainer.DogFoodCount;
 
