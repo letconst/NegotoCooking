@@ -152,20 +152,26 @@ public class InventorySlotFunctions : MonoBehaviour
         // 投入できない食材の状態
         var disallowState = FoodState.None;
 
+        // 操作説明表示中か否か
+        var isOperationDisplayed = false;
+
         switch (curSceneName)
         {
             case "BakeScenes":
-                disallowState = FoodState.Cooked;
+                disallowState        = FoodState.Cooked;
+                isOperationDisplayed = GameManager.Instance.bakeOperationBool;
 
                 break;
 
             case "BoilScenes":
-                disallowState = FoodState.Boil;
+                disallowState        = FoodState.Boil;
+                isOperationDisplayed = GameManager.Instance.boilOperationBool;
 
                 break;
 
             case "CutScenes":
-                disallowState = FoodState.Cut;
+                disallowState        = FoodState.Cut;
+                isOperationDisplayed = GameManager.Instance.cutOperationBool;
 
                 break;
 
@@ -176,12 +182,13 @@ public class InventorySlotFunctions : MonoBehaviour
         }
 
         // 条件に満たない食材は投入できない
-        if (!FireControl.clickBool                  ||
-            !FireControl_boil.clickBool             ||
-            !CutGauge.clickBool                     ||
-            selfSlot.Item == null                   ||
-            selfSlot.States.Contains(disallowState) ||
-            selfSlot.Item.KindOfItem1 == Item.KindOfItem.Seasoning) return;
+        if (!FireControl.clickBool                  ||                      // 焼き調理中である
+            !FireControl_boil.clickBool             ||                      // 煮込み調理中である
+            !CutGauge.clickBool                     ||                      // 切り調理中である
+            isOperationDisplayed                    ||                      // 操作説明表示中である
+            selfSlot.Item == null                   ||                      // 選択スロットに食材がない
+            selfSlot.States.Contains(disallowState) ||                      // 選択スロットの食材が投入可能な状態でない
+            selfSlot.Item.KindOfItem1 == Item.KindOfItem.Seasoning) return; // 選択スロットが調味料である
 
         switch (curSceneName)
         {
