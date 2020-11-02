@@ -17,9 +17,8 @@ public class Pause : MonoBehaviour
     public void GoTitle()
     {
         SoundManager.Instance.PlaySe(SE.Submit);
-        _pauseCanvasGroup.alpha = 0;
-        Time.timeScale          = 1f;
-        SceneChanger.Instance.SceneLoad(SceneChanger.SceneName.TitleScenes);
+        GameManager.Instance.ResetAllValues();
+        SceneChanger.Instance.SceneLoad(SceneChanger.SceneName.TitleScenes, true, .5f);
     }
 
     public void ReturnGame()

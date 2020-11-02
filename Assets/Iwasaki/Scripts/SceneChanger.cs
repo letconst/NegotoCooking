@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
-using UnityEngine.UI;
 
 public class SceneChanger : SingletonMonoBehaviour<SceneChanger>
 {
@@ -47,20 +43,22 @@ public class SceneChanger : SingletonMonoBehaviour<SceneChanger>
     //連打対策
     private bool doOnceSceneChange = true;
 
-    public void SceneLoad(SceneName sceneName, bool isFade = false)
+    public void SceneLoad(SceneName sceneName, bool isFade = false, float waitTime = -1)
     {
         if (doOnceSceneChange == false) return;
+
+        if (waitTime.Equals(-1)) waitTime = waittime;
 
         // リザルト遷移時、タイムカウンターを止める
         if (sceneName == SceneName.Result) TimeCounter.IsStopped = true;
 
         if (doOnceSceneChange)
         {
-            StartCoroutine(LoadSceneCor(sceneName, isFade));
+            StartCoroutine(LoadSceneCor(sceneName, isFade, waitTime));
         }
     }
 
-    private IEnumerator LoadSceneCor(SceneName sceneName, bool isFade)
+    private IEnumerator LoadSceneCor(SceneName sceneName, bool isFade, float waitTime)
     {
         // フェード指定があったらアニメーションする
         if (isFade)
@@ -71,13 +69,18 @@ public class SceneChanger : SingletonMonoBehaviour<SceneChanger>
         doOnceSceneChange = false;
         var async = SceneManager.LoadSceneAsync(sceneName.ToString());
         async.allowSceneActivation = false;
+        // 時が止まっていることも考慮し、とりあえず戻す
+        Time.timeScale = 1;
 
-        yield return new WaitForSeconds(waittime);
+        yield return new WaitForSecondsRealtime(waitTime);
 
         doOnceSceneChange          = true;
         async.allowSceneActivation = true;
 
-        if (isFade) StartCoroutine(FadeOut());
+        if (isFade)
+        {
+            yield return StartCoroutine(FadeOut());
+        }
     }
 
     /// <summary>
