@@ -17,7 +17,8 @@ public class CutController : MonoBehaviour
     // 現在調理中の食材（スロット渡し）
     public static InventorySlotBase FoodSlotBeingCut;
 
-    // Start is called before the first frame update
+    [SerializeField]
+    private GameObject operationCanvas;
     private void Start()
     {
         _cutMeter   = GameObject.FindGameObjectWithTag("BakeMator");
@@ -30,6 +31,7 @@ public class CutController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        if (operationCanvas.activeSelf == true) return;
         CookingCompleteListener();
     }
 

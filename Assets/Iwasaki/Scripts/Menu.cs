@@ -14,13 +14,18 @@ public class Menu : MonoBehaviour
     private GameObject playeInv;
     // Start is called before the first frame update
     void Start()
-    {
+    {        
         menu.SetActive(false);
+
+        if (GameManager.Instance.doOnce) return;
+        GameManager.Instance.doOnce = true;
+        GameManager.Instance.menuBool = true;
+
         if (GameManager.Instance.menuBool)
         {
             menu.SetActive(true);
             Time.timeScale = 0;
-        }             
+        }
     }
 
     // Update is called once per frame

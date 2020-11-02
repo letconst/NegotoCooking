@@ -975,6 +975,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _ladle: {fileID: 0}
   _potCenterPos: {fileID: 862039537}
+  operationCanvas: {fileID: 1247477791}
 --- !u!1001 &1047716879
 PrefabInstance:
   m_ObjectHideFlags: 0

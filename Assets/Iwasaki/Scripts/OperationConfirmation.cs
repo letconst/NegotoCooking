@@ -26,7 +26,6 @@ public class OperationConfirmation : MonoBehaviour
             if (GameManager.Instance.cutOperationBool)
             {
                 operationCanvas.SetActive(true);
-                Time.timeScale = 0;
             }
             
             if (GameManager.Instance.cutOperationBool && Input.GetKeyDown("joystick button 0") ||
@@ -51,7 +50,6 @@ public class OperationConfirmation : MonoBehaviour
                 notFirst = true;
                 operationCanvas.SetActive(false);
             }
-            StartCoroutine(waitTime(0.3f));
         }        
     }
 
@@ -87,7 +85,6 @@ public class OperationConfirmation : MonoBehaviour
                 notFirst = true;
                 operationCanvas.SetActive(false);
             }
-            StartCoroutine(waitTime(0.3f));
         }
     }
 
@@ -123,13 +120,6 @@ public class OperationConfirmation : MonoBehaviour
                 notFirst = true;
                 operationCanvas.SetActive(false);
             }
-            StartCoroutine(waitTime(0.3f));
         }
-    }
-    private IEnumerator waitTime(float time)
-    {
-        yield return new WaitForSeconds(time);
-        Time.timeScale = 1;
-        yield break;    
     }
 }

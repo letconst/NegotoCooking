@@ -504,6 +504,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FlyingPan: {fileID: 1269237327655512596}
   blackSmoke: {fileID: 1225821773}
+  operationCanvas: {fileID: 1200259098}
 --- !u!4 &359538283
 Transform:
   m_ObjectHideFlags: 0

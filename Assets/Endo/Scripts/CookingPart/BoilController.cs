@@ -22,7 +22,8 @@ public class BoilController : MonoBehaviour
     // 現在調理中の食材（スロット渡し）
     public static InventorySlotBase FoodSlotBeingBoiled;
 
-    // Start is called before the first frame update
+    [SerializeField]
+    private GameObject operationCanvas;
     private void Start()
     {
         _boilMeter  = GameObject.FindGameObjectWithTag("BoilMator");
@@ -35,6 +36,7 @@ public class BoilController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        if (operationCanvas.activeSelf == true) return;
         CookingCompleteListener();
         //PotActionHandler();
     }

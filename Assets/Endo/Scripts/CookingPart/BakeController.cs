@@ -27,7 +27,8 @@ public class BakeController : MonoBehaviour
     // 現在調理中の食材（スロット渡し）
     public static InventorySlotBase FoodSlotBeingBaked;
 
-    // Start is called before the first frame update
+    [SerializeField]
+    private GameObject operationCanvas;
     private void Start()
     {
         blackSmoke.Stop();
@@ -41,6 +42,7 @@ public class BakeController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        if (operationCanvas.activeSelf == true) return;
         CookingCompleteListener();
         FlyingPanActionHandler();
         blackSmoke.transform.position = new Vector3(FlyingPan.transform.position.x, FlyingPan.transform.position.y, FlyingPan.transform.position.z);
