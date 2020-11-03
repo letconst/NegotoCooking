@@ -57,7 +57,7 @@ GameObject:
   - component: {fileID: 4380816121593587142}
   - component: {fileID: 4380816121593587137}
   - component: {fileID: 4380816121593587141}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: LBedroomDoorWrapper
   m_TagString: Untagged
   m_Icon: {fileID: 0}

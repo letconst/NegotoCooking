@@ -57,7 +57,7 @@ GameObject:
   - component: {fileID: 8734916712966844736}
   - component: {fileID: 8734916712966844743}
   - component: {fileID: 8734916712966844739}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: RKichenDoorWrapper
   m_TagString: Untagged
   m_Icon: {fileID: 0}

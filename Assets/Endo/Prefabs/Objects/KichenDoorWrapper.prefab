@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1405501631777233106}
   - component: {fileID: 1405501631777233109}
   - component: {fileID: 1405501631777233105}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: KichenDoorWrapper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
