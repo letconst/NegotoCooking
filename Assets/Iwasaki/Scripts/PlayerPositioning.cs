@@ -18,6 +18,7 @@ public class PlayerPositioning : MonoBehaviour
         {
             Debug.Log("StartPos");
             _player.transform.position = playerPosition.transform.position;
+            _player.transform.rotation = playerPosition.transform.rotation;
         }
         else
         {
