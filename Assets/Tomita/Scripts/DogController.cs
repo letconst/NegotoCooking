@@ -209,6 +209,7 @@ public class DogController : MonoBehaviour
                 dontRay = true;
                 return;
             }
+
             dontRay = false;
             State = DogState.Move;
             var DogToy = nearObject.gameObject.GetComponent<DogToyController>();
@@ -300,12 +301,12 @@ public class DogController : MonoBehaviour
             return;
         }
         //認識対象が視線範囲外であるときは何もしない
-        if(other == nearObject && dontRay)
+        if (other == nearObject && dontRay)
         {
             return;
         }
 
-        if(other.CompareTag("DogFood"))
+        if (other.CompareTag("DogFood"))
         {
             nearObject = other;
             return;
