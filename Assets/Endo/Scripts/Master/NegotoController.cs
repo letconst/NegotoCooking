@@ -57,9 +57,9 @@ public class NegotoController : MonoBehaviour
     // プレイヤーが寝言表示範囲に入ってからの経過時間
     private float _elapsedTimeForDelay;
 
-    private Dictionary<FoodState, string> _foodStateName = new Dictionary<FoodState, string>()
+    private readonly Dictionary<FoodState, string> _foodStateName = new Dictionary<FoodState, string>()
     {
-        {FoodState.None, "振る"},
+        {FoodState.None, "入れる"},
         {FoodState.Raw, ""},
         {FoodState.Cooked, "焼く"},
         {FoodState.Cut, "切る"},
