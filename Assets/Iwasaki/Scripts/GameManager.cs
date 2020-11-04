@@ -155,9 +155,13 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         statisticsManager.throwInCount = 0;
         PlayerPos                      = Vector3.zero;
         PlayerRotate                   = Vector3.zero;
+        cutOperationBool               = false;
+        bakeOperationBool              = false;
+        boilOperationBool              = false;
         IsReachedNavOfNegoto           = false;
         IsReachedNavOfStairs           = false;
         IsReachedNavOfKitchen          = false;
+        doOnce                         = false;
     }
 
     private void OnApplicationQuit()
