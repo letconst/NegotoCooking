@@ -75,12 +75,14 @@ public class MasterController : SingletonMonoBehaviour<MasterController>
         //捨てるべからず
         if (GameManager.Instance.StatisticsManager.throwInCount >= 3)
         {
+            // Debug.Log("Failed: 捨てるべからず");
             GameManager.Instance.FailCount++;
         }
 
         //素早く丁寧に
         if (TimeCounter.CurrentTime < 100)
         {
+            // Debug.Log("Failed: 素早く丁寧に");
             GameManager.Instance.FailCount++;
         }
 
@@ -100,16 +102,25 @@ public class MasterController : SingletonMonoBehaviour<MasterController>
             }
         }
 
-        // 必須食材の要件を満たさないものが含まれていたら失敗
         // やり方間違えるべからず
+        // 必須食材の要件を満たさないものが含まれていたら失敗
         if (foodsToJudge.Count >= 3)
         {
+            // Debug.Log("Failed: やり方間違えるべからず");
             GameManager.Instance.FailCount++;
+
+            // 大皿に入っている食材が3個未満ならさらに評価ダウン
+            if (largePlateContainer.Container.Count < 3)
+            {
+                // Debug.Log("Failed: 少なすぎる");
+                GameManager.Instance.FailCount++;
+            }
         }
 
         // すべての食材が間違っていたらさらに評価ダウン
         if (foodsToJudge.Count == targetRecipe.RequireFoods.Count)
         {
+            // Debug.Log("Failed: すべて違う");
             GameManager.Instance.FailCount++;
         }
     }
