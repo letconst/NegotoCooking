@@ -152,6 +152,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         NegotoManager.Instance.NegotoData.Entries.Clear();
         dogToyData.Entries.Clear();
         NoiseMator                     = 0;
+        FailCount                      = 0;
         statisticsManager.throwInCount = 0;
         PlayerPos                      = Vector3.zero;
         PlayerRotate                   = Vector3.zero;
