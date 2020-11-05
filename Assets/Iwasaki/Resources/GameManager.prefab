@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8056102388491078409}
   - component: {fileID: 8056102388491078414}
+  - component: {fileID: 7716586579114392159}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -46,3 +47,15 @@ MonoBehaviour:
   statisticsManager: {fileID: 11400000, guid: 2c7568ed88b8adb44aeb7c0f609aae69, type: 2}
   dogToyData: {fileID: 11400000, guid: 715c136ebdfcb754c8b39fbddc2ed910, type: 2}
   alertBool: 0
+--- !u!114 &7716586579114392159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8056102388491078415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab36bb275e001784880c13bd035f248f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
