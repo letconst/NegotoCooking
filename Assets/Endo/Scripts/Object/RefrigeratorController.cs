@@ -55,6 +55,9 @@ public class RefrigeratorController : MonoBehaviour
         if (Input.GetButtonDown("Interact") && // インタラクトボタン押下
             _selfCanvasGroup.alpha.Equals(0))  // インベントリが開かれていない
         {
+            // 冷蔵庫インベントリの描画をリセット
+            _selfInvRenderer.ClearRender();
+
             _selfCanvasGroup.alpha          = 1;
             _selfCanvasGroup.interactable   = true;
             _selfCanvasGroup.blocksRaycasts = true;
