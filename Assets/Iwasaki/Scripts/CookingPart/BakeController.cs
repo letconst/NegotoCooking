@@ -46,9 +46,9 @@ public class BakeController : MonoBehaviour
     {
         // ポーズ中は進行および操作させない
         if (PushPause.Instance.IsNowPausing) return;
-        
+
         if (operationCanvas.activeSelf == true) return;
-        
+
         CookingCompleteListener();
         FlyingPanActionHandler();
         blackSmoke.transform.position = new Vector3(FlyingPan.transform.position.x, FlyingPan.transform.position.y, FlyingPan.transform.position.z);
@@ -158,5 +158,14 @@ public class BakeController : MonoBehaviour
                 flyingpanTimes++;
             }
         }
+    }
+
+    /// <summary>
+    /// 全ゲームシーンで共有される値をリセット
+    /// </summary>
+    public static void ResetValues()
+    {
+        doOnceBakeSound    = true;
+        FoodSlotBeingBaked = null;
     }
 }

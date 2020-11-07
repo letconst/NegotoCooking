@@ -54,4 +54,15 @@ public class InventoryManager : SingletonMonoBehaviour<InventoryManager>
 
         PlayerContainer.DogFoodCount = playerContainer.MaxDogFoodCount;
     }
+
+    /// <summary>
+    /// 全ゲームシーンで共有される値をリセット
+    /// </summary>
+    public void ResetValues()
+    {
+        PlayerContainer.Container.Clear();
+        PlayerContainer.DogFoodCount = PlayerContainer.MaxDogFoodCount;
+        RefContainers.RefInvContainers.Clear();
+        LargePlateContainer.Container.Clear();
+    }
 }

@@ -40,9 +40,9 @@ public class BoilController : MonoBehaviour
     {
         // ポーズ中は進行および操作させない
         if (PushPause.Instance.IsNowPausing) return;
-        
+
         if (operationCanvas.activeSelf == true) return;
-        
+
         CookingCompleteListener();
         //PotActionHandler();
     }
@@ -87,5 +87,13 @@ public class BoilController : MonoBehaviour
         _ladle.transform.position = new Vector3(_potCenterPos.transform.position.x + h * 65,
                                                 _potCenterPos.transform.position.y,
                                                 _potCenterPos.transform.position.z + v * 70);
+    }
+
+    /// <summary>
+    /// 全ゲームシーンで共有される値をリセット
+    /// </summary>
+    public static void ResetValues()
+    {
+        FoodSlotBeingBoiled = null;
     }
 }

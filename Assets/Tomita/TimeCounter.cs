@@ -68,4 +68,13 @@ public class TimeCounter : MonoBehaviour
             SceneChanger.Instance.SceneLoad(SceneChanger.SceneName.Result);
         }
     }
+
+    /// <summary>
+    /// 全ゲームシーンで共有される値をリセット
+    /// </summary>
+    public static void ResetValues()
+    {
+        CurrentTime = CountUp;
+        IsStopped   = false;
+    }
 }

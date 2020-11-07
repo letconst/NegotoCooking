@@ -114,4 +114,14 @@ public class CutGauge : MonoBehaviour
         toRightBool = true;
         yield break;
     }
+
+    /// <summary>
+    /// 全ゲームシーンで共有される値をリセット
+    /// </summary>
+    public static void ResetValues()
+    {
+        cutBool      = false;
+        cantBackBool = true;
+        clickBool    = true;
+    }
 }

@@ -234,4 +234,14 @@ public class FireControl_boil : MonoBehaviour
         doOnce = true;
         yield break;
     }
+
+    /// <summary>
+    /// 全ゲームシーンで共有される値をリセットする
+    /// </summary>
+    public static void ResetValues()
+    {
+        boilBool   = false;
+        bubbleBool = false;
+        clickBool  = true;
+    }
 }

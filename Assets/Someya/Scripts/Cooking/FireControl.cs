@@ -188,4 +188,14 @@ public class FireControl : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
         doOnce = true;
     }
+
+    /// <summary>
+    /// 全ゲームシーンで共有される値をリセットする
+    /// </summary>
+    public static void ResetValues()
+    {
+        bakeBool  = false;
+        burntBool = false;
+        clickBool = true;
+    }
 }

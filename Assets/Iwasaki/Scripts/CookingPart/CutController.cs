@@ -35,9 +35,9 @@ public class CutController : MonoBehaviour
     {
         // ポーズ中は進行および操作させない
         if (PushPause.Instance.IsNowPausing) return;
-        
+
         if (operationCanvas.activeSelf == true) return;
-        
+
         CookingCompleteListener();
     }
 
@@ -69,5 +69,13 @@ public class CutController : MonoBehaviour
         CutGauge.clickBool    = true;
         CutGauge.cantBackBool = true;
         FoodSlotBeingCut      = null;
+    }
+
+    /// <summary>
+    /// 全ゲームシーンで共有される値をリセット
+    /// </summary>
+    public static void ResetValues()
+    {
+        FoodSlotBeingCut = null;
     }
 }

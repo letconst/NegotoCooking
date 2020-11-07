@@ -102,4 +102,16 @@ public class CookingManager : SingletonMonoBehaviour<CookingManager>
 
         yield break;
     }
+
+    /// <summary>
+    /// 全ゲームシーンで共有される値をリセット
+    /// </summary>
+    public void ResetValues()
+    {
+        timeleft      = 0;
+        burntTimeleft = 0;
+        doOnceAlert   = true;
+        go100Point    = false;
+        _isNowCooking = false;
+    }
 }

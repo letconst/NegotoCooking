@@ -99,16 +99,11 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     /// </summary>
     public void ResetAllValues()
     {
-        InventoryManager.Instance.PlayerContainer.Container.Clear();
-        InventoryManager.Instance.PlayerContainer.DogFoodCount =
-            InventoryManager.Instance.PlayerContainer.MaxDogFoodCount;
-
-        InventoryManager.Instance.RefContainers.RefInvContainers.Clear();
-        InventoryManager.Instance.LargePlateContainer.Container.Clear();
-        TimeCounter.CurrentTime = TimeCounter.CountUp;
-        TimeCounter.IsStopped   = false;
+        InventoryManager.Instance.ResetValues();
+        TimeCounter.ResetValues();
         NegotoManager.Instance.NegotoData.Entries.Clear();
         dogToyData.Entries.Clear();
+        SoundManager.Instance.FadeOutBgm(.2f);
         NoiseMator                     = 0;
         FailCount                      = 0;
         statisticsManager.throwInCount = 0;
@@ -121,6 +116,15 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         IsReachedNavOfStairs           = false;
         IsReachedNavOfKitchen          = false;
         doOnce                         = false;
+
+        // 調理フラグ
+        CookingManager.Instance.ResetValues();
+        FireControl.ResetValues();
+        FireControl_boil.ResetValues();
+        BakeController.ResetValues();
+        BoilController.ResetValues();
+        CutController.ResetValues();
+        CutGauge.ResetValues();
     }
 
     private void OnApplicationQuit()
